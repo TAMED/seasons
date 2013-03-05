@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="32" height="24" tilewidth="32" tileheight="32" backgroundcolor="#98bfbf">
+ <tileset firstgid="1" name="rocls" tilewidth="32" tileheight="32">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+  <image source="../rocks.png" width="128" height="128"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYBpgTGuAy45R+weH/bROE+jm0TtNDnb7aQ1G7R+1f9T+UftH7R8Y+9EBJfZTo94atX/wYAC24AGT
+  </data>
+ </layer>
+</map>
