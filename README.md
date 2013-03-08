@@ -8,3 +8,8 @@ Configuring the build path:
 4) Click on the arrow next to lwjgl.jar
 5) Double click "Native library location"
 6) Select the folder in /lib/lwjgl-natives that corresponds to your system
+7) Click "Add JARs" and add jbox2d-library-2.1.2.3-jar-with-dependencies from lib/jbox2d-library
+8) Click on the array next to jbox2d....jar
+9) Edit javadoc location.
+10) Select "Javadoc in archive" and "Workspace file"
+11) Select "jbox2d-library-2.1.2.3-javadoc.jar"
