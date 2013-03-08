@@ -12,3 +12,7 @@ Configuring the build path:
 9) Edit javadoc location.
 10) Select "Javadoc in archive" and "Workspace file"
 11) Select "jbox2d-library-2.1.2.3-javadoc.jar"
+
+git first steps:
+git checkout -b staging origin/staging
+That will checkout the staging branch and switch you to it, so from then on you can work from there.
