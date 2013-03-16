@@ -65,7 +65,7 @@ public abstract class Entity extends Sprite {
 	@Override
 	public final void setPosition(float x, float y) {
 		if (physicsBody == null) {
-			super.getPosition();
+			super.setPosition(x, y);
 			return;
 		}
 		physicsBody.setTransform(new Vec2(x / Config.PIXELS_PER_METER,
