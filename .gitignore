@@ -1,5 +1,8 @@
 bin/
 *.class
+seasons.jar
+seasons.tar.gz
+seasons.zip
 
 # Package Files #
 *.war
