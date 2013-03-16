@@ -1,19 +1,18 @@
 import java.lang.reflect.Field;
 
-import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
+
+import util.Box2DDebugDraw;
+import entities.Player;
 
 /**
  * 
@@ -28,20 +27,14 @@ public class Game extends BasicGame {
 	 *  This is only here for testing pusposes
 	 */
 	private TiledMap testMap;
-	Vec2 gravity;
-	World testWorld;
-	BodyDef testBody;
-	Body groundBody;
-	PolygonShape groundBox;
-	BodyDef bodyDef;
-	Body body;
-	PolygonShape dynamicBox;
-	FixtureDef fixtureDef;
-	float timeStep = (float) (1.0/60.0);
-	int velocityIterations = 6;
-	int positionIterations = 2;
-	Rectangle fallingBlock;
-	Rectangle fixedBlock;
+	private Vec2 gravity;
+	private World testWorld;
+	private float timeStep = (float) (1.0/60.0);
+	private int velocityIterations = 6;
+	private int positionIterations = 2;
+	private Player player;
+	private Player ground;
+	private Box2DDebugDraw debugdraw;
 
 	/**
 	 * @param title
@@ -68,8 +61,10 @@ public class Game extends BasicGame {
 			Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
 			fieldSysPath.setAccessible( true );
 			fieldSysPath.set( null, null );
+			
 			AppGameContainer app = new AppGameContainer(new Game("Seasons"));
 			app.setDisplayMode(1024, 768, false);
+			app.setTargetFrameRate(60);
 			app.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,7 +77,10 @@ public class Game extends BasicGame {
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
 		testMap.render(0, 0);
-		arg1.draw(fallingBlock);
+		debugdraw.setGraphics(arg1);
+		testWorld.drawDebugData();
+		player.render(arg1);
+		ground.render(arg1);
 	}
 
 	/* (non-Javadoc)
@@ -94,31 +92,18 @@ public class Game extends BasicGame {
 		gravity = new Vec2(0,10);
 		testWorld = new World(gravity, true);
 		
-		testBody = new BodyDef();
-		testBody.position.set(new Vec2(220,736));
+		debugdraw = new Box2DDebugDraw();
+		debugdraw.setFlags(DebugDraw.e_shapeBit);
+		testWorld.setDebugDraw(debugdraw);
 		
-		groundBody = testWorld.createBody(testBody);
-		groundBox = new PolygonShape();
-		groundBox.setAsBox(50, 10);
-		groundBody.createFixture(groundBox,0);
+		// tiles should eventually have their own class that's similar to Entity
+		// but for now, it's a Player, whatever
+		ground = new Player(400, 656, 32, 32);
+		ground.getPhysicsBodyDef().type = BodyType.STATIC;
+		ground.addToWorld(testWorld);
 		
-		bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DYNAMIC;
-		bodyDef.position.set(new Vec2(220,200));
-		body = testWorld.createBody(bodyDef);
-		
-		dynamicBox = new PolygonShape();
-		dynamicBox.setAsBox(1, 1);
-		fixtureDef = new FixtureDef();
-		fixtureDef.shape = dynamicBox;
-		fixtureDef.density = 1;
-		fixtureDef.friction = (float) .3;
-		body.createFixture(fixtureDef);
-		
-		fallingBlock =new Rectangle(body.getPosition().x, body.getPosition().y, 20, 20);
-		//fallingBlock.setImageColor(255, 0,0);
-		//fixedBlock.setImageColor(0, 255, 0);
-		
+		player = new Player(400, 100, 32, 72);
+		player.addToWorld(testWorld);
 	}
 
 	/* (non-Javadoc)
@@ -127,10 +112,7 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer arg0, int arg1) throws SlickException {
 		testWorld.step(timeStep, velocityIterations, positionIterations);
-		Vec2 position = body.getPosition();
-		//float angle = body.getAngle();
-		fallingBlock.setCenterX(position.x);
-		fallingBlock.setCenterY(position.y);
+		player.update();
 	}
 
 }
