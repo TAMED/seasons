@@ -1,19 +1,19 @@
-package src;
+import java.lang.reflect.Field;
 
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
+import org.jbox2d.dynamics.World;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
-import org.jbox2d.common.*;
-import org.jbox2d.dynamics.*;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
-import org.jbox2d.collision.*;
-import org.jbox2d.collision.shapes.PolygonShape;
 
 /**
  * 
@@ -52,11 +52,26 @@ public class Game extends BasicGame {
 	
 	// TODO this is temporary: should be moved to a separate class, use constants, etc.
 	public static void main(String[] arguments) {
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.matches(".*linux.*")) {
+			System.setProperty( "java.library.path", "lib/linux/" );
+		} else if (os.matches(".*windows.*")) {
+			System.setProperty( "java.library.path", "lib\\windows\\" );
+		} else if (os.matches(".*mac.*")) {
+			System.setProperty( "java.library.path", "lib/macosx/" );
+		} else {
+			System.out.println("Could not identify operating system: " + os);
+			System.exit(1);
+		}
+		
 		try {
+			Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
+			fieldSysPath.setAccessible( true );
+			fieldSysPath.set( null, null );
 			AppGameContainer app = new AppGameContainer(new Game("Seasons"));
 			app.setDisplayMode(1024, 768, false);
 			app.start();
-		} catch (SlickException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -113,7 +128,7 @@ public class Game extends BasicGame {
 	public void update(GameContainer arg0, int arg1) throws SlickException {
 		testWorld.step(timeStep, velocityIterations, positionIterations);
 		Vec2 position = body.getPosition();
-		float angle = body.getAngle();
+		//float angle = body.getAngle();
 		fallingBlock.setCenterX(position.x);
 		fallingBlock.setCenterY(position.y);
 	}
