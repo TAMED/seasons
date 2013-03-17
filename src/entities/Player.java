@@ -55,7 +55,7 @@ public class Player extends Entity {
 		float yvel = this.getPhysicsBody().getLinearVelocity().y;
 		if(input.isKeyDown(Input.KEY_D)) xvel += Config.MOVE_VEL;
 		if(input.isKeyDown(Input.KEY_A)) xvel -= Config.MOVE_VEL;
-		if(this.touchingGround() && jumpTimeout <= 0) {
+		if(this.sensorsTouching()[Config.BOTTOM] && jumpTimeout <= 0) {
 			if(input.isKeyDown(Input.KEY_SPACE)) {
 				yvel = -Config.JUMP_VEL;
 				jumpTimeout = Config.JUMP_TIMER;

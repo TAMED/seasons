@@ -28,7 +28,8 @@ public abstract class Entity extends Sprite {
 	private BodyDef physicsDef;
 	private FixtureDef physicsFixture;
 	private Body physicsBody;
-	private FixtureDef footFixture;
+	private FixtureDef[] sensors = new FixtureDef[4];
+	private PolygonShape[] sensorShapes = new PolygonShape[4];
 
 	public Entity(float x, float y, float width, float height) {
 		super(x, y, width, height);
@@ -47,11 +48,19 @@ public abstract class Entity extends Sprite {
 		physicsFixture.density = Config.DEFAULT_DENSITY;
 		physicsFixture.friction = Config.DEFAULT_FRICTION;
 		
-		PolygonShape footShape = new PolygonShape();
-		footShape.setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
-		footFixture = new FixtureDef();
-		footFixture.shape = footShape;
-		footFixture.isSensor = true;
+		// creates sensors on each side. Config has mapping of integers to TOP, BOTTOM, etc.
+		for(int i = 0; i < sensorShapes.length; i++) {
+			sensorShapes[i] = new PolygonShape();
+		}
+		sensorShapes[0].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
+		sensorShapes[1].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
+		sensorShapes[2].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
+		sensorShapes[3].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
+		for(int i = 0; i < sensors.length; i++){
+			sensors[i] = new FixtureDef();
+			sensors[i].shape = sensorShapes[i];
+			sensors[i].isSensor = true;
+		}
 	}
 	
 	@Override
@@ -63,7 +72,9 @@ public abstract class Entity extends Sprite {
 	public final void addToWorld(World world) {
 		physicsBody = world.createBody(physicsDef);
 		physicsBody.createFixture(physicsFixture);
-		physicsBody.createFixture(footFixture).setUserData("foot");
+		for(int i = 0; i < sensors.length; i++){
+			physicsBody.createFixture(sensors[i]).setUserData(new Integer(i));
+		}
 	}
 	
 	@Override
@@ -92,20 +103,32 @@ public abstract class Entity extends Sprite {
 		return physicsDef;
 	}
 	
-	public final boolean touchingGround() {
+	/**
+	 * Iterates over sensors seeing which are intersecting
+	 * @return array corresponding to TOP, BOTTOM, etc as defined in config
+	 */
+	public final boolean[] sensorsTouching() {
+		boolean[] touchingSides = new boolean[sensors.length];
+		for(int i = 0; i < sensors.length; i++) {
+			touchingSides[i] = false;
+		}
 		ContactEdge contact = physicsBody.getContactList();
 		while(contact != null) {
 			if(contact.contact.isTouching()) {
-				if(contact.contact.getFixtureA().getUserData() == "foot"){
-					return true;
-				}
-				if(contact.contact.getFixtureB().getUserData() == "foot"){
-					return true;
+				for(int i = 0; i < sensors.length; i++) {
+					Integer data = (Integer) contact.contact.getFixtureA().getUserData();
+					if(data != null && data.equals(new Integer(i))){
+						touchingSides[i] = true;
+					}
+					data = (Integer) contact.contact.getFixtureB().getUserData();
+					if(data != null && data.equals(new Integer(i))){
+						touchingSides[i] = true;
+					}
 				}
 			}
 			contact = contact.next;
 		}
-		return false;
+		return touchingSides;
 	}
 
 }
