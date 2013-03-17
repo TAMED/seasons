@@ -1,6 +1,6 @@
 import java.lang.reflect.Field;
 
-import map.Box2DMap;
+import map.Map;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
@@ -11,7 +11,6 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
 import util.Box2DDebugDraw;
 import entities.Player;
@@ -28,7 +27,7 @@ public class Game extends BasicGame {
 	/**
 	 *  This is only here for testing pusposes
 	 */
-	private TiledMap testMap;
+	private Map testMap;
 	private Vec2 gravity;
 	private World testWorld;
 	private float timeStep = (float) (1.0/60.0);
@@ -78,7 +77,7 @@ public class Game extends BasicGame {
 	 */
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
-		testMap.render(0, 0);
+		testMap.render();
 		debugdraw.setGraphics(arg1);
 		testWorld.drawDebugData();
 		player.render(arg1);
@@ -90,9 +89,10 @@ public class Game extends BasicGame {
 	 */
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
-		testMap = new TiledMap("assets/maps/test.tmx");
 		gravity = new Vec2(0,10);
 		testWorld = new World(gravity, true);
+		testMap = new Map("assets/maps/test.tmx", testWorld);
+		testMap.parseMapObjects();
 		
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit);
@@ -106,8 +106,6 @@ public class Game extends BasicGame {
 		
 		player = new Player(400, 100, 32, 72);
 		player.addToWorld(testWorld);
-		
-		Box2DMap blah = new Box2DMap(testMap, testWorld);
 	}
 
 	/* (non-Javadoc)
