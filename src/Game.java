@@ -81,7 +81,6 @@ public class Game extends BasicGame {
 		debugdraw.setGraphics(arg1);
 		testWorld.drawDebugData();
 		player.render(arg1);
-		ground.render(arg1);
 	}
 
 	/* (non-Javadoc)
@@ -100,11 +99,9 @@ public class Game extends BasicGame {
 		
 		// tiles should eventually have their own class that's similar to Entity
 		// but for now, it's a Player, whatever
-		ground = new Player(400, 656, 32, 32);
-		ground.getPhysicsBodyDef().type = BodyType.STATIC;
-		ground.addToWorld(testWorld);
 		
 		player = new Player(400, 100, 32, 72);
+		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
 	}
 
@@ -112,9 +109,9 @@ public class Game extends BasicGame {
 	 * @see org.newdawn.slick.BasicGame#update(org.newdawn.slick.GameContainer, int)
 	 */
 	@Override
-	public void update(GameContainer arg0, int arg1) throws SlickException {
+	public void update(GameContainer gc, int delta) throws SlickException {
 		testWorld.step(timeStep, velocityIterations, positionIterations);
-		player.update();
+		player.update(gc, delta);
 	}
 
 }

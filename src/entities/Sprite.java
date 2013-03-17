@@ -5,6 +5,7 @@ package entities;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
@@ -43,7 +44,7 @@ public class Sprite {
 		draw(graphics);
 	}
 	
-	public void update() {
+	public void update(GameContainer gc, int delta) {
 		
 	}
 	
@@ -114,5 +115,4 @@ public class Sprite {
 	public final void setY(float y) {
 		setPosition(getX(), y);
 	}
-
 }

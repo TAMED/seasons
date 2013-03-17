@@ -18,6 +18,8 @@ public class Map {
 	public void parseMapObjects(){
 		for(int j = 0; j < foreground.getHeight(); j++) {
 			for(int i = 0; i < foreground.getWidth(); i++) {
+				// other functions may be added here, currently
+				// only parses walls
 				parseTileBox2D(i,j);
 			}
 		}

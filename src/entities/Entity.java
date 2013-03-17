@@ -10,6 +10,9 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.dynamics.contacts.ContactEdge;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
@@ -25,11 +28,13 @@ public abstract class Entity extends Sprite {
 	private BodyDef physicsDef;
 	private FixtureDef physicsFixture;
 	private Body physicsBody;
+	private FixtureDef footFixture;
 
 	public Entity(float x, float y, float width, float height) {
 		super(x, y, width, height);
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
+		physicsDef.fixedRotation = true;
 		physicsDef.position.set(x / Config.PIXELS_PER_METER,
 		                        y / Config.PIXELS_PER_METER);
 		
@@ -41,17 +46,24 @@ public abstract class Entity extends Sprite {
 		physicsFixture.shape = physicsShape;
 		physicsFixture.density = Config.DEFAULT_DENSITY;
 		physicsFixture.friction = Config.DEFAULT_FRICTION;
+		
+		PolygonShape footShape = new PolygonShape();
+		footShape.setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
+		footFixture = new FixtureDef();
+		footFixture.shape = footShape;
+		footFixture.isSensor = true;
 	}
 	
 	@Override
 	public abstract void render(Graphics graphics);
 
 	@Override
-	public abstract void update();
+	public abstract void update(GameContainer gc, int delta);
 	
 	public final void addToWorld(World world) {
 		physicsBody = world.createBody(physicsDef);
 		physicsBody.createFixture(physicsFixture);
+		physicsBody.createFixture(footFixture).setUserData("foot");
 	}
 	
 	@Override
@@ -78,6 +90,22 @@ public abstract class Entity extends Sprite {
 	
 	public final BodyDef getPhysicsBodyDef() {
 		return physicsDef;
+	}
+	
+	public final boolean touchingGround() {
+		ContactEdge contact = physicsBody.getContactList();
+		while(contact != null) {
+			if(contact.contact.isTouching()) {
+				if(contact.contact.getFixtureA().getUserData() == "foot"){
+					return true;
+				}
+				if(contact.contact.getFixtureB().getUserData() == "foot"){
+					return true;
+				}
+			}
+			contact = contact.next;
+		}
+		return false;
 	}
 
 }
