@@ -1,5 +1,7 @@
 import java.lang.reflect.Field;
 
+import map.Box2DMap;
+
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
@@ -104,6 +106,8 @@ public class Game extends BasicGame {
 		
 		player = new Player(400, 100, 32, 72);
 		player.addToWorld(testWorld);
+		
+		Box2DMap blah = new Box2DMap(testMap, testWorld);
 	}
 
 	/* (non-Javadoc)
