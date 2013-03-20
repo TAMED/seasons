@@ -12,7 +12,7 @@ import entities.Sprite;
 
 public class Hookshot extends ItemBase {
 
-	private static float HOOK_VEL = 10f;
+	private static float HOOK_VEL = 20f;
 	
 	private enum HookState { IN, MOTION, OUT };
 
@@ -23,6 +23,7 @@ public class Hookshot extends ItemBase {
 	
 	public Hookshot(Player player) {
 		this.owner = player;
+		state = HookState.IN;
 		aiming = 2;
 	}
 
@@ -48,6 +49,11 @@ public class Hookshot extends ItemBase {
 	
 	@Override
 	public void update(GameContainer gc, int delta) {
+		// Check for a collision of the hook with a wall
+		if (state == HookState.MOTION) {
+			
+		}
+		
 		Input input = gc.getInput();
 		
 		if (input.isKeyPressed(Input.KEY_UP) && (aiming != 0)) {
@@ -57,20 +63,49 @@ public class Hookshot extends ItemBase {
 		}
 		
 		if (input.isKeyPressed(Input.KEY_LEFT)) {
-			float x = owner.getPosition().getX();
-			float y = owner.getPosition().getY();
-			
-			hook = new Hook(x, y, 10, 10);
+			if (state == HookState.MOTION) {
+				owner.world.destroyBody(hook.getPhysicsBody());
+				spawnHook();
+			} else if (state == HookState.IN) {
+				spawnHook();
+				state = HookState.MOTION;
+			}
+		}
+	}
+
+	/**
+	 * creates a new Hook object and projects it in the direction of the aim
+	 */
+	private void spawnHook() {
+		float x = owner.getPosition().getX();
+		float y = owner.getPosition().getY();
+
+		float right = (owner.isRight) ? 1 : -1;
+		float diag = (float) (1/Math.sqrt(2));
+		
+		float playerRad = 100;
+		float hookSize = 10;
+		
+		if (aiming == 0) {
+			hook = new Hook(x, y - playerRad, hookSize, hookSize);
 			hook.addToWorld(owner.world);
-			
-			float right = (owner.isRight) ? 1 : -1;
-			float diag = (float) Math.sqrt(2);
-			
-			if (aiming == 0) hook.getPhysicsBody().setLinearVelocity(new Vec2(0, -HOOK_VEL));
-			if (aiming == 1) hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, -HOOK_VEL*diag));
-			if (aiming == 2) hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*right, 0));
-			if (aiming == 3) hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, HOOK_VEL*diag));
-			if (aiming == 4) hook.getPhysicsBody().setLinearVelocity(new Vec2(0, HOOK_VEL));
+			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, -HOOK_VEL));
+		} else if (aiming == 1) {
+			hook = new Hook(x + playerRad*diag*right, y - playerRad*diag, hookSize, hookSize);
+			hook.addToWorld(owner.world);
+			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, -HOOK_VEL*diag));
+		} else if (aiming == 2) {
+			hook = new Hook(x + playerRad*right, y, hookSize, hookSize);
+			hook.addToWorld(owner.world);
+			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*right, 0));
+		} else if (aiming == 3) {
+			hook = new Hook(x + playerRad*diag*right, y + playerRad*diag, hookSize, hookSize);
+			hook.addToWorld(owner.world);
+			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, HOOK_VEL*diag));
+		} else if (aiming == 4) {
+			hook = new Hook(x, y + playerRad*diag, hookSize, hookSize);
+			hook.addToWorld(owner.world);
+			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, HOOK_VEL));
 		}
 	}
 }
