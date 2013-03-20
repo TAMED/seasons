@@ -9,6 +9,7 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.FixtureDef;
+import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,6 +22,7 @@ import config.Config;
  *
  */
 public class Player extends Entity {
+	public World world;
 	private int jumpTimeout = 0;
 	private ItemBase[] items = new ItemBase[2];
 
@@ -29,11 +31,13 @@ public class Player extends Entity {
 	 * @param y
 	 * @param width
 	 * @param height
+	 * @param game 
 	 */
-	public Player(float x, float y, float width, float height) {
+	public Player(float x, float y, float width, float height, World gameWorld) {
 		super(x, y, width, height);
 		setImage(Color.white);
 		items[0] = new Hookshot(this);
+		world = gameWorld;
 	}
 
 	/* (non-Javadoc)

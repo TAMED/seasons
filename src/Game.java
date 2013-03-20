@@ -100,7 +100,7 @@ public class Game extends BasicGame {
 		// tiles should eventually have their own class that's similar to Entity
 		// but for now, it's a Player, whatever
 		
-		player = new Player(400, 100, 32, 72);
+		player = new Player(400, 100, 32, 72, testWorld);
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
 	}
