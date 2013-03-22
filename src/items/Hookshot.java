@@ -1,6 +1,9 @@
 package items;
 
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.joints.DistanceJoint;
+import org.jbox2d.dynamics.joints.DistanceJointDef;
+import org.jbox2d.dynamics.joints.WeldJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,14 +15,16 @@ import entities.Sprite;
 
 public class Hookshot extends ItemBase {
 
-	private static float HOOK_VEL = 20f;
+	private static float HOOK_VEL = 40f;
+	private static float PULL_VEL_BUFFER = 7f;
 	
-	private enum HookState { IN, MOTION, OUT };
+	private enum HookState { IN, MOTION, OUT, PULL };
 
 	private HookState state;
 	private int aiming; // values 0, 1, 2, 3, 4 correspond to up, up-out, out, down-out, down
 	
 	private Hook hook;
+	private WeldJointDef joint;
 	
 	public Hookshot(Player player) {
 		this.owner = player;
@@ -48,10 +53,15 @@ public class Hookshot extends ItemBase {
 	}
 	
 	@Override
-	public void update(GameContainer gc, int delta) {
+	public void update(GameContainer gc, int delta) {		
 		// Check for a collision of the hook with a wall
 		if (state == HookState.MOTION) {
-			
+			for (boolean sensor : hook.sensorsTouching()) {
+				if (sensor) {
+					state = HookState.OUT;
+					hook.getPhysicsBody().setActive(false);
+				}
+			}
 		}
 		
 		Input input = gc.getInput();
@@ -69,7 +79,26 @@ public class Hookshot extends ItemBase {
 			} else if (state == HookState.IN) {
 				spawnHook();
 				state = HookState.MOTION;
+			} else if (state == HookState.OUT) {
+				state = HookState.PULL;
+				float xDiff = hook.getX() - owner.getX();
+				float yDiff = hook.getY() - owner.getY();
+				owner.getPhysicsBody().setLinearVelocity(new Vec2(xDiff/PULL_VEL_BUFFER, yDiff/PULL_VEL_BUFFER));
 			}
+		}
+		
+		if (state == HookState.PULL) {
+			float xDiff = hook.getX() - owner.getX();
+			float yDiff = hook.getY() - owner.getY();
+			
+			// stop the hook pull if you are close enough to the hook OR the player stops moving (is blocked)
+			if ((Math.sqrt(xDiff*xDiff + yDiff*yDiff) < 30) || (owner.getPhysicsBody().getLinearVelocity().length() < 2)) {
+				owner.world.destroyBody(hook.getPhysicsBody());
+				hook = null;
+				state = HookState.IN;
+			}
+			
+			owner.getPhysicsBody().setLinearVelocity(new Vec2(xDiff/PULL_VEL_BUFFER, yDiff/PULL_VEL_BUFFER));
 		}
 	}
 
@@ -107,5 +136,7 @@ public class Hookshot extends ItemBase {
 			hook.addToWorld(owner.world);
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, HOOK_VEL));
 		}
+		
+		hook.getPhysicsBody().getFixtureList().setFriction(10000);
 	}
 }
