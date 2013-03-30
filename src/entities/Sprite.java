@@ -23,8 +23,9 @@ public class Sprite {
 	 * The color of the rectangle displayed if an image or animation is not assigned
 	 */
 	private Color color;
-	private Image image;	
+	private Image image;
 	private Animation anim;
+	public boolean isRight = true;
 	/**
 	 * How the sprite will be drawn
 	 */
@@ -54,6 +55,10 @@ public class Sprite {
 				graphics.setColor(color);
 				graphics.drawRect(getX() - (width / 2), 
 				                  getY() - (height / 2), width, height);
+				
+				// temporary marker to indicate direction of sprite
+				int facing = (this.isRight) ? 1 : -1;
+				graphics.drawOval(getX() + facing*(width / 2) - 5, getY() - (height / 2), 10, 10);
 				break;
 			case IMAGE:
 			case ANIMATION:
