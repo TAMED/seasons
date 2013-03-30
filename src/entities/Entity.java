@@ -10,10 +10,7 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.contacts.ContactEdge;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import config.Config;
@@ -62,12 +59,6 @@ public abstract class Entity extends Sprite {
 			sensors[i].isSensor = true;
 		}
 	}
-	
-	@Override
-	public abstract void render(Graphics graphics);
-
-	@Override
-	public abstract void update(GameContainer gc, int delta);
 	
 	public final void addToWorld(World world) {
 		physicsBody = world.createBody(physicsDef);
