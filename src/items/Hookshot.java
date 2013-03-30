@@ -66,16 +66,16 @@ public class Hookshot extends ItemBase {
 		
 		Input input = gc.getInput();
 		
-		if (input.isKeyPressed(Input.KEY_UP) && (aiming != 0)) {
+		if (input.isKeyPressed(Input.KEY_W) && (aiming != 0)) {
 			aiming--;
-		} else if (input.isKeyPressed(Input.KEY_DOWN) && (aiming != 4)) {
+		} else if (input.isKeyPressed(Input.KEY_S) && (aiming != 4)) {
 			aiming ++;
 		}
 		
-		if (input.isKeyPressed(Input.KEY_LEFT)) {
+		if (input.isKeyPressed(Input.KEY_J)) {
 			if (state == HookState.MOTION) {
-				owner.world.destroyBody(hook.getPhysicsBody());
-				spawnHook();
+				//owner.world.destroyBody(hook.getPhysicsBody());
+				//spawnHook();
 			} else if (state == HookState.IN) {
 				spawnHook();
 				state = HookState.MOTION;
