@@ -12,6 +12,7 @@ import org.newdawn.slick.Input;
 import entities.Entity;
 import entities.Player;
 import entities.Sprite;
+import entities.Sprite.Direction;
 
 public class Hookshot extends ItemBase {
 
@@ -39,7 +40,7 @@ public class Hookshot extends ItemBase {
 		float y = owner.getPosition().getY();
 		
 		float diag = (float) Math.sqrt(2);
-		float yDirection = owner.isRight ? 100 : -100;
+		float yDirection = (owner.getFacing() == Direction.RIGHT) ? 100 : -100;
 		
 		if (aiming == 0) graphics.drawLine(x, y, x, y - 100);
 		if (aiming == 1) graphics.drawLine(x, y, x + yDirection/diag, y - 100/diag);
@@ -93,7 +94,7 @@ public class Hookshot extends ItemBase {
 			
 			// stop the hook pull if you are close enough to the hook OR the player stops moving (is blocked)
 			if ((Math.sqrt(xDiff*xDiff + yDiff*yDiff) < 30) || (owner.getPhysicsBody().getLinearVelocity().length() < 2)) {
-				owner.world.destroyBody(hook.getPhysicsBody());
+				owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
 				hook = null;
 				state = HookState.IN;
 			}
@@ -109,7 +110,7 @@ public class Hookshot extends ItemBase {
 		float x = owner.getPosition().getX();
 		float y = owner.getPosition().getY();
 
-		float right = (owner.isRight) ? 1 : -1;
+		float right = (owner.getFacing() == Direction.RIGHT) ? 1 : -1;
 		float diag = (float) (1/Math.sqrt(2));
 		
 		float playerRad = 100;
@@ -117,23 +118,23 @@ public class Hookshot extends ItemBase {
 		
 		if (aiming == 0) {
 			hook = new Hook(x, y - playerRad, hookSize, hookSize);
-			hook.addToWorld(owner.world);
+			hook.addToWorld(owner.getPhysicsWorld());
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, -HOOK_VEL));
 		} else if (aiming == 1) {
 			hook = new Hook(x + playerRad*diag*right, y - playerRad*diag, hookSize, hookSize);
-			hook.addToWorld(owner.world);
+			hook.addToWorld(owner.getPhysicsWorld());
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, -HOOK_VEL*diag));
 		} else if (aiming == 2) {
 			hook = new Hook(x + playerRad*right, y, hookSize, hookSize);
-			hook.addToWorld(owner.world);
+			hook.addToWorld(owner.getPhysicsWorld());
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*right, 0));
 		} else if (aiming == 3) {
 			hook = new Hook(x + playerRad*diag*right, y + playerRad*diag, hookSize, hookSize);
-			hook.addToWorld(owner.world);
+			hook.addToWorld(owner.getPhysicsWorld());
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, HOOK_VEL*diag));
 		} else if (aiming == 4) {
 			hook = new Hook(x, y + playerRad*diag, hookSize, hookSize);
-			hook.addToWorld(owner.world);
+			hook.addToWorld(owner.getPhysicsWorld());
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, HOOK_VEL));
 		}
 		

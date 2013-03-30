@@ -4,12 +4,12 @@ import map.Map;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import util.Box2DDebugDraw;
@@ -34,8 +34,8 @@ public class Game extends BasicGame {
 	private int velocityIterations = 6;
 	private int positionIterations = 2;
 	private Player player;
-	private Player ground;
 	private Box2DDebugDraw debugdraw;
+	private boolean viewDebug = false;
 
 	/**
 	 * @param title
@@ -78,8 +78,10 @@ public class Game extends BasicGame {
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
 		testMap.render();
-		debugdraw.setGraphics(arg1);
-		testWorld.drawDebugData();
+		if (viewDebug) {
+			debugdraw.setGraphics(arg1);
+			testWorld.drawDebugData();
+		}
 		player.render(arg1);
 	}
 
@@ -112,6 +114,8 @@ public class Game extends BasicGame {
 	public void update(GameContainer gc, int delta) throws SlickException {
 		testWorld.step(timeStep, velocityIterations, positionIterations);
 		player.update(gc, delta);
+		
+		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
 	}
 
 }

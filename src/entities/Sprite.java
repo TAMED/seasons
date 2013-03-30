@@ -18,6 +18,7 @@ import org.newdawn.slick.geom.Point;
 public class Sprite {
 	
 	public enum ImageType { SIMPLE, IMAGE, ANIMATION };
+	public enum Direction { LEFT, RIGHT };
 	
 	/**
 	 * The color of the rectangle displayed if an image or animation is not assigned
@@ -25,7 +26,6 @@ public class Sprite {
 	private Color color;
 	private Image image;
 	private Animation anim;
-	public boolean isRight = true;
 	/**
 	 * How the sprite will be drawn
 	 */
@@ -34,11 +34,13 @@ public class Sprite {
 	private float width;
 	private float height;
 	private Point position;
+	private Direction facing;
 
 	public Sprite(float x, float y, float width, float height) {
 		position = new Point(x, y);
 		this.width = width;
 		this.height = height;
+		this.facing = Direction.RIGHT;
 	}
 	
 	public void render(Graphics graphics) {
@@ -46,22 +48,31 @@ public class Sprite {
 	}
 	
 	public void update(GameContainer gc, int delta) {
-		
+		if (imageType == ImageType.ANIMATION) anim.update(delta);		
 	}
 	
 	protected void draw(Graphics graphics) {
+		float hw = width / 2;
+		float hh = height / 2;
+		float x = getX();
+		float y = getY();
+		Image img;
+		
 		switch (imageType) {
 			case SIMPLE:
 				graphics.setColor(color);
-				graphics.drawRect(getX() - (width / 2), 
-				                  getY() - (height / 2), width, height);
-				
-				// temporary marker to indicate direction of sprite
-				int facing = (this.isRight) ? 1 : -1;
-				graphics.drawOval(getX() + facing*(width / 2) - 5, getY() - (height / 2), 10, 10);
+				graphics.drawRect(x - hw, y - hh, width, height);
+				// marker to indicate direction of sprite
+				int offset = (facing == Direction.RIGHT) ? 1 : -1;
+				graphics.drawOval(x + offset * hw - 5, y - hh, 10, 10);
 				break;
 			case IMAGE:
+				img = image.getFlippedCopy(facing == Direction.RIGHT, false);
+				img.draw(x - hh, y - hh, height, height);
+				break;
 			case ANIMATION:
+				img = anim.getCurrentFrame().getFlippedCopy(facing == Direction.RIGHT, false);
+				img.draw(x - hh, y - hh, height, height);
 				break;
 		}
 	}
@@ -69,6 +80,17 @@ public class Sprite {
 	public void setImage(Color c) {
 		imageType = ImageType.SIMPLE;
 		this.color = c;
+	}
+	
+	public void setImage(Image i) {
+		imageType = ImageType.IMAGE;
+		this.image = i;
+	}
+	
+	public void setImage(Animation a) {
+		imageType = ImageType.ANIMATION;
+		this.anim = a;
+		this.anim.setAutoUpdate(false);
 	}
 
 	/**
@@ -119,5 +141,19 @@ public class Sprite {
 	 */
 	public final void setY(float y) {
 		setPosition(getX(), y);
+	}
+
+	/**
+	 * @return the direction the sprite is facing
+	 */
+	public Direction getFacing() {
+		return facing;
+	}
+
+	/**
+	 * @param dir the direction the sprite should face
+	 */
+	public void setFacing(Direction dir) {
+		this.facing = dir;
 	}
 }

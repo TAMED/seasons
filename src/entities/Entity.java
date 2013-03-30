@@ -10,10 +10,7 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.contacts.ContactEdge;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import config.Config;
@@ -28,6 +25,7 @@ public abstract class Entity extends Sprite {
 	private BodyDef physicsDef;
 	private FixtureDef physicsFixture;
 	private Body physicsBody;
+	private World physicsWorld;
 	private FixtureDef[] sensors = new FixtureDef[4];
 	private PolygonShape[] sensorShapes = new PolygonShape[4];
 
@@ -63,20 +61,22 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
-	@Override
-	public abstract void render(Graphics graphics);
-
-	@Override
-	public abstract void update(GameContainer gc, int delta);
-	
 	public final void addToWorld(World world) {
 		physicsBody = world.createBody(physicsDef);
 		physicsBody.createFixture(physicsFixture);
 		for(int i = 0; i < sensors.length; i++){
 			physicsBody.createFixture(sensors[i]).setUserData(new Integer(i));
 		}
+		physicsWorld = world;
 	}
 	
+	/**
+	 * @return the entity's physics world
+	 */
+	public World getPhysicsWorld() {
+		return physicsWorld;
+	}
+
 	@Override
 	public final Point getPosition() {
 		if (physicsBody == null) return super.getPosition();
