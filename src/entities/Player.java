@@ -3,13 +3,16 @@
  */
 package entities;
 
+import items.Hookshot;
+import items.ItemBase;
+
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 
 import config.Config;
 
@@ -18,32 +21,38 @@ import config.Config;
  *
  */
 public class Player extends Entity {
-	int jumpTimeout = 0;
+	private int jumpTimeout = 0;
+	private ItemBase[] items = new ItemBase[2];
 
 	/**
 	 * @param x
 	 * @param y
 	 * @param width
 	 * @param height
+	 * @param game 
 	 */
-	public Player(float x, float y, float width, float height) {
+	public Player(float x, float y, float width, float height, World gameWorld) {
 		super(x, y, width, height);
 		
 		try {
 			setImage(new Image("assets/images/shaman1.png"));
-		} catch (SlickException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			setImage(Color.white);
 		}
+		
+		items[0] = new Hookshot(this);
 	}
 
 	public void render(Graphics graphics) {
 		draw(graphics);
+		items[0].render(graphics);
 	}
 
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
 		movePlayer(gc,delta);
+		items[0].update(gc, delta);
 	}
 	
 	private void movePlayer(GameContainer gc, int delta) {

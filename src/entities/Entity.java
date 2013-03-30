@@ -25,6 +25,7 @@ public abstract class Entity extends Sprite {
 	private BodyDef physicsDef;
 	private FixtureDef physicsFixture;
 	private Body physicsBody;
+	private World physicsWorld;
 	private FixtureDef[] sensors = new FixtureDef[4];
 	private PolygonShape[] sensorShapes = new PolygonShape[4];
 
@@ -66,8 +67,16 @@ public abstract class Entity extends Sprite {
 		for(int i = 0; i < sensors.length; i++){
 			physicsBody.createFixture(sensors[i]).setUserData(new Integer(i));
 		}
+		physicsWorld = world;
 	}
 	
+	/**
+	 * @return the entity's physics world
+	 */
+	public World getPhysicsWorld() {
+		return physicsWorld;
+	}
+
 	@Override
 	public final Point getPosition() {
 		if (physicsBody == null) return super.getPosition();

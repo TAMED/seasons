@@ -4,7 +4,6 @@ import map.Map;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -34,7 +33,6 @@ public class Game extends BasicGame {
 	private int velocityIterations = 6;
 	private int positionIterations = 2;
 	private Player player;
-	private Player ground;
 	private Box2DDebugDraw debugdraw;
 
 	/**
@@ -100,7 +98,7 @@ public class Game extends BasicGame {
 		// tiles should eventually have their own class that's similar to Entity
 		// but for now, it's a Player, whatever
 		
-		player = new Player(400, 100, 32, 72);
+		player = new Player(400, 100, 32, 72, testWorld);
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
 	}
