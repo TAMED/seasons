@@ -25,11 +25,15 @@ public class Map {
 		}
 	}
 	
+	public TiledMap getTiledMap() {
+		return foreground;
+	}
+	
 	private void parseTileBox2D(int i, int j) {
 		int tileId = foreground.getTileId(i, j, 0);
+		String tileType = foreground.getTileProperty(tileId, "type", "meh");
 		for(int k = 0; k < Config.WALL_IDS.length; k++) {
-			if(Config.WALL_IDS[k] == tileId){
-				// note that the .5 is necessary because Box2D uses centers, where TiledMap uses top left corner
+			if (tileType.equals("wall")) {
 				Box2DTile tile = new Box2DTile(i+(float).5,j+(float).5, foreground.getTileWidth(), foreground.getTileHeight());
 				tile.addToWorld(world);
 			}

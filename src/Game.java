@@ -12,6 +12,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import camera.Camera;
+
 import util.Box2DDebugDraw;
 import entities.Player;
 
@@ -36,6 +38,7 @@ public class Game extends BasicGame {
 	private Player player;
 	private Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
+	private Camera camera;
 
 	/**
 	 * @param title
@@ -77,7 +80,9 @@ public class Game extends BasicGame {
 	 */
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
-		testMap.render();
+		//testMap.render();
+		camera.drawMap();
+		camera.translateGraphics();
 		if (viewDebug) {
 			debugdraw.setGraphics(arg1);
 			testWorld.drawDebugData();
@@ -92,7 +97,7 @@ public class Game extends BasicGame {
 	public void init(GameContainer arg0) throws SlickException {
 		gravity = new Vec2(0,10);
 		testWorld = new World(gravity, true);
-		testMap = new Map("assets/maps/test.tmx", testWorld);
+		testMap = new Map("assets/maps/tiledtest.tmx", testWorld);
 		testMap.parseMapObjects();
 		
 		debugdraw = new Box2DDebugDraw();
@@ -105,6 +110,8 @@ public class Game extends BasicGame {
 		player = new Player(400, 100, 32, 72, testWorld);
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
+		
+		camera = new Camera(arg0, testMap.getTiledMap());
 	}
 
 	/* (non-Javadoc)
@@ -114,8 +121,8 @@ public class Game extends BasicGame {
 	public void update(GameContainer gc, int delta) throws SlickException {
 		testWorld.step(timeStep, velocityIterations, positionIterations);
 		player.update(gc, delta);
-		
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
+		camera.centerOn(player.getX(),player.getY());
 	}
 
 }
