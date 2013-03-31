@@ -3,16 +3,20 @@
  */
 package entities;
 
+import java.util.EnumSet;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.newdawn.slick.geom.Point;
 
+import util.Direction;
 import config.Config;
 
 /**
@@ -23,13 +27,19 @@ import config.Config;
 public abstract class Entity extends Sprite {
 	private PolygonShape physicsShape;
 	private BodyDef physicsDef;
-	private FixtureDef physicsFixture;
+	private FixtureDef physicsFixtureDef;
+	private Fixture physicsFixture;
 	private Body physicsBody;
 	private World physicsWorld;
-	private FixtureDef[] sensors = new FixtureDef[4];
-	private PolygonShape[] sensorShapes = new PolygonShape[4];
+	private FixtureDef[] sensors = new FixtureDef[Direction.values().length];
+	private PolygonShape[] sensorShapes = new PolygonShape[Direction.values().length];
+	
+	private float runSpeed;
+	private float jmpSpeed;
+	
+	private boolean alive;
 
-	public Entity(float x, float y, float width, float height) {
+	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed) {
 		super(x, y, width, height);
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
@@ -41,31 +51,61 @@ public abstract class Entity extends Sprite {
 		physicsShape.setAsBox(width / 2 / Config.PIXELS_PER_METER,
 		                     height / 2 / Config.PIXELS_PER_METER);
 		
-		physicsFixture = new FixtureDef();
-		physicsFixture.shape = physicsShape;
-		physicsFixture.density = Config.DEFAULT_DENSITY;
-		physicsFixture.friction = Config.DEFAULT_FRICTION;
+		physicsFixtureDef = new FixtureDef();
+		physicsFixtureDef.shape = physicsShape;
+		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
+		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
 		
 		// creates sensors on each side. Config has mapping of integers to TOP, BOTTOM, etc.
 		for(int i = 0; i < sensorShapes.length; i++) {
 			sensorShapes[i] = new PolygonShape();
 		}
-		sensorShapes[0].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
-		sensorShapes[1].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
-		sensorShapes[2].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
-		sensorShapes[3].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
+		sensorShapes[Direction.UP.ordinal()   ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
+		sensorShapes[Direction.DOWN.ordinal() ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
+		sensorShapes[Direction.LEFT.ordinal() ].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
+		sensorShapes[Direction.RIGHT.ordinal()].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
 		for(int i = 0; i < sensors.length; i++){
 			sensors[i] = new FixtureDef();
 			sensors[i].shape = sensorShapes[i];
 			sensors[i].isSensor = true;
 		}
+		
+		this.runSpeed = runSpeed;
+		this.jmpSpeed = jmpSpeed;
+		
+		this.alive = true;
 	}
 	
-	public final void addToWorld(World world) {
+	public void moveLeft() {
+		float yvel = this.getPhysicsBody().getLinearVelocity().y;
+		this.getPhysicsBody().setLinearVelocity(new Vec2(-runSpeed, yvel));
+		setFacing(Direction.LEFT);
+	}
+	
+	public void moveRight() {
+		float yvel = this.getPhysicsBody().getLinearVelocity().y;
+		this.getPhysicsBody().setLinearVelocity(new Vec2(runSpeed, yvel));
+		setFacing(Direction.RIGHT);
+	}
+	
+	public void jump() {
+		if(this.isTouching(Direction.DOWN)) {
+			float xvel = this.getPhysicsBody().getLinearVelocity().x;
+			this.getPhysicsBody().setLinearVelocity(new Vec2(xvel, -jmpSpeed));
+		}
+	}
+	
+	public void dampenVelocity(int delta) {
+		Vec2 vel = this.getPhysicsBody().getLinearVelocity();
+		this.getPhysicsBody().setLinearVelocity(new Vec2((float) (vel.x * Math.pow(Config.DRAG, delta/100f)), vel.y));
+	}
+	
+	public void addToWorld(World world) {
 		physicsBody = world.createBody(physicsDef);
-		physicsBody.createFixture(physicsFixture);
+		physicsFixture = physicsBody.createFixture(physicsFixtureDef);
+		physicsFixture.setUserData(this);
 		for(int i = 0; i < sensors.length; i++){
-			physicsBody.createFixture(sensors[i]).setUserData(new Integer(i));
+			physicsBody.createFixture(sensors[i]).setUserData(Direction.values()[i]);
 		}
 		physicsWorld = world;
 	}
@@ -104,31 +144,57 @@ public abstract class Entity extends Sprite {
 	}
 	
 	/**
-	 * Iterates over sensors seeing which are intersecting
-	 * @return array corresponding to TOP, BOTTOM, etc as defined in config
+	 * @return the entity's physics fixture
 	 */
-	public final boolean[] sensorsTouching() {
-		boolean[] touchingSides = new boolean[sensors.length];
-		for(int i = 0; i < sensors.length; i++) {
-			touchingSides[i] = false;
-		}
-		ContactEdge contact = physicsBody.getContactList();
-		while(contact != null) {
-			if(contact.contact.isTouching()) {
-				for(int i = 0; i < sensors.length; i++) {
-					Integer data = (Integer) contact.contact.getFixtureA().getUserData();
-					if(data != null && data.equals(new Integer(i))){
-						touchingSides[i] = true;
-					}
-					data = (Integer) contact.contact.getFixtureB().getUserData();
-					if(data != null && data.equals(new Integer(i))){
-						touchingSides[i] = true;
-					}
+	public Fixture getPhysicsFixture() {
+		return physicsFixture;
+	}
+	
+	public boolean isAlive() {
+		return alive;
+	}
+	
+	public void kill() {
+		alive = false;
+	}
+
+	/**
+	 * @return whether or not the given side of the entity is touching an object
+	 */
+	public final boolean isTouching(Direction side) {
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				if (data != null && side.equals(data)) {
+					return true;					
 				}
 			}
-			contact = contact.next;
+			contactEdge = contactEdge.next;
 		}
-		return touchingSides;
+		
+		return false;
+	}
+	
+	/**
+	 * @return whether or not the given side of the entity is touching an object
+	 */
+	public final EnumSet<Direction> sidesTouching() {
+		EnumSet<Direction> touching = EnumSet.noneOf(Direction.class);
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				if (data != null && data instanceof Direction) {
+					touching.add((Direction) data);
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		return touching;
 	}
 
 }

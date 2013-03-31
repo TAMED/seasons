@@ -14,13 +14,11 @@ public class Config {
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
+	// Player
+	public static final float PLAYER_MOVE_SPEED = 8f;
+	public static final float PLAYER_JUMP_SPEED = 8f;
+	
 	// Movement
-	public static final float JUMP_VEL = 8f;
-	public static final float MOVE_VEL = 8f;
-	public static final int JUMP_TIMER = 15;
-	public static final int TOP = 0;
-	public static final int BOTTOM = 1;
-	public static final int LEFT = 2;
-	public static final int RIGHT = 3;
+	public static final float DRAG = 0.5f;
 	
 }
