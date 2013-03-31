@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="60" height="24" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32">
-  <image source="../../../../../Dropbox/CMS.617/concept art/tilesets/grass.png" width="100" height="100"/>
-  <tile id="6">
+ <tileset firstgid="1" name="rocks" tilewidth="32" tileheight="32">
+  <image source="../rocks.png" width="128" height="128"/>
+  <tile id="1">
    <properties>
     <property name="type" value="wall"/>
    </properties>
@@ -10,7 +10,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="60" height="24">
   <data encoding="base64" compression="zlib">
-   eJzt2DEKACAMBMF0/v/H9oIgJkhuvQEbC8kWNhkRMYqOguycas3rjJm5FXt3d7dvdVP5F1V6f+JeNveyuZfNvWzuZXMvm3vZ3Mt20lu1v+yw3+w0ywsTOmAChQ==
+   eJztlUEKACEMA4v/f/TeBUO3a7aFJODJOnZEdEXEEhtfwmS/7SNTc7MnNd+dq+LLZp/2y9Qwe+r0nfCmMGPfGb6s/8u+M3z32LfOQVz79sS+eB7VZdbZ99/4Ptc5iGvfnkz2RYwql3X29tX1VRoPvIkDMQ==
   </data>
  </layer>
 </map>

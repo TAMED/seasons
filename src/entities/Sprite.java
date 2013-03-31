@@ -10,6 +10,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import util.Direction;
+
 /**
  * 
  * @author Mullings
@@ -18,7 +20,6 @@ import org.newdawn.slick.geom.Point;
 public class Sprite {
 	
 	public enum ImageType { SIMPLE, IMAGE, ANIMATION };
-	public enum Direction { LEFT, RIGHT };
 	
 	/**
 	 * The color of the rectangle displayed if an image or animation is not assigned

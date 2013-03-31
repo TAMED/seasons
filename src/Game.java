@@ -1,4 +1,6 @@
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import map.Map;
 
@@ -12,10 +14,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import camera.Camera;
+import combat.CombatContact;
 
 import util.Box2DDebugDraw;
+import camera.Camera;
 import entities.Player;
+import entities.enemies.Enemy;
+import entities.enemies.Ent;
 
 /**
  * 
@@ -32,10 +37,10 @@ public class Game extends BasicGame {
 	private Map testMap;
 	private Vec2 gravity;
 	private World testWorld;
-	private float timeStep = (float) (1.0/60.0);
 	private int velocityIterations = 6;
 	private int positionIterations = 2;
 	private Player player;
+	private ArrayList<Enemy> enemies;
 	private Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	private Camera camera;
@@ -88,6 +93,9 @@ public class Game extends BasicGame {
 			testWorld.drawDebugData();
 		}
 		player.render(arg1);
+		for (Enemy e : enemies) {
+			e.render(arg1);			
+		}
 	}
 
 	/* (non-Javadoc)
@@ -97,8 +105,11 @@ public class Game extends BasicGame {
 	public void init(GameContainer arg0) throws SlickException {
 		gravity = new Vec2(0,10);
 		testWorld = new World(gravity, true);
+		
+		testWorld.setContactListener(new CombatContact());
+		
 		testMap = new Map("assets/maps/tiledtest.tmx", testWorld);
-		testMap.parseMapObjects();
+		testMap.parseMapObjects();		
 		
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit);
@@ -107,9 +118,14 @@ public class Game extends BasicGame {
 		// tiles should eventually have their own class that's similar to Entity
 		// but for now, it's a Player, whatever
 		
-		player = new Player(400, 100, 32, 72, testWorld);
+		player = new Player(400, 100, 32, 72);
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
+		
+		enemies = new ArrayList<>();
+		Enemy ent1 = new Ent(900, 600);
+		ent1.addToWorld(testWorld);
+		enemies.add(ent1);
 		
 		camera = new Camera(arg0, testMap.getTiledMap());
 	}
@@ -119,8 +135,21 @@ public class Game extends BasicGame {
 	 */
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
-		testWorld.step(timeStep, velocityIterations, positionIterations);
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc);
+		if (!player.isAlive()) init(gc);
+		
+		testWorld.step(delta/1000f, velocityIterations, positionIterations);
 		player.update(gc, delta);
+		
+		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
+			Enemy e = it.next();
+			if (e.isAlive()) {
+				e.update(gc, delta);
+			} else {
+				it.remove();
+			}
+		}
+
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
 		camera.centerOn(player.getX(),player.getY());
 	}

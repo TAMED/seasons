@@ -1,18 +1,14 @@
 package items;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.joints.DistanceJoint;
-import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.WeldJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
-import entities.Entity;
+import util.Direction;
 import entities.Player;
-import entities.Sprite;
-import entities.Sprite.Direction;
 
 public class Hookshot extends ItemBase {
 
@@ -56,13 +52,9 @@ public class Hookshot extends ItemBase {
 	@Override
 	public void update(GameContainer gc, int delta) {		
 		// Check for a collision of the hook with a wall
-		if (state == HookState.MOTION) {
-			for (boolean sensor : hook.sensorsTouching()) {
-				if (sensor) {
-					state = HookState.OUT;
-					hook.getPhysicsBody().setActive(false);
-				}
-			}
+		if (state == HookState.MOTION && !hook.sidesTouching().isEmpty()) {
+			state = HookState.OUT;
+			hook.getPhysicsBody().setActive(false);
 		}
 		
 		Input input = gc.getInput();
@@ -139,5 +131,10 @@ public class Hookshot extends ItemBase {
 		}
 		
 		hook.getPhysicsBody().getFixtureList().setFriction(10000);
+	}
+
+	@Override
+	public boolean isAttacking() {
+		return state == HookState.PULL;
 	}
 }
