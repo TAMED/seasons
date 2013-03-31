@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 
 import entities.Player;
 
-public class ItemBase {
+public abstract class ItemBase {
 	
 	protected Player owner;
 
@@ -20,4 +20,9 @@ public class ItemBase {
 	public void render(Graphics graphics) {
 		
 	}
+	
+	/**
+	 * @return whether the item can damage enemies
+	 */
+	public abstract boolean isAttacking();
 }

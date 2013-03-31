@@ -6,8 +6,6 @@ package entities;
 import items.Hookshot;
 import items.ItemBase;
 
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,18 +19,10 @@ import config.Config;
  *
  */
 public class Player extends Entity {
-	private int jumpTimeout = 0;
 	private ItemBase[] items = new ItemBase[2];
 
-	/**
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param game 
-	 */
-	public Player(float x, float y, float width, float height, World gameWorld) {
-		super(x, y, width, height);
+	public Player(float x, float y, float width, float height) {
+		super(x, y, width, height, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED);
 		
 		try {
 			setImage(new Image("assets/images/shaman1.png"));
@@ -57,23 +47,26 @@ public class Player extends Entity {
 	
 	private void movePlayer(GameContainer gc, int delta) {
 		Input input = gc.getInput();
-		float xvel = 0;
-		float yvel = this.getPhysicsBody().getLinearVelocity().y;
-		if(input.isKeyDown(Input.KEY_A)) {
-			xvel -= Config.MOVE_VEL;
-			setFacing(Direction.LEFT);
-		}
+		
 		if(input.isKeyDown(Input.KEY_D)) {
-			xvel += Config.MOVE_VEL;
-			setFacing(Direction.RIGHT);
+			moveRight();
+		} else if(input.isKeyDown(Input.KEY_A)) {
+			moveLeft();
+		} else {
+			dampenVelocity(delta);
 		}
-		if(this.sensorsTouching()[Config.BOTTOM] && jumpTimeout <= 0) {
-			if(input.isKeyDown(Input.KEY_SPACE)) {
-				yvel = -Config.JUMP_VEL;
-				jumpTimeout = Config.JUMP_TIMER;
-			}
+		if(input.isKeyPressed(Input.KEY_SPACE)) {
+			jump();
 		}
-		if(jumpTimeout > 0) jumpTimeout--;
-		this.getPhysicsBody().setLinearVelocity(new Vec2(xvel,yvel));
+	}
+	
+	/**
+	 * @return whether the player will damage enemies when coming into contact with them
+	 */
+	public boolean isAttacking() {
+		for (ItemBase i : items) {
+			if (i != null && i.isAttacking()) return true;
+		}
+		return false;
 	}
 }
