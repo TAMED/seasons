@@ -122,7 +122,7 @@ public class Game extends BasicGame {
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
 		
-		enemies = new ArrayList<>();
+		enemies = new ArrayList<Enemy>();
 		Enemy ent1 = new Ent(900, 600);
 		ent1.addToWorld(testWorld);
 		enemies.add(ent1);
