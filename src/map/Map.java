@@ -46,7 +46,6 @@ public class Map {
 					if(tileType.equals("wall")) {
 						startVTop.set(i*tileWidth / Config.PIXELS_PER_METER, j*tileHeight / Config.PIXELS_PER_METER);
 						startVBottom.set(i*tileWidth / Config.PIXELS_PER_METER, (j+1)*tileHeight / Config.PIXELS_PER_METER);
-						System.out.println(j);
 						running = true;
 					}
 				}
