@@ -104,7 +104,7 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
 		gravity = new Vec2(0,10);
-		testWorld = new World(gravity, true);
+		testWorld = new World(gravity);
 		
 		testWorld.setContactListener(new CombatContact());
 		
