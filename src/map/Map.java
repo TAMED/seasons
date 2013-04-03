@@ -1,5 +1,6 @@
 package map;
 
+import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -36,6 +37,8 @@ public class Map {
 			if (tileType.equals("wall")) {
 				Box2DTile tile = new Box2DTile(i+(float).5,j+(float).5, foreground.getTileWidth(), foreground.getTileHeight());
 				tile.addToWorld(world);
+				EdgeShape blah = new EdgeShape();
+				
 			}
 		}	
 	}
