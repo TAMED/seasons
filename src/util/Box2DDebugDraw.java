@@ -5,12 +5,10 @@ package util;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Color3f;
-import org.jbox2d.common.IViewportTransform;
 import org.jbox2d.common.OBBViewportTransform;
 import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.ShapeFill;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Polygon;

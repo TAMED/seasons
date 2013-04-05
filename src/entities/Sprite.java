@@ -10,6 +10,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 
+import config.Config;
+
 import util.Direction;
 
 /**
@@ -99,6 +101,14 @@ public class Sprite {
 	 */
 	public Point getPosition() {
 		return position;
+	}
+
+	/**
+	 * @return the position on the sprite, relative to the screen
+	 */
+	public Point getScreenPosition() {
+		Point cam = Config.camera.getPosition();
+		return new Point(getX() - cam.getX(), getY() - cam.getY());
 	}
 
 	/**
