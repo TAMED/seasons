@@ -104,7 +104,7 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
 		gravity = new Vec2(0,10);
-		testWorld = new World(gravity, true);
+		testWorld = new World(gravity);
 		
 		testWorld.setContactListener(new CombatContact());
 		
@@ -122,7 +122,7 @@ public class Game extends BasicGame {
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
 		
-		enemies = new ArrayList<>();
+		enemies = new ArrayList<Enemy>();
 		Enemy ent1 = new Ent(900, 600);
 		ent1.addToWorld(testWorld);
 		enemies.add(ent1);
