@@ -14,10 +14,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import combat.CombatContact;
-
 import util.Box2DDebugDraw;
 import camera.Camera;
+
+import combat.CombatContact;
+import config.Config;
+
 import entities.Player;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
@@ -43,7 +45,7 @@ public class Game extends BasicGame {
 	private ArrayList<Enemy> enemies;
 	private Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
-	private Camera camera;
+	private static Camera camera;
 
 	/**
 	 * @param title
@@ -128,6 +130,7 @@ public class Game extends BasicGame {
 		enemies.add(ent1);
 		
 		camera = new Camera(arg0, testMap.getTiledMap());
+		Config.camera = camera;
 	}
 
 	/* (non-Javadoc)
@@ -152,6 +155,13 @@ public class Game extends BasicGame {
 
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
 		camera.centerOn(player.getX(),player.getY());
+	}
+
+	/**
+	 * @return the camera
+	 */
+	public static Camera getCamera() {
+		return camera;
 	}
 
 }

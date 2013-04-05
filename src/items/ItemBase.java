@@ -6,6 +6,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
+import util.Util;
+
 import entities.Player;
 
 public abstract class ItemBase {
@@ -24,7 +26,7 @@ public abstract class ItemBase {
 		Input input = gc.getInput();
 		
 		Vec2 mouseCursor = new Vec2(input.getAbsoluteMouseX(), input.getAbsoluteMouseY());
-		Vec2 playerLoc = new Vec2(owner.getPosition().getX(), owner.getPosition().getY());
+		Vec2 playerLoc = Util.PointToVec2(owner.getScreenPosition());
 		
 		// This line finds the difference between the two vectors, then scales to the
 		// aimLength times a unit vector

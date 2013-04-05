@@ -1,5 +1,7 @@
 package config;
 
+import camera.Camera;
+
 public class Config {
 	
 	public static final String TITLE = "Seasons";
@@ -21,4 +23,6 @@ public class Config {
 	// Movement
 	public static final float DRAG = 0.5f;
 	
+	// THIS IS A GIANT HACK. Please remove once there's a framework for appstates
+	public static Camera camera;
 }
