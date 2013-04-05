@@ -7,7 +7,8 @@ import org.newdawn.slick.Graphics;
 import entities.Entity;
 
 public class Hook extends Entity {
-
+	private static final float SIZE = 10;
+	
 	private Hookshot hookshot;
 	/**
 	 * @param x
@@ -15,8 +16,8 @@ public class Hook extends Entity {
 	 * @param width
 	 * @param height
 	 */
-	public Hook(float x, float y, float width, float height) {
-		super(x, y, width, height, 0, 0, 1);
+	public Hook(float x, float y) {
+		super(x, y, SIZE, SIZE, 0, 0, 1);
 		setImage(Color.red);
 	}
 

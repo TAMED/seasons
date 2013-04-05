@@ -1,142 +1,126 @@
 package items;
 
+import input.Controls;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.joints.WeldJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Vector2f;
 
-import util.Direction;
+import util.Util;
 import entities.Player;
 
 public class Hookshot extends ItemBase {
 
-	private static float HOOK_VEL = 40f;
-	private static float PULL_VEL_BUFFER = 7f;
+	private static final float PULL_VEL_BUFFER = 7f;
+	// How far away from the player the hook starts when it is shot
+	private static final float STARTING_DIST = 100;
+	private static final float STARTING_VEL = 100;
+	// additional tolerance for deciding when to complete grapple
+	private static final float EPSILON = 2;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
 	private HookState state;
-	private int aiming; // values 0, 1, 2, 3, 4 correspond to up, up-out, out, down-out, down
 	
 	private Hook hook;
 	private WeldJointDef joint;
 	
 	public Hookshot(Player player) {
-		this.owner = player;
+		super(player);
 		state = HookState.IN;
-		aiming = 2;
 	}
 
 	@Override
 	public void render(Graphics graphics) {
-		super.render(graphics);
-		graphics.setColor(Color.white);
-		float x = owner.getPosition().getX();
-		float y = owner.getPosition().getY();
+		// draw hook
+		switch (state) {
+			case MOTION: case OUT: case PULL:
+				hook.render(graphics);
+				break;
+		}
 		
-		float diag = (float) Math.sqrt(2);
-		float yDirection = (owner.getFacing() == Direction.RIGHT) ? 100 : -100;
-		
-		/*if (aiming == 0) graphics.drawLine(x, y, x, y - 100);
-		if (aiming == 1) graphics.drawLine(x, y, x + yDirection/diag, y - 100/diag);
-		if (aiming == 2) graphics.drawLine(x, y, x + yDirection, y);
-		if (aiming == 3) graphics.drawLine(x, y, x + yDirection/diag, y + 100/diag);
-		if (aiming == 4) graphics.drawLine(x, y, x, y + 100);*/
-		
-		if (hook != null) {
-			hook.render(graphics);
+		// draw tether
+		switch (state) {
+			case OUT: case PULL:
+				graphics.setColor(Color.white);
+				graphics.drawLine(owner.getX(), owner.getY(), hook.getX(), hook.getY());
 		}
 	}
 	
 	@Override
 	public void update(GameContainer gc, int delta) {
-		super.update(gc, delta);
-		// Check for a collision of the hook with a wall
-		if (state == HookState.MOTION && !hook.sidesTouching().isEmpty()) {
-			state = HookState.OUT;
-			hook.getPhysicsBody().setActive(false);
-		}
-		
 		Input input = gc.getInput();
 		
-		if (input.isKeyPressed(Input.KEY_W) && (aiming != 0)) {
-			aiming--;
-		} else if (input.isKeyPressed(Input.KEY_S) && (aiming != 4)) {
-			aiming ++;
-		}
-		
-		if (input.isKeyPressed(Input.KEY_J) || input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			if (state == HookState.MOTION) {
-				//owner.world.destroyBody(hook.getPhysicsBody());
-				//spawnHook();
-			} else if (state == HookState.IN) {
-				spawnHook();
-				state = HookState.MOTION;
-			} else if (state == HookState.OUT) {
-				state = HookState.PULL;
-				float xDiff = hook.getX() - owner.getX();
-				float yDiff = hook.getY() - owner.getY();
-				owner.getPhysicsBody().setLinearVelocity(new Vec2(xDiff/PULL_VEL_BUFFER, yDiff/PULL_VEL_BUFFER));
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			switch (state) {
+				case IN:
+					spawnHook();
+					state = HookState.MOTION;
+					break;
+				case OUT:
+					state = HookState.PULL;
+					break;
 			}
 		}
 		
-		if (state == HookState.PULL) {
-			float xDiff = hook.getX() - owner.getX();
-			float yDiff = hook.getY() - owner.getY();
-			
-			// stop the hook pull if you are close enough to the hook OR the player stops moving (is blocked)
-			if ((Math.sqrt(xDiff*xDiff + yDiff*yDiff) < 30) || (owner.getPhysicsBody().getLinearVelocity().length() < 2)) {
-				owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
-				hook = null;
-				state = HookState.IN;
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+			switch (state) {
+				case OUT: case PULL:
+					hook.getPhysicsBody().getWorld().destroyBody(hook.getPhysicsBody());
+					hook = null;
+					state = HookState.IN;
+					break;
 			}
-			
-			owner.getPhysicsBody().setLinearVelocity(new Vec2(xDiff/PULL_VEL_BUFFER, yDiff/PULL_VEL_BUFFER));
+		}
+		
+		switch (state) {
+			case MOTION:
+				// check for collision with a wall
+				if (!hook.sidesTouching().isEmpty()) {
+					state = HookState.OUT;
+					hook.getPhysicsBody().setActive(false);
+				}
+				break;
+			case PULL:
+				Vector2f diff = new Vector2f(hook.getX() - owner.getX(), hook.getY() - owner.getY());
+				
+				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
+				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || (owner.getVelocity() < 2)) {
+					removeHook();
+					state = HookState.IN;
+				}
+				Vector2f vel = diff.copy().scale(1/PULL_VEL_BUFFER);
+				owner.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(vel));
+				break;
 		}
 	}
 
 	/**
-	 * creates a new Hook object and projects it in the direction of the aim
+	 * Creates a new Hook object and projects it in the direction of the aim
 	 */
 	private void spawnHook() {
 		float x = owner.getPosition().getX();
 		float y = owner.getPosition().getY();
-
-		float right = (owner.getFacing() == Direction.RIGHT) ? 1 : -1;
-		float diag = (float) (1/Math.sqrt(2));
+		Vector2f aim = new Vector2f(Controls.getAimAngle(owner));
+		Vector2f start = aim.copy().scale(STARTING_DIST);
 		
-		float playerRad = 100;
-		float hookSize = 10;
-		
-/*		if (aiming == 0) {
-			hook = new Hook(x, y - playerRad, hookSize, hookSize);
-			hook.addToWorld(owner.getPhysicsWorld());
-			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, -HOOK_VEL));
-		} else if (aiming == 1) {
-			hook = new Hook(x + playerRad*diag*right, y - playerRad*diag, hookSize, hookSize);
-			hook.addToWorld(owner.getPhysicsWorld());
-			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, -HOOK_VEL*diag));
-		} else if (aiming == 2) {
-			hook = new Hook(x + playerRad*right, y, hookSize, hookSize);
-			hook.addToWorld(owner.getPhysicsWorld());
-			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*right, 0));
-		} else if (aiming == 3) {
-			hook = new Hook(x + playerRad*diag*right, y + playerRad*diag, hookSize, hookSize);
-			hook.addToWorld(owner.getPhysicsWorld());
-			hook.getPhysicsBody().setLinearVelocity(new Vec2(HOOK_VEL*diag*right, HOOK_VEL*diag));
-		} else if (aiming == 4) {
-			hook = new Hook(x, y + playerRad*diag, hookSize, hookSize);
-			hook.addToWorld(owner.getPhysicsWorld());
-			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, HOOK_VEL));
-		}*/
-		
-		hook = new Hook(owner.getPosition().getX() + aim.x, owner.getPosition().getY() + aim.y, hookSize, hookSize);
+		hook = new Hook(x + start.x, y + start.y);
 		hook.addToWorld(owner.getPhysicsWorld());
-		hook.getPhysicsBody().setLinearVelocity(aim);
+		hook.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(aim.copy().scale(STARTING_VEL)));
 		
 		hook.getPhysicsBody().getFixtureList().setFriction(10000);
+	}
+
+	/**
+	 * Removes the Hook object
+	 */
+	private void removeHook() {
+		owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
+		hook = null;
 	}
 
 	@Override

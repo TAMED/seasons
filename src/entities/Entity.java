@@ -155,6 +155,13 @@ public abstract class Entity extends Sprite {
 	}
 	
 	/**
+	 * @return the entity's linear velocity
+	 */
+	public float getVelocity() {
+		return physicsBody.getLinearVelocity().length();
+	}
+	
+	/**
 	 * @return the entity's current hp
 	 */
 	public int getHp() {

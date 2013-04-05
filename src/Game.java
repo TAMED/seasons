@@ -1,3 +1,5 @@
+import input.Controls;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,12 +16,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import ui.Cursor;
 import util.Box2DDebugDraw;
 import camera.Camera;
 
 import combat.CombatContact;
-import config.Config;
 
+import config.Config;
 import entities.Player;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
@@ -46,6 +49,7 @@ public class Game extends BasicGame {
 	private Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	private static Camera camera;
+	private Cursor cursor;
 
 	/**
 	 * @param title
@@ -86,25 +90,29 @@ public class Game extends BasicGame {
 	 * @see org.newdawn.slick.Game#render(org.newdawn.slick.GameContainer, org.newdawn.slick.Graphics)
 	 */
 	@Override
-	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
+	public void render(GameContainer gc, Graphics graphics) throws SlickException {
 		//testMap.render();
 		camera.drawMap();
 		camera.translateGraphics();
 		if (viewDebug) {
-			debugdraw.setGraphics(arg1);
+			debugdraw.setGraphics(graphics);
 			testWorld.drawDebugData();
 		}
-		player.render(arg1);
+		player.render(graphics);
 		for (Enemy e : enemies) {
-			e.render(arg1);			
+			e.render(graphics);			
 		}
+		
+		cursor.render(graphics);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.newdawn.slick.BasicGame#init(org.newdawn.slick.GameContainer)
 	 */
 	@Override
-	public void init(GameContainer arg0) throws SlickException {
+	public void init(GameContainer gc) throws SlickException {
+		Controls.setGC(gc);
+		
 		gravity = new Vec2(0,10);
 		testWorld = new World(gravity);
 		
@@ -126,8 +134,10 @@ public class Game extends BasicGame {
 		ent1.addToWorld(testWorld);
 		enemies.add(ent1);
 		
-		camera = new Camera(arg0, testMap.getTiledMap());
+		camera = new Camera(gc, testMap.getTiledMap());
 		Config.camera = camera;
+		
+		cursor = new Cursor(player);
 	}
 
 	/* (non-Javadoc)
@@ -153,6 +163,8 @@ public class Game extends BasicGame {
 
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
 		camera.centerOn(player.getX(),player.getY());
+		
+		cursor.update(gc, delta);
 	}
 
 	/**
