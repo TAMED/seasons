@@ -1,6 +1,7 @@
 package camera;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -98,6 +99,13 @@ public class Camera {
    }
    
    /**
+ * @return the camera's location
+ */
+public Point getPosition() {
+	return new Point(cameraX, cameraY);
+}
+
+/**
     * draws the part of the map which is currently focussed by the camera on the screen
     */
    public void drawMap() {
