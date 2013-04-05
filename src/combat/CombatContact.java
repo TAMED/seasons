@@ -35,17 +35,17 @@ public class CombatContact implements ContactListener {
 		
 		if (fixA instanceof Player && fixB instanceof Enemy) {
 			if (((Player) fixA).isAttacking()) {
-				((Enemy) fixB).kill();
+				((Enemy) fixB).damage();
 			} else {
-				((Player) fixA).kill();
+				((Player) fixA).damage();
 			}
 		}
 		
 		if (fixB instanceof Player && fixA instanceof Enemy) {
 			if (((Player) fixB).isAttacking()) {
-				((Enemy) fixA).kill();
+				((Enemy) fixA).damage();
 			} else {
-				((Player) fixB).kill();
+				((Player) fixB).damage();
 			}
 		}
 	}

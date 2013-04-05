@@ -22,8 +22,8 @@ public class Enemy extends Entity {
 	 * @param width
 	 * @param height
 	 */
-	public Enemy(float x, float y, float width, float height, float runSpeed, float jmpSpeed, AI ai) {
-		super(x, y, width, height, runSpeed, jmpSpeed);
+	public Enemy(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp, AI ai) {
+		super(x, y, width, height, runSpeed, jmpSpeed, maxHp);
 		this.ai = ai;
 		setImage(Color.red);
 	}

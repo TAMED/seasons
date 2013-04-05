@@ -37,9 +37,11 @@ public abstract class Entity extends Sprite {
 	private float runSpeed;
 	private float jmpSpeed;
 	
+	public final int maxHp;
+	private int hp;
 	private boolean alive;
 
-	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed) {
+	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp) {
 		super(x, y, width, height);
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
@@ -73,6 +75,8 @@ public abstract class Entity extends Sprite {
 		this.runSpeed = runSpeed;
 		this.jmpSpeed = jmpSpeed;
 		
+		this.maxHp = maxHp;
+		this.hp = maxHp;
 		this.alive = true;
 	}
 	
@@ -150,12 +154,48 @@ public abstract class Entity extends Sprite {
 		return physicsFixture;
 	}
 	
+	/**
+	 * @return the entity's current hp
+	 */
+	public int getHp() {
+		return hp;
+	}
+
+	/**
+	 * @param deal damage to the entity
+	 */
+	public void damage(int points) {
+		this.hp = Math.max(0, hp - points);
+	}
+
+	/**
+	 * @param deal 1 point of damage to the entity
+	 */
+	public void damage() {
+		damage(1);
+	}
+
+	/**
+	 * @param heal the entity
+	 */
+	public void heal(int points) {
+		this.hp = Math.min(maxHp, hp + points);
+	}
+
+	/**
+	 * @param heal the entity to full health
+	 */
+	public void heal() {
+		heal(maxHp);
+	}
+
 	public boolean isAlive() {
 		return alive;
 	}
 	
 	public void kill() {
 		alive = false;
+		physicsBody.setActive(false);
 	}
 
 	/**

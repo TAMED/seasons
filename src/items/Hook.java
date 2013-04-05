@@ -16,7 +16,7 @@ public class Hook extends Entity {
 	 * @param height
 	 */
 	public Hook(float x, float y, float width, float height) {
-		super(x, y, width, height, 0, 0);
+		super(x, y, width, height, 0, 0, 1);
 		setImage(Color.red);
 	}
 

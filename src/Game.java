@@ -115,9 +115,6 @@ public class Game extends BasicGame {
 		debugdraw.setFlags(DebugDraw.e_shapeBit);
 		testWorld.setDebugDraw(debugdraw);
 		
-		// tiles should eventually have their own class that's similar to Entity
-		// but for now, it's a Player, whatever
-		
 		player = new Player(400, 100, 32, 72);
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
@@ -143,10 +140,11 @@ public class Game extends BasicGame {
 		
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
 			Enemy e = it.next();
-			if (e.isAlive()) {
+			if (e.getHp() > 0) {
 				e.update(gc, delta);
 			} else {
 				it.remove();
+				e.kill();
 			}
 		}
 
