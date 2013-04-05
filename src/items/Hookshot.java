@@ -54,6 +54,7 @@ public class Hookshot extends ItemBase {
 	@Override
 	public void update(GameContainer gc, int delta) {
 		Input input = gc.getInput();
+		boolean startPull = false;
 		
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			switch (state) {
@@ -62,6 +63,7 @@ public class Hookshot extends ItemBase {
 					state = HookState.MOTION;
 					break;
 				case OUT:
+					startPull = true;
 					state = HookState.PULL;
 					break;
 			}
@@ -89,7 +91,7 @@ public class Hookshot extends ItemBase {
 				Vector2f diff = new Vector2f(hook.getX() - owner.getX(), hook.getY() - owner.getY());
 				
 				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
-				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || (owner.getVelocity() < 2)) {
+				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 2) && !startPull)) {
 					removeHook();
 					state = HookState.IN;
 				}
