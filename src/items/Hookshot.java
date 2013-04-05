@@ -31,6 +31,7 @@ public class Hookshot extends ItemBase {
 
 	@Override
 	public void render(Graphics graphics) {
+		super.render(graphics);
 		graphics.setColor(Color.white);
 		float x = owner.getPosition().getX();
 		float y = owner.getPosition().getY();
@@ -38,11 +39,11 @@ public class Hookshot extends ItemBase {
 		float diag = (float) Math.sqrt(2);
 		float yDirection = (owner.getFacing() == Direction.RIGHT) ? 100 : -100;
 		
-		if (aiming == 0) graphics.drawLine(x, y, x, y - 100);
+		/*if (aiming == 0) graphics.drawLine(x, y, x, y - 100);
 		if (aiming == 1) graphics.drawLine(x, y, x + yDirection/diag, y - 100/diag);
 		if (aiming == 2) graphics.drawLine(x, y, x + yDirection, y);
 		if (aiming == 3) graphics.drawLine(x, y, x + yDirection/diag, y + 100/diag);
-		if (aiming == 4) graphics.drawLine(x, y, x, y + 100);
+		if (aiming == 4) graphics.drawLine(x, y, x, y + 100);*/
 		
 		if (hook != null) {
 			hook.render(graphics);
@@ -50,7 +51,8 @@ public class Hookshot extends ItemBase {
 	}
 	
 	@Override
-	public void update(GameContainer gc, int delta) {		
+	public void update(GameContainer gc, int delta) {
+		super.update(gc, delta);
 		// Check for a collision of the hook with a wall
 		if (state == HookState.MOTION && !hook.sidesTouching().isEmpty()) {
 			state = HookState.OUT;
@@ -65,7 +67,7 @@ public class Hookshot extends ItemBase {
 			aiming ++;
 		}
 		
-		if (input.isKeyPressed(Input.KEY_J)) {
+		if (input.isKeyPressed(Input.KEY_J) || input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			if (state == HookState.MOTION) {
 				//owner.world.destroyBody(hook.getPhysicsBody());
 				//spawnHook();
@@ -108,7 +110,7 @@ public class Hookshot extends ItemBase {
 		float playerRad = 100;
 		float hookSize = 10;
 		
-		if (aiming == 0) {
+/*		if (aiming == 0) {
 			hook = new Hook(x, y - playerRad, hookSize, hookSize);
 			hook.addToWorld(owner.getPhysicsWorld());
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, -HOOK_VEL));
@@ -128,7 +130,11 @@ public class Hookshot extends ItemBase {
 			hook = new Hook(x, y + playerRad*diag, hookSize, hookSize);
 			hook.addToWorld(owner.getPhysicsWorld());
 			hook.getPhysicsBody().setLinearVelocity(new Vec2(0, HOOK_VEL));
-		}
+		}*/
+		
+		hook = new Hook(owner.getPosition().getX() + aim.x, owner.getPosition().getY() + aim.y, hookSize, hookSize);
+		hook.addToWorld(owner.getPhysicsWorld());
+		hook.getPhysicsBody().setLinearVelocity(aim);
 		
 		hook.getPhysicsBody().getFixtureList().setFriction(10000);
 	}
