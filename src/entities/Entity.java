@@ -3,6 +3,7 @@
  */
 package entities;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -206,7 +207,7 @@ public abstract class Entity extends Sprite {
 	}
 
 	/**
-	 * @return whether or not the given side of the entity is touching an object
+	 * @return whether or not the given side of the entity is touching another body
 	 */
 	public final boolean isTouching(Direction side) {
 		ContactEdge contactEdge = physicsBody.getContactList();
@@ -225,7 +226,7 @@ public abstract class Entity extends Sprite {
 	}
 	
 	/**
-	 * @return whether or not the given side of the entity is touching an object
+	 * @return a set containing the sides of the entity that are touching another both
 	 */
 	public final EnumSet<Direction> sidesTouching() {
 		EnumSet<Direction> touching = EnumSet.noneOf(Direction.class);
@@ -242,6 +243,23 @@ public abstract class Entity extends Sprite {
 		}
 		
 		return touching;
+	}
+	
+	/**
+	 * @return a list of bodies touching the object
+	 */
+	public final ArrayList<Body> bodiesTouching() {
+		ArrayList<Body> list = new ArrayList<Body>();
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				list.add(contactEdge.contact.getFixtureA().getBody());
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		return list;
 	}
 
 }

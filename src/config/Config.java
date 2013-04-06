@@ -17,11 +17,12 @@ public class Config {
 	public static final int TILE_HEIGHT = 32;
 	
 	// Player
-	public static final float PLAYER_MOVE_SPEED = 8f;
-	public static final float PLAYER_JUMP_SPEED = 8f;
-	public static final int PLAYER_MAX_HP = 0;
+	public static final float PLAYER_MOVE_SPEED = 8;
+	public static final float PLAYER_JUMP_SPEED = 8;
+	public static final int PLAYER_MAX_HP = 1;
 	
 	// Movement
+	public static final float GRAVITY = 10;
 	public static final float DRAG = 0.5f;
 	
 	// UI

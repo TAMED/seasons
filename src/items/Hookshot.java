@@ -3,7 +3,9 @@ package items;
 import input.Controls;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.joints.WeldJointDef;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.joints.Joint;
+import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -15,10 +17,11 @@ import entities.Player;
 
 public class Hookshot extends ItemBase {
 
-	private static final float PULL_VEL_BUFFER = 7f;
-	// How far away from the player the hook starts when it is shot
+	// how far away from the player the hook starts when it is shot
 	private static final float STARTING_DIST = 100;
 	private static final float STARTING_VEL = 100;
+	// spring constant for grappling
+	private static final float K = 5;
 	// additional tolerance for deciding when to complete grapple
 	private static final float EPSILON = 2;
 	
@@ -27,7 +30,7 @@ public class Hookshot extends ItemBase {
 	private HookState state;
 	
 	private Hook hook;
-	private WeldJointDef joint;
+	private Joint tether;
 	
 	public Hookshot(Player player) {
 		super(player);
@@ -53,6 +56,8 @@ public class Hookshot extends ItemBase {
 	
 	@Override
 	public void update(GameContainer gc, int delta) {
+		if (hook != null) hook.update(gc, delta);
+		
 		Input input = gc.getInput();
 		boolean startPull = false;
 		
@@ -63,6 +68,7 @@ public class Hookshot extends ItemBase {
 					state = HookState.MOTION;
 					break;
 				case OUT:
+					detachTether();
 					startPull = true;
 					state = HookState.PULL;
 					break;
@@ -72,31 +78,53 @@ public class Hookshot extends ItemBase {
 		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
 			switch (state) {
 				case OUT: case PULL:
-					hook.getPhysicsBody().getWorld().destroyBody(hook.getPhysicsBody());
-					hook = null;
+					removeHook();
+					detachTether();
 					state = HookState.IN;
 					break;
 			}
 		}
 		
 		switch (state) {
+			case OUT:
+//				Vec2 v1 = new Vec2();
+//				tether.getAnchorA(v1);
+//				Vec2 v2 = new Vec2();
+//				tether.getAnchorB(v2);
+//				Vec2 d = v2.sub(v1);
+//				System.out.println(d.length());
+				break;
 			case MOTION:
 				// check for collision with a wall
-				if (!hook.sidesTouching().isEmpty()) {
+				if (hook.isAttached()) {
 					state = HookState.OUT;
-					hook.getPhysicsBody().setActive(false);
+					attachTether();
 				}
 				break;
 			case PULL:
 				Vector2f diff = new Vector2f(hook.getX() - owner.getX(), hook.getY() - owner.getY());
-				
 				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
-				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 2) && !startPull)) {
+				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
 					removeHook();
 					state = HookState.IN;
+					break;
 				}
-				Vector2f vel = diff.copy().scale(1/PULL_VEL_BUFFER);
-				owner.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(vel));
+				
+				Body b1 = owner.getPhysicsBody();
+				Body b2 = hook.getPhysicsBody();
+				Vec2 dist = b2.getPosition().sub(b1.getPosition());
+				
+				// force-based movement (try K=50)
+//				b1.applyForceToCenter(dist.mul(K));
+//				b2.applyForceToCenter(dist.mul(-K));
+				
+				// impulse-based movement (try K=1)
+//				b1.applyLinearImpulse(dist.mul(K), b1.getPosition());
+//				b2.applyLinearImpulse(dist.mul(-K), b2.getPosition());
+				
+				// simple movement (try K=5)
+				b1.setLinearVelocity(dist.mul(K));
+				b2.setLinearVelocity(dist.mul(-K));
 				break;
 		}
 	}
@@ -113,8 +141,6 @@ public class Hookshot extends ItemBase {
 		hook = new Hook(x + start.x, y + start.y);
 		hook.addToWorld(owner.getPhysicsWorld());
 		hook.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(aim.copy().scale(STARTING_VEL)));
-		
-		hook.getPhysicsBody().getFixtureList().setFriction(10000);
 	}
 
 	/**
@@ -123,6 +149,27 @@ public class Hookshot extends ItemBase {
 	private void removeHook() {
 		owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
 		hook = null;
+	}
+
+	private void attachTether() {
+		Body b1 = owner.getPhysicsBody();
+		Body b2 = hook.getPhysicsBody();
+		Vec2 zero = new Vec2(0,0);
+		RopeJointDef tetherDef = new RopeJointDef();
+		tetherDef.bodyA = b1;
+		tetherDef.bodyB = b2;
+		tetherDef.localAnchorA.set(zero);
+		tetherDef.localAnchorB.set(zero);
+		tetherDef.maxLength = b1.getPosition().sub(b2.getPosition()).length();
+		System.out.println("Max Length: " + tetherDef.maxLength);
+		tether = owner.getPhysicsWorld().createJoint(tetherDef);
+	}
+
+	private void detachTether() {
+		if (tether != null) {
+			Joint.destroy(tether);
+			tether = null;
+		}
 	}
 
 	@Override

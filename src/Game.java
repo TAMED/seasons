@@ -113,7 +113,7 @@ public class Game extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		Controls.setGC(gc);
 		
-		gravity = new Vec2(0,10);
+		gravity = new Vec2(0,Config.GRAVITY);
 		testWorld = new World(gravity);
 		
 		testWorld.setContactListener(new CombatContact());
@@ -146,7 +146,7 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc);
-		if (!player.isAlive()) init(gc);
+		if (player.getHp() <= 0) init(gc);
 		
 		testWorld.step(delta/1000f, velocityIterations, positionIterations);
 		player.update(gc, delta);
