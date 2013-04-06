@@ -1,3 +1,5 @@
+import input.Controls;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,12 +16,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import ui.Cursor;
 import util.Box2DDebugDraw;
 import camera.Camera;
 
 import combat.CombatContact;
-import config.Config;
 
+import config.Config;
 import entities.Player;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
@@ -46,6 +49,7 @@ public class Game extends BasicGame {
 	private Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	private static Camera camera;
+	private Cursor cursor;
 
 	/**
 	 * @param title
@@ -86,26 +90,30 @@ public class Game extends BasicGame {
 	 * @see org.newdawn.slick.Game#render(org.newdawn.slick.GameContainer, org.newdawn.slick.Graphics)
 	 */
 	@Override
-	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
+	public void render(GameContainer gc, Graphics graphics) throws SlickException {
 		//testMap.render();
 		camera.drawMap();
 		camera.translateGraphics();
 		if (viewDebug) {
-			debugdraw.setGraphics(arg1);
+			debugdraw.setGraphics(graphics);
 			testWorld.drawDebugData();
 		}
-		player.render(arg1);
+		player.render(graphics);
 		for (Enemy e : enemies) {
-			e.render(arg1);			
+			e.render(graphics);			
 		}
+		
+		cursor.render(graphics);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.newdawn.slick.BasicGame#init(org.newdawn.slick.GameContainer)
 	 */
 	@Override
-	public void init(GameContainer arg0) throws SlickException {
-		gravity = new Vec2(0,10);
+	public void init(GameContainer gc) throws SlickException {
+		Controls.setGC(gc);
+		
+		gravity = new Vec2(0,Config.GRAVITY);
 		testWorld = new World(gravity);
 		
 		testWorld.setContactListener(new CombatContact());
@@ -117,9 +125,6 @@ public class Game extends BasicGame {
 		debugdraw.setFlags(DebugDraw.e_shapeBit);
 		testWorld.setDebugDraw(debugdraw);
 		
-		// tiles should eventually have their own class that's similar to Entity
-		// but for now, it's a Player, whatever
-		
 		player = new Player(400, 100, 32, 72);
 		player.getPhysicsBodyDef().allowSleep = false;
 		player.addToWorld(testWorld);
@@ -129,8 +134,10 @@ public class Game extends BasicGame {
 		ent1.addToWorld(testWorld);
 		enemies.add(ent1);
 		
-		camera = new Camera(arg0, testMap.getTiledMap());
+		camera = new Camera(gc, testMap.getTiledMap());
 		Config.camera = camera;
+		
+		cursor = new Cursor(player);
 	}
 
 	/* (non-Javadoc)
@@ -139,22 +146,25 @@ public class Game extends BasicGame {
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc);
-		if (!player.isAlive()) init(gc);
+		if (player.getHp() <= 0) init(gc);
 		
 		testWorld.step(delta/1000f, velocityIterations, positionIterations);
 		player.update(gc, delta);
 		
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
 			Enemy e = it.next();
-			if (e.isAlive()) {
+			if (e.getHp() > 0) {
 				e.update(gc, delta);
 			} else {
 				it.remove();
+				e.kill();
 			}
 		}
 
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
 		camera.centerOn(player.getX(),player.getY());
+		
+		cursor.update(gc, delta);
 	}
 
 	/**

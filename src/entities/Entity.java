@@ -3,6 +3,7 @@
  */
 package entities;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -37,9 +38,11 @@ public abstract class Entity extends Sprite {
 	private float runSpeed;
 	private float jmpSpeed;
 	
+	public final int maxHp;
+	private int hp;
 	private boolean alive;
 
-	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed) {
+	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp) {
 		super(x, y, width, height);
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
@@ -73,6 +76,8 @@ public abstract class Entity extends Sprite {
 		this.runSpeed = runSpeed;
 		this.jmpSpeed = jmpSpeed;
 		
+		this.maxHp = maxHp;
+		this.hp = maxHp;
 		this.alive = true;
 	}
 	
@@ -150,16 +155,59 @@ public abstract class Entity extends Sprite {
 		return physicsFixture;
 	}
 	
+	/**
+	 * @return the entity's linear velocity
+	 */
+	public float getVelocity() {
+		return physicsBody.getLinearVelocity().length();
+	}
+	
+	/**
+	 * @return the entity's current hp
+	 */
+	public int getHp() {
+		return hp;
+	}
+
+	/**
+	 * @param deal damage to the entity
+	 */
+	public void damage(int points) {
+		this.hp = Math.max(0, hp - points);
+	}
+
+	/**
+	 * @param deal 1 point of damage to the entity
+	 */
+	public void damage() {
+		damage(1);
+	}
+
+	/**
+	 * @param heal the entity
+	 */
+	public void heal(int points) {
+		this.hp = Math.min(maxHp, hp + points);
+	}
+
+	/**
+	 * @param heal the entity to full health
+	 */
+	public void heal() {
+		heal(maxHp);
+	}
+
 	public boolean isAlive() {
 		return alive;
 	}
 	
 	public void kill() {
 		alive = false;
+		physicsBody.setActive(false);
 	}
 
 	/**
-	 * @return whether or not the given side of the entity is touching an object
+	 * @return whether or not the given side of the entity is touching another body
 	 */
 	public final boolean isTouching(Direction side) {
 		ContactEdge contactEdge = physicsBody.getContactList();
@@ -178,7 +226,7 @@ public abstract class Entity extends Sprite {
 	}
 	
 	/**
-	 * @return whether or not the given side of the entity is touching an object
+	 * @return a set containing the sides of the entity that are touching another both
 	 */
 	public final EnumSet<Direction> sidesTouching() {
 		EnumSet<Direction> touching = EnumSet.noneOf(Direction.class);
@@ -195,6 +243,23 @@ public abstract class Entity extends Sprite {
 		}
 		
 		return touching;
+	}
+	
+	/**
+	 * @return a list of bodies touching the object
+	 */
+	public final ArrayList<Body> bodiesTouching() {
+		ArrayList<Body> list = new ArrayList<Body>();
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				list.add(contactEdge.contact.getFixtureA().getBody());
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		return list;
 	}
 
 }

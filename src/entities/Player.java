@@ -22,7 +22,7 @@ public class Player extends Entity {
 	private ItemBase[] items = new ItemBase[2];
 
 	public Player(float x, float y, float width, float height) {
-		super(x, y, width, height, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED);
+		super(x, y, width, height, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP);
 		
 		try {
 			setImage(new Image("assets/images/shaman1.png"));

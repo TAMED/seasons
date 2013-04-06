@@ -9,6 +9,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Vector2f;
 
 import config.Config;
 
@@ -97,6 +98,27 @@ public class Sprite {
 	}
 
 	/**
+	 * @return the width
+	 */
+	public float getWidth() {
+		return width;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public float getHeight() {
+		return height;
+	}
+
+	/**
+	 * @return the maximum dimension of the sprite
+	 */
+	public float getMaxDim() {
+		return Math.max(width, height);
+	}
+
+	/**
 	 * @return the position
 	 */
 	public Point getPosition() {
@@ -138,6 +160,13 @@ public class Sprite {
 	 */
 	public final void setPosition(Point position) {
 		setPosition(position.getX(), position.getY());
+	}
+
+	/**
+	 * @param vec the position to set
+	 */
+	public final void setPosition(Vector2f vec) {
+		setPosition(vec.x, vec.y);
 	}
 
 	/**
