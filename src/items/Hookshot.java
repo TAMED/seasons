@@ -161,7 +161,7 @@ public class Hookshot extends ItemBase {
 		tetherDef.localAnchorA.set(zero);
 		tetherDef.localAnchorB.set(zero);
 		tetherDef.maxLength = b1.getPosition().sub(b2.getPosition()).length();
-		System.out.println("Max Length: " + tetherDef.maxLength);
+		//System.out.println("Max Length: " + tetherDef.maxLength);
 		tether = owner.getPhysicsWorld().createJoint(tetherDef);
 	}
 
