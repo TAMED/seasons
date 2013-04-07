@@ -118,7 +118,7 @@ public class Game extends BasicGame {
 		
 		testWorld.setContactListener(new CombatContact());
 		
-		testMap = new Map("assets/maps/tiledtest.tmx", testWorld);
+		testMap = new Map("assets/maps/slopetest.tmx", testWorld);
 		testMap.parseMapObjects();		
 		
 		debugdraw = new Box2DDebugDraw();
