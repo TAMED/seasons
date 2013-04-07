@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
+import states.LevelState;
 import util.Util;
 import config.Config;
 import entities.Player;
@@ -40,7 +41,7 @@ public class Cursor extends Sprite {
 		super.update(gc, delta);
 		Vector2f mouse = new Vector2f(gc.getInput().getAbsoluteMouseX(), 
 		                  gc.getInput().getAbsoluteMouseY());
-		Vector2f cam = Util.PointToVector2f(Config.camera.getPosition());
+		Vector2f cam = Util.PointToVector2f(LevelState.getCamera().getPosition());
 		Vector2f p = Util.PointToVector2f(player.getPosition());
 		
 		Vector2f aim = mouse.add(cam).sub(p);

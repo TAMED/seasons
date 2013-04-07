@@ -1,5 +1,7 @@
 package map;
 
+import java.util.ArrayList;
+
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -11,6 +13,8 @@ import org.newdawn.slick.tiled.TiledMap;
 import util.Corner;
 
 import config.Config;
+import entities.enemies.Enemy;
+import entities.enemies.Ent;
 
 public class Map {
 	TiledMap foreground;
@@ -19,6 +23,8 @@ public class Map {
 	private int width;
 	private int tileHeight;
 	private int tileWidth;
+	private ArrayList<Enemy> enemies;
+	private Vec2 playerLoc;
 	
 	public Map(String tmxMap, World world) throws SlickException {
 		foreground = new TiledMap(tmxMap);
@@ -27,15 +33,39 @@ public class Map {
 		width = foreground.getWidth();
 		tileHeight = foreground.getTileHeight();
 		tileWidth = foreground.getTileWidth();
+		enemies = new ArrayList<Enemy>();
 	}
 	public void parseMapObjects() {
 		parseWallObjects();
 		parseSlopeObjects();
-		//parseEntityObjects();
+		parseEntityObjects();
 	}
 	
 	/**
-	 * Create a triangle around each slope.
+	 * Figure out where the player/enemies/etc are
+	 */
+	private void parseEntityObjects() {
+		for(int j = 0; j < height; j++) {
+			for(int i = 0; i < width; i++) {
+				int tileId = foreground.getTileId(i, j, 0);
+				String tileType = foreground.getTileProperty(tileId, "type", "meh");
+				if (tileType.equals("enemy")) {
+					String enemyType = foreground.getTileProperty(tileId, "enemyType", "none");
+					if (enemyType.equals("ent")) {
+						Vec2 center = getPixelCenter(i,j);
+						Enemy ent = new Ent(center.x, center.y);
+						enemies.add(ent);
+					}
+				}
+				if (tileType.equals("player")) {
+					playerLoc = getPixelCenter(i,j);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Create a triangle around each slope
 	 * Each slope must have a start and end point, 
 	 * the start point being the one that is the base of the triangle
 	 */
@@ -218,12 +248,25 @@ public class Map {
 		return corners;
 	}
 	
+	private Vec2 getPixelCenter(int x, int y) {
+		return new Vec2((x+.5f)*tileWidth,
+                (y+.5f)*tileHeight);
+	}
+	
 	private void createLine(Vec2 v1, Vec2 v2) {
 		EdgeShape edge = new EdgeShape();
 		edge.set(v1, v2);
 		BodyDef lineDef = new BodyDef();
 		Body line = world.createBody(lineDef);
 		line.createFixture(edge, Config.DEFAULT_DENSITY);
+	}
+	
+	public ArrayList<Enemy> getEnemies() {
+		return this.enemies;
+	}
+	
+	public Vec2 getPlayerLoc() {
+		return playerLoc;
 	}
 	
 	public TiledMap getTiledMap() {

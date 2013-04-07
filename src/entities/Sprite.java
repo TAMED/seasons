@@ -11,8 +11,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 
-import config.Config;
-
+import states.LevelState;
 import util.Direction;
 
 /**
@@ -129,7 +128,7 @@ public class Sprite {
 	 * @return the position on the sprite, relative to the screen
 	 */
 	public Point getScreenPosition() {
-		Point cam = Config.camera.getPosition();
+		Point cam = LevelState.getCamera().getPosition();
 		return new Point(getX() - cam.getX(), getY() - cam.getY());
 	}
 
