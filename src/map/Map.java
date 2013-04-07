@@ -65,7 +65,7 @@ public class Map {
 	}
 	
 	/**
-	 * Create a triangle around each slope.
+	 * Create a triangle around each slope
 	 * Each slope must have a start and end point, 
 	 * the start point being the one that is the base of the triangle
 	 */
