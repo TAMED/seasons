@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="60" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="rocks" tilewidth="32" tileheight="32">
+  <image source="../rocks.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="angle" value="2"/>
+    <property name="endpoint" value="end"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="60" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztldkKhTAMROu+///vOo+laEyrwZRk4LyFcQ54r20IoTXGm0h25+7g3Hy5yZpv2mvFV7r77nmcG8lNf/pq+E+RjPvq8JX6frmvDt80mn0HMIKJcTuDBayMnVp941y5cx2pXaXx97lOX+5m963TN6eH6nVfOgfYwfZw14AO9Bk7NfrGSd1zHaldpZHwpTpKe6V+W+5r19cSJ3R/A+M=
+  </data>
+ </layer>
+</map>
