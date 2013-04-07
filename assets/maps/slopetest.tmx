@@ -78,10 +78,21 @@
     <property name="type" value="slope"/>
    </properties>
   </tile>
+  <tile id="14">
+   <properties>
+    <property name="enemyType" value="ent"/>
+    <property name="type" value="enemy"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="type" value="player"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="60" height="24">
   <data encoding="base64" compression="zlib">
-   eJztldkKhTAMROu+///vOo+laEyrwZRk4LyFcQ54r20IoTXGm0h25+7g3Hy5yZpv2mvFV7r77nmcG8lNf/pq+E+RjPvq8JX6frmvDt80mn0HMIKJcTuDBayMnVp941y5cx2pXaXx97lOX+5m963TN6eH6nVfOgfYwfZw14AO9Bk7NfrGSd1zHaldpZHwpTpKe6V+W+5r19cSJ3R/A+M=
+   eJztlckOgDAIROu+R///a+XYNBVpFUOFSeZGhnlJl9o5VyvzE3Fmp/agzLzZSRPvEcn9M++X2Vf7KDOcnajZO8MuCW8Kp4xXBi/X/2W8MnhDSebtwD14IMyO4Ak8E3pK5fUVY6cyYr1yZee5TF5qZ+MtkzclB8s1XlwbeAUvN3MVuAG3CT0l8voK2VMZsV654uDFMnJzue6W8erl1eQTrpEEAg==
   </data>
  </layer>
 </map>

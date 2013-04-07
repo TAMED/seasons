@@ -1,6 +1,5 @@
 package config;
 
-import camera.Camera;
 
 public class Config {
 	
@@ -10,6 +9,8 @@ public class Config {
 	public static final float PIXELS_PER_METER = 32;
 	public static final float DEFAULT_DENSITY = 1f;
 	public static final float DEFAULT_FRICTION = 0.0001f;
+	public static final int VELOCITY_ITERATIONS = 6;
+	public static final int POSITION_ITERATIONS = 2;
 	
 	// Map parsing
 	public static final int[] WALL_IDS = {2};
@@ -29,7 +30,4 @@ public class Config {
 	// how far away from the player the aiming cursor appears
 	public static final float CURSOR_DIST = 100;
 	public static final int CURSOR_SIZE = 10;
-	
-	// THIS IS A GIANT HACK. Please remove once there's a framework for appstates
-	public static Camera camera;
 }

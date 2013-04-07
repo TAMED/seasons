@@ -3,7 +3,6 @@ package items;
 import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.jbox2d.dynamics.joints.Joint;
 import org.newdawn.slick.Color;
