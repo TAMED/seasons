@@ -1,12 +1,13 @@
 package main;
 import java.lang.reflect.Field;
 
-import level.LevelState;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import states.LevelState;
 
 import entities.Player;
 
@@ -21,15 +22,10 @@ import entities.Player;
 public class MainGame extends StateBasedGame {
 	public static Player player;
 	
-	
-	/**
-	 * @param title
-	 */
 	public MainGame(String title) {
 		super(title);
 	}
 	
-	// TODO this is temporary: should be moved to a separate class, use constants, etc.
 	public static void main(String[] arguments) {
 		
 		String os = System.getProperty("os.name").toLowerCase();
@@ -62,10 +58,8 @@ public class MainGame extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		player = new Player(0, 0, 32, 72);
-		player.getPhysicsBodyDef().allowSleep = false;
+		player = new Player(32, 72);
 		addState(new LevelState("assets/maps/slopetest.tmx",0));
-		
 	}
 
 }

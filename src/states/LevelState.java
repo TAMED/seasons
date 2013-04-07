@@ -1,4 +1,4 @@
-package level;
+package states;
 
 import input.Controls;
 
@@ -35,8 +35,6 @@ public class LevelState extends BasicGameState{
 	private Map map;
 	private Vec2 gravity;
 	private World world;
-	private int velocityIterations = 6;
-	private int positionIterations = 2;
 	private Player player;
 	private ArrayList<Enemy> enemies;
 	private Box2DDebugDraw debugdraw;
@@ -77,8 +75,6 @@ public class LevelState extends BasicGameState{
 		}
 		
 		camera = new Camera(gc, map.getTiledMap());
-		Config.camera = camera;
-		
 		cursor = new Cursor(player);
 	}
 
@@ -106,7 +102,7 @@ public class LevelState extends BasicGameState{
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc, game);
 		if (player.getHp() <= 0) init(gc, game);
 		
-		world.step(delta/1000f, velocityIterations, positionIterations);
+		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
 		player.update(gc, delta);
 		
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {

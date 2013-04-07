@@ -1,6 +1,5 @@
 package map;
 
-import util.Corner;
 
 public class SlopeReturn {
 	public int i;
