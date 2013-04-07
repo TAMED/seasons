@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="60" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="rocks" tilewidth="32" tileheight="32">
+  <image source="../rocks.png" width="128" height="128"/>
+  <tile id="0">
+   <properties>
+    <property name="angle" value="2"/>
+    <property name="endpoint" value="start"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="angle" value="2"/>
+    <property name="endpoint" value="end"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="60" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztlVEKgDAMQ+vc/c+s4N/AUuviKkmgX8Zn3xBtZtbI5k2Q7Kd7RDozd2LzHbksvmj23fMiHeROK30rfFOQkW8NX9T/S741fMfIN8/xuPJdE/n6171e5D75fhu9z3mOx0X69nP2YPfvvptdvj3Yr+zrMbJc1NnLl9eXaQ4I0ANB
+  </data>
+ </layer>
+</map>
