@@ -31,6 +31,7 @@ public class Map {
 	public void parseMapObjects() {
 		parseWallObjects();
 		parseSlopeObjects();
+		//parseEntityObjects();
 	}
 	
 	/**
@@ -43,20 +44,44 @@ public class Map {
 			for(int i = 0; i < width; i++) {
 				int tileId = foreground.getTileId(i, j, 0);
 				String tileType = foreground.getTileProperty(tileId, "type", "meh");
-				// find the endpoint of all slopes...
-				if(tileType.equals("slope") && foreground.getTileProperty(tileId, "endpoint", "meh").equals("end")) {
-					/// then find the start point, and create line.
-					SlopeReturn tileData = findSlopeStart(Integer.parseInt(foreground.getTileProperty(tileId, "angle", "0")),i, j);
-					Vec2 v2 = getCorners(i,j)[tileData.corner.opposite().ordinal()];
-					Vec2 v1 = getCorners(tileData.i,tileData.j)[tileData.corner.ordinal()];
-					createLine(v1,v2);
-					createLine(v2, new Vec2(v2.x, v1.y));
-					createLine(v1, new Vec2(v2.x, v1.y));
+				// find the first endpoint of all slopes...
+				if(tileType.equals("slope") && foreground.getTileProperty(tileId, "endpoint", "meh").equals("first")) {
+					int slope = Integer.parseInt(foreground.getTileProperty(tileId, "slope", "0"));
+					boolean flipped = Boolean.parseBoolean(foreground.getTileProperty(tileId, "flipped", "false"));
+					int shiftsign = slope < 0 ? -1 : 1;
+					// make sure the tile wasn't already used in a previous slope.
+					int testTile = foreground.getTileId(i+shiftsign, j-1, 0);
+					int testSlope = Integer.parseInt(foreground.getTileProperty(testTile, "slope", "0"));
+					boolean testFlipped = Boolean.parseBoolean(foreground.getTileProperty(testTile, "flipped", "false"));
+					if (!(slope == testSlope && flipped == testFlipped)) {
+						// find the other endpoint, and create triangles
+						SlopeReturn tileData = findSlopeStart(flipped, slope,i, j);
+						Vec2 v1 = new Vec2();
+						Vec2 v2 = new Vec2();
+						if (slope > 0) {
+							v1 = getCorners(i,j)[Corner.TOPRIGHT.ordinal()];
+							v2 = getCorners(tileData.i,tileData.j)[Corner.BOTTOMLEFT.ordinal()];
+						}
+						else {
+							v1 = getCorners(i,j)[Corner.TOPLEFT.ordinal()];
+							v2 = getCorners(tileData.i,tileData.j)[Corner.BOTTOMRIGHT.ordinal()];
+						}
+						createLine(v1,v2);
+						if (flipped) {
+							createLine(v1, new Vec2(v2.x, v1.y));
+							createLine(v2, new Vec2(v2.x, v1.y));
+						}
+						else {
+							createLine(v1, new Vec2(v1.x, v2.y));
+							createLine(v2, new Vec2(v1.x, v2.y));
+						}
+					}
 				}
 			}
 		}
-		
 	}
+	
+	
 	
 	/**
 	 * Parses all wall objects 
@@ -142,59 +167,40 @@ public class Map {
 		}
 	}
 	/**
-	 * Given the end of a slope, find the start of a slope
+	 * Given the first point in a slope, find the second point.
+	 * Will go across multiple slopes if they're the same type.
 	 * @param slope
 	 * @param i
 	 * @param j
 	 * @return
 	 */
-	private SlopeReturn findSlopeStart(int slope, int i, int j) {
+	private SlopeReturn findSlopeStart(boolean flipped, int slope, int i, int j) {
+		// figure out how to find next tile for this slope
+		int shift = 0;
+		int shiftsign = 0;
+		if (slope > 0) {
+			shift = -(slope - 1);
+			shiftsign = -1;
+		}
+		if (slope < 0) {
+			shift = -(slope + 1);
+			shiftsign = 1;
+		}
 		int curi = i;
 		int curj = j;
-		Corner startDir = Corner.TOPLEFT;
-		if (foreground.getTileProperty(foreground.getTileId(i-slope, j-1, 0), "endpoint", "meh").equals("start")){
-			startDir = Corner.TOPLEFT;
-			curi -= slope;
-			curj -= 1;
-		}
-		else if (foreground.getTileProperty(foreground.getTileId(i+slope, j-1, 0), "endpoint", "meh").equals("start")){
-			startDir = Corner.TOPRIGHT;
-			curi += slope;
-			curj -= 1;
-		}
-		else if (foreground.getTileProperty(foreground.getTileId(i-slope, j+1, 0), "endpoint", "meh").equals("start")){
-			startDir = Corner.BOTTOMLEFT;
-			curi -= slope;
-			curj += 1;
-		}
-		else if (foreground.getTileProperty(foreground.getTileId(i+slope, j+1, 0), "endpoint", "meh").equals("start")){
-			startDir = Corner.BOTTOMRIGHT;
-			curi += slope;
-			curj += 1;
-		}
-		else {
-			throw new IllegalArgumentException("Invalid map, slope doesn't have start");
-		}
-		
+		curi += shift;
 		while(true) {
-			int previ = curi;
-			int prevj = curj;
-			switch(startDir) {
-				case TOPLEFT:
-					curi -= slope;
-					curj -= 1;
-				case TOPRIGHT:
-					curi += slope;
-					curj -= 1;
-				case BOTTOMLEFT:
-					curi -= slope;
-					curj += 1;
-				case BOTTOMRIGHT:
-					curi += slope;
-					curj += 1;
+			// check if there is another line of the same slope connect to this one (make them one line)
+			int testTile = foreground.getTileId(curi+shiftsign, curj+1, 0);
+			int testSlope = Integer.parseInt(foreground.getTileProperty(testTile, "slope", "0"));
+			boolean testFlipped = Boolean.parseBoolean(foreground.getTileProperty(testTile, "flipped", "false"));
+			if(!(testSlope == slope && testFlipped == flipped)) {
+				return new SlopeReturn(curi, curj);
 			}
-			if(!foreground.getTileProperty(foreground.getTileId(curi, curj, 0), "endpoint", "meh").equals("start")){
-				return new SlopeReturn(previ, prevj, startDir);
+			else {
+				curi += shiftsign + shift;
+				curj += 1;
+				
 			}
 		}
 	}

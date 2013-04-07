@@ -112,7 +112,7 @@ public class Game extends BasicGame {
 	@Override
 	public void init(GameContainer gc) throws SlickException {
 		Controls.setGC(gc);
-		
+				
 		gravity = new Vec2(0,Config.GRAVITY);
 		testWorld = new World(gravity);
 		

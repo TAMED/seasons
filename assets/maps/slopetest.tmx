@@ -4,8 +4,9 @@
   <image source="../rocks.png" width="128" height="128"/>
   <tile id="0">
    <properties>
-    <property name="angle" value="2"/>
-    <property name="endpoint" value="start"/>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="3"/>
     <property name="type" value="slope"/>
    </properties>
   </tile>
@@ -21,10 +22,66 @@
     <property name="type" value="slope"/>
    </properties>
   </tile>
+  <tile id="3">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="true"/>
+    <property name="slope" value="3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="-3"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Tile Layer 1" width="60" height="24">
   <data encoding="base64" compression="zlib">
-   eJztlVEKgDAMQ+vc/c+s4N/AUuviKkmgX8Zn3xBtZtbI5k2Q7Kd7RDozd2LzHbksvmj23fMiHeROK30rfFOQkW8NX9T/S741fMfIN8/xuPJdE/n6171e5D75fhu9z3mOx0X69nP2YPfvvptdvj3Yr+zrMbJc1NnLl9eXaQ4I0ANB
+   eJztldkKhTAMROu+///vOo+laEyrwZRk4LyFcQ54r20IoTXGm0h25+7g3Hy5yZpv2mvFV7r77nmcG8lNf/pq+E+RjPvq8JX6frmvDt80mn0HMIKJcTuDBayMnVp941y5cx2pXaXx97lOX+5m963TN6eH6nVfOgfYwfZw14AO9Bk7NfrGSd1zHaldpZHwpTpKe6V+W+5r19cSJ3R/A+M=
   </data>
  </layer>
 </map>
