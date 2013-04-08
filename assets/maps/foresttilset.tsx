@@ -11,7 +11,7 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="5">
+ <tile id="3">
   <properties>
    <property name="enemyType" value="ent"/>
    <property name="type" value="enemy"/>
@@ -22,7 +22,7 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="9">
+ <tile id="6">
   <properties>
    <property name="endpoint" value="first"/>
    <property name="flipped" value="false"/>
@@ -30,7 +30,7 @@
    <property name="type" value="slope"/>
   </properties>
  </tile>
- <tile id="10">
+ <tile id="5">
   <properties>
    <property name="endpoint" value="second"/>
    <property name="flipped" value="false"/>
