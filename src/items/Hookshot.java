@@ -24,10 +24,13 @@ public class Hookshot extends ItemBase {
 	private static final float K = 5;
 	// additional tolerance for deciding when to complete grapple
 	private static final float EPSILON = 2;
+	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
+	private static final int ACTIVE_TIME = 250;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
 	private HookState state;
+	private int activeTimer;
 	
 	private Hook hook;
 	private Joint tether;
@@ -57,6 +60,7 @@ public class Hookshot extends ItemBase {
 	@Override
 	public void update(GameContainer gc, int delta) {
 		if (hook != null) hook.update(gc, delta);
+		activeTimer = Math.max(0, activeTimer - delta);
 		
 		Input input = gc.getInput();
 		boolean startPull = false;
@@ -102,6 +106,8 @@ public class Hookshot extends ItemBase {
 				}
 				break;
 			case PULL:
+				activeTimer = ACTIVE_TIME;
+				
 				Vector2f diff = new Vector2f(hook.getX() - owner.getX(), hook.getY() - owner.getY());
 				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
 				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
@@ -175,7 +181,7 @@ public class Hookshot extends ItemBase {
 
 	@Override
 	public boolean isAttacking() {
-		return state == HookState.PULL;
+		return activeTimer > 0;
 	}
 
 	@Override
