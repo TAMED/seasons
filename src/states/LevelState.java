@@ -41,6 +41,7 @@ public class LevelState extends BasicGameState{
 	private boolean viewDebug = false;
 	private static Camera camera;
 	private Cursor cursor;
+	private Vec2 goalLoc;
 	
 	public LevelState(String mapString, int id) {
 		super();
@@ -74,6 +75,8 @@ public class LevelState extends BasicGameState{
 			enemies.get(i).addToWorld(world);
 		}
 		
+		goalLoc = map.getGoalLoc();
+		
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
 	}
@@ -101,6 +104,7 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc, game);
 		if (player.getHp() <= 0) init(gc, game);
+		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) init(gc,game);
 		
 		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
 		player.update(gc, delta);
