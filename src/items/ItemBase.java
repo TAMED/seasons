@@ -23,4 +23,8 @@ public abstract class ItemBase {
 	public abstract boolean isAttacking();
 	
 	public abstract void reset();
+	
+	public void drawRange(Graphics graphics) {
+		
+	}
 }
