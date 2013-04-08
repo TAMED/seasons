@@ -261,5 +261,7 @@ public abstract class Entity extends Sprite {
 		
 		return list;
 	}
+	
+	abstract public void reset();
 
 }

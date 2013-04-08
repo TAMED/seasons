@@ -69,5 +69,10 @@ public class Hook extends Entity {
 	public boolean isAttached() {
 		return attached;
 	}
+	
+	@Override
+	public void reset() {
+		detach();
+	}
 
 }

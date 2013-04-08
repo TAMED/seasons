@@ -25,6 +25,7 @@ public class Map {
 	private int tileWidth;
 	private ArrayList<Enemy> enemies;
 	private Vec2 playerLoc;
+	private Vec2 goalLoc;
 	
 	public Map(String tmxMap, World world) throws SlickException {
 		foreground = new TiledMap(tmxMap);
@@ -59,6 +60,9 @@ public class Map {
 				}
 				if (tileType.equals("player")) {
 					playerLoc = getPixelCenter(i,j);
+				}
+				if (tileType.equals("goal")){
+					goalLoc = getPixelCenter(i,j);
 				}
 			}
 		}
@@ -267,6 +271,18 @@ public class Map {
 	
 	public Vec2 getPlayerLoc() {
 		return playerLoc;
+	}
+	
+	public Vec2 getGoalLoc() {
+		return goalLoc;
+	}
+	
+	public int getHeight() {
+		return this.height*this.tileHeight;
+	}
+	
+	public int getWidth() {
+		return this.width*this.tileWidth;
 	}
 	
 	public TiledMap getTiledMap() {

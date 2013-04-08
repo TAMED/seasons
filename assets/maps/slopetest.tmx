@@ -90,6 +90,9 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="17" name="what" tilewidth="32" tileheight="32">
+  <image source="../../../../../Dropbox/CMS.617/concept art/tilesets/forest-dirt.png" width="64" height="64"/>
+ </tileset>
  <layer name="Tile Layer 1" width="60" height="24">
   <data encoding="base64" compression="zlib">
    eJztlckOgDAIROu+R///a+XYNBVpFUOFSeZGhnlJl9o5VyvzE3Fmp/agzLzZSRPvEcn9M++X2Vf7KDOcnajZO8MuCW8Kp4xXBi/X/2W8MnhDSebtwD14IMyO4Ak8E3pK5fUVY6cyYr1yZee5TF5qZ+MtkzclB8s1XlwbeAUvN3MVuAG3CT0l8voK2VMZsV654uDFMnJzue6W8erl1eQTrpEEAg==
