@@ -27,6 +27,8 @@ public class Hookshot extends ItemBase {
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
 	private static final int ACTIVE_TIME = 250;
 	
+	private static final float MAX_RANGE = 500;
+	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
 	private HookState state;
@@ -99,10 +101,15 @@ public class Hookshot extends ItemBase {
 //				System.out.println(d.length());
 				break;
 			case MOTION:
+				Vec2 rangeCheck = new Vec2(hook.getX() - owner.getX(), hook.getY() - owner.getY());
 				// check for collision with a wall
 				if (hook.isAttached()) {
 					state = HookState.OUT;
 					attachTether();
+				}
+				if (rangeCheck.length() > MAX_RANGE) {
+					removeHook();
+					state = HookState.IN;
 				}
 				break;
 			case PULL:
@@ -192,5 +199,10 @@ public class Hookshot extends ItemBase {
 		}
 		// removeHook();
 		state = HookState.IN;
+	}
+	
+	public void drawRange(Graphics graphics) {
+		graphics.setColor(Color.lightGray);
+		graphics.drawOval(owner.getX() - MAX_RANGE, owner.getY() - MAX_RANGE, MAX_RANGE*2, MAX_RANGE*2);
 	}
 }
