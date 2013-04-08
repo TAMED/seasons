@@ -6,6 +6,8 @@ package ui;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import states.LevelState;
@@ -20,16 +22,19 @@ import entities.Sprite;
  */
 public class Cursor extends Sprite {
 	private Player player;
+	private Image cursor;
 
 	/**
 	 * @param x
 	 * @param y
 	 * @param width
 	 * @param height
+	 * @throws SlickException 
 	 */
-	public Cursor(Player p) {
+	public Cursor(Player p) throws SlickException {
 		super(0, 0, Config.CURSOR_SIZE, Config.CURSOR_SIZE);
-		setImage(Color.white);
+		Image wisp = new Image("assets/images/wisp.png");
+		setImage(wisp);
 		this.player = p;
 	}
 
