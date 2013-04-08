@@ -35,6 +35,11 @@ public class Player extends Entity {
 		
 		items[0] = new Hookshot(this);
 	}
+	
+	public void init(float x, float y) {
+		this.setPosition(x, y);
+		this.heal();
+	}
 
 	public void render(Graphics graphics) {
 		draw(graphics);

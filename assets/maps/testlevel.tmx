@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="foresttilset.tsx"/>
+ <layer name="Tile Layer 1" width="100" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztmYEKwjAMRFOhwhz+/+9qEWHNuiVNu13HchBk2iZnnh1GJyKaPIaKu2uUHjiPn1IPAtoEOY+/Ug8i2gT15xEbAineA5S3Uc4H2gOvj/LjPNb1AzkPtIdl/UjOA+3B71e50B6cR649Dy3f2bTB5w9rT3r4GJ3HWfUju0b5QPciCe3B71e50B6cRy60h7Pmj/kbL9qe/53Huv4R8wfnsOejVPvR2Y+kkXiUrq3iHKTPv5+Pcv1WP1sc7sCjx+/GveYPicMdeEjvT5vDOn/MpOdwNR5P9ig9t9y7ldfyH4amJxYOV+Nx1N7a/HvrWzhoeQRwtHjQ7K3NL623cuD9fhfqLs80Klo8aPbW5pfWWzlI/U6vfQDwUQ6v
+  </data>
+ </layer>
+</map>
