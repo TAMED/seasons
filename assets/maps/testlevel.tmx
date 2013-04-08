@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="100" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="foresttilset.tsx"/>
+ <tileset firstgid="17" source="foresttilset.tsx"/>
  <layer name="Tile Layer 1" width="100" height="24">
   <data encoding="base64" compression="zlib">
-   eJztmYEKwjAMRFOhwhz+/+9qEWHNuiVNu13HchBk2iZnnh1GJyKaPIaKu2uUHjiPn1IPAtoEOY+/Ug8i2gT15xEbAineA5S3Uc4H2gOvj/LjPNb1AzkPtIdl/UjOA+3B71e50B6cR649Dy3f2bTB5w9rT3r4GJ3HWfUju0b5QPciCe3B71e50B6cRy60h7Pmj/kbL9qe/53Huv4R8wfnsOejVPvR2Y+kkXiUrq3iHKTPv5+Pcv1WP1sc7sCjx+/GveYPicMdeEjvT5vDOn/MpOdwNR5P9ig9t9y7ldfyH4amJxYOV+Nx1N7a/HvrWzhoeQRwtHjQ7K3NL623cuD9fhfqLs80Klo8aPbW5pfWWzlI/U6vfQDwUQ6v
+   eJztmeEKwjAMhDOhgg7/+P4Pq0GGIbZr2rS7ynoQZNo25312WL0R0W3WUHV2jZLB5PERZ7CgTbz1pMmDxRkEYP8nfVm05BEchZTO4ChvGwfpY4T9gfag+/f2oznIvugsWGgPsv9C/fykOEgf6CxYaA+yf6D2fnIcpA90Fiy0h173KysH2RedBQvtoTWPUg6yLzoL1p4Hz3c2a+nzR20mGwePj9F5HNU/qOsS1e6HmA90Fiy0h9r7VSsOsi86CxbaQymP1hxkX3QWLLQH6/nDy2F9153S5//J47d/j/OH5rDnI9b70thPTiPxiF3XSnPIff7n/oj39/pJcTgDjxa/G7c6f+Q4nIFH7v1Z16g9f6xk5/BvPK7qMfecnJtat+Y/DEsmNRz+jUevuaXr7433cLDyWMDl8WCZW7p+aryXg877Eekr9zSqPB4sc0vXz42v5ZDLm197AQgBEHE=
   </data>
  </layer>
 </map>

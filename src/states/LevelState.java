@@ -13,6 +13,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -42,11 +43,14 @@ public class LevelState extends BasicGameState{
 	private static Camera camera;
 	private Cursor cursor;
 	private Vec2 goalLoc;
+	private String backgroundString;
+	private Image background;
 	
-	public LevelState(String mapString, int id) {
+	public LevelState(String mapString, String backgroundString, int id) {
 		super();
 		this.id = id;
 		this.mapString = mapString;
+		this.backgroundString = backgroundString;
 	}
 		
 	@Override
@@ -59,8 +63,12 @@ public class LevelState extends BasicGameState{
 		
 		world.setContactListener(new CombatContact());
 		
+		background = new Image(backgroundString);
+		
 		map = new Map(mapString, world);
 		map.parseMapObjects();
+		
+		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
 		
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit);
@@ -84,8 +92,13 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
 			throws SlickException {
+		camera.translateGraphics();
+		drawBackground(graphics);
+		camera.untranslateGraphics();
 		camera.drawMap();
 		camera.translateGraphics();
+		
+		
 		if (viewDebug) {
 			debugdraw.setGraphics(graphics);
 			world.drawDebugData();
@@ -94,7 +107,6 @@ public class LevelState extends BasicGameState{
 		for (Enemy e : enemies) {
 			e.render(graphics);			
 		}
-		
 		cursor.render(graphics);
 		
 	}
@@ -135,6 +147,15 @@ public class LevelState extends BasicGameState{
 	 */
 	public static Camera getCamera() {
 		return camera;
+	}
+	
+	// kinda janky, remove when paralaxing set up
+	private void drawBackground(Graphics graphics) {
+		int backgroundX = 0;
+		while (backgroundX < map.getWidth()){
+			graphics.drawImage(background,  backgroundX,  0);
+			backgroundX += background.getWidth();
+		}
 	}
 
 }

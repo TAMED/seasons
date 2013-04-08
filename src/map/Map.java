@@ -277,6 +277,14 @@ public class Map {
 		return goalLoc;
 	}
 	
+	public int getHeight() {
+		return this.height*this.tileHeight;
+	}
+	
+	public int getWidth() {
+		return this.width*this.tileWidth;
+	}
+	
 	public TiledMap getTiledMap() {
 		return foreground;
 	}
