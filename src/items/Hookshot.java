@@ -21,11 +21,13 @@ public class Hookshot extends ItemBase {
 	private static final float STARTING_DIST = 100;
 	private static final float STARTING_VEL = 100;
 	// spring constant for grappling
-	private static final float K = 5;
+	private static final float K = 50;
 	// additional tolerance for deciding when to complete grapple
-	private static final float EPSILON = 2;
+	private static final float EPSILON = 20;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
 	private static final int ACTIVE_TIME = 250;
+	
+	private static final float MAX_RANGE = 500;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
@@ -99,10 +101,15 @@ public class Hookshot extends ItemBase {
 //				System.out.println(d.length());
 				break;
 			case MOTION:
+				Vec2 rangeCheck = new Vec2(hook.getX() - owner.getX(), hook.getY() - owner.getY());
 				// check for collision with a wall
 				if (hook.isAttached()) {
 					state = HookState.OUT;
 					attachTether();
+				}
+				if (rangeCheck.length() > MAX_RANGE) {
+					removeHook();
+					state = HookState.IN;
 				}
 				break;
 			case PULL:
@@ -121,7 +128,7 @@ public class Hookshot extends ItemBase {
 				Vec2 dist = b2.getPosition().sub(b1.getPosition());
 				
 				// force-based movement (try K=50)
-//				b1.applyForceToCenter(dist.mul(K));
+				b1.applyForceToCenter(dist.mul(K));
 //				b2.applyForceToCenter(dist.mul(-K));
 				
 				// impulse-based movement (try K=1)
@@ -129,8 +136,7 @@ public class Hookshot extends ItemBase {
 //				b2.applyLinearImpulse(dist.mul(-K), b2.getPosition());
 				
 				// simple movement (try K=5)
-				b1.setLinearVelocity(dist.mul(K));
-				b2.setLinearVelocity(dist.mul(-K));
+//				b1.setLinearVelocity(dist.mul(K));
 				break;
 		}
 	}
@@ -192,5 +198,10 @@ public class Hookshot extends ItemBase {
 		}
 		// removeHook();
 		state = HookState.IN;
+	}
+	
+	public void drawRange(Graphics graphics) {
+		graphics.setColor(Color.lightGray);
+		graphics.drawOval(owner.getX() - MAX_RANGE, owner.getY() - MAX_RANGE, MAX_RANGE*2, MAX_RANGE*2);
 	}
 }

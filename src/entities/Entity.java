@@ -18,6 +18,7 @@ import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.newdawn.slick.geom.Point;
 
 import util.Direction;
+import util.Util;
 import config.Config;
 
 /**
@@ -87,21 +88,40 @@ public abstract class Entity extends Sprite {
 
 	
 	public void moveLeft() {
-		float yvel = this.getPhysicsBody().getLinearVelocity().y;
-		this.getPhysicsBody().setLinearVelocity(new Vec2(-runSpeed, yvel));
-		setFacing(Direction.LEFT);
+		if (this.isTouching(Direction.DOWN)) {
+			if (this.getFacing() == Direction.LEFT) {
+				this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
+			} else {
+				this.getPhysicsBody().applyForce(new Vec2(-3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
+				if (this.getPhysicsBody().getLinearVelocity().x < 0) {
+					setFacing(Direction.LEFT);
+				}
+			}
+		} else {
+			this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
+		}
 	}
 	
 	public void moveRight() {
-		float yvel = this.getPhysicsBody().getLinearVelocity().y;
-		this.getPhysicsBody().setLinearVelocity(new Vec2(runSpeed, yvel));
-		setFacing(Direction.RIGHT);
+		if (this.isTouching(Direction.DOWN)) {
+			if (this.getFacing() == Direction.RIGHT) {
+				this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
+			} else {
+				this.getPhysicsBody().applyForce(new Vec2(3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
+				if (this.getPhysicsBody().getLinearVelocity().x > 0) {
+					setFacing(Direction.RIGHT);
+				}
+			}
+		} else {
+			this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
+		}
 	}
 	
 	public void jump() {
 		if(this.isTouching(Direction.DOWN)) {
 			float xvel = this.getPhysicsBody().getLinearVelocity().x;
-			this.getPhysicsBody().setLinearVelocity(new Vec2(xvel, -jmpSpeed));
+			this.getPhysicsBody().applyForce(new Vec2(0, -1500), Util.PointToVec2(this.getPosition()));
+			//this.getPhysicsBody().setLinearVelocity(new Vec2(xvel, -jmpSpeed));
 		}
 	}
 	
