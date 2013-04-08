@@ -147,7 +147,9 @@ public class Hookshot extends ItemBase {
 	 * Removes the Hook object
 	 */
 	private void removeHook() {
-		owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
+		if (hook != null){
+			owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
+		}
 		hook = null;
 	}
 
@@ -161,7 +163,6 @@ public class Hookshot extends ItemBase {
 		tetherDef.localAnchorA.set(zero);
 		tetherDef.localAnchorB.set(zero);
 		tetherDef.maxLength = b1.getPosition().sub(b2.getPosition()).length();
-		//System.out.println("Max Length: " + tetherDef.maxLength);
 		tether = owner.getPhysicsWorld().createJoint(tetherDef);
 	}
 
@@ -175,5 +176,15 @@ public class Hookshot extends ItemBase {
 	@Override
 	public boolean isAttacking() {
 		return state == HookState.PULL;
+	}
+
+	@Override
+	public void reset() {
+		detachTether();
+		if (hook != null) {
+			hook.reset();
+		}
+		// removeHook();
+		state = HookState.IN;
 	}
 }

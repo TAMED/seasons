@@ -21,4 +21,6 @@ public abstract class ItemBase {
 	 * @return whether the item can damage enemies
 	 */
 	public abstract boolean isAttacking();
+	
+	public abstract void reset();
 }

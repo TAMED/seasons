@@ -76,7 +76,8 @@ public class LevelState extends BasicGameState{
 				
 		player = MainGame.player;
 		player.addToWorld(world);
-		player.reset(map.getPlayerLoc().x, map.getPlayerLoc().y);		
+		player.reset();
+		player.setPosition(map.getPlayerLoc().x, map.getPlayerLoc().y);
 		
 		enemies = map.getEnemies();
 		for (int i = 0; i < enemies.size(); i++) {

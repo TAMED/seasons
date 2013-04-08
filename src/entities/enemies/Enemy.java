@@ -34,4 +34,10 @@ public class Enemy extends Entity {
 		ai.update(this, delta);
 	}
 
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -36,9 +36,14 @@ public class Player extends Entity {
 		items[0] = new Hookshot(this);
 	}
 	
-	public void reset(float x, float y) {
-		this.setPosition(x, y);
+	@Override
+	public void reset() {
 		this.heal();
+		for (int i = 0; i < items.length; i++) {
+			if (items[i] != null) {
+				this.items[i].reset();
+			}
+		}
 	}
 
 	public void render(Graphics graphics) {
