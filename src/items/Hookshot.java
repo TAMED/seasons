@@ -21,9 +21,9 @@ public class Hookshot extends ItemBase {
 	private static final float STARTING_DIST = 100;
 	private static final float STARTING_VEL = 100;
 	// spring constant for grappling
-	private static final float K = 5;
+	private static final float K = 50;
 	// additional tolerance for deciding when to complete grapple
-	private static final float EPSILON = 2;
+	private static final float EPSILON = 20;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
 	private static final int ACTIVE_TIME = 250;
 	
@@ -128,7 +128,7 @@ public class Hookshot extends ItemBase {
 				Vec2 dist = b2.getPosition().sub(b1.getPosition());
 				
 				// force-based movement (try K=50)
-//				b1.applyForceToCenter(dist.mul(K));
+				b1.applyForceToCenter(dist.mul(K));
 //				b2.applyForceToCenter(dist.mul(-K));
 				
 				// impulse-based movement (try K=1)
@@ -136,8 +136,7 @@ public class Hookshot extends ItemBase {
 //				b2.applyLinearImpulse(dist.mul(-K), b2.getPosition());
 				
 				// simple movement (try K=5)
-				b1.setLinearVelocity(dist.mul(K));
-				b2.setLinearVelocity(dist.mul(-K));
+//				b1.setLinearVelocity(dist.mul(K));
 				break;
 		}
 	}
