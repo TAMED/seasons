@@ -68,7 +68,6 @@ public class Hookshot extends ItemBase {
 			case OUT: case PULL:
 				Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
 				
-				System.out.println("hi");
 				for (int i = 1; i < HOOK_CHUNKS; i++) {
 					Vec2 rel = dist.mul(i / (float) HOOK_CHUNKS);
 					wisp.draw(owner.getPosition().getX() - (HOOK_DIM / 2) + rel.x, owner.getPosition().getY() - (HOOK_DIM / 2) + rel.y);

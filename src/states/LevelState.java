@@ -11,6 +11,7 @@ import map.Map;
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -20,6 +21,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import ui.Cursor;
+import ui.Timer;
 import util.Box2DDebugDraw;
 import camera.Camera;
 
@@ -45,6 +47,7 @@ public class LevelState extends BasicGameState{
 	private Vec2 goalLoc;
 	private String backgroundString;
 	private Image background;
+	private Timer timer;
 	
 	public LevelState(String mapString, String backgroundString, int id) {
 		super();
@@ -88,6 +91,7 @@ public class LevelState extends BasicGameState{
 		
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
+		timer = new Timer();
 	}
 
 	@Override
@@ -110,6 +114,9 @@ public class LevelState extends BasicGameState{
 		}
 		cursor.render(graphics);
 		
+		// timer draw
+		graphics.setColor(Color.white);
+		graphics.drawString(timer.getTime(), 100, 100);
 	}
 
 	@Override
@@ -136,6 +143,7 @@ public class LevelState extends BasicGameState{
 		camera.centerOn(player.getX(),player.getY());
 		
 		cursor.update(gc, delta);
+		timer.update(delta);
 	}
 
 	@Override
