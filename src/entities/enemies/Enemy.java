@@ -28,6 +28,12 @@ public class Enemy extends Entity {
 		setImage(Color.red);
 	}
 	
+	public Enemy(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, AI ai) {
+		super(x, y, width, height, ground, runSpeed, jmpSpeed, maxHp);
+		this.ai = ai;
+		setImage(Color.red);
+	}
+	
 	@Override
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);

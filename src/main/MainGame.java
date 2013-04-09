@@ -46,7 +46,7 @@ public class MainGame extends StateBasedGame {
 			fieldSysPath.set( null, null );
 			
 			AppGameContainer app = new AppGameContainer(new MainGame("Seasons"));
-			app.setDisplayMode(1024, 768, false);
+			app.setDisplayMode(1024, 740, false);//768, false);
 			app.setTargetFrameRate(60);
 			app.start();
 		} catch (Exception e) {
@@ -58,7 +58,7 @@ public class MainGame extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		player = new Player(32, 72);
+		player = new Player(32, 72, 4);
 		addState(new LevelState("assets/maps/testlevel.tmx", "assets/backgrounds/forest3.png", 0));
 	}
 
