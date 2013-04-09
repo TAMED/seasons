@@ -115,8 +115,7 @@ public abstract class Entity extends Sprite {
 	public void jump() {
 		if(this.isTouching(Direction.DOWN)) {
 			float xvel = this.getPhysicsBody().getLinearVelocity().x;
-			this.getPhysicsBody().applyForce(new Vec2(0, -1500), Util.PointToVec2(this.getPosition()));
-			//this.getPhysicsBody().setLinearVelocity(new Vec2(xvel, -jmpSpeed));
+			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -Config.PLAYER_JUMP_SPEED), new Vec2(0, 0));
 		}
 	}
 	

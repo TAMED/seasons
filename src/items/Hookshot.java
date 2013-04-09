@@ -61,10 +61,11 @@ public class Hookshot extends ItemBase {
 	
 	@Override
 	public void update(GameContainer gc, int delta) {
+		Input input = gc.getInput();
+		
 		if (hook != null) hook.update(gc, delta);
 		activeTimer = Math.max(0, activeTimer - delta);
 		
-		Input input = gc.getInput();
 		boolean startPull = false;
 		
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
@@ -92,14 +93,6 @@ public class Hookshot extends ItemBase {
 		}
 		
 		switch (state) {
-			case OUT:
-//				Vec2 v1 = new Vec2();
-//				tether.getAnchorA(v1);
-//				Vec2 v2 = new Vec2();
-//				tether.getAnchorB(v2);
-//				Vec2 d = v2.sub(v1);
-//				System.out.println(d.length());
-				break;
 			case MOTION:
 				Vec2 rangeCheck = new Vec2(hook.getX() - owner.getX(), hook.getY() - owner.getY());
 				// check for collision with a wall
@@ -165,6 +158,9 @@ public class Hookshot extends ItemBase {
 		hook = null;
 	}
 
+	/**
+	 * Attaches a RopeJoint between the STATIC hook body and the player.
+	 */
 	private void attachTether() {
 		Body b1 = owner.getPhysicsBody();
 		Body b2 = hook.getPhysicsBody();
