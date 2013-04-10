@@ -44,7 +44,11 @@ public abstract class Entity extends Sprite {
 	private boolean alive;
 
 	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp) {
-		super(x, y, width, height);
+		this(x, y, width, height, 0, runSpeed, jmpSpeed, maxHp);
+	}
+
+	public Entity(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp) {
+		super(x, y, width, height, ground);
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
 		physicsDef.fixedRotation = true;
@@ -81,6 +85,7 @@ public abstract class Entity extends Sprite {
 		this.hp = maxHp;
 		this.alive = true;
 	}
+
 	
 	public void moveLeft() {
 		if (this.isTouching(Direction.DOWN)) {
@@ -115,8 +120,7 @@ public abstract class Entity extends Sprite {
 	public void jump() {
 		if(this.isTouching(Direction.DOWN)) {
 			float xvel = this.getPhysicsBody().getLinearVelocity().x;
-			this.getPhysicsBody().applyForce(new Vec2(0, -1500), Util.PointToVec2(this.getPosition()));
-			//this.getPhysicsBody().setLinearVelocity(new Vec2(xvel, -jmpSpeed));
+			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -Config.PLAYER_JUMP_SPEED), new Vec2(0, 0));
 		}
 	}
 	

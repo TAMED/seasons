@@ -38,12 +38,18 @@ public class Sprite {
 	private float height;
 	private Point position;
 	private Direction facing;
+	private float ground;
 
 	public Sprite(float x, float y, float width, float height) {
+		this(x, y, width, height, 0f);
+	}
+	
+	public Sprite(float x, float y, float width, float height, float ground) {
 		position = new Point(x, y);
 		this.width = width;
 		this.height = height;
 		this.facing = Direction.RIGHT;
+		this.ground = ground;
 	}
 	
 	public void render(Graphics graphics) {
@@ -71,11 +77,11 @@ public class Sprite {
 				break;
 			case IMAGE:
 				img = image.getFlippedCopy(facing == Direction.RIGHT, false);
-				img.draw(x - hh, y - hh, height, height);
+				img.draw(x - hh, y - hh, height + 2*ground, height + 2*ground);
 				break;
 			case ANIMATION:
 				img = anim.getCurrentFrame().getFlippedCopy(facing == Direction.RIGHT, false);
-				img.draw(x - hh, y - hh, height, height);
+				img.draw(x - hh, y - hh + ground, height, height + 2*ground);
 				break;
 		}
 	}
