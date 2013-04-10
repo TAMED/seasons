@@ -116,7 +116,7 @@ public class LevelState extends BasicGameState{
 		
 		// timer draw
 		graphics.setColor(Color.white);
-		graphics.drawString(timer.getTime(), 100, 100);
+		graphics.drawString(timer.getTime(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+100);
 	}
 
 	@Override
