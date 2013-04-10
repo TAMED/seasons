@@ -3,7 +3,7 @@ package items;
 import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.joints.DistanceJointDef;
+import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.joints.Joint;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -48,10 +48,11 @@ public class Hook extends Entity {
 	 * @param b a body
 	 */
 	private void attach(Body b) {
-		Body self = getPhysicsBody();
-		DistanceJointDef jointDef = new DistanceJointDef();
-		jointDef.initialize(b, self, self.getPosition(), self.getPosition());
-		anchor = getPhysicsWorld().createJoint(jointDef);
+//		Body self = getPhysicsBody();
+//		DistanceJointDef jointDef = new DistanceJointDef();
+//		jointDef.initialize(b, self, self.getPosition(), self.getPosition());
+//		anchor = getPhysicsWorld().createJoint(jointDef);
+		this.getPhysicsBody().setType(BodyType.STATIC);
 		attached = true;
 	}
 

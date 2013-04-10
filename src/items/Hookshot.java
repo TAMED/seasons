@@ -9,7 +9,9 @@ import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import util.Util;
@@ -26,8 +28,11 @@ public class Hookshot extends ItemBase {
 	private static final float EPSILON = 20;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
 	private static final int ACTIVE_TIME = 250;
-	
+	// range the hook can travel before it will reset
 	private static final float MAX_RANGE = 500;
+	// number of segments the rope/chain is broken into (visually, for the wisps)
+	private static final int HOOK_CHUNKS = 10;
+	private static final int HOOK_DIM = 32;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
@@ -37,9 +42,16 @@ public class Hookshot extends ItemBase {
 	private Hook hook;
 	private Joint tether;
 	
+	private Image wisp;
+	
 	public Hookshot(Player player) {
 		super(player);
 		state = HookState.IN;
+		try {
+			wisp = new Image("assets/images/wisp.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -54,17 +66,22 @@ public class Hookshot extends ItemBase {
 		// draw tether
 		switch (state) {
 			case OUT: case PULL:
-				graphics.setColor(Color.white);
-				graphics.drawLine(owner.getX(), owner.getY(), hook.getX(), hook.getY());
+				Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
+				
+				for (int i = 1; i < HOOK_CHUNKS; i++) {
+					Vec2 rel = dist.mul(i / (float) HOOK_CHUNKS);
+					wisp.draw(owner.getPosition().getX() - (HOOK_DIM / 2) + rel.x, owner.getPosition().getY() - (HOOK_DIM / 2) + rel.y);
+				}
 		}
 	}
 	
 	@Override
 	public void update(GameContainer gc, int delta) {
+		Input input = gc.getInput();
+		
 		if (hook != null) hook.update(gc, delta);
 		activeTimer = Math.max(0, activeTimer - delta);
 		
-		Input input = gc.getInput();
 		boolean startPull = false;
 		
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
@@ -92,14 +109,6 @@ public class Hookshot extends ItemBase {
 		}
 		
 		switch (state) {
-			case OUT:
-//				Vec2 v1 = new Vec2();
-//				tether.getAnchorA(v1);
-//				Vec2 v2 = new Vec2();
-//				tether.getAnchorB(v2);
-//				Vec2 d = v2.sub(v1);
-//				System.out.println(d.length());
-				break;
 			case MOTION:
 				Vec2 rangeCheck = new Vec2(hook.getX() - owner.getX(), hook.getY() - owner.getY());
 				// check for collision with a wall
@@ -165,6 +174,9 @@ public class Hookshot extends ItemBase {
 		hook = null;
 	}
 
+	/**
+	 * Attaches a RopeJoint between the STATIC hook body and the player.
+	 */
 	private void attachTether() {
 		Body b1 = owner.getPhysicsBody();
 		Body b2 = hook.getPhysicsBody();
@@ -201,7 +213,9 @@ public class Hookshot extends ItemBase {
 	}
 	
 	public void drawRange(Graphics graphics) {
-		graphics.setColor(Color.lightGray);
-		graphics.drawOval(owner.getX() - MAX_RANGE, owner.getY() - MAX_RANGE, MAX_RANGE*2, MAX_RANGE*2);
+		if (state == HookState.IN) {
+			graphics.setColor(Color.lightGray);
+			graphics.drawOval(owner.getX() - MAX_RANGE, owner.getY() - MAX_RANGE, MAX_RANGE*2, MAX_RANGE*2);
+		}
 	}
 }
