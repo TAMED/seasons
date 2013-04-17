@@ -59,7 +59,7 @@ public class MainGame extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		player = new Player(32, 72, 4);
-		addState(new LevelState("assets/maps/testlevel.tmx", "assets/backgrounds/forest3.png", 0));
+		addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 0));
 	}
 
 }

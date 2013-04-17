@@ -125,6 +125,7 @@ public class LevelState extends BasicGameState{
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc, game);
 		if (player.getHp() <= 0) init(gc, game);
 		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) init(gc,game);
+		if (player.getY() > map.getHeight()+64) init(gc, game);
 		
 		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
 		player.update(gc, delta);

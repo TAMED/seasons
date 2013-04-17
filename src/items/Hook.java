@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.joints.Joint;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -15,7 +14,7 @@ public class Hook extends Entity {
 	private static final float SIZE = 10;
 	
 	private boolean attached;
-	private Joint anchor;
+//	private Joint anchor;
 	
 	/**
 	 * @param x
@@ -60,7 +59,7 @@ public class Hook extends Entity {
 	 * @param detach the hook, if it is connected to a wall
 	 */
 	public void detach() {
-		Joint.destroy(anchor);
+//		Joint.destroy(anchor);
 		this.attached = false;
 	}
 
