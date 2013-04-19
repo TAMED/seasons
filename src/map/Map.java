@@ -3,9 +3,13 @@ package map;
 import java.util.ArrayList;
 
 import org.jbox2d.collision.shapes.EdgeShape;
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -37,9 +41,25 @@ public class Map {
 		enemies = new ArrayList<Enemy>();
 	}
 	public void parseMapObjects() {
+		parseHookableObjects();
 		parseWallObjects();
 		parseSlopeObjects();
 		parseEntityObjects();
+	}
+	
+	/**
+	 * Give bodies to things which can be hooked
+	 */
+	private void parseHookableObjects() {
+		for(int j = 0; j < height; j++) {
+			for(int i = 0; i < width; i++) {
+				int tileId = foreground.getTileId(i, j, 0);
+				String tileType = foreground.getTileProperty(tileId, "hookable", "meh");
+				if (tileType.equals("true")) {
+					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, 2, 2);
+				}
+			}
+		}
 	}
 	
 	/**
@@ -263,6 +283,29 @@ public class Map {
 		BodyDef lineDef = new BodyDef();
 		Body line = world.createBody(lineDef);
 		line.createFixture(edge, Config.DEFAULT_DENSITY);
+	}
+	
+	private void createBox(float x, float y, int category, int collides) {
+		BodyDef physicsDef = new BodyDef();
+		physicsDef.type = BodyType.STATIC;
+		physicsDef.fixedRotation = true;
+		physicsDef.position.set(x / Config.PIXELS_PER_METER,
+		                        y / Config.PIXELS_PER_METER);
+		
+		PolygonShape physicsShape = new PolygonShape();
+		physicsShape.setAsBox(tileWidth / 2 / Config.PIXELS_PER_METER,
+		                     tileHeight / 2 / Config.PIXELS_PER_METER);
+		
+		FixtureDef physicsFixtureDef = new FixtureDef();
+		physicsFixtureDef.shape = physicsShape;
+		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
+		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
+		physicsFixtureDef.filter.categoryBits = Config.HOOKABLE;
+		physicsFixtureDef.filter.maskBits = Config.HOOKABLE;
+		
+		Body physicsBody = world.createBody(physicsDef);
+		Fixture physicsFixture = physicsBody.createFixture(physicsFixtureDef);
+		physicsFixture.setUserData(this);
 	}
 	
 	public ArrayList<Enemy> getEnemies() {
