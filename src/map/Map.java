@@ -15,7 +15,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import util.Corner;
-import util.Direction;
 
 import config.Config;
 import entities.enemies.Enemy;
@@ -286,7 +285,7 @@ public class Map {
 		line.createFixture(edge, Config.DEFAULT_DENSITY);
 	}
 	
-	private void createBox(float x, float y, int group, int collides) {
+	private void createBox(float x, float y, int category, int collides) {
 		BodyDef physicsDef = new BodyDef();
 		physicsDef.type = BodyType.STATIC;
 		physicsDef.fixedRotation = true;
@@ -301,8 +300,8 @@ public class Map {
 		physicsFixtureDef.shape = physicsShape;
 		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
 		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
-		physicsFixtureDef.filter.groupIndex = group;
-		physicsFixtureDef.filter.maskBits = collides;
+		physicsFixtureDef.filter.categoryBits = Config.HOOKABLE;
+		physicsFixtureDef.filter.maskBits = Config.HOOKABLE;
 		
 		Body physicsBody = world.createBody(physicsDef);
 		Fixture physicsFixture = physicsBody.createFixture(physicsFixtureDef);

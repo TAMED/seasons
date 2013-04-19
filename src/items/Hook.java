@@ -9,6 +9,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import config.Config;
+
 import entities.Entity;
 
 public class Hook extends Entity {
@@ -27,8 +29,8 @@ public class Hook extends Entity {
 		super(x, y, SIZE, SIZE, 0, 0, 1, false);
 		setImage(Color.red);
 		getPhysicsBodyDef().bullet = true;
-		getPhysicsFixtureDef().filter.groupIndex = Integer.parseInt("0010", 2);
-		getPhysicsFixtureDef().filter.maskBits = Integer.parseInt("0010", 2);
+		getPhysicsFixtureDef().filter.categoryBits = Config.HOOKABLE;
+		getPhysicsFixtureDef().filter.maskBits = Config.HOOKABLE;
 		attached = false;
 	}
 
