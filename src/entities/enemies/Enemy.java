@@ -23,13 +23,13 @@ public class Enemy extends Entity {
 	 * @param height
 	 */
 	public Enemy(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp, AI ai) {
-		super(x, y, width, height, runSpeed, jmpSpeed, maxHp);
+		super(x, y, width, height, runSpeed, jmpSpeed, maxHp, true);
 		this.ai = ai;
 		setImage(Color.red);
 	}
 	
 	public Enemy(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, AI ai) {
-		super(x, y, width, height, ground, runSpeed, jmpSpeed, maxHp);
+		super(x, y, width, height, ground, runSpeed, jmpSpeed, maxHp, true);
 		this.ai = ai;
 		setImage(Color.red);
 	}

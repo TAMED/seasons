@@ -157,7 +157,7 @@ public class Hookshot extends ItemBase {
 		float x = owner.getPosition().getX();
 		float y = owner.getPosition().getY();
 		Vector2f aim = new Vector2f(Controls.getAimAngle(owner));
-		Vector2f start = aim.copy().scale(STARTING_DIST);
+		Vector2f start = new Vector2f(0,0);
 		
 		hook = new Hook(x + start.x, y + start.y);
 		hook.addToWorld(owner.getPhysicsWorld());

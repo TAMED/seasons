@@ -70,9 +70,7 @@ public class LevelState extends BasicGameState{
 		
 		map = new Map(mapString, world);
 		map.parseMapObjects();
-		
 		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
-		
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit);
 		world.setDebugDraw(debugdraw);
@@ -81,14 +79,12 @@ public class LevelState extends BasicGameState{
 		player.addToWorld(world);
 		player.reset();
 		player.setPosition(map.getPlayerLoc().x, map.getPlayerLoc().y);
-		
 		enemies = map.getEnemies();
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).addToWorld(world);
 		}
 		
 		goalLoc = map.getGoalLoc();
-		
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
 		timer = new Timer();
@@ -126,10 +122,8 @@ public class LevelState extends BasicGameState{
 		if (player.getHp() <= 0) init(gc, game);
 		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) init(gc,game);
 		if (player.getY() > map.getHeight()+64) init(gc, game);
-		
 		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
 		player.update(gc, delta);
-		
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
 			Enemy e = it.next();
 			if (e.getHp() > 0) {
