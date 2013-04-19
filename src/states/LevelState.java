@@ -21,6 +21,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import ui.Cursor;
+import ui.Time;
 import ui.Timer;
 import util.Box2DDebugDraw;
 import camera.Camera;
@@ -48,6 +49,8 @@ public class LevelState extends BasicGameState{
 	private String backgroundString;
 	private Image background;
 	private Timer timer;
+	private Time lastTime;
+	private Time bestTime;
 	
 	public LevelState(String mapString, String backgroundString, int id) {
 		super();
@@ -87,7 +90,20 @@ public class LevelState extends BasicGameState{
 		goalLoc = map.getGoalLoc();
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
-		timer = new Timer();
+		
+		if (lastTime == null) {
+			lastTime = new Time();
+		}
+		
+		if (bestTime == null) {
+			bestTime = new Time();
+		}
+		
+		if (timer != null) {
+			timer.reset();
+		} else {
+			timer = new Timer();
+		}
 	}
 
 	@Override
@@ -112,7 +128,10 @@ public class LevelState extends BasicGameState{
 		
 		// timer draw
 		graphics.setColor(Color.white);
-		graphics.drawString(timer.getTime(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+100);
+		graphics.drawString(timer.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+100);
+
+		graphics.drawString("Last " + lastTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+125);
+		graphics.drawString("Best " + bestTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+150);
 	}
 
 	@Override
@@ -120,8 +139,22 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc, game);
 		if (player.getHp() <= 0) init(gc, game);
-		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) init(gc,game);
-		if (player.getY() > map.getHeight()+64) init(gc, game);
+		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) {
+			if (lastTime == null) {
+				lastTime = new Time();
+			}
+			lastTime.set(timer.getMillis());
+		
+			if (bestTime == null) {
+				bestTime = new Time();
+			}
+			if ((lastTime.getMillis() < bestTime.getMillis()) || (bestTime.getMillis() == 0)) {
+				bestTime.set(timer.getMillis());
+			}
+			
+			init(gc,game);
+		}
+		if (player.getY() > map.getHeight()+64) init(gc, game);   
 		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
 		player.update(gc, delta);
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {

@@ -1,26 +1,34 @@
 package ui;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
-
 public class Timer {
 
-	private int millis;
+	private Time time;
 	
 	public Timer() {
-		millis = 0;
+		time = new Time();
 	}
 
 	public void update(int delta) {
-		millis += delta;
+		time.update(delta);
 	}
 	
 	public void reset() {
-		millis = 0;
+		time.reset();
 	}
 	
-	public String getTime() {
-		int extra = millis % 1000;
-		return "Time: " + ((millis - extra)/1000) + ":" + ((extra - (extra % 10))/10);
+	public String getTimeString() {
+		return time.getTimeString();
+	}
+	
+	public int getMillis() {
+		return time.getMillis();
+	}
+	
+	public Time getTime() {
+		return time;
+	}
+	
+	public void set(int millis) {
+		time.set(millis);
 	}
 }
