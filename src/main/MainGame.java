@@ -7,6 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import states.IntroState;
 import states.LevelState;
 
 import entities.Player;
@@ -59,7 +60,8 @@ public class MainGame extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		player = new Player(32, 72, 4);
-		addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 0));
+		addState(new IntroState(0));
+		addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 1));
 	}
 
 }

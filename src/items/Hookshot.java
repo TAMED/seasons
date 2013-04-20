@@ -19,8 +19,7 @@ import entities.Player;
 
 public class Hookshot extends ItemBase {
 
-	// how far away from the player the hook starts when it is shot
-	private static final float STARTING_VEL = 100;
+	private static final float STARTING_VEL = 50;
 	// spring constant for grappling
 	private static final float K = 50;
 	// additional tolerance for deciding when to complete grapple
