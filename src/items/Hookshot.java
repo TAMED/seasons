@@ -23,7 +23,7 @@ public class Hookshot extends ItemBase {
 	// spring constant for grappling
 	private static final float K = 50;
 	// additional tolerance for deciding when to complete grapple
-	private static final float EPSILON = 20;
+	private static final float EPSILON = 30;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
 	private static final int ACTIVE_TIME = 250;
 	// range the hook can travel before it will reset
