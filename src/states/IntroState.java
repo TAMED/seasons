@@ -37,7 +37,7 @@ public class IntroState extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame arg1, Graphics g)
 			throws SlickException {
 		String title = "Scare Bear: 5 Seasons of Hell";
-		String pressKey = "Press Enter Key to Start";
+		String pressKey = "Left Click to Start";
 		font.getWidth(title);
 		font.drawString(gc.getWidth()/2 - font.getWidth(title)/2,gc.getHeight()/2 - font.getHeight(title)/2, title);
 		font.drawString(gc.getWidth()/2 - font.getWidth(pressKey)/2,gc.getHeight()/2+font.getHeight(title), pressKey);
@@ -46,7 +46,7 @@ public class IntroState extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int arg2)
 			throws SlickException {
-		if(gc.getInput().isKeyPressed(Input.KEY_ENTER)) {
+		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			game.enterState(1);
 		}
 		
