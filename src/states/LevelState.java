@@ -131,6 +131,7 @@ public class LevelState extends BasicGameState{
 		cursor.render(graphics);
 		
 		// timer draw
+		// HACK: remove once there's a parallax system
 		graphics.setColor(Color.white);
 		graphics.drawString(timer.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+100);
 

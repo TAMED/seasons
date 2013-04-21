@@ -15,7 +15,10 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.ContactEdge;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Point;
+
+import anim.AnimationState;
 
 import util.Direction;
 import util.Util;
@@ -85,8 +88,16 @@ public abstract class Entity extends Sprite {
 		this.hp = maxHp;
 		this.alive = true;
 	}
-
 	
+	/* (non-Javadoc)
+	 * @see entities.Sprite#update(org.newdawn.slick.GameContainer, int)
+	 */
+	@Override
+	public void update(GameContainer gc, int delta) {
+		super.update(gc, delta);
+		anim.update(this);
+	}
+
 	public void moveLeft() {
 		if (this.isTouching(Direction.DOWN)) {
 			if (this.getFacing() == Direction.LEFT) {
@@ -100,6 +111,7 @@ public abstract class Entity extends Sprite {
 		} else {
 			this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
 		}
+		anim.play(AnimationState.RUN);
 	}
 	
 	public void moveRight() {
@@ -115,6 +127,7 @@ public abstract class Entity extends Sprite {
 		} else {
 			this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
 		}
+		anim.play(AnimationState.RUN);
 	}
 	
 	public void jump() {
@@ -122,11 +135,15 @@ public abstract class Entity extends Sprite {
 			float xvel = this.getPhysicsBody().getLinearVelocity().x;
 			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -Config.PLAYER_JUMP_SPEED), new Vec2(0, 0));
 		}
+		anim.play(AnimationState.JUMP);
 	}
 	
 	public void dampenVelocity(int delta) {
 		Vec2 vel = this.getPhysicsBody().getLinearVelocity();
 		this.getPhysicsBody().setLinearVelocity(new Vec2((float) (vel.x * Math.pow(Config.DRAG, delta/100f)), vel.y));
+		if (this.isTouching(Direction.DOWN)) {
+			anim.play(AnimationState.IDLE);
+		}
 	}
 	
 	public void addToWorld(World world) {

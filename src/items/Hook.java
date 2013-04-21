@@ -24,7 +24,7 @@ public class Hook extends Entity {
 	 */
 	public Hook(float x, float y) {
 		super(x, y, SIZE, SIZE, 0, 0, 1);
-		setImage(Color.red);
+		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
 		attached = false;
 	}
