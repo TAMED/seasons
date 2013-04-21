@@ -15,10 +15,12 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.ContactEdge;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Point;
 
 import util.Direction;
 import util.Util;
+import anim.AnimationState;
 import config.Config;
 
 /**
@@ -69,20 +71,19 @@ public abstract class Entity extends Sprite {
 		if (hasSensors) {
 			sensorShapes = new PolygonShape[Direction.values().length];
 			// creates sensors on each side. Config has mapping of integers to TOP, BOTTOM, etc.
-			for(int i = 0; i < sensorShapes.length; i++) {
+			for (int i = 0; i < sensorShapes.length; i++) {
 				sensorShapes[i] = new PolygonShape();
 			}
 			sensorShapes[Direction.UP.ordinal()   ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
 			sensorShapes[Direction.DOWN.ordinal() ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
 			sensorShapes[Direction.LEFT.ordinal() ].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
 			sensorShapes[Direction.RIGHT.ordinal()].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
-			for(int i = 0; i < sensors.length; i++){
+			for (int i = 0; i < sensors.length; i++) {
 				sensors[i] = new FixtureDef();
 				sensors[i].shape = sensorShapes[i];
 				sensors[i].isSensor = true;
 			}
-		}
-		else {
+		} else {
 			sensorShapes = new PolygonShape[0];
 		}
 		this.runSpeed = runSpeed;
@@ -92,8 +93,16 @@ public abstract class Entity extends Sprite {
 		this.hp = maxHp;
 		this.alive = true;
 	}
-
 	
+	/* (non-Javadoc)
+	 * @see entities.Sprite#update(org.newdawn.slick.GameContainer, int)
+	 */
+	@Override
+	public void update(GameContainer gc, int delta) {
+		super.update(gc, delta);
+		anim.update(this);
+	}
+
 	public void moveLeft() {
 		if (this.isTouching(Direction.DOWN)) {
 			if (this.getFacing() == Direction.LEFT) {
@@ -107,6 +116,7 @@ public abstract class Entity extends Sprite {
 		} else {
 			this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
 		}
+		anim.play(AnimationState.RUN);
 	}
 	
 	public void moveRight() {
@@ -122,18 +132,23 @@ public abstract class Entity extends Sprite {
 		} else {
 			this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
 		}
+		anim.play(AnimationState.RUN);
 	}
 	
 	public void jump() {
 		if(this.isTouching(Direction.DOWN)) {
-			float xvel = this.getPhysicsBody().getLinearVelocity().x;
-			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -Config.PLAYER_JUMP_SPEED), new Vec2(0, 0));
+//			float xvel = this.getPhysicsBody().getLinearVelocity().x;
+			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
 		}
+		anim.play(AnimationState.JUMP);
 	}
 	
 	public void dampenVelocity(int delta) {
 		Vec2 vel = this.getPhysicsBody().getLinearVelocity();
 		this.getPhysicsBody().setLinearVelocity(new Vec2((float) (vel.x * Math.pow(Config.DRAG, delta/100f)), vel.y));
+		if (this.isTouching(Direction.DOWN)) {
+			anim.play(AnimationState.IDLE);
+		}
 	}
 	
 	public void addToWorld(World world) {
@@ -293,8 +308,8 @@ public abstract class Entity extends Sprite {
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
 		while(contactEdge != null) {
-			Fixture fixtureA = contactEdge.contact.getFixtureA();
-			Fixture fixtureB = contactEdge.contact.getFixtureB();
+//			Fixture fixtureA = contactEdge.contact.getFixtureA();
+//			Fixture fixtureB = contactEdge.contact.getFixtureB();
 			if(contactEdge.contact.isTouching()) {
 				list.add(contactEdge.contact.getFixtureA().getBody());
 			}

@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.FixtureDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import config.Config;
-
 import entities.Entity;
 
 public class Hook extends Entity {
@@ -27,7 +25,7 @@ public class Hook extends Entity {
 	 */
 	public Hook(float x, float y) {
 		super(x, y, SIZE, SIZE, 0, 0, 1, false);
-		setImage(Color.red);
+		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
 		getPhysicsFixtureDef().filter.categoryBits = Config.HOOKABLE;
 		getPhysicsFixtureDef().filter.maskBits = Config.HOOKABLE;
