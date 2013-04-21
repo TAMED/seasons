@@ -8,6 +8,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import config.Config;
 import entities.Entity;
 
 public class Hook extends Entity {
@@ -23,9 +24,11 @@ public class Hook extends Entity {
 	 * @param height
 	 */
 	public Hook(float x, float y) {
-		super(x, y, SIZE, SIZE, 0, 0, 1);
+		super(x, y, SIZE, SIZE, 0, 0, 1, false);
 		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
+		getPhysicsFixtureDef().filter.categoryBits = Config.HOOKABLE;
+		getPhysicsFixtureDef().filter.maskBits = Config.HOOKABLE;
 		attached = false;
 	}
 
@@ -47,10 +50,6 @@ public class Hook extends Entity {
 	 * @param b a body
 	 */
 	private void attach(Body b) {
-//		Body self = getPhysicsBody();
-//		DistanceJointDef jointDef = new DistanceJointDef();
-//		jointDef.initialize(b, self, self.getPosition(), self.getPosition());
-//		anchor = getPhysicsWorld().createJoint(jointDef);
 		this.getPhysicsBody().setType(BodyType.STATIC);
 		attached = true;
 	}
@@ -59,7 +58,6 @@ public class Hook extends Entity {
 	 * @param detach the hook, if it is connected to a wall
 	 */
 	public void detach() {
-//		Joint.destroy(anchor);
 		this.attached = false;
 	}
 

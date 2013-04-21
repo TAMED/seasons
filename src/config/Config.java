@@ -17,9 +17,12 @@ public class Config {
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
+	// Object Groups
+	public static final int HOOKABLE = 2;
+	
 	// Player
 	public static final float PLAYER_MOVE_SPEED = 25;
-	public static final float PLAYER_JUMP_SPEED = 20;
+	public static final float PLAYER_JUMP_SPEED = 30;
 	public static final int PLAYER_MAX_HP = 1;
 	
 	// Movement

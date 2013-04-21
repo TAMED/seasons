@@ -12,11 +12,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import anim.AnimationState;
-
 import config.Config;
 
 /**
@@ -31,8 +29,8 @@ public class Player extends Entity {
 	}
 	
 	public Player(float width, float height, float ground) {
-		super(0, 0, width, height, ground, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP);
-
+		super(0, 0, width, height, ground, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP, true);
+		
 		try {
 			setImage(new Image("assets/images/bear shaman.png"));
 			anim.addAnimation(AnimationState.IDLE, new Animation(new SpriteSheet("assets/images/bear shaman idle sprite sheet.png", 152, 152), 100));
