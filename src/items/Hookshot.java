@@ -19,12 +19,11 @@ import entities.Player;
 
 public class Hookshot extends ItemBase {
 
-	// how far away from the player the hook starts when it is shot
-	private static final float STARTING_VEL = 100;
+	private static final float STARTING_VEL = 50;
 	// spring constant for grappling
 	private static final float K = 50;
 	// additional tolerance for deciding when to complete grapple
-	private static final float EPSILON = 20;
+	private static final float EPSILON = 30;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
 	private static final int ACTIVE_TIME = 250;
 	// range the hook can travel before it will reset

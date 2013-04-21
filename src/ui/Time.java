@@ -22,7 +22,12 @@ public class Time {
 	
 	public String getTimeString() {
 		int extra = millis % 1000;
-		return "Time: " + ((millis - extra)/1000) + ":" + ((extra - (extra % 10))/10);
+		StringBuilder sb = new StringBuilder();
+		sb.append("Time: ");
+		sb.append(((millis - extra)/1000));
+		sb.append(":");
+		sb.append(((extra - (extra % 10))/10));
+		return sb.toString();
 	}
 	
 	public void set(int millis) {
