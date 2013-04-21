@@ -62,48 +62,6 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
-		Controls.setGC(gc);
-		
-		gravity = new Vec2(0,Config.GRAVITY);
-		world = new World(gravity);
-		
-		world.setContactListener(new CombatContact());
-		
-		background = new Image(backgroundString);
-		
-		map = new Map(mapString, world);
-		map.parseMapObjects();
-		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
-		debugdraw = new Box2DDebugDraw();
-		debugdraw.setFlags(DebugDraw.e_shapeBit);
-		world.setDebugDraw(debugdraw);
-				
-		player = MainGame.player;
-		player.addToWorld(world);
-		player.reset();
-		player.setPosition(map.getPlayerLoc().x, map.getPlayerLoc().y);
-		enemies = map.getEnemies();
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).addToWorld(world);
-		}
-		
-		goalLoc = map.getGoalLoc();
-		camera = new Camera(gc, map.getTiledMap());
-		cursor = new Cursor(player);
-		
-		if (lastTime == null) {
-			lastTime = new Time();
-		}
-		
-		if (bestTime == null) {
-			bestTime = new Time();
-		}
-		
-		if (timer != null) {
-			timer.reset();
-		} else {
-			timer = new Timer();
-		}
 	}
 
 	@Override
@@ -155,7 +113,7 @@ public class LevelState extends BasicGameState{
 			
 			game.enterState(0);
 		}
-		if (player.getY() > map.getHeight()+64) init(gc, game);   
+		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
 		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
 		player.update(gc, delta);
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
@@ -175,6 +133,55 @@ public class LevelState extends BasicGameState{
 		timer.update(delta);
 	}
 
+	@Override
+	public void enter(GameContainer gc, StateBasedGame game)
+			throws SlickException {
+		// TODO Auto-generated method stub
+		super.enter(gc, game);
+		Controls.setGC(gc);
+		
+		gravity = new Vec2(0,Config.GRAVITY);
+		world = new World(gravity);
+		
+		world.setContactListener(new CombatContact());
+		
+		background = new Image(backgroundString);
+		
+		map = new Map(mapString, world);
+		map.parseMapObjects();
+		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
+		debugdraw = new Box2DDebugDraw();
+		debugdraw.setFlags(DebugDraw.e_shapeBit);
+		world.setDebugDraw(debugdraw);
+				
+		player = MainGame.player;
+		player.addToWorld(world);
+		player.reset();
+		player.setPosition(map.getPlayerLoc().x, map.getPlayerLoc().y);
+		enemies = map.getEnemies();
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).addToWorld(world);
+		}
+		
+		goalLoc = map.getGoalLoc();
+		camera = new Camera(gc, map.getTiledMap());
+		cursor = new Cursor(player);
+		
+		if (lastTime == null) {
+			lastTime = new Time();
+		}
+		
+		if (bestTime == null) {
+			bestTime = new Time();
+		}
+		
+		if (timer != null) {
+			timer.reset();
+		} else {
+			timer = new Timer();
+		}
+	}
+	
 	@Override
 	public int getID() {
 		return id;
