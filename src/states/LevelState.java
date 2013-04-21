@@ -62,6 +62,82 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
+	}
+
+	@Override
+	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
+			throws SlickException {
+		camera.translateGraphics();
+		drawBackground(graphics);
+		camera.untranslateGraphics();
+		camera.drawMap();
+		camera.translateGraphics();
+		
+		
+		if (viewDebug) {
+			debugdraw.setGraphics(graphics);
+			world.drawDebugData();
+		}
+		player.render(graphics);
+		for (Enemy e : enemies) {
+			e.render(graphics);			
+		}
+		cursor.render(graphics);
+		
+		// timer draw
+		// HACK: remove once there's a parallax system
+		graphics.setColor(Color.white);
+		graphics.drawString(timer.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+100);
+
+		graphics.drawString("Last " + lastTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+125);
+		graphics.drawString("Best " + bestTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+150);
+	}
+
+	@Override
+	public void update(GameContainer gc, StateBasedGame game, int delta)
+			throws SlickException {
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) game.enterState(this.getID());
+		if (player.getHp() <= 0) game.enterState(this.getID());
+		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) {
+			if (lastTime == null) {
+				lastTime = new Time();
+			}
+			lastTime.set(timer.getMillis());
+		
+			if (bestTime == null) {
+				bestTime = new Time();
+			}
+			if ((lastTime.getMillis() < bestTime.getMillis()) || (bestTime.getMillis() == 0)) {
+				bestTime.set(timer.getMillis());
+			}
+			
+			game.enterState(0);
+		}
+		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
+		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
+		player.update(gc, delta);
+		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
+			Enemy e = it.next();
+			if (e.getHp() > 0) {
+				e.update(gc, delta);
+			} else {
+				it.remove();
+				e.kill();
+			}
+		}
+
+		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
+		camera.centerOn(player.getX(),player.getY());
+		
+		cursor.update(gc, delta);
+		timer.update(delta);
+	}
+
+	@Override
+	public void enter(GameContainer gc, StateBasedGame game)
+			throws SlickException {
+		// TODO Auto-generated method stub
+		super.enter(gc, game);
 		Controls.setGC(gc);
 		
 		gravity = new Vec2(0,Config.GRAVITY);
@@ -105,76 +181,7 @@ public class LevelState extends BasicGameState{
 			timer = new Timer();
 		}
 	}
-
-	@Override
-	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
-			throws SlickException {
-		camera.translateGraphics();
-		drawBackground(graphics);
-		camera.untranslateGraphics();
-		camera.drawMap();
-		camera.translateGraphics();
-		
-		
-		if (viewDebug) {
-			debugdraw.setGraphics(graphics);
-			world.drawDebugData();
-		}
-		player.render(graphics);
-		for (Enemy e : enemies) {
-			e.render(graphics);			
-		}
-		cursor.render(graphics);
-		
-		// timer draw
-		// HACK: remove once there's a parallax system
-		graphics.setColor(Color.white);
-		graphics.drawString(timer.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+100);
-
-		graphics.drawString("Last " + lastTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+125);
-		graphics.drawString("Best " + bestTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+150);
-	}
-
-	@Override
-	public void update(GameContainer gc, StateBasedGame game, int delta)
-			throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) init(gc, game);
-		if (player.getHp() <= 0) init(gc, game);
-		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) {
-			if (lastTime == null) {
-				lastTime = new Time();
-			}
-			lastTime.set(timer.getMillis());
-		
-			if (bestTime == null) {
-				bestTime = new Time();
-			}
-			if ((lastTime.getMillis() < bestTime.getMillis()) || (bestTime.getMillis() == 0)) {
-				bestTime.set(timer.getMillis());
-			}
-			
-			init(gc,game);
-		}
-		if (player.getY() > map.getHeight()+64) init(gc, game);   
-		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
-		player.update(gc, delta);
-		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
-			Enemy e = it.next();
-			if (e.getHp() > 0) {
-				e.update(gc, delta);
-			} else {
-				it.remove();
-				e.kill();
-			}
-		}
-
-		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
-		camera.centerOn(player.getX(),player.getY());
-		
-		cursor.update(gc, delta);
-		timer.update(delta);
-	}
-
+	
 	@Override
 	public int getID() {
 		return id;
