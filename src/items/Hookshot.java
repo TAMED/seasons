@@ -20,7 +20,6 @@ import entities.Player;
 public class Hookshot extends ItemBase {
 
 	// how far away from the player the hook starts when it is shot
-	private static final float STARTING_DIST = 100;
 	private static final float STARTING_VEL = 100;
 	// spring constant for grappling
 	private static final float K = 50;
@@ -157,7 +156,7 @@ public class Hookshot extends ItemBase {
 		float x = owner.getPosition().getX();
 		float y = owner.getPosition().getY();
 		Vector2f aim = new Vector2f(Controls.getAimAngle(owner));
-		Vector2f start = aim.copy().scale(STARTING_DIST);
+		Vector2f start = new Vector2f(0,0);
 		
 		hook = new Hook(x + start.x, y + start.y);
 		hook.addToWorld(owner.getPhysicsWorld());

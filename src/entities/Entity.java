@@ -34,7 +34,8 @@ public abstract class Entity extends Sprite {
 	private Body physicsBody;
 	private World physicsWorld;
 	private FixtureDef[] sensors = new FixtureDef[Direction.values().length];
-	private PolygonShape[] sensorShapes = new PolygonShape[Direction.values().length];
+	private PolygonShape[] sensorShapes;
+	private boolean hasSensors;
 	
 	private float runSpeed;
 	private float jmpSpeed;
@@ -43,12 +44,13 @@ public abstract class Entity extends Sprite {
 	private int hp;
 	private boolean alive;
 
-	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp) {
-		this(x, y, width, height, 0, runSpeed, jmpSpeed, maxHp);
+	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
+		this(x, y, width, height, 0, runSpeed, jmpSpeed, maxHp, hasSensors);
 	}
 
-	public Entity(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp) {
+	public Entity(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
 		super(x, y, width, height, ground);
+		this.hasSensors = hasSensors;
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
 		physicsDef.fixedRotation = true;
@@ -64,20 +66,25 @@ public abstract class Entity extends Sprite {
 		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
 		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
 		
-		// creates sensors on each side. Config has mapping of integers to TOP, BOTTOM, etc.
-		for(int i = 0; i < sensorShapes.length; i++) {
-			sensorShapes[i] = new PolygonShape();
+		if (hasSensors) {
+			sensorShapes = new PolygonShape[Direction.values().length];
+			// creates sensors on each side. Config has mapping of integers to TOP, BOTTOM, etc.
+			for(int i = 0; i < sensorShapes.length; i++) {
+				sensorShapes[i] = new PolygonShape();
+			}
+			sensorShapes[Direction.UP.ordinal()   ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
+			sensorShapes[Direction.DOWN.ordinal() ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
+			sensorShapes[Direction.LEFT.ordinal() ].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
+			sensorShapes[Direction.RIGHT.ordinal()].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
+			for(int i = 0; i < sensors.length; i++){
+				sensors[i] = new FixtureDef();
+				sensors[i].shape = sensorShapes[i];
+				sensors[i].isSensor = true;
+			}
 		}
-		sensorShapes[Direction.UP.ordinal()   ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
-		sensorShapes[Direction.DOWN.ordinal() ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
-		sensorShapes[Direction.LEFT.ordinal() ].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
-		sensorShapes[Direction.RIGHT.ordinal()].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
-		for(int i = 0; i < sensors.length; i++){
-			sensors[i] = new FixtureDef();
-			sensors[i].shape = sensorShapes[i];
-			sensors[i].isSensor = true;
+		else {
+			sensorShapes = new PolygonShape[0];
 		}
-		
 		this.runSpeed = runSpeed;
 		this.jmpSpeed = jmpSpeed;
 		
@@ -133,10 +140,12 @@ public abstract class Entity extends Sprite {
 		physicsBody = world.createBody(physicsDef);
 		physicsFixture = physicsBody.createFixture(physicsFixtureDef);
 		physicsFixture.setUserData(this);
-		for(int i = 0; i < sensors.length; i++){
-			physicsBody.createFixture(sensors[i]).setUserData(Direction.values()[i]);
+		if (hasSensors) {
+			for(int i = 0; i < sensors.length; i++){
+				physicsBody.createFixture(sensors[i]).setUserData(Direction.values()[i]);
+			}
+			physicsWorld = world;
 		}
-		physicsWorld = world;
 	}
 	
 	/**
@@ -177,6 +186,13 @@ public abstract class Entity extends Sprite {
 	 */
 	public Fixture getPhysicsFixture() {
 		return physicsFixture;
+	}
+	
+	/**
+	 * @return the entity's physics fixture
+	 */
+	public FixtureDef getPhysicsFixtureDef() {
+		return physicsFixtureDef;
 	}
 	
 	/**
@@ -277,6 +293,8 @@ public abstract class Entity extends Sprite {
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
 		while(contactEdge != null) {
+			Fixture fixtureA = contactEdge.contact.getFixtureA();
+			Fixture fixtureB = contactEdge.contact.getFixtureB();
 			if(contactEdge.contact.isTouching()) {
 				list.add(contactEdge.contact.getFixtureA().getBody());
 			}
