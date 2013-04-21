@@ -6,12 +6,15 @@ package entities;
 import items.Hookshot;
 import items.ItemBase;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SpriteSheet;
 
+import anim.AnimationState;
 import config.Config;
 
 /**
@@ -29,10 +32,11 @@ public class Player extends Entity {
 		super(0, 0, width, height, ground, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP, true);
 		
 		try {
-			setImage(new Image("assets/images/player.png"));
+			setImage(new Image("assets/images/bear shaman.png"));
+			anim.addAnimation(AnimationState.IDLE, new Animation(new SpriteSheet("assets/images/bear shaman idle sprite sheet.png", 152, 152), 100));
 		} catch (Exception e) {
 			e.printStackTrace();
-			setImage(Color.white);
+			setColor(Color.white);
 		}
 		
 		getPhysicsBodyDef().allowSleep = false;

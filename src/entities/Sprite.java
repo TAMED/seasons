@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import states.LevelState;
 import util.Direction;
+import anim.AnimStateMachine;
 
 /**
  * 
@@ -20,19 +21,12 @@ import util.Direction;
  *
  */
 public class Sprite {
-	
-	public enum ImageType { SIMPLE, IMAGE, ANIMATION };
-	
 	/**
 	 * The color of the rectangle displayed if an image or animation is not assigned
 	 */
 	private Color color;
 	private Image image;
-	private Animation anim;
-	/**
-	 * How the sprite will be drawn
-	 */
-	private ImageType imageType;
+	protected AnimStateMachine anim;
 	
 	private float width;
 	private float height;
@@ -46,6 +40,7 @@ public class Sprite {
 	
 	public Sprite(float x, float y, float width, float height, float ground) {
 		position = new Point(x, y);
+		anim = new AnimStateMachine();
 		this.width = width;
 		this.height = height;
 		this.facing = Direction.RIGHT;
@@ -57,7 +52,10 @@ public class Sprite {
 	}
 	
 	public void update(GameContainer gc, int delta) {
-		if (imageType == ImageType.ANIMATION) anim.update(delta);		
+		Animation currentAnim = anim.getCurrentAnimation();
+		if (currentAnim != null) {
+			currentAnim.update(delta);		
+		}
 	}
 	
 	protected void draw(Graphics graphics) {
@@ -65,41 +63,35 @@ public class Sprite {
 		float hh = height / 2;
 		float x = getX();
 		float y = getY();
-		Image img;
 		
-		switch (imageType) {
-			case SIMPLE:
-				graphics.setColor(color);
-				graphics.drawRect(x - hw, y - hh, width, height);
-				// marker to indicate direction of sprite
-				int offset = (facing == Direction.RIGHT) ? 1 : -1;
-				graphics.drawOval(x + offset * hw - 5, y - hh, 10, 10);
-				break;
-			case IMAGE:
+		Animation currentAnim = anim.getCurrentAnimation();
+		if (currentAnim != null || image != null) {
+			Image img;
+			if (currentAnim != null) {
+				img = currentAnim.getCurrentFrame()
+				           .getFlippedCopy(facing == Direction.RIGHT, false);
+			} else {
 				img = image.getFlippedCopy(facing == Direction.RIGHT, false);
-				img.draw(x - hh, y - hh, height + 2*ground, height + 2*ground);
-				break;
-			case ANIMATION:
-				img = anim.getCurrentFrame().getFlippedCopy(facing == Direction.RIGHT, false);
-				img.draw(x - hh, y - hh + ground, height, height + 2*ground);
-				break;
+			}
+			img.draw(x - hh, y - hh, height + 2*ground, height + 2*ground);
+		} else if (color != null) {
+			graphics.setColor(color);
+			graphics.drawRect(x - hw, y - hh, width, height);
+			// marker to indicate direction of sprite
+			int offset = (facing == Direction.RIGHT) ? 1 : -1;
+			graphics.drawOval(x + offset * hw - 5, y - hh, 10, 10);
+			// text to indicate current animation
+			if (anim.getCurrentState() != null)
+				graphics.drawString(anim.getCurrentState().toString(), x - hw, y - hh);
 		}
 	}
 	
-	public void setImage(Color c) {
-		imageType = ImageType.SIMPLE;
+	public void setColor(Color c) {
 		this.color = c;
 	}
 	
 	public void setImage(Image i) {
-		imageType = ImageType.IMAGE;
 		this.image = i;
-	}
-	
-	public void setImage(Animation a) {
-		imageType = ImageType.ANIMATION;
-		this.anim = a;
-		this.anim.setAutoUpdate(false);
 	}
 
 	/**

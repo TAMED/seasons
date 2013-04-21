@@ -22,7 +22,7 @@ public class Config {
 	
 	// Player
 	public static final float PLAYER_MOVE_SPEED = 25;
-	public static final float PLAYER_JUMP_SPEED = 20;
+	public static final float PLAYER_JUMP_SPEED = 30;
 	public static final int PLAYER_MAX_HP = 1;
 	
 	// Movement
