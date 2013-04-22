@@ -63,7 +63,7 @@ public class Hookshot extends ItemBase {
 		
 		// draw tether
 		switch (state) {
-			case OUT: case PULL:
+			case OUT: case PULL: case MOTION:
 				Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
 				
 				for (int i = 1; i < HOOK_CHUNKS; i++) {
