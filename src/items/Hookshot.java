@@ -216,4 +216,8 @@ public class Hookshot extends ItemBase {
 			graphics.drawOval(owner.getX() - MAX_RANGE, owner.getY() - MAX_RANGE, MAX_RANGE*2, MAX_RANGE*2);
 		}
 	}
+	
+	public boolean isPulling() {
+		return state.equals(HookState.PULL);
+	}
 }
