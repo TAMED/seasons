@@ -104,7 +104,7 @@ public class LevelState extends BasicGameState{
 				game.enterState(this.getID()+1);
 			}
 		}
-		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) {
+		if (Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30) {
 			if (lastTime == null) {
 				lastTime = new Time();
 			}
