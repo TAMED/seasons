@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="300" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <layer name="Tile Layer 1" width="300" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztm82u0zAQhYcdsED8iX+kAhJXIDYgthfNFrEG3gL2wP6+No6uLEWpU8/YM7FTn086i6qJG3viz07VEulhp2Nr+FpwzjfhcZ8bpYTaNqXjKB27+XWVUjsma22WwmRXY16ktK+5uk3va2tGhedosKzpnoCvruFMcvToKyZ7X7HB+fOUuupUuxrgq33h6SumuvvS6l7egh59NcEGbXjCtH5/8Eosga/2haev5jD5e4oLrssKL1+x8nivNrzhRLYAvtoXW/lqgslmv8WJtMbLV8AX+GpfbOmrOUx6b8VzegS+2iffQ35k8rOgXfjKh1a+ijCl902pfVTPwFfnScn8mPCuMzu3vyUfQz4Jj23tqwmm4/Ffvu4d+Oo86dVX58RlyBfhsT34yhKNqy2RPFeUPluAdkjrijqXM7KvNH0fmZshtxJ50vKiwJBo5mzJ+tHz2gFf5Zlc9TDkWSLPG14XGJOR5+zIfZcQXXUIeZvIRbMrA+eE5nuZkefsyH3PkXMVfAWs0MzDkefsyH0/hcRV8BWwAr6SMXLf15C6Cr4COaTPefCVjJH7nkLjKvgK5JDOL/hKxsh9X6J1FXwFcsBXtozY918hv0MeLKJ1FXw1NpJnPfjKlpH6Hj31J+QvHf+W6kA6V8FXdcR6pH6Hq81tp2u8ceI9ydyBr2wZoe9LT/0jvZfgKzuW9XhjkEdk66zHlbmDuMdrjWqFp6fgKz2pelyFfBDkKpPXdO2sWs/E1Poz9V8IxDbWa1QrlvPiQPaegq/krHnKOpOzLPZqU145JHX/eHzO2mfVRrKuxHi0uUxco+6G3Oss9+n4+/GY5T7Rcz+V8lXrsemhBqfi7SmPeHlkq7R0lcZbNb6K8+9FyMuN8y6T9yFPSbZPPGxYy4sGY9UqmhrMsydPxfwHMtsw0w==
+  </data>
+ </layer>
+</map>
