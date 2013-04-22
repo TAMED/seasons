@@ -96,8 +96,14 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) game.enterState(this.getID());
-		if (player.getHp() <= 0) game.enterState(this.getID());
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+			if (this.getID() == 1) {
+				game.enterState(2);
+			}
+			else {
+				game.enterState(0);
+			}
+		}
 		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) {
 			if (lastTime == null) {
 				lastTime = new Time();
@@ -110,8 +116,12 @@ public class LevelState extends BasicGameState{
 			if ((lastTime.getMillis() < bestTime.getMillis()) || (bestTime.getMillis() == 0)) {
 				bestTime.set(timer.getMillis());
 			}
-			
-			game.enterState(0);
+			if (this.getID() == 1) {
+				game.enterState(2);
+			}
+			else {
+				game.enterState(0);
+			}
 		}
 		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
 		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);

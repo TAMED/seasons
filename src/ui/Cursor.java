@@ -30,7 +30,7 @@ public class Cursor extends Sprite {
 	 */
 	public Cursor(Player p) throws SlickException {
 		super(0, 0, Config.CURSOR_SIZE, Config.CURSOR_SIZE);
-		Image wisp = new Image("assets/images/wisp.png");
+		Image wisp = new Image("assets/images/nonentities/wisp/sprite.png");
 		setImage(wisp);
 		this.player = p;
 	}

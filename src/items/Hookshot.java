@@ -46,7 +46,7 @@ public class Hookshot extends ItemBase {
 		super(player);
 		state = HookState.IN;
 		try {
-			wisp = new Image("assets/images/wisp.png");
+			wisp = new Image("assets/images/nonentities/wisp/sprite.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
