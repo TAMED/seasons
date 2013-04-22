@@ -61,8 +61,8 @@ public class MainGame extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		player = new Player(36, 80, 4);
 		addState(new IntroState(0));
-		addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 1));
-		addState(new LevelState("assets/maps/cliffForest.tmx", "assets/backgrounds/forest3.png", 2));
+		addState(new LevelState("assets/maps/cliffForest.tmx", "assets/backgrounds/forest3.png", 1));
+		addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 2));
 		addState(new LevelState("assets/maps/moreHillyForest.tmx", "assets/backgrounds/forest3.png", 3));
 		addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 4));
 	}
