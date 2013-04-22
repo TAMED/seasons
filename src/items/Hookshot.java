@@ -12,6 +12,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Vector2f;
 
 import util.Util;
@@ -41,12 +42,16 @@ public class Hookshot extends ItemBase {
 	private Joint tether;
 	
 	private Image wisp;
+	private Sound launchSound;
+	private Sound pullSound;
 	
 	public Hookshot(Player player) {
 		super(player);
 		state = HookState.IN;
 		try {
 			wisp = new Image("assets/images/nonentities/wisp/sprite.png");
+			launchSound = new Sound("assets/hookLaunch.wav");
+			pullSound = new Sound("assets/pickup.wav");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -87,6 +92,7 @@ public class Hookshot extends ItemBase {
 				case IN:
 					spawnHook();
 					state = HookState.MOTION;
+					launchSound.play();
 					break;
 				case OUT:
 					detachTether();
