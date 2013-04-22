@@ -96,7 +96,7 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) game.enterState(this.getID());
+		if (gc.getInput().isKeyPressed(Input.KEY_F5)) game.enterState(this.getID());
 		if (player.getHp() <= 0) game.enterState(this.getID());
 		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) {
 			if (lastTime == null) {
@@ -127,6 +127,7 @@ public class LevelState extends BasicGameState{
 		}
 
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
+		if (gc.getInput().isKeyPressed(Input.KEY_F11)) gc.setFullscreen(!gc.isFullscreen());
 		camera.centerOn(player.getX(),player.getY());
 		
 		cursor.update(gc, delta);

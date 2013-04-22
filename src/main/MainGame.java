@@ -47,7 +47,7 @@ public class MainGame extends StateBasedGame {
 			fieldSysPath.set( null, null );
 			
 			AppGameContainer app = new AppGameContainer(new MainGame("Seasons"));
-			app.setDisplayMode(1024, 740, false);//768, false);
+			app.setDisplayMode(1366, 768, true);//740, false);
 			app.setTargetFrameRate(60);
 			app.start();
 		} catch (Exception e) {
