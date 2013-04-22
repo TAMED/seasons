@@ -145,6 +145,20 @@ public class Sprite {
 	}
 
 	/**
+	 * @return the x center coordinate of the position
+	 */
+	public final float getCenterX() {
+		return getPosition().getX() + getWidth()/2;
+	}
+
+	/**
+	 * @return the y center coordinate of the position
+	 */
+	public final float getCenterY() {
+		return getPosition().getY() + getHeight()/2;
+	}
+	
+	/**
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 */

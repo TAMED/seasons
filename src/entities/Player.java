@@ -77,7 +77,9 @@ public class Player extends Entity {
 		} else if(input.isKeyDown(Input.KEY_A)) {
 			moveLeft();
 		} else {
-			dampenVelocity(delta);
+			if (!((Hookshot) items[0]).isPulling()) {
+				dampenVelocity(delta);
+			}
 		}
 		if(input.isKeyPressed(Input.KEY_SPACE)) {
 			jump();
