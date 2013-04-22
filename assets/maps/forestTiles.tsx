@@ -353,4 +353,49 @@
    <property name="type" value="slope"/>
   </properties>
  </tile>
+ <tile id="89">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="90">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="91">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="101">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="102">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="103">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="113">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="114">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="115">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
 </tileset>

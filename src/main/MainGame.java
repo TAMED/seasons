@@ -62,6 +62,7 @@ public class MainGame extends StateBasedGame {
 		player = new Player(36, 80, 4);
 		addState(new IntroState(0));
 		addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 1));
+		addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 2));
 	}
 
 }
