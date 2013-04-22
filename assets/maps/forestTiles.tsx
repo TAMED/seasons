@@ -323,7 +323,7 @@
  </tile>
  <tile id="99">
   <properties>
-   <property name="endpoint" value="first"/>
+   <property name="endpoint" value="second"/>
    <property name="flipped" value="false"/>
    <property name="slope" value="2"/>
    <property name="type" value="slope"/>
@@ -331,7 +331,7 @@
  </tile>
  <tile id="100">
   <properties>
-   <property name="endpoint" value="second"/>
+   <property name="endpoint" value="first"/>
    <property name="flipped" value="false"/>
    <property name="slope" value="2"/>
    <property name="type" value="slope"/>
@@ -347,7 +347,7 @@
  </tile>
  <tile id="110">
   <properties>
-   <property name="endpoint" value="second"/>
+   <property name="endpoint" value="first"/>
    <property name="flipped" value="false"/>
    <property name="slope" value="2"/>
    <property name="type" value="slope"/>
