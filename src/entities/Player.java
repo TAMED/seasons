@@ -32,8 +32,11 @@ public class Player extends Entity {
 		super(0, 0, width, height, ground, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP, true);
 		
 		try {
-			setImage(new Image("assets/images/bear shaman.png"));
-			anim.addAnimation(AnimationState.IDLE, new Animation(new SpriteSheet("assets/images/bear shaman idle sprite sheet.png", 152, 152), 100));
+			setImage(new Image("assets/images/player/sprite.png"));
+			anim.addAnimation(AnimationState.IDLE, new Animation(new SpriteSheet("assets/images/player/idle.png", 152, 152), 100));
+			Animation running = new Animation(new SpriteSheet("assets/images/player/running.png", 152, 152), 1);
+			setFrames(running, 14, 80);
+			anim.addAnimation(AnimationState.RUN, running);
 		} catch (Exception e) {
 			e.printStackTrace();
 			setColor(Color.white);
@@ -89,5 +92,14 @@ public class Player extends Entity {
 			if (i != null && i.isAttacking()) return true;
 		}
 		return false;
+	}
+	
+	private void setFrames(Animation anim, int numFrames, int durPerFrame) {
+		for (int i = 0; i < numFrames; i++) {
+			anim.setDuration(i, durPerFrame);
+		}
+		for (int i = numFrames; i < anim.getFrameCount(); i++) {
+			anim.setDuration(i, 0);
+		}
 	}
 }
