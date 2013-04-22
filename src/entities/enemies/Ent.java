@@ -24,7 +24,7 @@ public class Ent extends Enemy {
 	public Ent(float x, float y) {
 		super(x, y, WIDTH, HEIGHT, GROUND, RUNSPEED, JMPSPEED, MAXHP, new Goomba());
 		try {
-			setImage(new Image("assets/images/ent1.png"));
+			setImage(new Image("assets/images/enemies/ent.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

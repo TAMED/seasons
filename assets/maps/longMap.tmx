@@ -1,164 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="500" height="24" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="tileSheet" tilewidth="32" tileheight="32">
-  <image source="tileSheet.png" width="192" height="192"/>
-  <tile id="0">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="4">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="5">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="8">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="9">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="10">
-   <properties>
-    <property name="endpoint" value="first"/>
-    <property name="flipped" value="false"/>
-    <property name="slope" value="1"/>
-    <property name="type" value="slope"/>
-   </properties>
-  </tile>
-  <tile id="11">
-   <properties>
-    <property name="endpoint" value="first"/>
-    <property name="flipped" value="false"/>
-    <property name="slope" value="-1"/>
-    <property name="type" value="slope"/>
-   </properties>
-  </tile>
-  <tile id="12">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="13">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="14">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="15">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="18">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="19">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="20">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="21">
-   <properties>
-    <property name="hookable" value="true"/>
-   </properties>
-  </tile>
-  <tile id="23">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="24">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="25">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="28">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="29">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="30">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="31">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="32">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="33">
-   <properties>
-    <property name="hookable" value="true"/>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="34">
-   <properties>
-    <property name="type" value="wall"/>
-   </properties>
-  </tile>
-  <tile id="35">
-   <properties>
-    <property name="type" value="player"/>
-   </properties>
-  </tile>
- </tileset>
- <tileset firstgid="37" name="goal" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="goal" tilewidth="32" tileheight="32">
   <image source="../rocks.png" width="128" height="128"/>
   <tile id="0">
    <properties>
@@ -166,9 +8,10 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="17" source="forestTiles.tsx"/>
  <layer name="Tile Layer 1" width="500" height="24">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
 </map>
