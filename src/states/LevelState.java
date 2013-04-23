@@ -96,15 +96,15 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
-			if (this.getID() == 1) {
-				game.enterState(2);
-			}
-			else {
+		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
+			if (this.getID() == 4) {
 				game.enterState(0);
 			}
+			else {
+				game.enterState(this.getID()+1);
+			}
 		}
-		if (Math.abs(player.getX()-goalLoc.x) < 30 && Math.abs(player.getY() - goalLoc.y) < 30) {
+		if (Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30) {
 			if (lastTime == null) {
 				lastTime = new Time();
 			}
@@ -116,11 +116,11 @@ public class LevelState extends BasicGameState{
 			if ((lastTime.getMillis() < bestTime.getMillis()) || (bestTime.getMillis() == 0)) {
 				bestTime.set(timer.getMillis());
 			}
-			if (this.getID() == 1) {
-				game.enterState(2);
+			if (this.getID() == 4) {
+				game.enterState(0);
 			}
 			else {
-				game.enterState(0);
+				game.enterState(this.getID()+1);
 			}
 		}
 		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
@@ -137,6 +137,7 @@ public class LevelState extends BasicGameState{
 		}
 
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
+		if (gc.getInput().isKeyPressed(Input.KEY_F11)) gc.setFullscreen(!gc.isFullscreen());
 		camera.centerOn(player.getX(),player.getY());
 		
 		cursor.update(gc, delta);
