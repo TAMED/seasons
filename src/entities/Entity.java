@@ -29,7 +29,6 @@ import config.Config;
  * 
  */
 public abstract class Entity extends Sprite {
-	private PolygonShape physicsShape;
 	private BodyDef physicsDef;
 	private FixtureDef physicsFixtureDef;
 	private Fixture physicsFixture;
@@ -60,12 +59,9 @@ public abstract class Entity extends Sprite {
 		physicsDef.position.set(x / Config.PIXELS_PER_METER,
 		                        y / Config.PIXELS_PER_METER);
 		
-		physicsShape = new PolygonShape();
-		physicsShape.setAsBox(width / 2 / Config.PIXELS_PER_METER,
-		                     height / 2 / Config.PIXELS_PER_METER);
-		
 		physicsFixtureDef = new FixtureDef();
-		physicsFixtureDef.shape = physicsShape;
+		physicsFixtureDef.shape = Util.getBoxShape(width / 2 / Config.PIXELS_PER_METER,
+		                                          height / 2 / Config.PIXELS_PER_METER);
 		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
 		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
 		physicsFixtureDef.filter.maskBits |= Config.WATER;
@@ -73,14 +69,11 @@ public abstract class Entity extends Sprite {
 		if (hasSensors) {
 			sensorShapes = new PolygonShape[Direction.values().length];
 			// creates sensors on each side. Config has mapping of integers to TOP, BOTTOM, etc.
-			for (int i = 0; i < sensorShapes.length; i++) {
-				sensorShapes[i] = new PolygonShape();
-			}
-			sensorShapes[Direction.UP.ordinal()   ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
-			sensorShapes[Direction.DOWN.ordinal() ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
-			sensorShapes[Direction.LEFT.ordinal() ].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
-			sensorShapes[Direction.RIGHT.ordinal()].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
-			sensorShapes[Direction.CENTER.ordinal()].setAsBox(.1f, .1f, new Vec2(0,0), 0);
+			sensorShapes[Direction.UP.ordinal()   ]  = Util.getBoxShape(width/2.2f/Config.PIXELS_PER_METER, .1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
+			sensorShapes[Direction.DOWN.ordinal() ]  = Util.getBoxShape(width/2.2f/Config.PIXELS_PER_METER, .1f, new Vec2(0,  height/2/Config.PIXELS_PER_METER), 0);
+			sensorShapes[Direction.LEFT.ordinal() ]  = Util.getBoxShape(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER,  0), 0);
+			sensorShapes[Direction.RIGHT.ordinal()]  = Util.getBoxShape(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2( width/2/Config.PIXELS_PER_METER,  0), 0);
+			sensorShapes[Direction.CENTER.ordinal()] = Util.getBoxShape(.1f, .1f, new Vec2(0,0), 0);
 			for (int i = 0; i < sensors.length; i++) {
 				sensors[i] = new FixtureDef();
 				sensors[i].shape = sensorShapes[i];

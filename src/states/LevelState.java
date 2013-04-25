@@ -167,7 +167,7 @@ public class LevelState extends BasicGameState{
 		map.parseMapObjects();
 		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
 		debugdraw = new Box2DDebugDraw();
-		debugdraw.setFlags(DebugDraw.e_shapeBit);
+		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		world.setDebugDraw(debugdraw);
 				
 		player = MainGame.player;
