@@ -22,6 +22,8 @@ public class Config {
 	public static final int WATER = 4;
 	
 	// Player
+	public static final int PLAYER_DRAW_WIDTH = 36;
+	public static final int PLAYER_DRAW_HEIGHT = 80;
 	public static final float PLAYER_MOVE_SPEED = 25;
 	public static final float PLAYER_JUMP_SPEED = 30;
 	public static final int PLAYER_MAX_HP = 1;

@@ -9,15 +9,12 @@ import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import util.Util;
 import anim.AnimStateMachine;
 import anim.AnimationState;
-
-import util.Util;
 import entities.Player;
 
 public class Hookshot extends ItemBase {
@@ -32,8 +29,8 @@ public class Hookshot extends ItemBase {
 	// range the hook can travel before it will reset
 	private static final float MAX_RANGE = 500;
 	// number of segments the rope/chain is broken into (visually, for the wisps)
-	private static final int HOOK_CHUNKS = 10;
-	private static final int HOOK_DIM = 32;
+	private static final float CHAIN_LENGTH = 530f;
+	private static final float CHAIN_HEIGHT = 16f;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
@@ -43,36 +40,29 @@ public class Hookshot extends ItemBase {
 	private Hook hook;
 	private Joint tether;
 	
-	private Image wisp;
+	private Chain chain;
 	
 	public Hookshot(Player player) {
 		super(player);
 		state = HookState.IN;
-		try {
-			wisp = new Image("assets/images/nonentities/wisp/sprite.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
 	public void render(Graphics graphics) {
+
+		
+		// draw tether
+		switch (state) {
+			case OUT: case PULL: case MOTION:
+				chain.render(graphics);
+
+		}
+		
 		// draw hook
 		switch (state) {
 			case MOTION: case OUT: case PULL:
 				hook.render(graphics);
 				break;
-		}
-		
-		// draw tether
-		switch (state) {
-			case OUT: case PULL: case MOTION:
-				Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
-				
-				for (int i = 1; i < HOOK_CHUNKS; i++) {
-					Vec2 rel = dist.mul(i / (float) HOOK_CHUNKS);
-					wisp.draw(owner.getPosition().getX() - (HOOK_DIM / 2) + rel.x, owner.getPosition().getY() - (HOOK_DIM / 2) + rel.y);
-				}
 		}
 	}
 	
@@ -150,6 +140,8 @@ public class Hookshot extends ItemBase {
 //				b1.setLinearVelocity(dist.mul(K));
 				break;
 		}
+		
+		if (chain != null)  chain.update(gc, delta);
 	}
 
 	/**
@@ -161,9 +153,22 @@ public class Hookshot extends ItemBase {
 		Vector2f aim = new Vector2f(Controls.getAimAngle(owner));
 		Vector2f start = new Vector2f(0,0);
 		
-		hook = new Hook(x + start.x, y + start.y);
+		hook = new Hook(x + start.x, y + start.y, owner);
 		hook.addToWorld(owner.getPhysicsWorld());
 		hook.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(aim.copy().scale(STARTING_VEL)));
+		
+		// drawing
+//		chain.draw(owner.getPosition().getX() - (chain.getWidth()/2) + halfDist.x, owner.getPosition().getY() - (chain.getHeight()/2) + halfDist.y);
+
+		
+		Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
+		Vec2 halfDist = dist.mul(.5f);
+		chain = new Chain(owner.getPosition().getX() - CHAIN_LENGTH/2 + halfDist.x, 
+				  owner.getPosition().getY() - CHAIN_HEIGHT/2 + halfDist.y, 
+				  CHAIN_LENGTH,
+				  CHAIN_HEIGHT,
+				  owner,
+				  hook);
 	}
 
 	/**
@@ -174,6 +179,10 @@ public class Hookshot extends ItemBase {
 			owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
 		}
 		hook = null;
+		
+		
+		//drawing
+		chain = null;
 	}
 
 	/**
@@ -190,6 +199,8 @@ public class Hookshot extends ItemBase {
 		tetherDef.localAnchorB.set(zero);
 		tetherDef.maxLength = b1.getPosition().sub(b2.getPosition()).length();
 		tether = owner.getPhysicsWorld().createJoint(tetherDef);
+
+
 	}
 
 	private void detachTether() {
@@ -197,6 +208,7 @@ public class Hookshot extends ItemBase {
 			Joint.destroy(tether);
 			tether = null;
 		}
+
 	}
 
 	@Override
