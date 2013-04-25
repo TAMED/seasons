@@ -16,9 +16,12 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.ContactEdge;
+import org.jbox2d.dynamics.joints.RevoluteJoint;
+import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Point;
 
+import states.LevelState;
 import util.Direction;
 import util.Util;
 import anim.AnimationState;
@@ -42,6 +45,11 @@ public abstract class Entity extends Sprite {
 	private FixtureDef boxDef;
 	private Body physicsBody;
 	
+	private boolean hasFeet;
+	private BodyDef footDef;
+	private FixtureDef footFixtureDef;
+	private RevoluteJoint footJoint;
+	
 	private boolean hasSensors;
 	private FixtureDef[] sensors = new FixtureDef[Direction.values().length];
 	private PolygonShape[] sensorShapes;
@@ -50,19 +58,20 @@ public abstract class Entity extends Sprite {
 	private float height;
 	private float radius;
 	
-	private float runSpeed;
-	private float jmpSpeed;
-	
 	public final int maxHp;
 	private int hp;
 	private boolean alive;
 	private int jumpTimer = 500;
+	
+	private float runSpeed;
+	private float acceleration;
+	private float jmpSpeed;
 
-	public Entity(float width, float height, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
-		this(width, height, 0, runSpeed, jmpSpeed, maxHp, hasSensors);
+	public Entity(float width, float height, int maxHp, boolean hasSensors) {
+		this(width, height, 0, maxHp, hasSensors);
 	}
 
-	public Entity(float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
+	public Entity(float width, float height, float ground, int maxHp, boolean hasSensors) {
 		super(0, 0, width, height, ground);
 		
 		this.width = width;
@@ -122,8 +131,6 @@ public abstract class Entity extends Sprite {
 		} else {
 			sensorShapes = new PolygonShape[0];
 		}
-		this.runSpeed = runSpeed;
-		this.jmpSpeed = jmpSpeed;
 		
 		this.maxHp = maxHp;
 		this.hp = maxHp;
@@ -141,35 +148,53 @@ public abstract class Entity extends Sprite {
 		this.waterUpdate(gc);
 	}
 
-	public void moveLeft() {
-		if (this.isTouching(Direction.DOWN)) {
-			if (this.getFacing() == Direction.LEFT) {
-				this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
-			} else {
-				this.getPhysicsBody().applyForce(new Vec2(-3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
-			}
-		} else {
-			this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
-		}
-		setFacing(Direction.LEFT);
-		anim.play(AnimationState.RUN);
+	public void move(float xvel, float yvel) {
+		if (xvel > 0) setFacing(Direction.RIGHT);
+		if (xvel < 0) setFacing(Direction.LEFT);
+		getPhysicsBody().applyLinearImpulse(new Vec2(xvel, yvel), getPhysicsBody().getWorldCenter());
 	}
 	
-	public void moveRight() {
-		if (this.isTouching(Direction.DOWN)) {
-			if (this.getFacing() == Direction.RIGHT) {
-				this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
-			} else {
-				this.getPhysicsBody().applyForce(new Vec2(3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
+	public void addFeet(float runSpeed, float acceleration, float jmpSpeed) {
+		this.hasFeet = true;
+		this.runSpeed = runSpeed;
+		this.acceleration = acceleration;
+		this.jmpSpeed = jmpSpeed;
+		
+		footDef = new BodyDef();
+		footDef.type = BodyType.DYNAMIC;
+		footDef.fixedRotation = false;
+		footFixtureDef = new FixtureDef();
+		footFixtureDef.shape = Util.getCircleShape(radius * 1.1f / Config.PIXELS_PER_METER);
+		footFixtureDef.density = Config.DEFAULT_DENSITY;
+		footFixtureDef.friction = Config.DEFAULT_TRACTION;
+	}
+	
+	public void run(Direction dir) {
+		if (hasFeet) {
+			switch (dir) {
+				case LEFT:
+					footJoint.setMotorSpeed(runSpeed);
+//					if (this.getPhysicsBody().getLinearVelocity().x < 0) {
+						setFacing(Direction.LEFT);
+//					}
+					anim.play(AnimationState.RUN);
+					break;
+				case RIGHT:
+					footJoint.setMotorSpeed(-runSpeed);
+//					if (this.getPhysicsBody().getLinearVelocity().x > 0) {
+						setFacing(Direction.RIGHT);
+//					}
+					anim.play(AnimationState.RUN);
+					break;
+				default:
+					footJoint.setMotorSpeed(0);
+					break;
 			}
-		} else {
-			this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
 		}
-		setFacing(Direction.RIGHT);
-		anim.play(AnimationState.RUN);
 	}
 	
 	public void jump(GameContainer gc, int delta) {
+		// TODO: impulse should be applied to body center
 		System.out.println(jumpTimer);
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
@@ -177,21 +202,11 @@ public abstract class Entity extends Sprite {
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
-		}
-		else if(this.isTouching(Direction.DOWN)) {
-//			float xvel = this.getPhysicsBody().getLinearVelocity().x;
+		} else if (this.isTouching(Direction.DOWN) || LevelState.godMode) {
 			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
 			anim.play(AnimationState.JUMP);
 		}
 		
-	}
-	
-	public void dampenVelocity(int delta) {
-		Vec2 vel = this.getPhysicsBody().getLinearVelocity();
-		this.getPhysicsBody().setLinearVelocity(new Vec2((float) (vel.x * Math.pow(Config.DRAG, delta/100f)), vel.y));
-		if (this.isTouching(Direction.DOWN)) {
-			anim.play(AnimationState.IDLE);
-		}
 	}
 	
 	public void addToWorld(World world, float x, float y) {
@@ -210,6 +225,17 @@ public abstract class Entity extends Sprite {
 			for(int i = 0; i < sensors.length; i++){
 				physicsBody.createFixture(sensors[i]).setUserData(Direction.values()[i]);
 			}
+		}
+
+		if (hasFeet) {
+			footDef.position.set(x / Config.PIXELS_PER_METER, (y + (height / 2) - radius) / Config.PIXELS_PER_METER);
+			Body footBody = world.createBody(footDef);
+			footBody.createFixture(footFixtureDef);
+			RevoluteJointDef joint = new RevoluteJointDef();
+			joint.initialize(footBody, physicsBody, footBody.getWorldCenter());
+			joint.enableMotor = true;
+			joint.maxMotorTorque = acceleration;
+			footJoint = (RevoluteJoint) world.createJoint(joint);
 		}
 	}
 	
@@ -356,14 +382,13 @@ public abstract class Entity extends Sprite {
 	 * @return a list of bodies touching the object
 	 */
 	public final ArrayList<Body> bodiesTouching() {
+		// TODO: this function will currently add the same body multiple times
 		ArrayList<Body> list = new ArrayList<Body>();
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
 		while(contactEdge != null) {
 			if(contactEdge.contact.isTouching()) {
 				Body b = contactEdge.contact.getFixtureA().getBody();
-				Body bb = contactEdge.contact.getFixtureB().getBody();
-				System.out.println("A:" + b.getUserData() + ", B:" + bb.getUserData());
 				list.add(b);
 			}
 			contactEdge = contactEdge.next;

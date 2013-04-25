@@ -25,7 +25,7 @@ public class Hook extends Entity {
 	 * @param height
 	 */
 	public Hook() {
-		super(SIZE, SIZE, 0, 0, 1, false);
+		super(SIZE, SIZE, 1, false);
 		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
 		for (FixtureDef f : getPhysicsFixtureDefs()) {
@@ -44,8 +44,6 @@ public class Hook extends Entity {
 	public void update(GameContainer gc, int delta) {
 		ArrayList<Body> touching = bodiesTouching();
 		if (touching.size() > 0) {
-			System.out.println(touching.get(0).getUserData());
-			System.out.println(getPhysicsBody().getUserData());
 			attach(touching.get(0));
 		}
 	}

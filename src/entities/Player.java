@@ -13,6 +13,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 
+import util.Direction;
+
 import anim.AnimationState;
 import config.Config;
 
@@ -27,7 +29,8 @@ public class Player extends Entity {
 	}
 	
 	public Player(float width, float height, float ground) {
-		super(width, height, ground, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP, true);
+		super(width, height, ground, Config.PLAYER_MAX_HP, true);
+		addFeet(Config.PLAYER_MOVE_SPEED, Config.PLAYER_ACCELERATION, Config.PLAYER_JUMP_SPEED);
 		
 		try {
 			setImage(new Image("assets/images/player/sprite.png"));
@@ -72,15 +75,18 @@ public class Player extends Entity {
 	private void movePlayer(GameContainer gc, int delta) {
 		Input input = gc.getInput();
 		
+		boolean floating = !isTouching(Direction.DOWN) || checkWater(gc);
+		
 		if(input.isKeyDown(Input.KEY_D)) {
-			moveRight();
+			run(Direction.RIGHT);
+			if (floating) move(Config.PLAYER_AIR_MOVE_SPEED, 0);
 		} else if(input.isKeyDown(Input.KEY_A)) {
-			moveLeft();
+			run(Direction.LEFT);
+			if (floating) move(-Config.PLAYER_AIR_MOVE_SPEED, 0);
 		} else {
-			if (!hookshot.isPulling()) {
-				dampenVelocity(delta);
-			}
+			run(Direction.DOWN);
 		}
+		
 		if(input.isKeyPressed(Input.KEY_SPACE)) {
 			jump(gc, delta);
 		}

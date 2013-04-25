@@ -27,7 +27,7 @@ public class Enemy extends Entity {
 	}
 	
 	public Enemy(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, AI ai) {
-		super(width, height, ground, runSpeed, jmpSpeed, maxHp, true);
+		super(width, height, ground, maxHp, true);
 		this.ai = ai;
 		setColor(Color.red);
 		setPosition(x, y);

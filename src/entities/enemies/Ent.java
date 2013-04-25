@@ -16,6 +16,7 @@ public class Ent extends Enemy {
 	private static final float HEIGHT = 64;
 	private static final float GROUND = 6;
 	private static final int RUNSPEED = 2;
+	private static final int ACCELERATION = 2;
 	private static final int JMPSPEED = 2;
 	private static final int MAXHP = 1;
 
@@ -23,6 +24,7 @@ public class Ent extends Enemy {
 	
 	public Ent(float x, float y) {
 		super(x, y, WIDTH, HEIGHT, GROUND, RUNSPEED, JMPSPEED, MAXHP, new Goomba());
+		addFeet(RUNSPEED, ACCELERATION, JMPSPEED);
 		try {
 			setImage(new Image("assets/images/enemies/ent.png"));
 		} catch (Exception e) {
