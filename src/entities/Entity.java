@@ -109,13 +109,11 @@ public abstract class Entity extends Sprite {
 				this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
 			} else {
 				this.getPhysicsBody().applyForce(new Vec2(-3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
-				if (this.getPhysicsBody().getLinearVelocity().x < 0) {
-					setFacing(Direction.LEFT);
-				}
 			}
 		} else {
 			this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
 		}
+		setFacing(Direction.LEFT);
 		anim.play(AnimationState.RUN);
 	}
 	
@@ -125,13 +123,11 @@ public abstract class Entity extends Sprite {
 				this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
 			} else {
 				this.getPhysicsBody().applyForce(new Vec2(3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
-				if (this.getPhysicsBody().getLinearVelocity().x > 0) {
-					setFacing(Direction.RIGHT);
-				}
 			}
 		} else {
 			this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
 		}
+		setFacing(Direction.RIGHT);
 		anim.play(AnimationState.RUN);
 	}
 	
