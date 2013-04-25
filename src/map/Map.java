@@ -41,22 +41,28 @@ public class Map {
 		enemies = new ArrayList<Enemy>();
 	}
 	public void parseMapObjects() {
-		parseHookableObjects();
+		parseSpecialObjects();
 		parseWallObjects();
 		parseSlopeObjects();
 		parseEntityObjects();
+		createLine(new Vec2(0, (height+2)*tileHeight/ Config.PIXELS_PER_METER), 
+				new Vec2(width*tileWidth/ Config.PIXELS_PER_METER, (height+2)*tileHeight/ Config.PIXELS_PER_METER));
 	}
 	
 	/**
 	 * Give bodies to things which can be hooked
 	 */
-	private void parseHookableObjects() {
+	private void parseSpecialObjects() {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
 				int tileId = foreground.getTileId(i, j, 0);
 				String tileType = foreground.getTileProperty(tileId, "hookable", "meh");
 				if (tileType.equals("true")) {
-					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, 2, 2);
+					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.HOOKABLE, Config.HOOKABLE, false);
+				}
+				tileType = foreground.getTileProperty(tileId, "water", "meh");
+				if (tileType.equals("true")) {
+					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.WATER, 1, true);
 				}
 			}
 		}
@@ -285,7 +291,7 @@ public class Map {
 		line.createFixture(edge, Config.DEFAULT_DENSITY);
 	}
 	
-	private void createBox(float x, float y, int category, int collides) {
+	private void createBox(float x, float y, int category, int collides, boolean isSensor) {
 		BodyDef physicsDef = new BodyDef();
 		physicsDef.type = BodyType.STATIC;
 		physicsDef.fixedRotation = true;
@@ -300,8 +306,9 @@ public class Map {
 		physicsFixtureDef.shape = physicsShape;
 		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
 		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
-		physicsFixtureDef.filter.categoryBits = Config.HOOKABLE;
-		physicsFixtureDef.filter.maskBits = Config.HOOKABLE;
+		physicsFixtureDef.filter.categoryBits = category;
+		physicsFixtureDef.filter.maskBits = collides;
+		physicsFixtureDef.isSensor = isSensor;
 		
 		Body physicsBody = world.createBody(physicsDef);
 		Fixture physicsFixture = physicsBody.createFixture(physicsFixtureDef);

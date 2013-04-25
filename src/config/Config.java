@@ -17,8 +17,9 @@ public class Config {
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	
-	// Object Groups
+	// Object Filter Categories
 	public static final int HOOKABLE = 2;
+	public static final int WATER = 4;
 	
 	// Player
 	public static final float PLAYER_MOVE_SPEED = 25;
@@ -26,8 +27,9 @@ public class Config {
 	public static final int PLAYER_MAX_HP = 1;
 	
 	// Movement
-	public static final float GRAVITY = 10;
+	public static final float GRAVITY = 15;
 	public static final float DRAG = 0.5f;
+	public static final float WATER_GRAVITY_SCALE = -1f;
 	
 	// UI
 	// how far away from the player the aiming cursor appears
