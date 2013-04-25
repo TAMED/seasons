@@ -23,8 +23,8 @@ public class Hook extends Entity {
 	 * @param width
 	 * @param height
 	 */
-	public Hook(float x, float y) {
-		super(x, y, SIZE, SIZE, 0, 0, 1, false);
+	public Hook() {
+		super(SIZE, SIZE, 0, 0, 1, false);
 		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
 		getPhysicsFixtureDef().filter.categoryBits = Config.HOOKABLE;

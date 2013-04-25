@@ -171,12 +171,11 @@ public class LevelState extends BasicGameState{
 		world.setDebugDraw(debugdraw);
 				
 		player = MainGame.player;
-		player.addToWorld(world);
+		player.addToWorld(world, map.getPlayerLoc().x, map.getPlayerLoc().y);
 		player.reset();
-		player.setPosition(map.getPlayerLoc().x, map.getPlayerLoc().y);
 		enemies = map.getEnemies();
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).addToWorld(world);
+		for (Enemy e : enemies) {
+			e.addToWorld(world, e.getX(), e.getY());
 		}
 		
 		goalLoc = map.getGoalLoc();

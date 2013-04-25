@@ -46,18 +46,16 @@ public abstract class Entity extends Sprite {
 	private boolean alive;
 	private int jumpTimer = 500;
 
-	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
-		this(x, y, width, height, 0, runSpeed, jmpSpeed, maxHp, hasSensors);
+	public Entity(float width, float height, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
+		this(width, height, 0, runSpeed, jmpSpeed, maxHp, hasSensors);
 	}
 
-	public Entity(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
-		super(x, y, width, height, ground);
+	public Entity(float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
+		super(0, 0, width, height, ground);
 		this.hasSensors = hasSensors;
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
 		physicsDef.fixedRotation = true;
-		physicsDef.position.set(x / Config.PIXELS_PER_METER,
-		                        y / Config.PIXELS_PER_METER);
 		
 		physicsFixtureDef = new FixtureDef();
 		physicsFixtureDef.shape = Util.getBoxShape(width / 2 / Config.PIXELS_PER_METER,
@@ -154,7 +152,8 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
-	public void addToWorld(World world) {
+	public void addToWorld(World world, float x, float y) {
+		physicsDef.position.set(x / Config.PIXELS_PER_METER, y / Config.PIXELS_PER_METER);
 		physicsBody = world.createBody(physicsDef);
 		physicsFixture = physicsBody.createFixture(physicsFixtureDef);
 		physicsFixture.setUserData(this);

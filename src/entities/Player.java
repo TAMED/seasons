@@ -27,7 +27,7 @@ public class Player extends Entity {
 	}
 	
 	public Player(float width, float height, float ground) {
-		super(0, 0, width, height, ground, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP, true);
+		super(width, height, ground, Config.PLAYER_MOVE_SPEED, Config.PLAYER_JUMP_SPEED, Config.PLAYER_MAX_HP, true);
 		
 		try {
 			setImage(new Image("assets/images/player/sprite.png"));
