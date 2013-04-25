@@ -33,6 +33,8 @@ public class Sprite {
 	private Point position;
 	private Direction facing;
 	private float ground;
+	private float angle = 0;
+	
 	public Sprite(float x, float y, float width, float height) {
 		this(x, y, width, height, 0f);
 	}
@@ -69,8 +71,10 @@ public class Sprite {
 			if (currentAnim != null) {
 				img = currentAnim.getCurrentFrame()
 				           .getFlippedCopy(facing == Direction.RIGHT, false);
+				img.setRotation(this.angle);
 			} else {
 				img = image.getFlippedCopy(facing == Direction.RIGHT, false);
+				img.setRotation(this.angle);
 			}
 			img.draw(x - hh, y - hh, height + 2*ground, height + 2*ground);
 		} else if (color != null) {
@@ -205,5 +209,9 @@ public class Sprite {
 	 */
 	public void setFacing(Direction dir) {
 		this.facing = dir;
+	}
+	
+	public void setRotation(float angle) {
+		this.angle = angle;
 	}
 }
