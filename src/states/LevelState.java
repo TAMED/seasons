@@ -83,10 +83,11 @@ public class LevelState extends BasicGameState{
 		if (viewDebug) {
 			debugdraw.setGraphics(graphics);
 			world.drawDebugData();
-		}
-		player.render(graphics);
-		for (Enemy e : enemies) {
-			e.render(graphics);			
+		} else {
+			player.render(graphics);
+			for (Enemy e : enemies) {
+				e.render(graphics);			
+			}
 		}
 		cursor.render(graphics);
 		

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,8 +28,10 @@ public class Hook extends Entity {
 		super(SIZE, SIZE, 0, 0, 1, false);
 		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
-		getPhysicsFixtureDef().filter.categoryBits = Config.HOOKABLE;
-		getPhysicsFixtureDef().filter.maskBits = Config.HOOKABLE;
+		for (FixtureDef f : getPhysicsFixtureDefs()) {
+			f.filter.categoryBits = Config.HOOKABLE;
+			f.filter.maskBits = Config.HOOKABLE;
+		}
 		attached = false;
 	}
 
@@ -41,12 +44,14 @@ public class Hook extends Entity {
 	public void update(GameContainer gc, int delta) {
 		ArrayList<Body> touching = bodiesTouching();
 		if (touching.size() > 0) {
+			System.out.println(touching.get(0).getUserData());
+			System.out.println(getPhysicsBody().getUserData());
 			attach(touching.get(0));
 		}
 	}
 	
 	/**
-	 * Attaches the hook to the specified body
+	 * Anchors the hook at its current location
 	 * @param b a body
 	 */
 	private void attach(Body b) {

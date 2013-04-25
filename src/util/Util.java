@@ -49,7 +49,7 @@ public class Util {
 		return new Vector2f(v.x, v.y);
 	}
 	
-	public static PolygonShape getBoxShape(float halfWidth, float halfHeight) { return getBoxShape(halfWidth, halfHeight, new Vec2(), 0); }
+	public static PolygonShape getBoxShape(float halfWidth, float halfHeight) { return getBoxShape(halfWidth, halfHeight, new Vec2(0, 0), 0); }
 	
 	public static PolygonShape getBoxShape(float halfWidth, float halfHeight, Vec2 center, float angle) {
 		PolygonShape box = new PolygonShape();

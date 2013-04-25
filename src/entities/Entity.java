@@ -6,6 +6,7 @@ package entities;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -29,14 +30,25 @@ import config.Config;
  * 
  */
 public abstract class Entity extends Sprite {
+	/**
+	 * If the difference between the width and height of the entity is less than
+	 * this (in pixels), then the capsule shape is approximated with only two circles
+	 */
+	private static final float EPSILON = 5;
+	
 	private BodyDef physicsDef;
-	private FixtureDef physicsFixtureDef;
-	private Fixture physicsFixture;
+	private FixtureDef circleDef1;
+	private FixtureDef circleDef2;
+	private FixtureDef boxDef;
 	private Body physicsBody;
-	private World physicsWorld;
+	
+	private boolean hasSensors;
 	private FixtureDef[] sensors = new FixtureDef[Direction.values().length];
 	private PolygonShape[] sensorShapes;
-	private boolean hasSensors;
+	
+	private float width;
+	private float height;
+	private float radius;
 	
 	private float runSpeed;
 	private float jmpSpeed;
@@ -52,17 +64,47 @@ public abstract class Entity extends Sprite {
 
 	public Entity(float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
 		super(0, 0, width, height, ground);
+		
+		this.width = width;
+		this.height = height;
+		this.radius = Math.min(width, height) / 2;
+		float hw = width / 2;  // half-width
+		float hh = height / 2; // half-height
+		
 		this.hasSensors = hasSensors;
+		
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
 		physicsDef.fixedRotation = true;
 		
-		physicsFixtureDef = new FixtureDef();
-		physicsFixtureDef.shape = Util.getBoxShape(width / 2 / Config.PIXELS_PER_METER,
-		                                          height / 2 / Config.PIXELS_PER_METER);
-		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
-		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
-		physicsFixtureDef.filter.maskBits |= Config.WATER;
+		circleDef1 = new FixtureDef();
+		circleDef1.density = Config.DEFAULT_DENSITY;
+		circleDef1.friction = Config.DEFAULT_FRICTION;
+		circleDef1.shape = Util.getCircleShape(radius / Config.PIXELS_PER_METER);
+		((CircleShape) circleDef1.shape).m_p.set((-hw + radius) / Config.PIXELS_PER_METER,
+		                                         (-hh + radius) / Config.PIXELS_PER_METER);
+		
+		circleDef2 = new FixtureDef();
+		circleDef2.density = Config.DEFAULT_DENSITY;
+		circleDef2.friction = Config.DEFAULT_FRICTION;
+		circleDef2.shape = Util.getCircleShape(radius / Config.PIXELS_PER_METER);
+		((CircleShape) circleDef2.shape).m_p.set((hw - radius) / Config.PIXELS_PER_METER,
+		                                         (hh - radius) / Config.PIXELS_PER_METER);
+		
+		boxDef = new FixtureDef();
+		boxDef.density = Config.DEFAULT_DENSITY;
+		boxDef.friction = Config.DEFAULT_FRICTION;
+		boxDef.filter.maskBits |= Config.WATER;
+		if (height - width > EPSILON) {
+			boxDef.shape = Util.getBoxShape(hw / Config.PIXELS_PER_METER,
+		                             (hh - hw) / Config.PIXELS_PER_METER);
+		} else if (width - height > EPSILON) {
+			boxDef.shape = Util.getBoxShape(hh / Config.PIXELS_PER_METER,
+			                         (hw - hh) / Config.PIXELS_PER_METER);
+		} else { // just make an arbitrary box
+			boxDef.shape = Util.getBoxShape(hw / 2 / Config.PIXELS_PER_METER,
+			                                hh / 2 / Config.PIXELS_PER_METER);
+		}
 		
 		if (hasSensors) {
 			sensorShapes = new PolygonShape[Direction.values().length];
@@ -155,13 +197,19 @@ public abstract class Entity extends Sprite {
 	public void addToWorld(World world, float x, float y) {
 		physicsDef.position.set(x / Config.PIXELS_PER_METER, y / Config.PIXELS_PER_METER);
 		physicsBody = world.createBody(physicsDef);
-		physicsFixture = physicsBody.createFixture(physicsFixtureDef);
-		physicsFixture.setUserData(this);
+		physicsBody.setUserData(this);
+
+		Fixture circle1 = physicsBody.createFixture(circleDef1);
+		circle1.setUserData(this);
+		Fixture circle2 = physicsBody.createFixture(circleDef2);
+		circle2.setUserData(this);
+		Fixture box = physicsBody.createFixture(boxDef);
+		box.setUserData(this);
+		
 		if (hasSensors) {
 			for(int i = 0; i < sensors.length; i++){
 				physicsBody.createFixture(sensors[i]).setUserData(Direction.values()[i]);
 			}
-			physicsWorld = world;
 		}
 	}
 	
@@ -169,7 +217,8 @@ public abstract class Entity extends Sprite {
 	 * @return the entity's physics world
 	 */
 	public World getPhysicsWorld() {
-		return physicsWorld;
+		if (physicsBody != null) return physicsBody.getWorld();
+		return null;
 	}
 
 	@Override
@@ -202,14 +251,15 @@ public abstract class Entity extends Sprite {
 	 * @return the entity's physics fixture
 	 */
 	public Fixture getPhysicsFixture() {
-		return physicsFixture;
+		if (physicsBody != null) return physicsBody.getFixtureList();
+		return null;
 	}
 	
 	/**
 	 * @return the entity's physics fixture
 	 */
-	public FixtureDef getPhysicsFixtureDef() {
-		return physicsFixtureDef;
+	public FixtureDef[] getPhysicsFixtureDefs() {
+		return new FixtureDef[] {circleDef1, circleDef2, boxDef};
 	}
 	
 	/**
@@ -311,7 +361,10 @@ public abstract class Entity extends Sprite {
 		
 		while(contactEdge != null) {
 			if(contactEdge.contact.isTouching()) {
-				list.add(contactEdge.contact.getFixtureA().getBody());
+				Body b = contactEdge.contact.getFixtureA().getBody();
+				Body bb = contactEdge.contact.getFixtureB().getBody();
+				System.out.println("A:" + b.getUserData() + ", B:" + bb.getUserData());
+				list.add(b);
 			}
 			contactEdge = contactEdge.next;
 		}
