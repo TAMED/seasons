@@ -36,11 +36,13 @@ public class Player extends Entity {
 			setFrames(running, 14, 80);
 			Animation jumping = new Animation(new SpriteSheet("assets/images/player/jumping.png", 152, 152), 10);
 			Animation falling = new Animation(new SpriteSheet("assets/images/player/falling.png", 152, 152), 10);
+			Animation hooking = new Animation(new SpriteSheet("assets/images/player/hooking.png", 152, 152), 10);
 			
 			anim.addAnimation(AnimationState.IDLE, idle);
 			anim.addAnimation(AnimationState.RUN, running);
 			anim.addAnimation(AnimationState.JUMP, jumping);
 			anim.addAnimation(AnimationState.FALL, falling);
+			anim.addAnimation(AnimationState.HOOKING, hooking);
 		} catch (Exception e) {
 			e.printStackTrace();
 			setColor(Color.white);
@@ -66,7 +68,7 @@ public class Player extends Entity {
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
 		movePlayer(gc,delta);
-		hookshot.update(gc, delta);
+		hookshot.update(gc, delta, anim);
 	}
 	
 	private void movePlayer(GameContainer gc, int delta) {

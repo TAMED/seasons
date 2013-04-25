@@ -14,6 +14,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import anim.AnimStateMachine;
+import anim.AnimationState;
+
 import util.Util;
 import entities.Player;
 
@@ -74,7 +77,7 @@ public class Hookshot extends ItemBase {
 	}
 	
 	@Override
-	public void update(GameContainer gc, int delta) {
+	public void update(GameContainer gc, int delta, AnimStateMachine anim) {
 		Input input = gc.getInput();
 		
 		if (hook != null) hook.update(gc, delta);
@@ -118,6 +121,7 @@ public class Hookshot extends ItemBase {
 					removeHook();
 					state = HookState.IN;
 				}
+				anim.play(AnimationState.HOOKING);
 				break;
 			case PULL:
 				activeTimer = ACTIVE_TIME;
@@ -220,4 +224,9 @@ public class Hookshot extends ItemBase {
 	public boolean isPulling() {
 		return state.equals(HookState.PULL);
 	}
+	
+	public boolean isShooting() {
+		return state.equals(HookState.MOTION);
+	}
+	
 }
