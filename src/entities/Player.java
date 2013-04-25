@@ -46,6 +46,7 @@ public class Player extends Entity {
 			anim.addAnimation(AnimationState.RUN, running);
 			anim.setFrames(AnimationState.RUN, 14, 80);
 			anim.addAnimation(AnimationState.JUMP, jumping);
+			anim.addAnimation(AnimationState.RISE, jumping);
 			anim.addAnimation(AnimationState.FALL, falling);
 			anim.addAnimation(AnimationState.HOOKING, hooking);
 			anim.addAnimation(AnimationState.START_JUMP, jumpTransition);
