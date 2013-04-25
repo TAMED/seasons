@@ -33,10 +33,16 @@ public class Player extends Entity {
 		
 		try {
 			setImage(new Image("assets/images/player/sprite.png"));
-			anim.addAnimation(AnimationState.IDLE, new Animation(new SpriteSheet("assets/images/player/idle.png", 152, 152), 100));
+			Animation idle = new Animation(new SpriteSheet("assets/images/player/idle.png", 152, 152), 100);
 			Animation running = new Animation(new SpriteSheet("assets/images/player/running.png", 152, 152), 1);
 			setFrames(running, 14, 80);
+			Animation jumping = new Animation(new SpriteSheet("assets/images/player/jumping.png", 152, 152), 10);
+			Animation falling = new Animation(new SpriteSheet("assets/images/player/falling.png", 152, 152), 10);
+			
+			anim.addAnimation(AnimationState.IDLE, idle);
 			anim.addAnimation(AnimationState.RUN, running);
+			anim.addAnimation(AnimationState.JUMP, jumping);
+			anim.addAnimation(AnimationState.FALL, falling);
 		} catch (Exception e) {
 			e.printStackTrace();
 			setColor(Color.white);
