@@ -49,16 +49,8 @@ public class Hook extends Entity {
 	}
 
 	@Override
-	public void render(Graphics graphics) {
-		float x = getScreenPosition().getX() - owner.getScreenPosition().getX();
-		float y = getScreenPosition().getY() - owner.getScreenPosition().getY();
-
-		Vector2f myLoc = Util.PointToVector2f(getScreenPosition());
-		Vector2f p = Util.PointToVector2f(owner.getScreenPosition());
-		Vector2f aim = myLoc.sub(p);
-		
-//		setRotation((float) Controls.getAimAngle(owner) + 90);
-		setRotation((float) aim.getTheta() + 90);
+	public void render(Graphics graphics) {	
+		setRotation(getAngle()); // sprite is drawn at 90 angle
 		draw(graphics);
 	}
 
@@ -98,4 +90,10 @@ public class Hook extends Entity {
 		detach();
 	}
 
+	public float getAngle() {
+		Vector2f myLoc = Util.PointToVector2f(getScreenPosition());
+		Vector2f p = Util.PointToVector2f(owner.getScreenPosition());
+		Vector2f aim = myLoc.sub(p);
+		return (float) aim.getTheta() + 90;
+	}
 }

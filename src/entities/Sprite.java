@@ -30,6 +30,8 @@ public class Sprite {
 	
 	private float width;
 	private float height;
+	private float drawWidth;
+	private float drawHeight;
 	private Point position;
 	private Direction facing;
 	private float ground;
@@ -44,6 +46,8 @@ public class Sprite {
 		anim = new AnimStateMachine();
 		this.width = width;
 		this.height = height;
+		this.drawWidth = width;
+		this.drawHeight = height;
 		this.facing = Direction.RIGHT;
 		this.ground = ground;
 	}
@@ -60,8 +64,8 @@ public class Sprite {
 	}
 	
 	protected void draw(Graphics graphics) {
-		float hw = width / 2;
-		float hh = height / 2;
+		float hw = drawWidth / 2;
+		float hh = drawHeight / 2;
 		float x = getX();
 		float y = getY();
 		
@@ -76,7 +80,7 @@ public class Sprite {
 				img = image.getFlippedCopy(facing == Direction.RIGHT, false);
 				img.setRotation(this.angle);
 			}
-			img.draw(x - hh, y - hh, height + 2*ground, height + 2*ground);
+			img.draw(x - hw, y - hh, drawWidth + 2*ground, drawHeight + 2*ground);
 		} else if (color != null) {
 			graphics.setColor(color);
 			graphics.drawRect(x - hw, y - hh, width, height);
@@ -87,6 +91,14 @@ public class Sprite {
 			if (anim.getCurrentState() != null)
 				graphics.drawString(anim.getCurrentState().toString(), x - hw, y - hh);
 		}
+	}
+	
+	public void setDrawWidth(float f) {
+		drawWidth = f;
+	}
+	
+	public void setDrawHeight(float f) {
+		drawHeight = f;
 	}
 	
 	public void setColor(Color c) {

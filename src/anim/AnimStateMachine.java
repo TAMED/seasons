@@ -81,10 +81,9 @@ public class AnimStateMachine {
 			Animation transition = animMap.get(currentState.transitionsFrom());
 
 			if (transition.isStopped()) {
-				
 				return animMap.get(currentState);
 			} else {
-				return animMap.get(AnimationState.START_JUMP);
+				return animMap.get(currentState.transitionsFrom());
 			}
 		
 		}
