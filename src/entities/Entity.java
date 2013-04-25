@@ -45,6 +45,7 @@ public abstract class Entity extends Sprite {
 	public final int maxHp;
 	private int hp;
 	private boolean alive;
+	private int jumpTimer = 500;
 
 	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
 		this(x, y, width, height, 0, runSpeed, jmpSpeed, maxHp, hasSensors);
@@ -101,9 +102,10 @@ public abstract class Entity extends Sprite {
 	 */
 	@Override
 	public void update(GameContainer gc, int delta) {
+		jumpTimer += delta;
 		super.update(gc, delta);
 		anim.update(this);
-		this.waterUpdate();
+		this.waterUpdate(gc);
 	}
 
 	public void moveLeft() {
@@ -138,12 +140,21 @@ public abstract class Entity extends Sprite {
 		anim.play(AnimationState.RUN);
 	}
 	
-	public void jump() {
-		if(this.isTouching(Direction.DOWN)) {
+	public void jump(GameContainer gc, int delta) {
+		System.out.println(jumpTimer);
+		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
+			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
+				this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
+				anim.play(AnimationState.JUMP);
+				jumpTimer = 0;
+			}
+		}
+		else if(this.isTouching(Direction.DOWN)) {
 //			float xvel = this.getPhysicsBody().getLinearVelocity().x;
 			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
+			anim.play(AnimationState.JUMP);
 		}
-		anim.play(AnimationState.JUMP);
+		
 	}
 	
 	public void dampenVelocity(int delta) {
@@ -311,8 +322,6 @@ public abstract class Entity extends Sprite {
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
 		while(contactEdge != null) {
-//			Fixture fixtureA = contactEdge.contact.getFixtureA();
-//			Fixture fixtureB = contactEdge.contact.getFixtureB();
 			if(contactEdge.contact.isTouching()) {
 				list.add(contactEdge.contact.getFixtureA().getBody());
 			}
@@ -327,8 +336,6 @@ public abstract class Entity extends Sprite {
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
 		while(contactEdge != null) {
-//			Fixture fixtureA = contactEdge.contact.getFixtureA();
-//			Fixture fixtureB = contactEdge.contact.getFixtureB();
 			if(contactEdge.contact.isTouching()) {
 				int category = contactEdge.contact.getFixtureA().m_filter.categoryBits;
 				Object data = contactEdge.contact.getFixtureB().getUserData();
@@ -342,12 +349,14 @@ public abstract class Entity extends Sprite {
 		return categories;
 	}
 	
-	public boolean checkWater() {
-		return (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0; 
+	public boolean checkWater(GameContainer gc) {
+		boolean water = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0;
+		boolean low = this.getCenterY() > gc.getHeight();
+		return water || low;
 	}
 	
-	private void waterUpdate() {
-		if (checkWater()) {
+	private void waterUpdate(GameContainer gc) {
+		if (checkWater(gc)) {
 			this.getPhysicsBody().setLinearDamping(5f);
 			this.getPhysicsBody().setGravityScale(-.2f);
 		}

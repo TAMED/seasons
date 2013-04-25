@@ -45,6 +45,8 @@ public class Map {
 		parseWallObjects();
 		parseSlopeObjects();
 		parseEntityObjects();
+		createLine(new Vec2(0, (height+2)*tileHeight/ Config.PIXELS_PER_METER), 
+				new Vec2(width*tileWidth/ Config.PIXELS_PER_METER, (height+2)*tileHeight/ Config.PIXELS_PER_METER));
 	}
 	
 	/**

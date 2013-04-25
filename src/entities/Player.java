@@ -76,7 +76,7 @@ public class Player extends Entity {
 			}
 		}
 		if(input.isKeyPressed(Input.KEY_SPACE)) {
-			jump();
+			jump(gc, delta);
 		}
 	}
 	
