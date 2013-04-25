@@ -33,7 +33,6 @@ public class Sprite {
 	private Point position;
 	private Direction facing;
 	private float ground;
-
 	public Sprite(float x, float y, float width, float height) {
 		this(x, y, width, height, 0f);
 	}

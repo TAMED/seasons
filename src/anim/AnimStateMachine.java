@@ -10,6 +10,7 @@ import org.newdawn.slick.Animation;
 import util.Direction;
 
 import entities.Entity;
+import entities.Player;
 
 
 /**
@@ -52,6 +53,33 @@ public class AnimStateMachine {
 				}
 				break;
 		}
+	}
+	
+	// player has its own special state
+	public void update(Player player) {
+		if (currentState == null) return;
+		switch(currentState) {
+			case JUMP:
+				if (player.getPhysicsBody().getLinearVelocity().y >= 0) {
+					play(AnimationState.FALL);
+//					System.out.println("JUMP => FALL");
+				}
+				break;
+			case FALL:
+				if (player.isTouching(Direction.DOWN)) {
+					play(AnimationState.IDLE);
+//					System.out.println("FALL => IDLE");
+				}
+				break;
+			case IDLE:
+			case RUN:
+				if (!player.isTouching(Direction.DOWN)) {
+					play(AnimationState.FALL);
+//					System.out.println("IDLE/RUN => FALL");
+				}
+				break;
+		}
+	
 	}
 	
 	public boolean play(AnimationState state) {

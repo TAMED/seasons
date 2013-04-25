@@ -53,10 +53,16 @@ public class LevelState extends BasicGameState{
 	private Time bestTime;
 	
 	public LevelState(String mapString, String backgroundString, int id) {
+		this(mapString, backgroundString, id, new Vec2(0, Config.GRAVITY));
+	}
+	
+	public LevelState(String mapString, String backgroundString, int id, Vec2 gravity) {
 		super();
 		this.id = id;
 		this.mapString = mapString;
 		this.backgroundString = backgroundString;
+		this.gravity = gravity;
+		
 	}
 		
 	@Override
@@ -151,7 +157,6 @@ public class LevelState extends BasicGameState{
 		super.enter(gc, game);
 		Controls.setGC(gc);
 		
-		gravity = new Vec2(0,Config.GRAVITY);
 		world = new World(gravity);
 		
 		world.setContactListener(new CombatContact());
