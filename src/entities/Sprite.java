@@ -25,14 +25,18 @@ public class Sprite {
 	 * The color of the rectangle displayed if an image or animation is not assigned
 	 */
 	private Color color;
-	private Image image;
+	protected Image image;
 	protected AnimStateMachine anim;
 	
 	private float width;
 	private float height;
+	protected float drawWidth;
+	protected float drawHeight;
 	private Point position;
 	private Direction facing;
 	private float ground;
+	private float angle = 0;
+	
 	public Sprite(float x, float y, float width, float height) {
 		this(x, y, width, height, 0f);
 	}
@@ -42,6 +46,8 @@ public class Sprite {
 		anim = new AnimStateMachine();
 		this.width = width;
 		this.height = height;
+		this.drawWidth = width;
+		this.drawHeight = height;
 		this.facing = Direction.RIGHT;
 		this.ground = ground;
 	}
@@ -58,8 +64,8 @@ public class Sprite {
 	}
 	
 	protected void draw(Graphics graphics) {
-		float hw = width / 2;
-		float hh = height / 2;
+		float hw = drawWidth / 2;
+		float hh = drawHeight / 2;
 		float x = getX();
 		float y = getY();
 		
@@ -69,10 +75,12 @@ public class Sprite {
 			if (currentAnim != null) {
 				img = currentAnim.getCurrentFrame()
 				           .getFlippedCopy(facing == Direction.RIGHT, false);
+				img.setRotation(this.angle);
 			} else {
 				img = image.getFlippedCopy(facing == Direction.RIGHT, false);
+				img.setRotation(this.angle);
 			}
-			img.draw(x - hh, y - hh, height + 2*ground, height + 2*ground);
+			img.draw(x - hw, y - hh, drawWidth + 2*ground, drawHeight + 2*ground);
 		} else if (color != null) {
 			graphics.setColor(color);
 			graphics.drawRect(x - hw, y - hh, width, height);
@@ -83,6 +91,14 @@ public class Sprite {
 			if (anim.getCurrentState() != null)
 				graphics.drawString(anim.getCurrentState().toString(), x - hw, y - hh);
 		}
+	}
+	
+	public void setDrawWidth(float f) {
+		drawWidth = f;
+	}
+	
+	public void setDrawHeight(float f) {
+		drawHeight = f;
 	}
 	
 	public void setColor(Color c) {
@@ -205,5 +221,9 @@ public class Sprite {
 	 */
 	public void setFacing(Direction dir) {
 		this.facing = dir;
+	}
+	
+	public void setRotation(float angle) {
+		this.angle = angle;
 	}
 }

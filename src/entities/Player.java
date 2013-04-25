@@ -33,16 +33,23 @@ public class Player extends Entity {
 			setImage(new Image("assets/images/player/sprite.png"));
 			Animation idle = new Animation(new SpriteSheet("assets/images/player/idle.png", 152, 152), 100);
 			Animation running = new Animation(new SpriteSheet("assets/images/player/running.png", 152, 152), 1);
-			setFrames(running, 14, 80);
 			Animation jumping = new Animation(new SpriteSheet("assets/images/player/jumping.png", 152, 152), 10);
 			Animation falling = new Animation(new SpriteSheet("assets/images/player/falling.png", 152, 152), 10);
 			Animation hooking = new Animation(new SpriteSheet("assets/images/player/hooking.png", 152, 152), 10);
 			
+			Animation jumpTransition = new Animation(new SpriteSheet("assets/images/player/jump_transition.png", 152, 152), 50);
+			
+			// set transitions to no looping
+			jumpTransition.setLooping(false);
+			
 			anim.addAnimation(AnimationState.IDLE, idle);
 			anim.addAnimation(AnimationState.RUN, running);
+			anim.setFrames(AnimationState.RUN, 14, 80);
 			anim.addAnimation(AnimationState.JUMP, jumping);
+			anim.addAnimation(AnimationState.RISE, jumping);
 			anim.addAnimation(AnimationState.FALL, falling);
 			anim.addAnimation(AnimationState.HOOKING, hooking);
+			anim.addAnimation(AnimationState.START_JUMP, jumpTransition);
 		} catch (Exception e) {
 			e.printStackTrace();
 			setColor(Color.white);
@@ -60,9 +67,9 @@ public class Player extends Entity {
 	}
 
 	public void render(Graphics graphics) {
-		draw(graphics);
 		hookshot.render(graphics);
 		hookshot.drawRange(graphics);
+		draw(graphics);
 	}
 
 	public void update(GameContainer gc, int delta) {
@@ -95,12 +102,5 @@ public class Player extends Entity {
 		return hookshot.isAttacking();
 	}
 	
-	private void setFrames(Animation anim, int numFrames, int durPerFrame) {
-		for (int i = 0; i < numFrames; i++) {
-			anim.setDuration(i, durPerFrame);
-		}
-		for (int i = numFrames; i < anim.getFrameCount(); i++) {
-			anim.setDuration(i, 0);
-		}
-	}
+
 }
