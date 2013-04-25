@@ -4,7 +4,6 @@
 package entities;
 
 import items.Hookshot;
-import items.ItemBase;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -22,8 +21,7 @@ import config.Config;
  *
  */
 public class Player extends Entity {
-	private ItemBase[] items = new ItemBase[2];
-
+	Hookshot hookshot;
 	public Player(float width, float height) {
 		this(width, height, 0);
 	}
@@ -44,29 +42,25 @@ public class Player extends Entity {
 		
 		getPhysicsBodyDef().allowSleep = false;
 		
-		items[0] = new Hookshot(this);
+		hookshot = new Hookshot(this);
 	}
 	
 	@Override
 	public void reset() {
 		this.heal();
-		for (int i = 0; i < items.length; i++) {
-			if (items[i] != null) {
-				this.items[i].reset();
-			}
-		}
+		hookshot.reset();
 	}
 
 	public void render(Graphics graphics) {
 		draw(graphics);
-		items[0].render(graphics);
-		items[0].drawRange(graphics);
+		hookshot.render(graphics);
+		hookshot.drawRange(graphics);
 	}
 
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
 		movePlayer(gc,delta);
-		items[0].update(gc, delta);
+		hookshot.update(gc, delta);
 	}
 	
 	private void movePlayer(GameContainer gc, int delta) {
@@ -77,7 +71,7 @@ public class Player extends Entity {
 		} else if(input.isKeyDown(Input.KEY_A)) {
 			moveLeft();
 		} else {
-			if (!((Hookshot) items[0]).isPulling()) {
+			if (!hookshot.isPulling()) {
 				dampenVelocity(delta);
 			}
 		}
@@ -90,10 +84,7 @@ public class Player extends Entity {
 	 * @return whether the player will damage enemies when coming into contact with them
 	 */
 	public boolean isAttacking() {
-		for (ItemBase i : items) {
-			if (i != null && i.isAttacking()) return true;
-		}
-		return false;
+		return hookshot.isAttacking();
 	}
 	
 	private void setFrames(Animation anim, int numFrames, int durPerFrame) {

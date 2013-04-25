@@ -67,6 +67,7 @@ public abstract class Entity extends Sprite {
 		physicsFixtureDef.shape = physicsShape;
 		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
 		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
+		physicsFixtureDef.filter.maskBits |= Config.WATER;
 		
 		if (hasSensors) {
 			sensorShapes = new PolygonShape[Direction.values().length];
@@ -78,6 +79,7 @@ public abstract class Entity extends Sprite {
 			sensorShapes[Direction.DOWN.ordinal() ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
 			sensorShapes[Direction.LEFT.ordinal() ].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
 			sensorShapes[Direction.RIGHT.ordinal()].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
+			sensorShapes[Direction.CENTER.ordinal()].setAsBox(.1f, .1f, new Vec2(0,0), 0);
 			for (int i = 0; i < sensors.length; i++) {
 				sensors[i] = new FixtureDef();
 				sensors[i].shape = sensorShapes[i];
@@ -101,6 +103,7 @@ public abstract class Entity extends Sprite {
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
 		anim.update(this);
+		this.waterUpdate();
 	}
 
 	public void moveLeft() {
@@ -317,6 +320,41 @@ public abstract class Entity extends Sprite {
 		}
 		
 		return list;
+	}
+	
+	public int[] categoriesTouchingSensors() {
+		int[] categories = new int[5];
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+//			Fixture fixtureA = contactEdge.contact.getFixtureA();
+//			Fixture fixtureB = contactEdge.contact.getFixtureB();
+			if(contactEdge.contact.isTouching()) {
+				int category = contactEdge.contact.getFixtureA().m_filter.categoryBits;
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				if (data != null && data instanceof Direction) {
+					categories[((Direction) data).ordinal()] |= category;
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		return categories;
+	}
+	
+	public boolean checkWater() {
+		return (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0; 
+	}
+	
+	private void waterUpdate() {
+		if (checkWater()) {
+			this.getPhysicsBody().setLinearDamping(5f);
+			this.getPhysicsBody().setGravityScale(-.2f);
+		}
+		else {
+			this.getPhysicsBody().setGravityScale(1);
+			this.getPhysicsBody().setLinearDamping(0f);
+		}
 	}
 	
 	abstract public void reset();
