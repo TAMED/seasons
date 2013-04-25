@@ -4,11 +4,11 @@
 package anim;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
 
 import util.Direction;
-
 import entities.Entity;
 import entities.Player;
 
@@ -32,6 +32,11 @@ public class AnimStateMachine {
 	
 	public void update(Entity entity) {
 		if (currentState == null) return;
+		
+		if (currentState == AnimationState.FALL && animMap.get(AnimationState.START_JUMP) != null) {
+			animMap.get(AnimationState.START_JUMP).restart();
+		}
+		
 		switch(currentState) {
 			case JUMP:
 				if (entity.getPhysicsBody().getLinearVelocity().y >= 0) {
@@ -55,32 +60,6 @@ public class AnimStateMachine {
 		}
 	}
 	
-	// player has its own special state
-	public void update(Player player) {
-		if (currentState == null) return;
-		switch(currentState) {
-			case JUMP:
-				if (player.getPhysicsBody().getLinearVelocity().y >= 0) {
-					play(AnimationState.FALL);
-//					System.out.println("JUMP => FALL");
-				}
-				break;
-			case FALL:
-				if (player.isTouching(Direction.DOWN)) {
-					play(AnimationState.IDLE);
-//					System.out.println("FALL => IDLE");
-				}
-				break;
-			case IDLE:
-			case RUN:
-				if (!player.isTouching(Direction.DOWN)) {
-					play(AnimationState.FALL);
-//					System.out.println("IDLE/RUN => FALL");
-				}
-				break;
-		}
-	
-	}
 	
 	public boolean play(AnimationState state) {
 		if (currentState == null || currentState.canChangeTo(state)) {
@@ -95,8 +74,20 @@ public class AnimStateMachine {
 	}
 
 	public Animation getCurrentAnimation() {
-		if (currentState != null)
-			return animMap.get(currentState);
+		if (currentState != null) {
+			if (currentState.transitionsFrom() == null )
+				return animMap.get(currentState);
+
+			Animation transition = animMap.get(currentState.transitionsFrom());
+
+			if (transition.isStopped()) {
+				
+				return animMap.get(currentState);
+			} else {
+				return animMap.get(AnimationState.START_JUMP);
+			}
+		
+		}
 		return null;
 	}
 	
