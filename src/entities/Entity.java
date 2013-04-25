@@ -354,7 +354,7 @@ public abstract class Entity extends Sprite {
 	private void waterUpdate(GameContainer gc) {
 		if (checkWater(gc)) {
 			this.getPhysicsBody().setLinearDamping(5f);
-			this.getPhysicsBody().setGravityScale(-.2f);
+			this.getPhysicsBody().setGravityScale(Config.WATER_GRAVITY_SCALE);
 		}
 		else {
 			this.getPhysicsBody().setGravityScale(1);
