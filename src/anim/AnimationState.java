@@ -11,7 +11,7 @@ import java.util.EnumSet;
  *
  */
 public enum AnimationState {
-	IDLE, RUN, JUMP, FALL, HOOKING, START_JUMP;
+	BASIC, IDLE, RUN, JUMP, FALL, HOOKING, START_JUMP;
 	
 	private EnumSet<AnimationState> prohibited;
 	private AnimationState transition = null;
@@ -36,6 +36,8 @@ public enum AnimationState {
 	}
 	
 	static {
+		BASIC.prohibitTransitions();
+		
 		IDLE.prohibitTransitions();
 		RUN.prohibitTransitions();
 		JUMP.prohibitTransitions(IDLE, RUN);

@@ -14,10 +14,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import util.Util;
 import anim.AnimStateMachine;
 import anim.AnimationState;
-
-import util.Util;
 import entities.Player;
 
 public class Hookshot extends ItemBase {
@@ -34,8 +33,8 @@ public class Hookshot extends ItemBase {
 	// number of segments the rope/chain is broken into (visually, for the wisps)
 	private static final int HOOK_CHUNKS = 10;
 	private static final int HOOK_DIM = 32;
-	private static final float CHAIN_LENGTH = 600f;
-	private static final float CHAIN_HEIGHT = 32f;
+	private static final float CHAIN_LENGTH = 530f;
+	private static final float CHAIN_HEIGHT = 24f;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
@@ -53,7 +52,6 @@ public class Hookshot extends ItemBase {
 		state = HookState.IN;
 		try {
 			wisp = new Image("assets/images/nonentities/wisp/sprite.png");
-//			chain = new Image("assets/images/nonentities/hookshot/chain/sprite.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -78,14 +76,8 @@ public class Hookshot extends ItemBase {
 //					wisp.draw(owner.getPosition().getX() - (HOOK_DIM / 2) + rel.x, owner.getPosition().getY() - (HOOK_DIM / 2) + rel.y);
 //				}
 				
-				
-				Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
-				Vec2 halfDist = dist.mul(.5f);
-				float length = dist.length();
-
 				chain.render(graphics);
-//				chain.setRotation(hook.getAngle() + 90);
-//				chain.draw(owner.getPosition().getX() - (chain.getWidth()/2) + halfDist.x, owner.getPosition().getY() - (chain.getHeight()/2) + halfDist.y);
+
 		}
 	}
 	
@@ -163,6 +155,8 @@ public class Hookshot extends ItemBase {
 //				b1.setLinearVelocity(dist.mul(K));
 				break;
 		}
+		
+		if (chain != null)  chain.update(gc, delta);
 	}
 
 	/**
