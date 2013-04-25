@@ -66,9 +66,9 @@ public class Player extends Entity {
 	}
 
 	public void render(Graphics graphics) {
-		draw(graphics);
 		hookshot.render(graphics);
 		hookshot.drawRange(graphics);
+		draw(graphics);
 	}
 
 	public void update(GameContainer gc, int delta) {

@@ -9,9 +9,7 @@ import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import util.Util;
@@ -31,10 +29,8 @@ public class Hookshot extends ItemBase {
 	// range the hook can travel before it will reset
 	private static final float MAX_RANGE = 500;
 	// number of segments the rope/chain is broken into (visually, for the wisps)
-	private static final int HOOK_CHUNKS = 10;
-	private static final int HOOK_DIM = 32;
 	private static final float CHAIN_LENGTH = 530f;
-	private static final float CHAIN_HEIGHT = 24f;
+	private static final float CHAIN_HEIGHT = 16f;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
@@ -44,40 +40,29 @@ public class Hookshot extends ItemBase {
 	private Hook hook;
 	private Joint tether;
 	
-	private Image wisp;
 	private Chain chain;
 	
 	public Hookshot(Player player) {
 		super(player);
 		state = HookState.IN;
-		try {
-			wisp = new Image("assets/images/nonentities/wisp/sprite.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
 	public void render(Graphics graphics) {
+
+		
+		// draw tether
+		switch (state) {
+			case OUT: case PULL: case MOTION:
+				chain.render(graphics);
+
+		}
+		
 		// draw hook
 		switch (state) {
 			case MOTION: case OUT: case PULL:
 				hook.render(graphics);
 				break;
-		}
-		
-		// draw tether
-		switch (state) {
-			case OUT: case PULL: case MOTION:
-//				Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
-//				
-//				for (int i = 1; i < HOOK_CHUNKS; i++) {
-//					Vec2 rel = dist.mul(i / (float) HOOK_CHUNKS);
-//					wisp.draw(owner.getPosition().getX() - (HOOK_DIM / 2) + rel.x, owner.getPosition().getY() - (HOOK_DIM / 2) + rel.y);
-//				}
-				
-				chain.render(graphics);
-
 		}
 	}
 	
@@ -200,11 +185,6 @@ public class Hookshot extends ItemBase {
 		chain = null;
 	}
 
-	private void spawnChain() {
-
-	}
-	
-	
 	/**
 	 * Attaches a RopeJoint between the STATIC hook body and the player.
 	 */

@@ -1,23 +1,16 @@
 package items;
 
-import input.Controls;
-
 import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
-import anim.AnimationState;
-
 import util.Util;
-
 import config.Config;
 import entities.Entity;
 import entities.Player;

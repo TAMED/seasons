@@ -4,13 +4,11 @@
 package anim;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
 
 import util.Direction;
 import entities.Entity;
-import entities.Player;
 
 
 /**

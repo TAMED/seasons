@@ -25,13 +25,13 @@ public class Sprite {
 	 * The color of the rectangle displayed if an image or animation is not assigned
 	 */
 	private Color color;
-	private Image image;
+	protected Image image;
 	protected AnimStateMachine anim;
 	
 	private float width;
 	private float height;
-	private float drawWidth;
-	private float drawHeight;
+	protected float drawWidth;
+	protected float drawHeight;
 	private Point position;
 	private Direction facing;
 	private float ground;
