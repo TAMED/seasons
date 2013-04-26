@@ -11,9 +11,10 @@ import java.util.EnumSet;
  *
  */
 public enum AnimationState {
-	IDLE, RUN, JUMP, FALL, HOOKING;
+	BASIC, IDLE, RUN, JUMP, RISE, FALL, HOOKING, START_JUMP;
 	
 	private EnumSet<AnimationState> prohibited;
+	private AnimationState transition = null;
 	
 	private void prohibitTransitions(AnimationState... prohibitedTransitions) {
 		prohibited = EnumSet.noneOf(AnimationState.class);
@@ -22,15 +23,29 @@ public enum AnimationState {
 		}
 	}
 	
+	private void transitionFrom(AnimationState as) {
+		transition = as;
+	}
+	
+	public AnimationState transitionsFrom() {
+		return transition;
+	}
+	
 	public boolean canChangeTo(AnimationState state) {
 		return !prohibited.contains(state);
 	}
 	
 	static {
+		BASIC.prohibitTransitions();
+		
 		IDLE.prohibitTransitions();
 		RUN.prohibitTransitions();
 		JUMP.prohibitTransitions(IDLE, RUN);
+		RISE.prohibitTransitions(IDLE, RUN);
 		FALL.prohibitTransitions(RUN);
 		HOOKING.prohibitTransitions();
+		START_JUMP.prohibitTransitions();
+		
+		JUMP.transitionFrom(START_JUMP);
 	}
 }

@@ -30,12 +30,14 @@ public class Config {
 	// Player
 	public static final int PLAYER_WIDTH = 36;
 	public static final int PLAYER_HEIGHT = 80;
+	public static final int PLAYER_DRAW_WIDTH = 80;
+	public static final int PLAYER_DRAW_HEIGHT = 80;
 	public static final int PLAYER_GROUND = 4;
+	public static final int PLAYER_MAX_HP = 1;
 	public static final float PLAYER_MOVE_SPEED = 50;
 	public static final float PLAYER_AIR_MOVE_SPEED = 0.5f;
 	public static final float PLAYER_ACCELERATION = 50;
 	public static final float PLAYER_JUMP_SPEED = 30;
-	public static final int PLAYER_MAX_HP = 1;
 	
 	// Movement
 	public static final float GRAVITY = 15;

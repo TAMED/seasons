@@ -63,6 +63,7 @@ public class MainGame extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
+		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
 		addState(new IntroState(0));
 		addState(new LevelState("assets/maps/cliffForest.tmx", "assets/backgrounds/forest3.png", 1, new Vec2(Config.GRAVITY*.85f, Config.GRAVITY)));
 		addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 2));

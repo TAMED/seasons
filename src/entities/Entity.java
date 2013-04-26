@@ -194,16 +194,14 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void jump(GameContainer gc, int delta) {
-		// TODO: impulse should be applied to body center
-		System.out.println(jumpTimer);
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
-				this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
+				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
-		} else if (this.isTouching(Direction.DOWN) || LevelState.godMode) {
-			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
+		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
+			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
 			anim.play(AnimationState.JUMP);
 		}
 		
