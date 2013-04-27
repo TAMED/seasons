@@ -39,8 +39,7 @@ public class Player extends Entity {
 			Animation running = new Animation(new SpriteSheet("assets/images/player/running.png", 152, 152), 1);
 			Animation jumping = new Animation(new SpriteSheet("assets/images/player/jumping.png", 152, 152), 10);
 			Animation falling = new Animation(new SpriteSheet("assets/images/player/falling.png", 152, 152), 10);
-			Animation hooking = new Animation(new SpriteSheet("assets/images/player/hooking.png", 152, 152), 10);
-			
+			Animation hooking = new Animation(new SpriteSheet("assets/images/player/hooking.png", 152, 152), 10);		
 			Animation jumpTransition = new Animation(new SpriteSheet("assets/images/player/jump_transition.png", 152, 152), 50);
 			
 			// set transitions to no looping
@@ -49,11 +48,10 @@ public class Player extends Entity {
 			anim.addAnimation(AnimationState.IDLE, idle);
 			anim.addAnimation(AnimationState.RUN, running);
 			anim.setFrames(AnimationState.RUN, 14, 80);
-			anim.addAnimation(AnimationState.JUMP, jumping);
+			anim.addAnimation(AnimationState.JUMP, jumpTransition);
 			anim.addAnimation(AnimationState.RISE, jumping);
 			anim.addAnimation(AnimationState.FALL, falling);
 			anim.addAnimation(AnimationState.HOOKING, hooking);
-			anim.addAnimation(AnimationState.START_JUMP, jumpTransition);
 		} catch (Exception e) {
 			e.printStackTrace();
 			setColor(Color.white);

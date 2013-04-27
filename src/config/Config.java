@@ -17,7 +17,7 @@ public class Config {
 	public static final float DEFAULT_TRACTION = 100f; // Friction for feet
 	public static final int VELOCITY_ITERATIONS = 6;
 	public static final int POSITION_ITERATIONS = 2;
-	public static final float VEL_EPSILON = .2f;
+	public static final float VEL_EPSILON = .5f;
 	
 	// Map parsing
 	public static final int[] WALL_IDS = {2};

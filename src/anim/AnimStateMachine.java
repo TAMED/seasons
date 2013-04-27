@@ -30,13 +30,19 @@ public class AnimStateMachine {
 	
 	public void update(Entity entity) {
 		if (currentState == null) return;
-		
-		if (currentState == AnimationState.FALL && animMap.get(AnimationState.START_JUMP) != null) {
-			animMap.get(AnimationState.START_JUMP).restart();
+		Animation animation = animMap.get(currentState);
+		if (currentState.isTransition()) {
+
+			if (animation.isStopped()) {
+				animation.restart();
+				play(currentState.getNextState(entity));
+			} else {
+				play(currentState);
+			}
+		} else {
+
+			play(currentState.getNextState(entity));
 		}
-
-		play(currentState.getNextState(entity));
-
 	}
 	
 	
@@ -54,17 +60,7 @@ public class AnimStateMachine {
 
 	public Animation getCurrentAnimation() {
 		if (currentState != null) {
-			if (currentState.transitionsFrom() == null )
-				return animMap.get(currentState);
-
-			Animation transition = animMap.get(currentState.transitionsFrom());
-
-			if (transition.isStopped()) {
-				return animMap.get(currentState);
-			} else {
-				return animMap.get(currentState.transitionsFrom());
-			}
-		
+			return animMap.get(currentState);
 		}
 		return null;
 	}

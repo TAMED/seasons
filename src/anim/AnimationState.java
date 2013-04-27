@@ -5,6 +5,8 @@ package anim;
 
 import java.util.EnumSet;
 
+import org.newdawn.slick.Animation;
+
 import config.Config;
 
 import util.Direction;
@@ -18,18 +20,14 @@ import entities.Entity;
  */
 public enum AnimationState {
 	
-	BASIC {
-		@Override
-		AnimationState getNextState(Entity entity) {
-			return AnimationState.BASIC;
-		}
-
+	BASIC { 
+		
 	}, 
 	
 	// passive animations
 	IDLE {
 		@Override
-		AnimationState getNextState(Entity entity) {
+		public AnimationState getNextState(Entity entity) {
 			if (!entity.isTouching(Direction.DOWN)) {
 				if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
 					return AnimationState.FALL;
@@ -43,11 +41,10 @@ public enum AnimationState {
 			} 
 			return this;
 		}
-
 	}, 
 	RUN {
 		@Override
-		AnimationState getNextState(Entity entity) {
+		public AnimationState getNextState(Entity entity) {
 			if (!entity.isTouching(Direction.DOWN)) {
 				if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
 					return AnimationState.FALL;
@@ -61,12 +58,11 @@ public enum AnimationState {
 			
 			return this;
 		}
-
 	}, 
 
 	RISE {
 		@Override
-		AnimationState getNextState(Entity entity) {
+		public AnimationState getNextState(Entity entity) {
 			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
 				return AnimationState.FALL;
 			} 
@@ -76,7 +72,7 @@ public enum AnimationState {
 	}, 
 	FALL {
 		@Override
-		AnimationState getNextState(Entity entity) {
+		public AnimationState getNextState(Entity entity) {
 			if (entity.isTouching(Direction.DOWN)) {
 				return AnimationState.IDLE;
 			}
@@ -89,10 +85,11 @@ public enum AnimationState {
 	}, 
 	
 	// player specific
-	START_JUMP {
+	
+	JUMP {
 		@Override
-		AnimationState getNextState(Entity entity) {
-			return null;
+		public AnimationState getNextState(Entity entity) {
+			return AnimationState.RISE;
 		}
 
 		@Override
@@ -101,19 +98,9 @@ public enum AnimationState {
 		}
 	},
 	
-	JUMP(START_JUMP) {
-		@Override
-		AnimationState getNextState(Entity entity) {
-			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
-				return AnimationState.FALL;
-			} 
-			return this;
-		}
-	}, 
-	
 	HOOKING {
 		@Override
-		AnimationState getNextState(Entity entity) {
+		public AnimationState getNextState(Entity entity) {
 			if (!entity.isTouching(Direction.DOWN)) {
 				if (entity.getPhysicsBody().getLinearVelocity().y < Config.VEL_EPSILON) {
 					return AnimationState.RISE;
@@ -138,7 +125,17 @@ public enum AnimationState {
 		this.transitionFrom = transitionFrom;
 	}
 	
-	abstract AnimationState getNextState(Entity entity);
+	public AnimationState getNextState(Entity entity) {
+		return this;
+	}
+	
+	// method for transitions
+	public AnimationState getNextState(Entity entity, Animation animation) {
+		if (isTransition() && animation.isStopped()) {
+			return getNextState(entity);
+		}
+		return this;
+	}
 	
 	public boolean isTransition() {
 		return false;
@@ -168,8 +165,5 @@ public enum AnimationState {
 		RISE.prohibitTransitions(IDLE, RUN);
 		FALL.prohibitTransitions(RUN);
 		HOOKING.prohibitTransitions();
-		START_JUMP.prohibitTransitions();
-		
-//		JUMP.transitionFrom(START_JUMP);
 	}
 }
