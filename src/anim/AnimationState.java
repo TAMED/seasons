@@ -96,7 +96,7 @@ public enum AnimationState {
 			if (entity.isTouching(Direction.DOWN)) {
 				return AnimationState.IDLE;
 			}
-			if (entity.getPhysicsBody().getLinearVelocity().y < Config.VEL_EPSILON) {
+			if (entity.getPhysicsBody().getLinearVelocity().y < -Config.VEL_EPSILON) {
 				return AnimationState.RISE;
 			}
 			return this;
