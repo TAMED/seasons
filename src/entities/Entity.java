@@ -156,6 +156,11 @@ public abstract class Entity extends Sprite {
 		getPhysicsBody().applyLinearImpulse(new Vec2(xvel, yvel), getPhysicsBody().getWorldCenter());
 	}
 	
+	public void moveForce(float xForce, float yForce) {
+		getPhysicsBody().applyForce(new Vec2(xForce, yForce), getPhysicsBody().getWorldCenter());
+
+	}
+	
 	public void addFeet(float runSpeed, float acceleration, float jmpSpeed) {
 		this.hasFeet = true;
 		this.runSpeed = runSpeed;

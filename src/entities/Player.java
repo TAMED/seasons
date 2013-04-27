@@ -85,14 +85,17 @@ public class Player extends Entity {
 	private void movePlayer(GameContainer gc, int delta) {
 		Input input = gc.getInput();
 		
-		boolean floating = !isTouching(Direction.DOWN) || checkWater(gc);
+		boolean floating = checkWater(gc);
+		boolean inAir = !isTouching(Direction.DOWN) && !checkWater(gc);
 		
 		if(input.isKeyDown(Input.KEY_D)) {
 			run(Direction.RIGHT);
-			if (floating) move(Config.PLAYER_AIR_MOVE_SPEED, 0);
+			if (floating) move(Config.PLAYER_WATER_MOVE_SPEED, 0);
+			if (inAir) moveForce(Config.PLAYER_ACCELERATION, 0);
 		} else if(input.isKeyDown(Input.KEY_A)) {
 			run(Direction.LEFT);
-			if (floating) move(-Config.PLAYER_AIR_MOVE_SPEED, 0);
+			if (floating) move(-Config.PLAYER_WATER_MOVE_SPEED, 0);
+			if (inAir) moveForce(-Config.PLAYER_ACCELERATION, 0);
 		} else {
 			run(Direction.DOWN);
 		}
