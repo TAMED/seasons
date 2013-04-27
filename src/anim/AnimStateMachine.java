@@ -19,7 +19,8 @@ import entities.Entity;
 public class AnimStateMachine {
 	private EnumMap<AnimationState, Animation> animMap;
 	protected AnimationState currentState;
-
+	protected AnimationState defaultState;
+	
 	public AnimStateMachine() {
 		animMap = new EnumMap<AnimationState, Animation>(AnimationState.class);
 	}
@@ -28,8 +29,20 @@ public class AnimStateMachine {
 		animMap.put(type, animation);
 	}
 	
+	public void setDefaultAnimation(AnimationState defaultState) {
+		this.defaultState = defaultState;
+	}
+	
 	public void update(Entity entity) {
-		if (currentState == null) return;
+		if (currentState == null && defaultState == null) {
+			return;
+		}
+		
+		if (currentState == null) {
+			play(defaultState);
+			return;
+		}
+		
 		Animation animation = animMap.get(currentState);
 		if (currentState.isTransition()) {
 
@@ -78,4 +91,7 @@ public class AnimStateMachine {
 		}
 	}
 	
+	public void reset() {
+		currentState = defaultState;
+	}
 }

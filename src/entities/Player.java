@@ -32,6 +32,7 @@ public class Player extends Entity {
 		super(width, height, ground, Config.PLAYER_MAX_HP, true);
 		addFeet(Config.PLAYER_MOVE_SPEED, Config.PLAYER_ACCELERATION, Config.PLAYER_JUMP_SPEED);
 		setDensity(Config.PLAYER_DENSITY);
+		anim.setDefaultAnimation(AnimationState.IDLE);
 		
 		try {
 			setImage(new Image("assets/images/player/sprite.png"));
@@ -66,6 +67,7 @@ public class Player extends Entity {
 	public void reset() {
 		this.heal();
 		hookshot.reset();
+		anim.reset();
 	}
 
 	public void render(Graphics graphics) {
