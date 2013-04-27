@@ -43,6 +43,7 @@ public class LevelState extends BasicGameState{
 	private ArrayList<Enemy> enemies;
 	private Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
+	public static boolean godMode = false;
 	private static Camera camera;
 	private Cursor cursor;
 	private Vec2 goalLoc;
@@ -83,10 +84,11 @@ public class LevelState extends BasicGameState{
 		if (viewDebug) {
 			debugdraw.setGraphics(graphics);
 			world.drawDebugData();
-		}
-		player.render(graphics);
-		for (Enemy e : enemies) {
-			e.render(graphics);			
+		} else {
+			player.render(graphics);
+			for (Enemy e : enemies) {
+				e.render(graphics);			
+			}
 		}
 		cursor.render(graphics);
 		
@@ -103,35 +105,30 @@ public class LevelState extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
 		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
-			if (this.getID() == 4) {
-				game.enterState(0);
-			}
-			else {
-				game.enterState(this.getID()+1);
-			}
+			nextLevel(game);
 		}
-		if (Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30) {
-			if (lastTime == null) {
-				lastTime = new Time();
-			}
-			lastTime.set(timer.getMillis());
 		
-			if (bestTime == null) {
-				bestTime = new Time();
-			}
+		// if the goal is reached
+		if (Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30) {
+			if (lastTime == null) lastTime = new Time();
+			lastTime.set(timer.getMillis());
+			if (bestTime == null) bestTime = new Time();
 			if ((lastTime.getMillis() < bestTime.getMillis()) || (bestTime.getMillis() == 0)) {
 				bestTime.set(timer.getMillis());
 			}
-			if (this.getID() == 4) {
-				game.enterState(0);
-			}
-			else {
-				game.enterState(this.getID()+1);
-			}
+			nextLevel(game);
 		}
-		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
+		
+		// restart if the player falls into a pit
+//		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
+		
+		// update world
 		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
+		
+		// update player
 		player.update(gc, delta);
+		
+		// update enemies
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
 			Enemy e = it.next();
 			if (e.getHp() > 0) {
@@ -142,18 +139,24 @@ public class LevelState extends BasicGameState{
 			}
 		}
 
+		// check toggles
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
+		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
 		if (gc.getInput().isKeyPressed(Input.KEY_F11)) gc.setFullscreen(!gc.isFullscreen());
-		camera.centerOn(player.getX(),player.getY());
 		
+		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
 		timer.update(delta);
+	}
+	
+	private void nextLevel(StateBasedGame game) {
+		if (this.getID() == 4) game.enterState(0);
+		else game.enterState((this.getID()+1) % 5);
 	}
 
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
-		// TODO Auto-generated method stub
 		super.enter(gc, game);
 		Controls.setGC(gc);
 		
@@ -167,16 +170,16 @@ public class LevelState extends BasicGameState{
 		map.parseMapObjects();
 		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
 		debugdraw = new Box2DDebugDraw();
-		debugdraw.setFlags(DebugDraw.e_shapeBit);
+		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		world.setDebugDraw(debugdraw);
 				
 		player = MainGame.player;
-		player.addToWorld(world);
+		player.addToWorld(world, map.getPlayerLoc().x, map.getPlayerLoc().y 
+				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
 		player.reset();
-		player.setPosition(map.getPlayerLoc().x, map.getPlayerLoc().y);
 		enemies = map.getEnemies();
-		for (int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).addToWorld(world);
+		for (Enemy e : enemies) {
+			e.addToWorld(world, e.getX(), e.getY());
 		}
 		
 		goalLoc = map.getGoalLoc();

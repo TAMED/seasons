@@ -34,6 +34,7 @@ public class Controls {
 	}
 	
 	public static boolean isKeyPressed(Action action) {
+		// TODO: Implement this and replace existing input checks with calls to this method
 		return false;
 	}
 }

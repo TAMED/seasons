@@ -40,18 +40,15 @@ public class AnimStateMachine {
 			case RISE:
 				if (entity.getPhysicsBody().getLinearVelocity().y >= 0) {
 					play(AnimationState.FALL);
-//					System.out.println("JUMP => FALL");
 				}
 				break;
 			case HOOKING:
 			case FALL:
 				if (entity.isTouching(Direction.DOWN)) {
 					play(AnimationState.IDLE);
-//					System.out.println("FALL => IDLE");
 				}
 				if (entity.getPhysicsBody().getLinearVelocity().y < 0) {
 					play(AnimationState.RISE);
-//					System.out.println("JUMP => FALL");
 				}
 				break;
 			case IDLE:
@@ -59,11 +56,13 @@ public class AnimStateMachine {
 				if (!entity.isTouching(Direction.DOWN)) {
 					if (entity.getPhysicsBody().getLinearVelocity().y >= 0) {
 						play(AnimationState.FALL);
-//						System.out.println("JUMP => FALL");
 					} else {
-						play(AnimationState.JUMP);
+						play(AnimationState.RISE);
 					}
-//					System.out.println("IDLE/RUN => FALL");
+				} else {
+					if (entity.getPhysicsBody().getLinearVelocity().x == 0) {
+						play(AnimationState.IDLE);
+					}
 				}
 				break;
 		}

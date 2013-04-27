@@ -5,10 +5,16 @@ public class Config {
 	
 	public static final String TITLE = "Seasons";
 	
+	// Resolution
+	public static final int RESOLUTION_WIDTH = 1366;
+	public static final int RESOLUTION_HEIGHT = 768;
+	public static final boolean FULLSCREEN = false;
+	
 	// Physics
 	public static final float PIXELS_PER_METER = 32;
 	public static final float DEFAULT_DENSITY = 1f;
-	public static final float DEFAULT_FRICTION = 0.0001f;
+	public static final float DEFAULT_FRICTION = 0.3f;
+	public static final float DEFAULT_TRACTION = 10f; // Friction for feet
 	public static final int VELOCITY_ITERATIONS = 6;
 	public static final int POSITION_ITERATIONS = 2;
 	
@@ -22,11 +28,16 @@ public class Config {
 	public static final int WATER = 4;
 	
 	// Player
-	public static final int PLAYER_DRAW_WIDTH = 36;
+	public static final int PLAYER_WIDTH = 36;
+	public static final int PLAYER_HEIGHT = 80;
+	public static final int PLAYER_DRAW_WIDTH = 80;
 	public static final int PLAYER_DRAW_HEIGHT = 80;
-	public static final float PLAYER_MOVE_SPEED = 25;
-	public static final float PLAYER_JUMP_SPEED = 30;
+	public static final int PLAYER_GROUND = 4;
 	public static final int PLAYER_MAX_HP = 1;
+	public static final float PLAYER_MOVE_SPEED = 50;
+	public static final float PLAYER_AIR_MOVE_SPEED = 0.5f;
+	public static final float PLAYER_ACCELERATION = 50;
+	public static final float PLAYER_JUMP_SPEED = 30;
 	
 	// Movement
 	public static final float GRAVITY = 15;
