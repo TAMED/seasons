@@ -137,6 +137,8 @@ public abstract class Entity extends Sprite {
 		this.alive = true;
 	}
 	
+	
+	
 	/* (non-Javadoc)
 	 * @see entities.Sprite#update(org.newdawn.slick.GameContainer, int)
 	 */
@@ -154,6 +156,11 @@ public abstract class Entity extends Sprite {
 		getPhysicsBody().applyLinearImpulse(new Vec2(xvel, yvel), getPhysicsBody().getWorldCenter());
 	}
 	
+	public void moveForce(float xForce, float yForce) {
+		getPhysicsBody().applyForce(new Vec2(xForce, yForce), getPhysicsBody().getWorldCenter());
+
+	}
+	
 	public void addFeet(float runSpeed, float acceleration, float jmpSpeed) {
 		this.hasFeet = true;
 		this.runSpeed = runSpeed;
@@ -169,22 +176,20 @@ public abstract class Entity extends Sprite {
 		footFixtureDef.friction = Config.DEFAULT_TRACTION;
 	}
 	
+	public void setDensity(float density) {
+		boxDef.density = density;
+	}
+	
 	public void run(Direction dir) {
 		if (hasFeet) {
 			switch (dir) {
 				case LEFT:
 					footJoint.setMotorSpeed(runSpeed);
-//					if (this.getPhysicsBody().getLinearVelocity().x < 0) {
-						setFacing(Direction.LEFT);
-//					}
-					anim.play(AnimationState.RUN);
+					setFacing(Direction.LEFT);
 					break;
 				case RIGHT:
 					footJoint.setMotorSpeed(-runSpeed);
-//					if (this.getPhysicsBody().getLinearVelocity().x > 0) {
-						setFacing(Direction.RIGHT);
-//					}
-					anim.play(AnimationState.RUN);
+					setFacing(Direction.RIGHT);
 					break;
 				default:
 					footJoint.setMotorSpeed(0);
@@ -431,5 +436,10 @@ public abstract class Entity extends Sprite {
 	}
 	
 	abstract public void reset();
+	
+	public boolean isStill() {
+		if (Math.abs(this.getPhysicsBody().getLinearVelocity().x) < Config.VEL_EPSILON) return true;
+		return false;
+	}
 
 }

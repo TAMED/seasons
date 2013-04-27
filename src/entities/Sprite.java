@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Vector2f;
 import states.LevelState;
 import util.Direction;
 import anim.AnimStateMachine;
+import anim.AnimationState;
 
 /**
  * 

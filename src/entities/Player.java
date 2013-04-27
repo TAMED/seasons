@@ -31,6 +31,8 @@ public class Player extends Entity {
 	public Player(float width, float height, float ground) {
 		super(width, height, ground, Config.PLAYER_MAX_HP, true);
 		addFeet(Config.PLAYER_MOVE_SPEED, Config.PLAYER_ACCELERATION, Config.PLAYER_JUMP_SPEED);
+		setDensity(Config.PLAYER_DENSITY);
+		anim.setDefaultAnimation(AnimationState.IDLE);
 		
 		try {
 			setImage(new Image("assets/images/player/sprite.png"));
@@ -38,21 +40,22 @@ public class Player extends Entity {
 			Animation running = new Animation(new SpriteSheet("assets/images/player/running.png", 152, 152), 1);
 			Animation jumping = new Animation(new SpriteSheet("assets/images/player/jumping.png", 152, 152), 10);
 			Animation falling = new Animation(new SpriteSheet("assets/images/player/falling.png", 152, 152), 10);
-			Animation hooking = new Animation(new SpriteSheet("assets/images/player/hooking.png", 152, 152), 10);
-			
+			Animation hooking = new Animation(new SpriteSheet("assets/images/player/hooking.png", 152, 152), 10);		
 			Animation jumpTransition = new Animation(new SpriteSheet("assets/images/player/jump_transition.png", 152, 152), 50);
+			Animation somersault = new Animation(new SpriteSheet("assets/images/player/somersault.png", 152, 152), 50);
 			
-			// set transitions to no looping
-			jumpTransition.setLooping(false);
+//			// set transitions to no looping
+//			jumpTransition.setLooping(false);
+//			somersault.setLooping(false);
 			
 			anim.addAnimation(AnimationState.IDLE, idle);
 			anim.addAnimation(AnimationState.RUN, running);
 			anim.setFrames(AnimationState.RUN, 14, 80);
-			anim.addAnimation(AnimationState.JUMP, jumping);
+			anim.addAnimation(AnimationState.JUMP, jumpTransition);
 			anim.addAnimation(AnimationState.RISE, jumping);
 			anim.addAnimation(AnimationState.FALL, falling);
 			anim.addAnimation(AnimationState.HOOKING, hooking);
-			anim.addAnimation(AnimationState.START_JUMP, jumpTransition);
+			anim.addAnimation(AnimationState.SOMERSAULT, somersault);
 		} catch (Exception e) {
 			e.printStackTrace();
 			setColor(Color.white);
@@ -67,6 +70,7 @@ public class Player extends Entity {
 	public void reset() {
 		this.heal();
 		hookshot.reset();
+		anim.reset();
 	}
 
 	public void render(Graphics graphics) {
@@ -84,14 +88,17 @@ public class Player extends Entity {
 	private void movePlayer(GameContainer gc, int delta) {
 		Input input = gc.getInput();
 		
-		boolean floating = !isTouching(Direction.DOWN) || checkWater(gc);
+		boolean floating = checkWater(gc);
+		boolean inAir = !isTouching(Direction.DOWN) && !checkWater(gc);
 		
 		if(input.isKeyDown(Input.KEY_D)) {
 			run(Direction.RIGHT);
-			if (floating) move(Config.PLAYER_AIR_MOVE_SPEED, 0);
+			if (floating) move(Config.PLAYER_WATER_MOVE_SPEED, 0);
+			if (inAir) moveForce(Config.PLAYER_AIR_ACCELERATION, 0);
 		} else if(input.isKeyDown(Input.KEY_A)) {
 			run(Direction.LEFT);
-			if (floating) move(-Config.PLAYER_AIR_MOVE_SPEED, 0);
+			if (floating) move(-Config.PLAYER_WATER_MOVE_SPEED, 0);
+			if (inAir) moveForce(-Config.PLAYER_AIR_ACCELERATION, 0);
 		} else {
 			run(Direction.DOWN);
 		}
