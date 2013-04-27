@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -28,12 +29,14 @@ public class Hook extends Entity {
 	 * @param width
 	 * @param height
 	 */
-	public Hook(float x, float y, Player owner) {
-		super(x, y, SIZE, SIZE, 0, 0, 1, false);
+	public Hook(Player owner) {
+		super(SIZE, SIZE, 1, false);
 		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
-		getPhysicsFixtureDef().filter.categoryBits = Config.HOOKABLE;
-		getPhysicsFixtureDef().filter.maskBits = Config.HOOKABLE;
+		for (FixtureDef f : getPhysicsFixtureDefs()) {
+			f.filter.categoryBits = Config.HOOKABLE;
+			f.filter.maskBits = Config.HOOKABLE;
+		}
 		attached = false;
 		try {
 			setImage(new Image("assets/images/nonentities/hookshot/hook/sprite.png"));
@@ -60,7 +63,7 @@ public class Hook extends Entity {
 	}
 	
 	/**
-	 * Attaches the hook to the specified body
+	 * Anchors the hook at its current location
 	 * @param b a body
 	 */
 	private void attach(Body b) {

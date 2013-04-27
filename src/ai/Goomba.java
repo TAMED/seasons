@@ -22,11 +22,8 @@ public class Goomba extends AI {
 	 */
 	@Override
 	public void update(Enemy enemy, int delta) {
-		if (enemy.isTouching(walkDir)) {
-			walkDir = walkDir.opposite();
-		}
-		if (walkDir == Direction.LEFT) enemy.moveLeft();
-		if (walkDir == Direction.RIGHT) enemy.moveRight();
+		if (enemy.isTouching(walkDir)) walkDir = walkDir.opposite();
+		enemy.run(walkDir);
 	}
 
 }

@@ -20,6 +20,7 @@ import config.Config;
  *
  */
 public class Box2DDebugDraw extends DebugDraw {
+	private static final float K_AXIS_SCALE = 0.4f;
 	
 	private Graphics graphics;
 
@@ -106,7 +107,15 @@ public class Box2DDebugDraw extends DebugDraw {
 	@Override
 	public void drawTransform(Transform xf) {
 		// TODO Auto-generated method stub
-
+		Vec2 p1 = xf.p, p2, 
+		     qx = new Vec2(), 
+		     qy = new Vec2();
+		xf.q.getXAxis(qx);
+		p2 = qx.mul(K_AXIS_SCALE).add(p1);
+		drawSegment(p1, p2, Color3f.RED);
+		xf.q.getYAxis(qy);
+		p2 = qy.mul(K_AXIS_SCALE).add(p1);
+		drawSegment(p1, p2, Color3f.BLUE);
 	}
 
 }

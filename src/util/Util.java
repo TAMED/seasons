@@ -1,6 +1,8 @@
 package util;
 
 import org.jbox2d.collision.AABB;
+import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Color3f;
 import org.jbox2d.common.Vec2;
 import org.newdawn.slick.Color;
@@ -45,5 +47,19 @@ public class Util {
 	
 	public static Vector2f Vec2ToVector2f(Vec2 v) {
 		return new Vector2f(v.x, v.y);
+	}
+	
+	public static PolygonShape getBoxShape(float halfWidth, float halfHeight) { return getBoxShape(halfWidth, halfHeight, new Vec2(0, 0), 0); }
+	
+	public static PolygonShape getBoxShape(float halfWidth, float halfHeight, Vec2 center, float angle) {
+		PolygonShape box = new PolygonShape();
+		box.setAsBox(halfWidth, halfHeight, center, angle);
+		return box;
+	}
+	
+	public static CircleShape getCircleShape(float radius) {
+		CircleShape circ = new CircleShape();
+		circ.setRadius(radius);
+		return circ;
 	}
 }

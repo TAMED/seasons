@@ -153,8 +153,8 @@ public class Hookshot extends ItemBase {
 		Vector2f aim = new Vector2f(Controls.getAimAngle(owner));
 		Vector2f start = new Vector2f(0,0);
 		
-		hook = new Hook(x + start.x, y + start.y, owner);
-		hook.addToWorld(owner.getPhysicsWorld());
+		hook = new Hook(owner);
+		hook.addToWorld(owner.getPhysicsWorld(), x + start.x, y + start.y);
 		hook.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(aim.copy().scale(STARTING_VEL)));
 		
 		// drawing
