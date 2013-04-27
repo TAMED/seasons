@@ -64,7 +64,7 @@ public enum AnimationState {
 		@Override
 		public AnimationState getNextState(Entity entity) {
 			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
-				return AnimationState.FALL;
+				return AnimationState.SOMERSAULT;
 			} 
 			return this;
 		}
@@ -106,6 +106,11 @@ public enum AnimationState {
 			return this;
 		}
 
+	}, SOMERSAULT(true) {
+		@Override
+		public AnimationState getNextState(Entity entity) {
+			return AnimationState.FALL;
+		}
 	};
 	
 	
@@ -156,5 +161,6 @@ public enum AnimationState {
 		RISE.prohibitTransitions(IDLE, RUN);
 		FALL.prohibitTransitions(RUN);
 		HOOKING.prohibitTransitions();
+		SOMERSAULT.prohibitTransitions();
 	}
 }

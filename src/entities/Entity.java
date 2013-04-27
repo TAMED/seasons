@@ -185,17 +185,11 @@ public abstract class Entity extends Sprite {
 			switch (dir) {
 				case LEFT:
 					footJoint.setMotorSpeed(runSpeed);
-//					if (this.getPhysicsBody().getLinearVelocity().x < 0) {
-						setFacing(Direction.LEFT);
-//					}
-					anim.play(AnimationState.RUN);
+					setFacing(Direction.LEFT);
 					break;
 				case RIGHT:
 					footJoint.setMotorSpeed(-runSpeed);
-//					if (this.getPhysicsBody().getLinearVelocity().x > 0) {
-						setFacing(Direction.RIGHT);
-//					}
-					anim.play(AnimationState.RUN);
+					setFacing(Direction.RIGHT);
 					break;
 				default:
 					footJoint.setMotorSpeed(0);

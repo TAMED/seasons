@@ -26,7 +26,11 @@ public class AnimStateMachine {
 	}
 	
 	public void addAnimation(AnimationState type, Animation animation) {
+		if (type.isTransition()) {
+			animation.setLooping(false);
+		}
 		animMap.put(type, animation);
+		
 	}
 	
 	public void setDefaultAnimation(AnimationState defaultState) {
