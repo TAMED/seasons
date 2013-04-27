@@ -45,7 +45,6 @@ public class AnimStateMachine {
 		
 		Animation animation = animMap.get(currentState);
 		if (currentState.isTransition()) {
-
 			if (animation.isStopped()) {
 				animation.restart();
 				play(currentState.getNextState(entity));
@@ -53,7 +52,6 @@ public class AnimStateMachine {
 				play(currentState);
 			}
 		} else {
-
 			play(currentState.getNextState(entity));
 		}
 	}

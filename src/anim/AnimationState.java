@@ -86,15 +86,10 @@ public enum AnimationState {
 	
 	// player specific
 	
-	JUMP {
+	JUMP(true) {
 		@Override
 		public AnimationState getNextState(Entity entity) {
 			return AnimationState.RISE;
-		}
-
-		@Override
-		public boolean isTransition() {
-			return true;
 		}
 	},
 	
@@ -115,14 +110,13 @@ public enum AnimationState {
 	
 	
 	private EnumSet<AnimationState> prohibited;
-	private AnimationState transitionFrom = null;
+	private boolean isTransition = false;
 	
 	private AnimationState() {
-		this.transitionFrom = null;
 	}
 	
-	private AnimationState(AnimationState transitionFrom) {
-		this.transitionFrom = transitionFrom;
+	private AnimationState(boolean isTransition) {
+		this.isTransition = isTransition;
 	}
 	
 	public AnimationState getNextState(Entity entity) {
@@ -138,7 +132,7 @@ public enum AnimationState {
 	}
 	
 	public boolean isTransition() {
-		return false;
+		return isTransition;
 	}
 	
 	private void prohibitTransitions(AnimationState... prohibitedTransitions) {
@@ -148,9 +142,6 @@ public enum AnimationState {
 		}
 	}
 	
-	public AnimationState transitionsFrom() {
-		return transitionFrom;
-	}
 	
 	public boolean canChangeTo(AnimationState state) {
 		return !prohibited.contains(state);
