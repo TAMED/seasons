@@ -5,13 +5,152 @@ package anim;
 
 import java.util.EnumSet;
 
+import config.Config;
+
+import util.Direction;
+
+import entities.Entity;
+
 /**
  * An enumeration of all of the animations in the game, as well as their transitions
  * @author Mullings
  *
  */
 public enum AnimationState {
-	BASIC, IDLE, RUN, JUMP, RISE, FALL, HOOKING, START_JUMP;
+	
+	BASIC {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			return AnimationState.BASIC;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	IDLE {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			if (!entity.isTouching(Direction.DOWN)) {
+				if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
+					return AnimationState.FALL;
+				} else {
+					return AnimationState.RISE;
+				}
+			} 
+			
+			if (!entity.isStill()) {
+				return AnimationState.RUN;
+			} 
+			return this;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	RUN {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			if (!entity.isTouching(Direction.DOWN)) {
+				if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
+					return AnimationState.FALL;
+				} else {
+					return AnimationState.RISE;
+				}
+			} 
+			if (entity.isStill()) {
+				return AnimationState.IDLE;
+			} 
+			
+			return this;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	JUMP {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
+				return AnimationState.FALL;
+			} 
+			return this;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	RISE {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
+				return AnimationState.FALL;
+			} 
+			return this;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	FALL {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			if (entity.isTouching(Direction.DOWN)) {
+				return AnimationState.IDLE;
+			}
+			if (entity.getPhysicsBody().getLinearVelocity().y < Config.VEL_EPSILON) {
+				return AnimationState.RISE;
+			}
+			return this;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	HOOKING {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			if (entity.isTouching(Direction.DOWN)) {
+				return AnimationState.IDLE;
+			}
+			if (entity.getPhysicsBody().getLinearVelocity().y < Config.VEL_EPSILON) {
+				return AnimationState.RISE;
+			}
+			return this;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	
+	// Transitions
+	START_JUMP {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			return null;
+		}
+
+		@Override
+		boolean isTransition() {
+			return true;
+		}
+	};
+	
+	abstract AnimationState getNextState(Entity entity);
+	abstract boolean isTransition();
 	
 	private EnumSet<AnimationState> prohibited;
 	private AnimationState transition = null;

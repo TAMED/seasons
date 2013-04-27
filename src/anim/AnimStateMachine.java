@@ -34,38 +34,9 @@ public class AnimStateMachine {
 		if (currentState == AnimationState.FALL && animMap.get(AnimationState.START_JUMP) != null) {
 			animMap.get(AnimationState.START_JUMP).restart();
 		}
-		
-		switch(currentState) {
-			case JUMP:
-			case RISE:
-				if (entity.getPhysicsBody().getLinearVelocity().y >= 0) {
-					play(AnimationState.FALL);
-				}
-				break;
-			case HOOKING:
-			case FALL:
-				if (entity.isTouching(Direction.DOWN)) {
-					play(AnimationState.IDLE);
-				}
-				if (entity.getPhysicsBody().getLinearVelocity().y < 0) {
-					play(AnimationState.RISE);
-				}
-				break;
-			case IDLE:
-			case RUN:
-				if (!entity.isTouching(Direction.DOWN)) {
-					if (entity.getPhysicsBody().getLinearVelocity().y >= 0) {
-						play(AnimationState.FALL);
-					} else {
-						play(AnimationState.RISE);
-					}
-				} else {
-					if (entity.getPhysicsBody().getLinearVelocity().x == 0) {
-						play(AnimationState.IDLE);
-					}
-				}
-				break;
-		}
+
+		play(currentState.getNextState(entity));
+
 	}
 	
 	

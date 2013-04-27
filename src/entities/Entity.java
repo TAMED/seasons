@@ -431,5 +431,10 @@ public abstract class Entity extends Sprite {
 	}
 	
 	abstract public void reset();
+	
+	public boolean isStill() {
+		if (Math.abs(this.getPhysicsBody().getLinearVelocity().x) < Config.VEL_EPSILON) return true;
+		return false;
+	}
 
 }
