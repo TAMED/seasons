@@ -29,6 +29,8 @@ public enum AnimationState {
 			return false;
 		}
 	}, 
+	
+	// passive animations
 	IDLE {
 		@Override
 		AnimationState getNextState(Entity entity) {
@@ -73,20 +75,7 @@ public enum AnimationState {
 			return false;
 		}
 	}, 
-	JUMP {
-		@Override
-		AnimationState getNextState(Entity entity) {
-			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
-				return AnimationState.FALL;
-			} 
-			return this;
-		}
 
-		@Override
-		boolean isTransition() {
-			return false;
-		}
-	}, 
 	RISE {
 		@Override
 		AnimationState getNextState(Entity entity) {
@@ -118,6 +107,24 @@ public enum AnimationState {
 			return false;
 		}
 	}, 
+	
+	// player specific
+	
+	JUMP {
+		@Override
+		AnimationState getNextState(Entity entity) {
+			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
+				return AnimationState.FALL;
+			} 
+			return this;
+		}
+
+		@Override
+		boolean isTransition() {
+			return false;
+		}
+	}, 
+	
 	HOOKING {
 		@Override
 		AnimationState getNextState(Entity entity) {

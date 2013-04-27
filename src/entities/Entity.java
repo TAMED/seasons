@@ -137,6 +137,8 @@ public abstract class Entity extends Sprite {
 		this.alive = true;
 	}
 	
+	
+	
 	/* (non-Javadoc)
 	 * @see entities.Sprite#update(org.newdawn.slick.GameContainer, int)
 	 */
@@ -167,6 +169,10 @@ public abstract class Entity extends Sprite {
 		footFixtureDef.shape = Util.getCircleShape(radius * 1.1f / Config.PIXELS_PER_METER);
 		footFixtureDef.density = Config.DEFAULT_DENSITY;
 		footFixtureDef.friction = Config.DEFAULT_TRACTION;
+	}
+	
+	public void setDensity(float density) {
+		boxDef.density = density;
 	}
 	
 	public void run(Direction dir) {

@@ -31,6 +31,7 @@ public class Player extends Entity {
 	public Player(float width, float height, float ground) {
 		super(width, height, ground, Config.PLAYER_MAX_HP, true);
 		addFeet(Config.PLAYER_MOVE_SPEED, Config.PLAYER_ACCELERATION, Config.PLAYER_JUMP_SPEED);
+		setDensity(Config.PLAYER_DENSITY);
 		
 		try {
 			setImage(new Image("assets/images/player/sprite.png"));
