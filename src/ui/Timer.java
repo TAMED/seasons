@@ -26,9 +26,6 @@ public class Timer extends Sprite {
 	 */
 	@Override
 	public void render(Graphics graphics) {
-		// TODO Auto-generated method stub
-		super.render(graphics);
-		
 		graphics.setColor(Color.white);
 		graphics.drawString(current, getX(), getY());
 		graphics.drawString(last,    getX(), getY() + 25);
