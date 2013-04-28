@@ -136,7 +136,7 @@ public Point getPosition() {
              tileIndexX,  
              tileIndexY,
                 (gc.getWidth()  - tileOffsetX) / tileWidth  + 1,
-                (gc.getHeight() - tileOffsetY) / tileHeight + 1);
+                (gc.getHeight() - tileOffsetY) / tileHeight + 1,0,false);
    }
    
    /**

@@ -30,7 +30,7 @@ public class Map {
 	private ArrayList<Enemy> enemies;
 	private Vec2 playerLoc;
 	private Vec2 goalLoc;
-	
+	private final float EPS = .01f;
 	public Map(String tmxMap, World world) throws SlickException {
 		foreground = new TiledMap(tmxMap);
 		this.world = world;
@@ -187,6 +187,7 @@ public class Map {
 				}
 			}
 		}
+		
 		// create vertical lines
 		for(int j = 0; j < width; j++) {
 			boolean running = false;
@@ -200,8 +201,8 @@ public class Map {
 				// create the start of a line
 				if (!running) {
 					if(tileType.equals("wall")) {
-						startVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
-						startVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
+						startVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER + EPS);
+						startVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER + EPS);
 						running = true;
 					}
 				}
@@ -209,13 +210,13 @@ public class Map {
 				if (running) {
 					if(!tileType.equals("wall") || i == height-1) {
 						if(!tileType.equals("wall")) {
-							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
-							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
+							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER - EPS);
+							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER - EPS);
 						}
 						// extend line a bit if end of map
 						else if(i == height-1) {
-							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER);
-							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER);
+							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER - EPS);
+							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER - EPS);
 						}
 						// add lines to map
 						createLine(startVTop, endVTop);
