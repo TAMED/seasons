@@ -31,6 +31,7 @@ import combat.CombatContact;
 import config.Config;
 
 import entities.Player;
+import entities.Salmon;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
@@ -41,6 +42,7 @@ public class LevelState extends BasicGameState{
 	private World world;
 	private Player player;
 	private ArrayList<Enemy> enemies;
+	private ArrayList<Salmon> salmons;
 	private Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
@@ -88,6 +90,9 @@ public class LevelState extends BasicGameState{
 			player.render(graphics);
 			for (Enemy e : enemies) {
 				e.render(graphics);			
+			}
+			for (Salmon s : salmons) {
+				s.render(graphics);
 			}
 		}
 		cursor.render(graphics);
@@ -138,6 +143,10 @@ public class LevelState extends BasicGameState{
 				e.kill();
 			}
 		}
+		
+		for (Salmon s : salmons) {
+			s.update(gc, delta);
+		}
 
 		// check toggles
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
@@ -178,6 +187,7 @@ public class LevelState extends BasicGameState{
 				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
 		player.reset();
 		enemies = map.getEnemies();
+		salmons = map.getSalmons();
 		for (Enemy e : enemies) {
 			e.addToWorld(world, e.getX(), e.getY());
 		}
@@ -198,6 +208,10 @@ public class LevelState extends BasicGameState{
 			timer.reset();
 		} else {
 			timer = new Timer();
+		}
+		
+		for (Salmon s : salmons) {
+			s.addToWorld(world, s.getX(), s.getY(), timer);
 		}
 	}
 	
