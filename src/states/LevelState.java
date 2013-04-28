@@ -10,7 +10,6 @@ import map.Map;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -29,7 +28,6 @@ import camera.Camera;
 import combat.CombatContact;
 
 import config.Config;
-
 import entities.Player;
 import entities.Salmon;
 import entities.enemies.Enemy;
@@ -39,11 +37,10 @@ public class LevelState extends BasicGameState{
 	private String mapString;
 	private Map map;
 	private Vec2 gravity;
-	private World world;
 	private Player player;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Salmon> salmons;
-	private Box2DDebugDraw debugdraw;
+	private static Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
 	private static Camera camera;
@@ -51,9 +48,17 @@ public class LevelState extends BasicGameState{
 	private Vec2 goalLoc;
 	private String backgroundString;
 	private Image background;
-	private Timer timer;
+	
+	private Time currentTime;
 	private Time lastTime;
 	private Time bestTime;
+	private static Timer timer;
+	
+	static {
+		debugdraw = new Box2DDebugDraw();
+		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
+		timer = new Timer(100, 100);
+	}
 	
 	public LevelState(String mapString, String backgroundString, int id) {
 		this(mapString, backgroundString, id, new Vec2(0, Config.GRAVITY));
@@ -80,30 +85,24 @@ public class LevelState extends BasicGameState{
 		drawBackground(graphics);
 		camera.untranslateGraphics();
 		camera.drawMap();
+		timer.updateTime(currentTime, lastTime, bestTime);
+		timer.render(graphics);
 		camera.translateGraphics();
 		
 		
 		if (viewDebug) {
 			debugdraw.setGraphics(graphics);
-			world.drawDebugData();
+			map.getWorld().drawDebugData();
 		} else {
 			player.render(graphics);
 			for (Enemy e : enemies) {
-				e.render(graphics);			
+				e.render(graphics);
 			}
 			for (Salmon s : salmons) {
 				s.render(graphics);
 			}
 		}
 		cursor.render(graphics);
-		
-		// timer draw
-		// HACK: remove once there's a parallax system
-		graphics.setColor(Color.white);
-		graphics.drawString(timer.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+100);
-
-		graphics.drawString("Last " + lastTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+125);
-		graphics.drawString("Best " + bestTime.getTimeString(), camera.getPosition().getMinX()+100, camera.getPosition().getMinY()+150);
 	}
 
 	@Override
@@ -116,10 +115,10 @@ public class LevelState extends BasicGameState{
 		// if the goal is reached
 		if (Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30) {
 			if (lastTime == null) lastTime = new Time();
-			lastTime.set(timer.getMillis());
-			if (bestTime == null) bestTime = new Time();
-			if ((lastTime.getMillis() < bestTime.getMillis()) || (bestTime.getMillis() == 0)) {
-				bestTime.set(timer.getMillis());
+			lastTime.set(currentTime.getMillis());
+			if (bestTime == null) bestTime = new Time(currentTime.getMillis());
+			else if (lastTime.getMillis() < bestTime.getMillis()) {
+				bestTime.set(currentTime.getMillis());
 			}
 			nextLevel(game);
 		}
@@ -128,7 +127,7 @@ public class LevelState extends BasicGameState{
 //		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
 		
 		// update world
-		world.step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
+		map.getWorld().step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
 		
 		// update player
 		player.update(gc, delta);
@@ -155,7 +154,7 @@ public class LevelState extends BasicGameState{
 		
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
-		timer.update(delta);
+		currentTime.update(delta);
 	}
 	
 	private void nextLevel(StateBasedGame game) {
@@ -169,50 +168,34 @@ public class LevelState extends BasicGameState{
 		super.enter(gc, game);
 		Controls.setGC(gc);
 		
-		world = new World(gravity);
-		
-		world.setContactListener(new CombatContact());
+		map = new Map(mapString, gravity);
+		map.parseMapObjects();
+		map.getWorld().setContactListener(new CombatContact());
+		map.getWorld().setDebugDraw(debugdraw);
 		
 		background = new Image(backgroundString);
-		
-		map = new Map(mapString, world);
-		map.parseMapObjects();
 		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
-		debugdraw = new Box2DDebugDraw();
-		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
-		world.setDebugDraw(debugdraw);
-				
+
 		player = MainGame.player;
-		player.addToWorld(world, map.getPlayerLoc().x, map.getPlayerLoc().y 
+		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
 				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
 		player.reset();
+		
+		currentTime = new Time();
+		
 		enemies = map.getEnemies();
-		salmons = map.getSalmons();
 		for (Enemy e : enemies) {
-			e.addToWorld(world, e.getX(), e.getY());
+			e.addToWorld(map.getWorld(), e.getX(), e.getY());
+		}
+		
+		salmons = map.getSalmons();
+		for (Salmon s : salmons) {
+			s.addToWorld(map.getWorld(), s.getX(), s.getY(), currentTime);
 		}
 		
 		goalLoc = map.getGoalLoc();
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
-		
-		if (lastTime == null) {
-			lastTime = new Time();
-		}
-		
-		if (bestTime == null) {
-			bestTime = new Time();
-		}
-		
-		if (timer != null) {
-			timer.reset();
-		} else {
-			timer = new Timer();
-		}
-		
-		for (Salmon s : salmons) {
-			s.addToWorld(world, s.getX(), s.getY(), timer);
-		}
 	}
 	
 	@Override

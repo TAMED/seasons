@@ -1,34 +1,49 @@
+/**
+ * 
+ */
 package ui;
 
-public class Timer {
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 
-	private Time time;
-	
-	public Timer() {
-		time = new Time();
+import entities.Sprite;
+
+/**
+ * @author Mullings
+ *
+ */
+public class Timer extends Sprite {
+	private String current;
+	private String last;
+	private String best;
+
+	public Timer(float x, float y) {
+		super(x, y, 0, 0);
 	}
 
-	public void update(int delta) {
-		time.update(delta);
+	/* (non-Javadoc)
+	 * @see entities.Sprite#render(org.newdawn.slick.Graphics)
+	 */
+	@Override
+	public void render(Graphics graphics) {
+		// TODO Auto-generated method stub
+		super.render(graphics);
+		
+		graphics.setColor(Color.white);
+		graphics.drawString(current, getX(), getY());
+		graphics.drawString(last,    getX(), getY() + 25);
+		graphics.drawString(best,    getX(), getY() + 50);
 	}
 	
-	public void reset() {
-		time.reset();
+	public void updateTime(Time currentTime, Time lastTime, Time bestTime) {
+		current = "Time: " + getTimeString(currentTime);
+		last    = "Last: " + getTimeString(lastTime);
+		best    = "Best: " + getTimeString(bestTime);
 	}
 	
-	public String getTimeString() {
-		return time.getTimeString();
+	private String getTimeString(Time t) {
+		if (t == null) return "N/A";
+		return t.getTimeString();
 	}
-	
-	public int getMillis() {
-		return time.getMillis();
-	}
-	
-	public Time getTime() {
-		return time;
-	}
-	
-	public void set(int millis) {
-		time.set(millis);
-	}
+
 }
