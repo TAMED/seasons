@@ -10,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 
 import util.Util;
@@ -21,7 +22,7 @@ public class Hookshot extends ItemBase {
 
 	private static final float STARTING_VEL = 50;
 	// spring constant for grappling
-	private static final float K = 50;
+	private static final float K = 500;
 	// additional tolerance for deciding when to complete grapple
 	private static final float EPSILON = 30;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
@@ -41,6 +42,8 @@ public class Hookshot extends ItemBase {
 	private Joint tether;
 	
 	private Chain chain;
+	
+	private Point playerStart;
 	
 	public Hookshot(Player player) {
 		super(player);
@@ -84,6 +87,7 @@ public class Hookshot extends ItemBase {
 				case OUT:
 					detachTether();
 					startPull = true;
+					playerStart = owner.getPosition();
 					state = HookState.PULL;
 					break;
 			}
@@ -117,8 +121,11 @@ public class Hookshot extends ItemBase {
 				activeTimer = ACTIVE_TIME;
 				
 				Vector2f diff = new Vector2f(hook.getX() - owner.getX(), hook.getY() - owner.getY());
+				boolean xFlip = (hook.getX() - playerStart.getX())*(hook.getX() - owner.getX()) < 0;
+				boolean yFlip = (hook.getY() - playerStart.getY())*(hook.getY() - owner.getY()) < 0;
+				
 				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
-				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
+				if ((xFlip && yFlip) || (diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
 					removeHook();
 					state = HookState.IN;
 					break;
@@ -127,6 +134,7 @@ public class Hookshot extends ItemBase {
 				Body b1 = owner.getPhysicsBody();
 				Body b2 = hook.getPhysicsBody();
 				Vec2 dist = b2.getPosition().sub(b1.getPosition());
+				dist.normalize();
 				
 				// force-based movement (try K=50)
 				b1.applyForceToCenter(dist.mul(K));
