@@ -19,52 +19,44 @@ import entities.Entity;
 public class AnimStateMachine {
 	private EnumMap<AnimationState, Animation> animMap;
 	protected AnimationState currentState;
-
+	protected AnimationState defaultState;
+	
 	public AnimStateMachine() {
 		animMap = new EnumMap<AnimationState, Animation>(AnimationState.class);
 	}
 	
 	public void addAnimation(AnimationState type, Animation animation) {
+		if (type.isTransition()) {
+			animation.setLooping(false);
+		}
 		animMap.put(type, animation);
+		
+	}
+	
+	public void setDefaultAnimation(AnimationState defaultState) {
+		this.defaultState = defaultState;
 	}
 	
 	public void update(Entity entity) {
-		if (currentState == null) return;
-		
-		if (currentState == AnimationState.FALL && animMap.get(AnimationState.START_JUMP) != null) {
-			animMap.get(AnimationState.START_JUMP).restart();
+		if (currentState == null && defaultState == null) {
+			return;
 		}
 		
-		switch(currentState) {
-			case JUMP:
-			case RISE:
-				if (entity.getPhysicsBody().getLinearVelocity().y >= 0) {
-					play(AnimationState.FALL);
-				}
-				break;
-			case HOOKING:
-			case FALL:
-				if (entity.isTouching(Direction.DOWN)) {
-					play(AnimationState.IDLE);
-				}
-				if (entity.getPhysicsBody().getLinearVelocity().y < 0) {
-					play(AnimationState.RISE);
-				}
-				break;
-			case IDLE:
-			case RUN:
-				if (!entity.isTouching(Direction.DOWN)) {
-					if (entity.getPhysicsBody().getLinearVelocity().y >= 0) {
-						play(AnimationState.FALL);
-					} else {
-						play(AnimationState.RISE);
-					}
-				} else {
-					if (entity.getPhysicsBody().getLinearVelocity().x == 0) {
-						play(AnimationState.IDLE);
-					}
-				}
-				break;
+		if (currentState == null) {
+			play(defaultState);
+			return;
+		}
+		
+		Animation animation = animMap.get(currentState);
+		if (currentState.isTransition()) {
+			if (animation.isStopped()) {
+				animation.restart();
+				play(currentState.getNextState(entity));
+			} else {
+				play(currentState);
+			}
+		} else {
+			play(currentState.getNextState(entity));
 		}
 	}
 	
@@ -83,17 +75,7 @@ public class AnimStateMachine {
 
 	public Animation getCurrentAnimation() {
 		if (currentState != null) {
-			if (currentState.transitionsFrom() == null )
-				return animMap.get(currentState);
-
-			Animation transition = animMap.get(currentState.transitionsFrom());
-
-			if (transition.isStopped()) {
-				return animMap.get(currentState);
-			} else {
-				return animMap.get(currentState.transitionsFrom());
-			}
-		
+			return animMap.get(currentState);
 		}
 		return null;
 	}
@@ -111,4 +93,7 @@ public class AnimStateMachine {
 		}
 	}
 	
+	public void reset() {
+		currentState = defaultState;
+	}
 }
