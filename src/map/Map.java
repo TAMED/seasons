@@ -17,6 +17,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import util.Corner;
 
 import config.Config;
+import entities.Salmon;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
 
@@ -28,6 +29,7 @@ public class Map {
 	private int tileHeight;
 	private int tileWidth;
 	private ArrayList<Enemy> enemies;
+	private ArrayList<Salmon> salmons;
 	private Vec2 playerLoc;
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
@@ -39,8 +41,9 @@ public class Map {
 		tileHeight = foreground.getTileHeight();
 		tileWidth = foreground.getTileWidth();
 		enemies = new ArrayList<Enemy>();
+		salmons = new ArrayList<Salmon>();
 	}
-	public void parseMapObjects() {
+	public void parseMapObjects() throws SlickException {
 		parseSpecialObjects();
 		parseWallObjects();
 		parseSlopeObjects();
@@ -64,17 +67,22 @@ public class Map {
 				if (tileType.equals("true")) {
 					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.WATER, 1, true);
 				}
+				tileType = foreground.getTileProperty(tileId, "type", "meh");
+				if (tileType.equals("goal")){
+					goalLoc = getPixelCenter(i,j);
+				}
 			}
 		}
 	}
 	
 	/**
 	 * Figure out where the player/enemies/etc are
+	 * @throws SlickException 
 	 */
-	private void parseEntityObjects() {
+	private void parseEntityObjects() throws SlickException {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
-				int tileId = foreground.getTileId(i, j, 0);
+				int tileId = foreground.getTileId(i, j, 1);
 				String tileType = foreground.getTileProperty(tileId, "type", "meh");
 				if (tileType.equals("enemy")) {
 					String enemyType = foreground.getTileProperty(tileId, "enemyType", "none");
@@ -87,8 +95,12 @@ public class Map {
 				if (tileType.equals("player")) {
 					playerLoc = getPixelCenter(i,j);
 				}
-				if (tileType.equals("goal")){
-					goalLoc = getPixelCenter(i,j);
+				if (tileType.equals("salmon")) {
+					int xOffset = Integer.parseInt(foreground.getTileProperty(tileId, "offsetX", "0"));
+					int yOffset = Integer.parseInt(foreground.getTileProperty(tileId, "offsetY", "0"));
+					Vec2 center = getPixelCenter(i+xOffset,j+yOffset);
+					Salmon salmon = new Salmon(center.x, center.y);
+					salmons.add(salmon);
 				}
 			}
 		}
@@ -338,6 +350,10 @@ public class Map {
 	
 	public TiledMap getTiledMap() {
 		return foreground;
+	}
+	
+	public ArrayList<Salmon> getSalmons() {
+		return this.salmons;
 	}
 	
 	public void render() {

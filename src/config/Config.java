@@ -27,6 +27,7 @@ public class Config {
 	// Object Filter Categories
 	public static final int HOOKABLE = 2;
 	public static final int WATER = 4;
+	public static final int SALMON = 8;
 	
 	// Player
 	public static final float PLAYER_DENSITY = 1f;
@@ -52,4 +53,5 @@ public class Config {
 	// how far away from the player the aiming cursor appears
 	public static final float CURSOR_DIST = 100;
 	public static final int CURSOR_SIZE = 15;
+	public static final int SALMON_TIME = -1000;
 }
