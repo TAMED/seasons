@@ -46,13 +46,16 @@ public class Salmon extends Sprite{
 	private static final float width = Config.TILE_WIDTH;
 	private static final float height = Config.TILE_HEIGHT;
 	
-	private Animation anim;
+	private Animation anima;
 	private boolean eaten = false;
 	private Timer timer;
 
 	public Salmon(float x, float y) throws SlickException {
 		super(x, y, width, height);
-		anim = new Animation(new SpriteSheet("assets/images/nonentities/salmon/spinning.png", 32, 32), 100);
+		anima = new Animation(new SpriteSheet("assets/images/nonentities/salmon/spinning.png", 32, 32), 100);
+		anim.addAnimation(AnimationState.BASIC, anima);
+		anim.setDefaultAnimation(AnimationState.BASIC);
+		
 		float hw = width / 2;  // half-width
 		float hh = height / 2; // half-height
 				
@@ -79,7 +82,7 @@ public class Salmon extends Sprite{
 	@Override
 	public void render(Graphics g) {
 		if (!eaten){
-			anim.draw(this.getX(), this.getY());
+			draw(g);
 		}
 	}
 	

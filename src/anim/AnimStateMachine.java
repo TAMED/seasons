@@ -35,6 +35,7 @@ public class AnimStateMachine {
 	
 	public void setDefaultAnimation(AnimationState defaultState) {
 		this.defaultState = defaultState;
+		play(this.defaultState);
 	}
 	
 	public void update(Entity entity) {
