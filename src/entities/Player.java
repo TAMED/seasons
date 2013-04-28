@@ -5,6 +5,7 @@ package entities;
 
 import items.Hookshot;
 
+import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -32,6 +33,7 @@ public class Player extends Entity {
 		super(width, height, ground, Config.PLAYER_MAX_HP, true);
 		addFeet(Config.PLAYER_MOVE_SPEED, Config.PLAYER_ACCELERATION, Config.PLAYER_JUMP_SPEED);
 		setDensity(Config.PLAYER_DENSITY);
+		this.getPhysicsFixtureDefs()[2].filter.maskBits |= Config.SALMON;
 		anim.setDefaultAnimation(AnimationState.IDLE);
 		
 		try {
@@ -83,6 +85,7 @@ public class Player extends Entity {
 		super.update(gc, delta);
 		movePlayer(gc,delta);
 		hookshot.update(gc, delta, anim);
+		salmonCheck();
 	}
 	
 	private void movePlayer(GameContainer gc, int delta) {
@@ -105,6 +108,28 @@ public class Player extends Entity {
 		
 		if(input.isKeyPressed(Input.KEY_SPACE)) {
 			jump(gc, delta);
+		}
+	}
+	
+	/**
+	 * Check if player is touching salmon
+	 */
+	public void salmonCheck() {
+		ContactEdge contactEdge = this.getPhysicsBody().getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				int category = contactEdge.contact.getFixtureA().m_filter.categoryBits;
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				Object preSalmon = contactEdge.contact.getFixtureA().getUserData();
+				if (category == Config.SALMON && preSalmon instanceof Salmon) {
+					Salmon salmon = (Salmon) preSalmon;
+					if(!salmon.isEaten()){
+						salmon.eat();
+					}
+				}
+			}
+			contactEdge = contactEdge.next;
 		}
 	}
 	

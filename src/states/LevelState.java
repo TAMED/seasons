@@ -192,10 +192,6 @@ public class LevelState extends BasicGameState{
 			e.addToWorld(world, e.getX(), e.getY());
 		}
 		
-		for (Salmon s : salmons) {
-			s.addToWorld(world, s.getX(), s.getY());
-		}
-		
 		goalLoc = map.getGoalLoc();
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
@@ -212,6 +208,10 @@ public class LevelState extends BasicGameState{
 			timer.reset();
 		} else {
 			timer = new Timer();
+		}
+		
+		for (Salmon s : salmons) {
+			s.addToWorld(world, s.getX(), s.getY(), timer);
 		}
 	}
 	
