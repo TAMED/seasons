@@ -137,7 +137,7 @@ public class Hookshot extends ItemBase {
 				dist.normalize();
 				
 				// force-based movement (try K=50)
-				b1.applyForceToCenter(dist.mul(K));
+				//b1.applyForceToCenter(dist.mul(K));
 //				b2.applyForceToCenter(dist.mul(-K));
 				
 				// impulse-based movement (try K=1)
