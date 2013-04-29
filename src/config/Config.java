@@ -13,8 +13,8 @@ public class Config {
 	// Physics
 	public static final float PIXELS_PER_METER = 32;
 	public static final float DEFAULT_DENSITY = 1f;
-	public static final float DEFAULT_FRICTION = 10f;
-	public static final float DEFAULT_TRACTION = 100f; // Friction for feet
+	public static final float DEFAULT_FRICTION = .03f;
+	public static final float DEFAULT_TRACTION = 10f; // Friction for feet
 	public static final int VELOCITY_ITERATIONS = 6;
 	public static final int POSITION_ITERATIONS = 2;
 	public static final float VEL_EPSILON = .5f;
@@ -37,10 +37,10 @@ public class Config {
 	public static final int PLAYER_DRAW_HEIGHT = 80;
 	public static final int PLAYER_GROUND = 6;
 	public static final int PLAYER_MAX_HP = 1;
-	public static final float PLAYER_MOVE_SPEED = 50;
-	public static final float PLAYER_AIR_ACCELERATION = 100;
-	public static final float PLAYER_WATER_MOVE_SPEED = 0.5f;
-	public static final float PLAYER_ACCELERATION = 80;
+	public static final float PLAYER_MOVE_SPEED = 32f;
+	public static final float PLAYER_AIR_ACCELERATION = 0.4f;
+	public static final float PLAYER_WATER_MOVE_SPEED = 1.0f;
+	public static final float PLAYER_ACCELERATION = 100;
 	public static final float PLAYER_JUMP_SPEED = 80;
 
 	
