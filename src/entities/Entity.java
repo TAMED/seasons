@@ -6,6 +6,7 @@ package entities;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -15,9 +16,14 @@ import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.ContactEdge;
+import org.jbox2d.dynamics.joints.RevoluteJoint;
+import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 
+import states.LevelState;
 import util.Direction;
 import util.Util;
 import anim.AnimationState;
@@ -29,55 +35,106 @@ import config.Config;
  * 
  */
 public abstract class Entity extends Sprite {
-	private PolygonShape physicsShape;
+	/**
+	 * If the difference between the width and height of the entity is less than
+	 * this (in pixels), then the capsule shape is approximated with only two circles
+	 */
+	private static final float EPSILON = 5;
+	
 	private BodyDef physicsDef;
-	private FixtureDef physicsFixtureDef;
-	private Fixture physicsFixture;
+	private FixtureDef circleDef1;
+	private FixtureDef circleDef2;
+	private FixtureDef boxDef;
 	private Body physicsBody;
-	private World physicsWorld;
+	
+	private boolean hasFeet;
+	private BodyDef footDef;
+	private FixtureDef footFixtureDef;
+	private RevoluteJoint footJoint;
+	
+	private boolean hasSensors;
 	private FixtureDef[] sensors = new FixtureDef[Direction.values().length];
 	private PolygonShape[] sensorShapes;
-	private boolean hasSensors;
 	
-	private float runSpeed;
-	private float jmpSpeed;
+	private float width;
+	private float height;
+	private float radius;
 	
 	public final int maxHp;
 	private int hp;
 	private boolean alive;
+	private int jumpTimer = 500;
+	
+	private float runSpeed;
+	private float acceleration;
+	private float jmpSpeed;
+	
+	private Sound jmpSound; 
 
-	public Entity(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
-		this(x, y, width, height, 0, runSpeed, jmpSpeed, maxHp, hasSensors);
+	public Entity(float width, float height, int maxHp, boolean hasSensors) {
+		this(width, height, 0, maxHp, hasSensors);
 	}
 
-	public Entity(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, boolean hasSensors) {
-		super(x, y, width, height, ground);
+	public Entity(float width, float height, float ground, int maxHp, boolean hasSensors) {
+		super(0, 0, width, height, ground);
+		
+		try {
+			jmpSound = new Sound("assets/sounds/boop.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(jmpSound);
+		this.width = width;
+		this.height = height;
+		this.radius = Math.min(width, height) / 2;
+		float hw = width / 2;  // half-width
+		float hh = height / 2; // half-height
+		
 		this.hasSensors = hasSensors;
+		
 		physicsDef = new BodyDef();
 		physicsDef.type = BodyType.DYNAMIC;
 		physicsDef.fixedRotation = true;
-		physicsDef.position.set(x / Config.PIXELS_PER_METER,
-		                        y / Config.PIXELS_PER_METER);
 		
-		physicsShape = new PolygonShape();
-		physicsShape.setAsBox(width / 2 / Config.PIXELS_PER_METER,
-		                     height / 2 / Config.PIXELS_PER_METER);
+		circleDef1 = new FixtureDef();
+		circleDef1.density = Config.DEFAULT_DENSITY;
+		circleDef1.friction = Config.DEFAULT_FRICTION;
+		circleDef1.shape = Util.getCircleShape(radius / Config.PIXELS_PER_METER);
+		((CircleShape) circleDef1.shape).m_p.set((-hw + radius) / Config.PIXELS_PER_METER,
+		                                         (-hh + radius) / Config.PIXELS_PER_METER);
 		
-		physicsFixtureDef = new FixtureDef();
-		physicsFixtureDef.shape = physicsShape;
-		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
-		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
+		circleDef2 = new FixtureDef();
+		circleDef2.density = Config.DEFAULT_DENSITY;
+		circleDef2.friction = Config.DEFAULT_FRICTION;
+		circleDef2.shape = Util.getCircleShape(radius / Config.PIXELS_PER_METER);
+		((CircleShape) circleDef2.shape).m_p.set((hw - radius) / Config.PIXELS_PER_METER,
+		                                         (hh - radius) / Config.PIXELS_PER_METER);
+		
+		boxDef = new FixtureDef();
+		boxDef.density = Config.DEFAULT_DENSITY;
+		boxDef.friction = Config.DEFAULT_FRICTION;
+		boxDef.filter.maskBits |= Config.WATER;
+		if (height - width > EPSILON) {
+			boxDef.shape = Util.getBoxShape(hw / Config.PIXELS_PER_METER,
+		                             (hh - hw) / Config.PIXELS_PER_METER);
+		} else if (width - height > EPSILON) {
+			boxDef.shape = Util.getBoxShape(hh / Config.PIXELS_PER_METER,
+			                         (hw - hh) / Config.PIXELS_PER_METER);
+		} else { // just make an arbitrary box
+			boxDef.shape = Util.getBoxShape(hw / 2 / Config.PIXELS_PER_METER,
+			                                hh / 2 / Config.PIXELS_PER_METER);
+		}
 		
 		if (hasSensors) {
 			sensorShapes = new PolygonShape[Direction.values().length];
 			// creates sensors on each side. Config has mapping of integers to TOP, BOTTOM, etc.
-			for (int i = 0; i < sensorShapes.length; i++) {
-				sensorShapes[i] = new PolygonShape();
-			}
-			sensorShapes[Direction.UP.ordinal()   ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
-			sensorShapes[Direction.DOWN.ordinal() ].setAsBox(width/2.2f/Config.PIXELS_PER_METER,.1f, new Vec2(0, height/2/Config.PIXELS_PER_METER), 0);
-			sensorShapes[Direction.LEFT.ordinal() ].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER, 0), 0);
-			sensorShapes[Direction.RIGHT.ordinal()].setAsBox(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(width/2/Config.PIXELS_PER_METER, 0), 0);
+			sensorShapes[Direction.UP.ordinal()   ]  = Util.getBoxShape(width/2.2f/Config.PIXELS_PER_METER, .1f, new Vec2(0, -height/2/Config.PIXELS_PER_METER), 0);
+			sensorShapes[Direction.DOWN.ordinal() ]  = Util.getBoxShape(width/2.2f/Config.PIXELS_PER_METER, .1f, new Vec2(0,  height/2/Config.PIXELS_PER_METER), 0);
+			sensorShapes[Direction.LEFT.ordinal() ]  = Util.getBoxShape(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2(-width/2/Config.PIXELS_PER_METER,  0), 0);
+			sensorShapes[Direction.RIGHT.ordinal()]  = Util.getBoxShape(.1f,height/2.2f/Config.PIXELS_PER_METER, new Vec2( width/2/Config.PIXELS_PER_METER,  0), 0);
+			sensorShapes[Direction.CENTER.ordinal()] = Util.getBoxShape(.1f, .1f, new Vec2(0,0), 0);
 			for (int i = 0; i < sensors.length; i++) {
 				sensors[i] = new FixtureDef();
 				sensors[i].shape = sensorShapes[i];
@@ -86,80 +143,116 @@ public abstract class Entity extends Sprite {
 		} else {
 			sensorShapes = new PolygonShape[0];
 		}
-		this.runSpeed = runSpeed;
-		this.jmpSpeed = jmpSpeed;
 		
 		this.maxHp = maxHp;
 		this.hp = maxHp;
 		this.alive = true;
 	}
 	
+	
+	
 	/* (non-Javadoc)
 	 * @see entities.Sprite#update(org.newdawn.slick.GameContainer, int)
 	 */
 	@Override
 	public void update(GameContainer gc, int delta) {
+		jumpTimer += delta;
 		super.update(gc, delta);
 		anim.update(this);
+		this.waterUpdate(gc);
 	}
 
-	public void moveLeft() {
-		if (this.isTouching(Direction.DOWN)) {
-			if (this.getFacing() == Direction.LEFT) {
-				this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
-			} else {
-				this.getPhysicsBody().applyForce(new Vec2(-3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
-				if (this.getPhysicsBody().getLinearVelocity().x < 0) {
+	public void move(float xvel, float yvel) {
+		if (xvel > 0) setFacing(Direction.RIGHT);
+		if (xvel < 0) setFacing(Direction.LEFT);
+		getPhysicsBody().applyLinearImpulse(new Vec2(xvel, yvel), getPhysicsBody().getWorldCenter());
+	}
+	
+	public void moveForce(float xForce, float yForce) {
+		getPhysicsBody().applyForce(new Vec2(xForce, yForce), getPhysicsBody().getWorldCenter());
+
+	}
+	
+	public void addFeet(float runSpeed, float acceleration, float jmpSpeed) {
+		this.hasFeet = true;
+		this.runSpeed = runSpeed;
+		this.acceleration = acceleration;
+		this.jmpSpeed = jmpSpeed;
+		
+		footDef = new BodyDef();
+		footDef.type = BodyType.DYNAMIC;
+		footDef.fixedRotation = false;
+		footFixtureDef = new FixtureDef();
+		footFixtureDef.shape = Util.getCircleShape(radius * 1.1f / Config.PIXELS_PER_METER);
+		footFixtureDef.density = Config.DEFAULT_DENSITY;
+		footFixtureDef.friction = Config.DEFAULT_TRACTION;
+	}
+	
+	public void setDensity(float density) {
+		boxDef.density = density;
+	}
+	
+	public void run(Direction dir) {
+		if (hasFeet) {
+			switch (dir) {
+				case LEFT:
+					footJoint.setMotorSpeed(runSpeed);
 					setFacing(Direction.LEFT);
-				}
-			}
-		} else {
-			this.getPhysicsBody().applyForce(new Vec2(-runSpeed, 0), Util.PointToVec2(this.getPosition()));
-		}
-		anim.play(AnimationState.RUN);
-	}
-	
-	public void moveRight() {
-		if (this.isTouching(Direction.DOWN)) {
-			if (this.getFacing() == Direction.RIGHT) {
-				this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
-			} else {
-				this.getPhysicsBody().applyForce(new Vec2(3*runSpeed, 0), Util.PointToVec2(this.getPosition()));
-				if (this.getPhysicsBody().getLinearVelocity().x > 0) {
+					break;
+				case RIGHT:
+					footJoint.setMotorSpeed(-runSpeed);
 					setFacing(Direction.RIGHT);
-				}
+					break;
+				default:
+					footJoint.setMotorSpeed(0);
+					break;
 			}
-		} else {
-			this.getPhysicsBody().applyForce(new Vec2(runSpeed, 0), Util.PointToVec2(this.getPosition()));
-		}
-		anim.play(AnimationState.RUN);
-	}
-	
-	public void jump() {
-		if(this.isTouching(Direction.DOWN)) {
-//			float xvel = this.getPhysicsBody().getLinearVelocity().x;
-			this.getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
-		}
-		anim.play(AnimationState.JUMP);
-	}
-	
-	public void dampenVelocity(int delta) {
-		Vec2 vel = this.getPhysicsBody().getLinearVelocity();
-		this.getPhysicsBody().setLinearVelocity(new Vec2((float) (vel.x * Math.pow(Config.DRAG, delta/100f)), vel.y));
-		if (this.isTouching(Direction.DOWN)) {
-			anim.play(AnimationState.IDLE);
 		}
 	}
 	
-	public void addToWorld(World world) {
+	public void jump(GameContainer gc, int delta) {
+		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
+			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
+				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
+				jmpSound.play();
+				anim.play(AnimationState.JUMP);
+				jumpTimer = 0;
+			}
+		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
+			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
+			jmpSound.play();
+			anim.play(AnimationState.JUMP);
+		}
+		
+	}
+	
+	public void addToWorld(World world, float x, float y) {
+		physicsDef.position.set(x / Config.PIXELS_PER_METER, y / Config.PIXELS_PER_METER);
 		physicsBody = world.createBody(physicsDef);
-		physicsFixture = physicsBody.createFixture(physicsFixtureDef);
-		physicsFixture.setUserData(this);
+		physicsBody.setUserData(this);
+
+		Fixture circle1 = physicsBody.createFixture(circleDef1);
+		circle1.setUserData(this);
+		Fixture circle2 = physicsBody.createFixture(circleDef2);
+		circle2.setUserData(this);
+		Fixture box = physicsBody.createFixture(boxDef);
+		box.setUserData(this);
+		
 		if (hasSensors) {
 			for(int i = 0; i < sensors.length; i++){
 				physicsBody.createFixture(sensors[i]).setUserData(Direction.values()[i]);
 			}
-			physicsWorld = world;
+		}
+
+		if (hasFeet) {
+			footDef.position.set(x / Config.PIXELS_PER_METER, (y + (height / 2) - radius) / Config.PIXELS_PER_METER);
+			Body footBody = world.createBody(footDef);
+			footBody.createFixture(footFixtureDef);
+			RevoluteJointDef joint = new RevoluteJointDef();
+			joint.initialize(footBody, physicsBody, footBody.getWorldCenter());
+			joint.enableMotor = true;
+			joint.maxMotorTorque = acceleration;
+			footJoint = (RevoluteJoint) world.createJoint(joint);
 		}
 	}
 	
@@ -167,7 +260,8 @@ public abstract class Entity extends Sprite {
 	 * @return the entity's physics world
 	 */
 	public World getPhysicsWorld() {
-		return physicsWorld;
+		if (physicsBody != null) return physicsBody.getWorld();
+		return null;
 	}
 
 	@Override
@@ -200,14 +294,15 @@ public abstract class Entity extends Sprite {
 	 * @return the entity's physics fixture
 	 */
 	public Fixture getPhysicsFixture() {
-		return physicsFixture;
+		if (physicsBody != null) return physicsBody.getFixtureList();
+		return null;
 	}
 	
 	/**
 	 * @return the entity's physics fixture
 	 */
-	public FixtureDef getPhysicsFixtureDef() {
-		return physicsFixtureDef;
+	public FixtureDef[] getPhysicsFixtureDefs() {
+		return new FixtureDef[] {circleDef1, circleDef2, boxDef};
 	}
 	
 	/**
@@ -304,14 +399,14 @@ public abstract class Entity extends Sprite {
 	 * @return a list of bodies touching the object
 	 */
 	public final ArrayList<Body> bodiesTouching() {
+		// TODO: this function will currently add the same body multiple times
 		ArrayList<Body> list = new ArrayList<Body>();
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
 		while(contactEdge != null) {
-//			Fixture fixtureA = contactEdge.contact.getFixtureA();
-//			Fixture fixtureB = contactEdge.contact.getFixtureB();
 			if(contactEdge.contact.isTouching()) {
-				list.add(contactEdge.contact.getFixtureA().getBody());
+				Body b = contactEdge.contact.getFixtureA().getBody();
+				list.add(b);
 			}
 			contactEdge = contactEdge.next;
 		}
@@ -319,6 +414,46 @@ public abstract class Entity extends Sprite {
 		return list;
 	}
 	
+	public int[] categoriesTouchingSensors() {
+		int[] categories = new int[5];
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				int category = contactEdge.contact.getFixtureA().m_filter.categoryBits;
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				if (data != null && data instanceof Direction) {
+					categories[((Direction) data).ordinal()] |= category;
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		return categories;
+	}
+	
+	public boolean checkWater(GameContainer gc) {
+		boolean water = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0;
+		boolean low = this.getCenterY() > gc.getHeight();
+		return water || low;
+	}
+	
+	private void waterUpdate(GameContainer gc) {
+		if (checkWater(gc)) {
+			this.getPhysicsBody().setLinearDamping(5f);
+			this.getPhysicsBody().setGravityScale(Config.WATER_GRAVITY_SCALE);
+		}
+		else {
+			this.getPhysicsBody().setGravityScale(1);
+			this.getPhysicsBody().setLinearDamping(0f);
+		}
+	}
+	
 	abstract public void reset();
+	
+	public boolean isStill() {
+		if (Math.abs(this.getPhysicsBody().getLinearVelocity().x) < Config.VEL_EPSILON) return true;
+		return false;
+	}
 
 }

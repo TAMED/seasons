@@ -23,15 +23,14 @@ public class Enemy extends Entity {
 	 * @param height
 	 */
 	public Enemy(float x, float y, float width, float height, float runSpeed, float jmpSpeed, int maxHp, AI ai) {
-		super(x, y, width, height, runSpeed, jmpSpeed, maxHp, true);
-		this.ai = ai;
-		setColor(Color.red);
+		this(x, y, width, height, 0, runSpeed, jmpSpeed, maxHp, ai);
 	}
 	
 	public Enemy(float x, float y, float width, float height, float ground, float runSpeed, float jmpSpeed, int maxHp, AI ai) {
-		super(x, y, width, height, ground, runSpeed, jmpSpeed, maxHp, true);
+		super(width, height, ground, maxHp, true);
 		this.ai = ai;
 		setColor(Color.red);
+		setPosition(x, y);
 	}
 	
 	@Override

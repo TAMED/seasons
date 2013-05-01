@@ -3,6 +3,8 @@ package items;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import anim.AnimStateMachine;
+
 import entities.Player;
 
 public abstract class ItemBase {
@@ -13,7 +15,8 @@ public abstract class ItemBase {
 		owner = player;
 	}
 
-	public abstract void update(GameContainer gc, int delta);
+	//public abstract void update(GameContainer gc, int delta);
+	public abstract void update(GameContainer gc, int delta, AnimStateMachine anim);
 
 	public abstract void render(Graphics graphics);
 	
@@ -27,4 +30,6 @@ public abstract class ItemBase {
 	public void drawRange(Graphics graphics) {
 		
 	}
+
+
 }

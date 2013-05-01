@@ -17,6 +17,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import util.Corner;
 
 import config.Config;
+import entities.Salmon;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
 
@@ -28,9 +29,10 @@ public class Map {
 	private int tileHeight;
 	private int tileWidth;
 	private ArrayList<Enemy> enemies;
+	private ArrayList<Salmon> salmons;
 	private Vec2 playerLoc;
 	private Vec2 goalLoc;
-	
+	private final float EPS = .01f;
 	public Map(String tmxMap, World world) throws SlickException {
 		foreground = new TiledMap(tmxMap);
 		this.world = world;
@@ -39,24 +41,35 @@ public class Map {
 		tileHeight = foreground.getTileHeight();
 		tileWidth = foreground.getTileWidth();
 		enemies = new ArrayList<Enemy>();
+		salmons = new ArrayList<Salmon>();
 	}
-	public void parseMapObjects() {
-		parseHookableObjects();
+	public void parseMapObjects() throws SlickException {
+		parseSpecialObjects();
 		parseWallObjects();
 		parseSlopeObjects();
 		parseEntityObjects();
+		createLine(new Vec2(0, (height+2)*tileHeight/ Config.PIXELS_PER_METER), 
+				new Vec2(width*tileWidth/ Config.PIXELS_PER_METER, (height+2)*tileHeight/ Config.PIXELS_PER_METER));
 	}
 	
 	/**
 	 * Give bodies to things which can be hooked
 	 */
-	private void parseHookableObjects() {
+	private void parseSpecialObjects() {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
 				int tileId = foreground.getTileId(i, j, 0);
 				String tileType = foreground.getTileProperty(tileId, "hookable", "meh");
 				if (tileType.equals("true")) {
-					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, 2, 2);
+					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.HOOKABLE, Config.HOOKABLE, false);
+				}
+				tileType = foreground.getTileProperty(tileId, "water", "meh");
+				if (tileType.equals("true")) {
+					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.WATER, 1, true);
+				}
+				tileType = foreground.getTileProperty(tileId, "type", "meh");
+				if (tileType.equals("goal")){
+					goalLoc = getPixelCenter(i,j);
 				}
 			}
 		}
@@ -64,11 +77,12 @@ public class Map {
 	
 	/**
 	 * Figure out where the player/enemies/etc are
+	 * @throws SlickException 
 	 */
-	private void parseEntityObjects() {
+	private void parseEntityObjects() throws SlickException {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
-				int tileId = foreground.getTileId(i, j, 0);
+				int tileId = foreground.getTileId(i, j, 1);
 				String tileType = foreground.getTileProperty(tileId, "type", "meh");
 				if (tileType.equals("enemy")) {
 					String enemyType = foreground.getTileProperty(tileId, "enemyType", "none");
@@ -81,8 +95,14 @@ public class Map {
 				if (tileType.equals("player")) {
 					playerLoc = getPixelCenter(i,j);
 				}
-				if (tileType.equals("goal")){
-					goalLoc = getPixelCenter(i,j);
+				if (tileType.equals("salmon")) {
+					int xOffset = Integer.parseInt(foreground.getTileProperty(tileId, "xOffset", "0"));
+					int yOffset = Integer.parseInt(foreground.getTileProperty(tileId, "yOffset", "0"));
+					Vec2 center = getPixelCenter(i,j);
+					center.x += xOffset;
+					center.y += yOffset;
+					Salmon salmon = new Salmon(center.x, center.y);
+					salmons.add(salmon);
 				}
 			}
 		}
@@ -181,6 +201,7 @@ public class Map {
 				}
 			}
 		}
+		
 		// create vertical lines
 		for(int j = 0; j < width; j++) {
 			boolean running = false;
@@ -194,8 +215,8 @@ public class Map {
 				// create the start of a line
 				if (!running) {
 					if(tileType.equals("wall")) {
-						startVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
-						startVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
+						startVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER + EPS);
+						startVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER + EPS);
 						running = true;
 					}
 				}
@@ -203,13 +224,13 @@ public class Map {
 				if (running) {
 					if(!tileType.equals("wall") || i == height-1) {
 						if(!tileType.equals("wall")) {
-							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
-							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER);
+							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER - EPS);
+							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, i*tileHeight / Config.PIXELS_PER_METER - EPS);
 						}
 						// extend line a bit if end of map
 						else if(i == height-1) {
-							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER);
-							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER);
+							endVTop.set(j*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER - EPS);
+							endVBottom.set((j+1)*tileWidth / Config.PIXELS_PER_METER, (i+1)*tileHeight / Config.PIXELS_PER_METER - EPS);
 						}
 						// add lines to map
 						createLine(startVTop, endVTop);
@@ -285,7 +306,7 @@ public class Map {
 		line.createFixture(edge, Config.DEFAULT_DENSITY);
 	}
 	
-	private void createBox(float x, float y, int category, int collides) {
+	private void createBox(float x, float y, int category, int collides, boolean isSensor) {
 		BodyDef physicsDef = new BodyDef();
 		physicsDef.type = BodyType.STATIC;
 		physicsDef.fixedRotation = true;
@@ -300,8 +321,9 @@ public class Map {
 		physicsFixtureDef.shape = physicsShape;
 		physicsFixtureDef.density = Config.DEFAULT_DENSITY;
 		physicsFixtureDef.friction = Config.DEFAULT_FRICTION;
-		physicsFixtureDef.filter.categoryBits = Config.HOOKABLE;
-		physicsFixtureDef.filter.maskBits = Config.HOOKABLE;
+		physicsFixtureDef.filter.categoryBits = category;
+		physicsFixtureDef.filter.maskBits = collides;
+		physicsFixtureDef.isSensor = isSensor;
 		
 		Body physicsBody = world.createBody(physicsDef);
 		Fixture physicsFixture = physicsBody.createFixture(physicsFixtureDef);
@@ -330,6 +352,10 @@ public class Map {
 	
 	public TiledMap getTiledMap() {
 		return foreground;
+	}
+	
+	public ArrayList<Salmon> getSalmons() {
+		return this.salmons;
 	}
 	
 	public void render() {

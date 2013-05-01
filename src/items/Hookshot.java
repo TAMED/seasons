@@ -9,20 +9,21 @@ import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 
+
 import util.Util;
+import anim.AnimStateMachine;
+import anim.AnimationState;
 import entities.Player;
 
 public class Hookshot extends ItemBase {
 
 	private static final float STARTING_VEL = 50;
 	// spring constant for grappling
-	private static final float K = 50;
+	private static final float K = 30;
 	// additional tolerance for deciding when to complete grapple
 	private static final float EPSILON = 30;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
@@ -30,8 +31,8 @@ public class Hookshot extends ItemBase {
 	// range the hook can travel before it will reset
 	private static final float MAX_RANGE = 500;
 	// number of segments the rope/chain is broken into (visually, for the wisps)
-	private static final int HOOK_CHUNKS = 10;
-	private static final int HOOK_DIM = 32;
+	private static final float CHAIN_LENGTH = 530f;
+	private static final float CHAIN_HEIGHT = 16f;
 	
 	private enum HookState { IN, MOTION, OUT, PULL };
 
@@ -41,45 +42,36 @@ public class Hookshot extends ItemBase {
 	private Hook hook;
 	private Joint tether;
 	
-	private Image wisp;
-	private Sound launchSound;
-	private Sound pullSound;
+	private Chain chain;
+	
+	private Point playerStart;
 	
 	public Hookshot(Player player) {
 		super(player);
 		state = HookState.IN;
-		try {
-			wisp = new Image("assets/images/nonentities/wisp/sprite.png");
-			launchSound = new Sound("assets/hookLaunch.wav");
-			pullSound = new Sound("assets/pickup.wav");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
 	public void render(Graphics graphics) {
+
+		
+		// draw tether
+		switch (state) {
+			case OUT: case PULL: case MOTION:
+				chain.render(graphics);
+
+		}
+		
 		// draw hook
 		switch (state) {
 			case MOTION: case OUT: case PULL:
 				hook.render(graphics);
 				break;
 		}
-		
-		// draw tether
-		switch (state) {
-			case OUT: case PULL: case MOTION:
-				Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
-				
-				for (int i = 1; i < HOOK_CHUNKS; i++) {
-					Vec2 rel = dist.mul(i / (float) HOOK_CHUNKS);
-					wisp.draw(owner.getPosition().getX() - (HOOK_DIM / 2) + rel.x, owner.getPosition().getY() - (HOOK_DIM / 2) + rel.y);
-				}
-		}
 	}
 	
 	@Override
-	public void update(GameContainer gc, int delta) {
+	public void update(GameContainer gc, int delta, AnimStateMachine anim) {
 		Input input = gc.getInput();
 		
 		if (hook != null) hook.update(gc, delta);
@@ -92,11 +84,11 @@ public class Hookshot extends ItemBase {
 				case IN:
 					spawnHook();
 					state = HookState.MOTION;
-					launchSound.play();
 					break;
 				case OUT:
 					detachTether();
 					startPull = true;
+					playerStart = owner.getPosition();
 					state = HookState.PULL;
 					break;
 			}
@@ -124,24 +116,22 @@ public class Hookshot extends ItemBase {
 					removeHook();
 					state = HookState.IN;
 				}
+				anim.play(AnimationState.HOOKING);
 				break;
 			case PULL:
 				activeTimer = ACTIVE_TIME;
 				
 				Vector2f diff = new Vector2f(hook.getX() - owner.getX(), hook.getY() - owner.getY());
-				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
-				if ((diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
-					removeHook();
-					state = HookState.IN;
-					break;
-				}
+				boolean xFlip = (hook.getX() - playerStart.getX())*(hook.getX() - owner.getX()) < 0;
+				boolean yFlip = (hook.getY() - playerStart.getY())*(hook.getY() - owner.getY()) < 0;
 				
 				Body b1 = owner.getPhysicsBody();
 				Body b2 = hook.getPhysicsBody();
 				Vec2 dist = b2.getPosition().sub(b1.getPosition());
+				dist.normalize();
 				
 				// force-based movement (try K=50)
-				b1.applyForceToCenter(dist.mul(K));
+				//b1.applyForceToCenter(dist.mul(K));
 //				b2.applyForceToCenter(dist.mul(-K));
 				
 				// impulse-based movement (try K=1)
@@ -149,9 +139,20 @@ public class Hookshot extends ItemBase {
 //				b2.applyLinearImpulse(dist.mul(-K), b2.getPosition());
 				
 				// simple movement (try K=5)
-//				b1.setLinearVelocity(dist.mul(K));
+				b1.setLinearVelocity(dist.mul(K));
+				
+
+				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
+				if ((xFlip && yFlip) || (diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
+					removeHook();
+					state = HookState.IN;
+					break;
+				}
+				
 				break;
 		}
+		
+		if (chain != null)  chain.update(gc, delta);
 	}
 
 	/**
@@ -163,9 +164,22 @@ public class Hookshot extends ItemBase {
 		Vector2f aim = new Vector2f(Controls.getAimAngle(owner));
 		Vector2f start = new Vector2f(0,0);
 		
-		hook = new Hook(x + start.x, y + start.y);
-		hook.addToWorld(owner.getPhysicsWorld());
+		hook = new Hook(owner);
+		hook.addToWorld(owner.getPhysicsWorld(), x + start.x, y + start.y);
 		hook.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(aim.copy().scale(STARTING_VEL)));
+		
+		// drawing
+//		chain.draw(owner.getPosition().getX() - (chain.getWidth()/2) + halfDist.x, owner.getPosition().getY() - (chain.getHeight()/2) + halfDist.y);
+
+		
+		Vec2 dist = Util.PointToVec2(hook.getPosition()).sub(Util.PointToVec2(owner.getPosition()));
+		Vec2 halfDist = dist.mul(.5f);
+		chain = new Chain(owner.getPosition().getX() - CHAIN_LENGTH/2 + halfDist.x, 
+				  owner.getPosition().getY() - CHAIN_HEIGHT/2 + halfDist.y, 
+				  CHAIN_LENGTH,
+				  CHAIN_HEIGHT,
+				  owner,
+				  hook);
 	}
 
 	/**
@@ -176,6 +190,10 @@ public class Hookshot extends ItemBase {
 			owner.getPhysicsWorld().destroyBody(hook.getPhysicsBody());
 		}
 		hook = null;
+		
+		
+		//drawing
+		chain = null;
 	}
 
 	/**
@@ -192,6 +210,8 @@ public class Hookshot extends ItemBase {
 		tetherDef.localAnchorB.set(zero);
 		tetherDef.maxLength = b1.getPosition().sub(b2.getPosition()).length();
 		tether = owner.getPhysicsWorld().createJoint(tetherDef);
+
+
 	}
 
 	private void detachTether() {
@@ -199,6 +219,7 @@ public class Hookshot extends ItemBase {
 			Joint.destroy(tether);
 			tether = null;
 		}
+
 	}
 
 	@Override
@@ -226,4 +247,9 @@ public class Hookshot extends ItemBase {
 	public boolean isPulling() {
 		return state.equals(HookState.PULL);
 	}
+	
+	public boolean isShooting() {
+		return state.equals(HookState.MOTION);
+	}
+	
 }
