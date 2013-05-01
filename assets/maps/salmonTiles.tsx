@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="salmonTiles" tilewidth="32" tileheight="32">
- <image source="../../../../../Dropbox/CMS.617/game art/nonentities/salmon/SalmonTile.png" width="128" height="128"/>
+ <image source="SalmonTile.png" width="128" height="128"/>
  <tile id="0">
   <properties>
    <property name="type" value="salmon"/>
