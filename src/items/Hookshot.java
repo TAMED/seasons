@@ -124,13 +124,6 @@ public class Hookshot extends ItemBase {
 				boolean xFlip = (hook.getX() - playerStart.getX())*(hook.getX() - owner.getX()) < 0;
 				boolean yFlip = (hook.getY() - playerStart.getY())*(hook.getY() - owner.getY()) < 0;
 				
-				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
-				if ((xFlip && yFlip) || (diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
-					removeHook();
-					state = HookState.IN;
-					break;
-				}
-				
 				Body b1 = owner.getPhysicsBody();
 				Body b2 = hook.getPhysicsBody();
 				Vec2 dist = b2.getPosition().sub(b1.getPosition());
@@ -146,6 +139,14 @@ public class Hookshot extends ItemBase {
 				
 				// simple movement (try K=5)
 				b1.setLinearVelocity(dist.mul(K));
+				
+
+				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
+				if ((xFlip && yFlip) || (diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
+					removeHook();
+					state = HookState.IN;
+					break;
+				}
 				
 				break;
 		}
