@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="100" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <tileset firstgid="145" source="salmonTiles.tsx"/>
+ <layer name="Tile Layer 1" width="100" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2cS04DMRBE+wSsEXs4Afv4FCABK/4r/is+W7g2bSWRRkPoeMZ2uu2ukkqKFCVR5umlPJssiOgENdMFIXNynPHaS+7V6vEZ95x7wT0k8JibHB7D3HLvuPcEHjmZwmPtwzX3hru36j73hfvKfSPwyMkUHg/cR+4T94N78E+PCDzmJgjPjX14pyWHT1pec6ngUT5DH56537SdA3iUi+TDF6WzAI8yGe9Dyu8SeJRLzj6Ah5w59xE5+wAeclJ4lNwH8JCTwqPkPoCHnE08au4DeMjZxKPmPljmERQ/e53IY5f7YJmHhUQeu9wH8PgbzX3I4RGyv7nNaO4D/LC1D5o8QsX3Hke6j7C0D178GPKwvA8eeVjeBw88og+RRwv74IHH2IfI4Yf0r21PPKR9bum85IFHy/vQA4+efWiRR88+tMCjp/NSDzw8+WCRh6d9sMLD63mpBR7wwRYP+DCdR5Au7sR4Pi+V4lEy8EGXB/bBFg/4oMsDPtjiAR90ecCHujyG/w9wmsADPtTlsS3wwRYP+KDLAz7Y4gEfdHnABzuNPOCDnUYe8MFOfwFdeDtOIE4AAA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="100" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OMQEAAAwCINe/9GLoAQlIAAAAAAAAAAAAAAAAAAAA+q4dAAAAABjwS1voiiBOAAA=
+  </data>
+ </layer>
+</map>
