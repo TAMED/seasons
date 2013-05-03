@@ -454,7 +454,7 @@
  </layer>
  <layer name="Tile Layer 2" width="300" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3YQQrAIAwEQPv/kz8uvRVpQUVJhJmL1zSsW7AUAAAAAGBGjR4AoIOusgPIwD0ETqCr+q3clb3zkAOykk3e5IGd5AsY9dUbugTm1eaMnAF2kTFWkCN2y5ix0ZkyfgMAcfwXgBPoKiCbK3oAAAAAIFz7bukdEwAAAADg3w3YZYc7gHAAAA==
+   H4sIAAAAAAAAC+3YQQ6AIAwEQPz/yR8bTxqjCajYYmZeUMqyB0oBAAAAAO6YowcAqKCr7AAy8A6BEeiqem/uyt5ZyQFZySZ72fKQbR6ecZ9Aq7Pe0CUwNm+Y3mTsX6LuU47oLWPGWmfKeIav2QHARicCI9BVQDZT9AAAAABAuOO/pX9MAAAAAIBrC6P/Co2AcAAA
   </data>
  </layer>
 </map>
