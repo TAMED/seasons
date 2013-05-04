@@ -85,7 +85,7 @@ public class Player extends Entity {
 		super.update(gc, delta);
 		movePlayer(gc,delta);
 		hookshot.update(gc, delta, anim);
-		salmonCheck();
+		staticEntityCheck();
 	}
 	
 	private void movePlayer(GameContainer gc, int delta) {
@@ -114,18 +114,24 @@ public class Player extends Entity {
 	/**
 	 * Check if player is touching salmon
 	 */
-	public void salmonCheck() {
+	public void staticEntityCheck() {
 		ContactEdge contactEdge = this.getPhysicsBody().getContactList();
 		
 		while(contactEdge != null) {
 			if(contactEdge.contact.isTouching()) {
 				int category = contactEdge.contact.getFixtureA().m_filter.categoryBits;
 				Object data = contactEdge.contact.getFixtureB().getUserData();
-				Object preSalmon = contactEdge.contact.getFixtureA().getUserData();
-				if (category == Config.SALMON && preSalmon instanceof Salmon) {
-					Salmon salmon = (Salmon) preSalmon;
-					if(!salmon.isEaten()){
-						salmon.eat();
+				Object preEntity = contactEdge.contact.getFixtureA().getUserData();
+				if (category == Config.SALMON && preEntity instanceof Salmon) {
+					Salmon entity = (Salmon) preEntity;
+					if(!entity.isDead()){
+						entity.activate(this);
+					}
+				}
+				if (category == Config.MUSHROOM && preEntity instanceof Mushroom) {
+					Mushroom entity = (Mushroom) preEntity;
+					if(!entity.isDead()){
+						entity.activate(this);
 					}
 				}
 			}

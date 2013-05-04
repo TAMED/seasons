@@ -20,6 +20,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.sun.org.apache.xerces.internal.impl.io.MalformedByteSequenceException;
+
 import ui.Cursor;
 import ui.Time;
 import ui.Timer;
@@ -30,6 +32,7 @@ import combat.CombatContact;
 
 import config.Config;
 
+import entities.Mushroom;
 import entities.Player;
 import entities.Salmon;
 import entities.enemies.Enemy;
@@ -54,6 +57,7 @@ public class LevelState extends BasicGameState{
 	private Timer timer;
 	private Time lastTime;
 	private Time bestTime;
+	private ArrayList<Mushroom> mushrooms;
 	
 	public LevelState(String mapString, String backgroundString, int id) {
 		this(mapString, backgroundString, id, new Vec2(0, Config.GRAVITY));
@@ -147,6 +151,9 @@ public class LevelState extends BasicGameState{
 		for (Salmon s : salmons) {
 			s.update(gc, delta);
 		}
+		for (Mushroom m : mushrooms) {
+			m.update(gc, delta);
+		}
 
 		// check toggles
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
@@ -188,6 +195,7 @@ public class LevelState extends BasicGameState{
 		player.reset();
 		enemies = map.getEnemies();
 		salmons = map.getSalmons();
+		mushrooms = map.getMushrooms();
 		for (Enemy e : enemies) {
 			e.addToWorld(world, e.getX(), e.getY());
 		}
@@ -212,6 +220,10 @@ public class LevelState extends BasicGameState{
 		
 		for (Salmon s : salmons) {
 			s.addToWorld(world, s.getX(), s.getY(), timer);
+		}
+		
+		for (Mushroom m : mushrooms) {
+			m.addToWorld(world, m.getX(), m.getY());
 		}
 	}
 	

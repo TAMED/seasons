@@ -28,6 +28,8 @@ public class Config {
 	public static final int HOOKABLE = 2;
 	public static final int WATER = 4;
 	public static final int SALMON = 8;
+	public static final int MUSHROOM = 16;
+	public static final int STATICENTITY = 24;
 	
 	// Player
 	public static final float PLAYER_DENSITY = 1f;
