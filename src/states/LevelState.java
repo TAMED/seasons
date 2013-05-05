@@ -159,8 +159,11 @@ public class LevelState extends BasicGameState{
 	}
 	
 	private void nextLevel(StateBasedGame game) {
-		if (this.getID() == 4) game.enterState(0);
-		else game.enterState((this.getID()+1) % 5);
+		try {
+			game.enterState(this.getID()+1);
+		} catch (Exception e) {
+			game.enterState(0);
+		}
 	}
 
 	@Override
