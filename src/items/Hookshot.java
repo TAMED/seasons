@@ -52,8 +52,6 @@ public class Hookshot extends ItemBase {
 
 	@Override
 	public void render(Graphics graphics) {
-
-		
 		// draw tether
 		switch (state) {
 			case OUT: case PULL: case MOTION:

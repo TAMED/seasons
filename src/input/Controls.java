@@ -24,8 +24,9 @@ public class Controls {
 	}
 	
 	public static double getAimAngle(Player player) {
-		Vector2f mouse = new Vector2f(container.getInput().getAbsoluteMouseX(), 
-		                              container.getInput().getAbsoluteMouseY());
+		Vector2f mouse = new Vector2f(container.getInput().getMouseX(), 
+		                              container.getInput().getMouseY());
+		
 		Vector2f p = Util.PointToVector2f(player.getScreenPosition());
 
 		Vector2f aim = mouse.sub(p);

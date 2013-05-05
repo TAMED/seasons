@@ -310,6 +310,20 @@ public abstract class Entity extends Sprite {
 	}
 	
 	/**
+	 * @return the width of the entity
+	 */
+	public float getBodyWidth() {
+		return width;
+	}
+	
+	/**
+	 * @return the height of the entity
+	 */
+	public float getBodyHeight() {
+		return height;
+	}
+	
+	/**
 	 * @return the entity's linear velocity
 	 */
 	public float getVelocity() {

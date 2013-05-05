@@ -15,7 +15,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 
 import util.Direction;
-
 import anim.AnimationState;
 import config.Config;
 
@@ -24,7 +23,8 @@ import config.Config;
  *
  */
 public class Player extends Entity {
-	Hookshot hookshot;
+	protected Hookshot hookshot;
+	
 	public Player(float width, float height) {
 		this(width, height, 0);
 	}
@@ -139,6 +139,9 @@ public class Player extends Entity {
 	public boolean isAttacking() {
 		return hookshot.isAttacking();
 	}
-	
+
+	public Hookshot getHookshot() {
+		return hookshot;
+	}
 
 }
