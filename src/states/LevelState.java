@@ -10,7 +10,7 @@ import map.Map;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
-import org.newdawn.slick.Color;
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -81,14 +81,13 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
 			throws SlickException {
-		camera.translateGraphics();
+		camera.translateGraphics(gc);
 		drawBackground(graphics);
-		camera.untranslateGraphics();
+		camera.untranslateGraphics(gc);
 		camera.drawMap();
 		timer.updateTime(currentTime, lastTime, bestTime);
 		timer.render(graphics);
-		camera.translateGraphics();
-		
+		camera.translateGraphics(gc);
 		
 		if (viewDebug) {
 			debugdraw.setGraphics(graphics);
@@ -150,7 +149,7 @@ public class LevelState extends BasicGameState{
 		// check toggles
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
 		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
-		if (gc.getInput().isKeyPressed(Input.KEY_F11)) gc.setFullscreen(!gc.isFullscreen());
+		if (gc.getInput().isKeyPressed(Input.KEY_F11)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
 		
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
