@@ -19,6 +19,8 @@ import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.jbox2d.dynamics.joints.RevoluteJoint;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 
 import states.LevelState;
@@ -66,6 +68,8 @@ public abstract class Entity extends Sprite {
 	private float runSpeed;
 	private float acceleration;
 	private float jmpSpeed;
+	
+	private Sound jmpSound; 
 
 	public Entity(float width, float height, int maxHp, boolean hasSensors) {
 		this(width, height, 0, maxHp, hasSensors);
@@ -74,6 +78,14 @@ public abstract class Entity extends Sprite {
 	public Entity(float width, float height, float ground, int maxHp, boolean hasSensors) {
 		super(0, 0, width, height, ground);
 		
+		try {
+			jmpSound = new Sound("assets/sounds/boop.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(jmpSound);
 		this.width = width;
 		this.height = height;
 		this.radius = Math.min(width, height) / 2;
@@ -202,11 +214,13 @@ public abstract class Entity extends Sprite {
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
+				jmpSound.play();
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
 		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
 			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
+			jmpSound.play();
 			anim.play(AnimationState.JUMP);
 		}
 		

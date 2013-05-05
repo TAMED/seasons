@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="300" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
- <tileset firstgid="145" name="salmon" tilewidth="32" tileheight="32">
-  <image source="../images/nonentities/salmon/salmon.png" width="32" height="32"/>
-  <tile id="0">
-   <properties>
-    <property name="offsetX" value="0"/>
-    <property name="offsetY" value="0"/>
-    <property name="type" value="salmon"/>
-   </properties>
-  </tile>
- </tileset>
+ <tileset firstgid="145" source="salmonTiles.tsx"/>
  <layer name="Tile Layer 1" width="300" height="24">
   <data encoding="base64" compression="zlib">
    eJztnEtvEzEURs2OskDQNiAhQH1IBQRSF2RfS1lFrGmlliVqu2rLYwXZ87e5FlhKR/aMH9fx9cx3pG/TmYyd8fWJ44y6UEotEARBGsiJ8rPsOWb5FHBOS8yZrhNy79bhuI/ziMSiN/SaktfpwjXWHLjqpa9/HPWiVVzNzP+/Rke04ZsH55QLyhfHsfX3tlz724mCr7q07CvtiKvWNENbY0DX7sAaNXxl0MpfLzmesvjmwSXlinLtOAZfhdOyr1xoBUe1QC1fddGepOKbB98pPyg/Hcfgq3C4fPWZchqRM6Z2QZu45pruOb+VeRc7D7pzIcZXIW2NbZ5J2tMA00HKelwaMb6aIvAVqAF85Qa+6ge+AjWAr9zAV/3o2h0AkwS+cgNfASAP+MqNRF89pGxRdjrZ6smjKj0FoAzwlRtpvjKu2qXMIvNMwVlgPMBXbiT5yrpqj7IfmQMFZ4HxAF+5keKrHFfBWWBscPvqY2pHhCHBVxyugrP4sfuIsXkuOK3sdXL7qvY+Dxf2mXXzXHoNX3G6Cs7iw47Li4QcCk8LtQFfDZPjqxvKLeVxZLhdBWflk/sZciw8LdQGfDVMiq++qn+euqN8U/GfxXuK31VwVjol1rsSPSa9NuCrYWJ81fXUinI0kD+JgbM2QwlX1fZSiLNK75ml1B73//MYu68eeM5xecp6RaKv4KwwSq2rajspxFlT2C8bq6+G9pt+UX6r+54KcVVNX8FZ/UzlO6AvHwpEWu1x+sruVdf+rddkaL+p66kYZ6X6CuuscpR0VQu+ynVRC7Vnn0vJbdt6yqxZzHer2r/zmqQ4J2Rtlesrrvlj6+YJ5enEs63KuqoFXx0XfO8Sas+O8SyzbXMd66mVgDGzSfFOSV+VqJs3lJeUdxXySkhMX15T3he6x/CVv/beqs3Vmx3jo8y27XVqj1U3fwFM+ad6
@@ -18,7 +9,7 @@
  </layer>
  <layer name="Tile Layer 2" width="300" height="24">
   <data encoding="base64" compression="zlib">
-   eJztzkERAAAEADD6vzSmhXO2BIsAAAAAAAAAAAAAAAAAAL6p7QAAAAAAAByT2wEAAAAAAAAAgNFdRACT
+   eJztzsEJgDAUBcHY/0lFg0mzvg5y/AozsPdtDQAAAAAAAAAAAAAAvm1PRzqrRwAWrnSnXj0CsPCkkWb1CAAAAAAA/MhWPQAAAAAAAAAAEC/kTAVI
   </data>
  </layer>
 </map>

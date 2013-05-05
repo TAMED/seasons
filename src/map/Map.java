@@ -96,9 +96,11 @@ public class Map {
 					playerLoc = getPixelCenter(i,j);
 				}
 				if (tileType.equals("salmon")) {
-					int xOffset = Integer.parseInt(foreground.getTileProperty(tileId, "offsetX", "0"));
-					int yOffset = Integer.parseInt(foreground.getTileProperty(tileId, "offsetY", "0"));
-					Vec2 center = getPixelCenter(i+xOffset,j+yOffset);
+					int xOffset = Integer.parseInt(foreground.getTileProperty(tileId, "xOffset", "0"));
+					int yOffset = Integer.parseInt(foreground.getTileProperty(tileId, "yOffset", "0"));
+					Vec2 center = getPixelCenter(i,j);
+					center.x += xOffset;
+					center.y += yOffset;
 					Salmon salmon = new Salmon(center.x, center.y);
 					salmons.add(salmon);
 				}
