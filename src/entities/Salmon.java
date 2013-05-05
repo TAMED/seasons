@@ -25,7 +25,7 @@ public class Salmon extends Sprite{
 	 * If the difference between the width and height of the entity is less than
 	 * this (in pixels), then the capsule shape is approximated with only two circles
 	 */
-	private static final float EPSILON = 5;
+//	private static final float EPSILON = 5;
 	
 	private BodyDef physicsDef;
 	private FixtureDef boxDef;

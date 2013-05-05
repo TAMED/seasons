@@ -4,6 +4,8 @@ import input.Controls;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import main.MainGame;
 import map.Map;
@@ -22,21 +24,22 @@ import org.newdawn.slick.state.StateBasedGame;
 import ui.Cursor;
 import ui.Time;
 import ui.Timer;
+import ui.Transitions;
 import util.Box2DDebugDraw;
 import camera.Camera;
 
 import combat.CombatContact;
 
 import config.Config;
+import config.Section;
 import entities.Player;
 import entities.Salmon;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
-	private int id;
-	private String mapString;
+	public static Queue<Section> sectionQueue;
+	private Section section;
 	private Map map;
-	private Vec2 gravity;
 	private Player player;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Salmon> salmons;
@@ -46,7 +49,6 @@ public class LevelState extends BasicGameState{
 	private static Camera camera;
 	private Cursor cursor;
 	private Vec2 goalLoc;
-	private String backgroundString;
 	private Image background;
 	
 	private Time currentTime;
@@ -55,22 +57,15 @@ public class LevelState extends BasicGameState{
 	private static Timer timer;
 	
 	static {
+		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		timer = new Timer(100, 100);
 	}
 	
-	public LevelState(String mapString, String backgroundString, int id) {
-		this(mapString, backgroundString, id, new Vec2(0, Config.GRAVITY));
-	}
-	
-	public LevelState(String mapString, String backgroundString, int id, Vec2 gravity) {
+	public LevelState(Section section) {
 		super();
-		this.id = id;
-		this.mapString = mapString;
-		this.backgroundString = backgroundString;
-		this.gravity = gravity;
-		
+		this.section = section;
 	}
 		
 	@Override
@@ -112,7 +107,7 @@ public class LevelState extends BasicGameState{
 		}
 		
 		// if the goal is reached
-		if (Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30) {
+		if (closeToGoal()) {
 			if (lastTime == null) lastTime = new Time();
 			lastTime.set(currentTime.getMillis());
 			if (bestTime == null) bestTime = new Time(currentTime.getMillis());
@@ -155,10 +150,14 @@ public class LevelState extends BasicGameState{
 		cursor.update(gc, delta);
 		currentTime.update(delta);
 	}
+
+	private boolean closeToGoal() {
+		return Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30;
+	}
 	
 	private void nextLevel(StateBasedGame game) {
-		if (this.getID() == 4) game.enterState(0);
-		else game.enterState((this.getID()+1) % 5);
+		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID);
+		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 
 	@Override
@@ -167,12 +166,12 @@ public class LevelState extends BasicGameState{
 		super.enter(gc, game);
 		Controls.setGC(gc);
 		
-		map = new Map(mapString, gravity);
+		map = new Map(section.getMapPath(), section.getGravity());
 		map.parseMapObjects();
 		map.getWorld().setContactListener(new CombatContact());
 		map.getWorld().setDebugDraw(debugdraw);
 		
-		background = new Image(backgroundString);
+		background = new Image(section.getBackgroundPath());
 		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
 
 		player = MainGame.player;
@@ -199,7 +198,7 @@ public class LevelState extends BasicGameState{
 	
 	@Override
 	public int getID() {
-		return id;
+		return section.getID();
 	}
 	
 	/**

@@ -1,7 +1,6 @@
 package main;
 import java.lang.reflect.Field;
 
-import org.jbox2d.common.Vec2;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.ScalableGame;
@@ -11,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import states.IntroState;
 import states.LevelState;
 import config.Config;
+import config.Section;
 import entities.Player;
 
 /**
@@ -23,7 +23,6 @@ import entities.Player;
  */
 public class MainGame extends StateBasedGame {
 	public static Player player;
-	public static ScalableGame game;
 	
 	public MainGame(String title) {
 		super(title);
@@ -47,7 +46,7 @@ public class MainGame extends StateBasedGame {
 			Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
 			fieldSysPath.setAccessible( true );
 			fieldSysPath.set( null, null );
-			game = new ScalableGame(new MainGame("Seasons"), Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
+			ScalableGame game = new ScalableGame(new MainGame("Seasons"), Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
 			AppGameContainer app = new AppGameContainer(game);
 			setFullscreen(app, false);
 			app.setVSync(true);
@@ -62,11 +61,10 @@ public class MainGame extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
 		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
-		addState(new IntroState(0));
-		addState(new LevelState("assets/maps/cliffForest.tmx", "assets/backgrounds/forest3.png", 3, new Vec2(0, Config.GRAVITY)));
-		addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 2));
-		addState(new LevelState("assets/maps/moreHillyForest.tmx", "assets/backgrounds/forest3.png", 1));
-		addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 4));
+		addState(new IntroState());
+		for (Section s : Section.values()) {
+			addState(new LevelState(s));
+		}
 	}
 	
 	public static void setFullscreen(AppGameContainer app, boolean fullscreen) throws SlickException {

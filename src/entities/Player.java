@@ -120,7 +120,7 @@ public class Player extends Entity {
 		while(contactEdge != null) {
 			if(contactEdge.contact.isTouching()) {
 				int category = contactEdge.contact.getFixtureA().m_filter.categoryBits;
-				Object data = contactEdge.contact.getFixtureB().getUserData();
+//				Object data = contactEdge.contact.getFixtureB().getUserData();
 				Object preSalmon = contactEdge.contact.getFixtureA().getUserData();
 				if (category == Config.SALMON && preSalmon instanceof Salmon) {
 					Salmon salmon = (Salmon) preSalmon;

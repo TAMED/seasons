@@ -14,15 +14,19 @@ import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import ui.Transitions;
+
+import config.Level;
+
 public class IntroState extends BasicGameState{
-	private int id;
+	public static final int ID = 0;
 	UnicodeFont font;
 	
-	public IntroState(int id) {
+	public IntroState() {
 		super();
-		this.id = id;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1)
 			throws SlickException {
@@ -47,14 +51,15 @@ public class IntroState extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame game, int arg2)
 			throws SlickException {
 		if(gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			game.enterState(1);
+			Level.FOREST_1.addToQueue();
+			game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 		}
 		
 	}
 
 	@Override
 	public int getID() {
-		return id;
+		return ID;
 	}
 
 }
