@@ -10,6 +10,12 @@ import org.jbox2d.common.Vec2;
  *
  */
 public enum Section {
+	FOREST_SEC1("1.tmx", "forest3.png"),
+	FOREST_SEC2("2.tmx", "forest3.png"),
+	FOREST_SEC3("3.tmx", "forest3.png"),
+	FOREST_SEC4("4.tmx", "forest3.png"),
+	FOREST_SEC5("5.tmx", "forest3.png"),
+	FOREST_SEC6("6.tmx", "forest3.png"),
 	FOREST_CLIFF("cliffForest.tmx", "forest3.png"),
 	FOREST_VINES("entirelyVines.tmx", "forest3.png"),
 	FOREST_HILLS("moreHillyForest.tmx", "forest3.png"),

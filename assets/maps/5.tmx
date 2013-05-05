@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <tileset firstgid="145" source="salmonTiles.tsx"/>
+ <layer name="Tile Layer 1" width="100" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3cu0oEQRAF0MLUD9BcMTYw3/4KBTXyHfmOVk31t61GG4dl7O7px1RN971wQRCV3cOlZhNXRHSMqumKkJQcZfzsBffy9+tT7hn3nLtN8EhNjscwN9xb7h3BIydTPNwetkb6zH3hvhI8cjLF4577wN0JdJfgkRrj+Z7bwxX3mrvmvnH3At0neNSI28Mj94n7yT2I6CHBo0T+28M794PiLOBRLsM9OIdYA3jkx7eHFAd4/CXlc0TqfYBHODEepe4DPMKJ8Sh1H+ARzphHrfsAj3DGPGrdB+0eRvBvu1iPue6Ddg8NsR5z3Qd4jEfqPuR6mOxXrjNS9wH7+ImW+yDtYSr+7s34PkdouQ/SHnNm6KH1PvTqofU+9OJh92A9tN+HXjw292Advkj+/W3Jw3efl/K81IvHUu9DKx6t7mGpHq3uYSkerTwvteLRyx60evRyHzR59Pi8tBQP7EGXB/Yw3cP43tyJ6fV5qaRHyWAPsh64D7o8sAdZD+xBlwf2IOuBPdT1GP5/gJMID+yhrkco2IMuD+xB1gN70OWBPch6YA866jywBx11HtiDjlqPb5oJiRwgTgAA
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="100" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OMQEAAAwCINe/9GLoAQlIAAAAAAAAAAAAAAAAAAAA+q4dAAAAABjwS1voiiBOAAA=
+  </data>
+ </layer>
+</map>
