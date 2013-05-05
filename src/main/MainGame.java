@@ -65,10 +65,17 @@ public class MainGame extends StateBasedGame {
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
 		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
 		addState(new IntroState(0));
-		addState(new LevelState("assets/maps/cliffForest.tmx", "assets/backgrounds/forest3.png", 3, new Vec2(0, Config.GRAVITY)));
-		addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 2));
-		addState(new LevelState("assets/maps/moreHillyForest.tmx", "assets/backgrounds/forest3.png", 1));
-		addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 4));
+		addState(new LevelState("assets/maps/1.tmx", "assets/backgrounds/forest3.png", 1));
+		addState(new LevelState("assets/maps/2.tmx", "assets/backgrounds/forest3.png", 2));
+		addState(new LevelState("assets/maps/3.tmx", "assets/backgrounds/forest3.png", 3));
+		addState(new LevelState("assets/maps/4.tmx", "assets/backgrounds/forest3.png", 4));
+		addState(new LevelState("assets/maps/5.tmx", "assets/backgrounds/forest3.png", 5));
+		addState(new LevelState("assets/maps/6.tmx", "assets/backgrounds/forest3.png", 6));
+		
+		//addState(new LevelState("assets/maps/cliffForest.tmx", "assets/backgrounds/forest3.png", 3, new Vec2(0, Config.GRAVITY)));
+		//addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 2));
+		//addState(new LevelState("assets/maps/moreHillyForest.tmx", "assets/backgrounds/forest3.png", 1));
+		//addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 4));
 	}
 
 }

@@ -433,9 +433,9 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public boolean checkWater(GameContainer gc) {
-		boolean water = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0;
-		boolean low = this.getCenterY() > gc.getHeight();
-		return water || low;
+		boolean center = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0;
+		boolean top    = (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) > 0;
+		return center || top;
 	}
 	
 	private void waterUpdate(GameContainer gc) {

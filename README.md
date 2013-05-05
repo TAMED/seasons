@@ -26,4 +26,4 @@ Exporting as an executable
 4) Set the export destination to the project folder
 5) Make sure the Library Handling is set to "Extract required libraries into generated JAR"
 6) Click Finish
-7) Run "bash export.sh" in a terminal (or a terminal emulator like Cygwin on Windows). If you don't have acces to one, then just manually perform the steps in export.sh
+7) Run "bash deploy.sh" in a terminal (or a terminal emulator like Cygwin on Windows). If you don't have acces to one, then just manually perform the steps in deploy.sh
