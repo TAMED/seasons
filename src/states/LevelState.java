@@ -97,6 +97,9 @@ public class LevelState extends BasicGameState{
 			}
 		}
 		cursor.render(graphics);
+		
+		// so that transitions render correctly
+		camera.untranslateGraphics(gc);
 	}
 
 	@Override
@@ -156,7 +159,7 @@ public class LevelState extends BasicGameState{
 	}
 	
 	private void nextLevel(StateBasedGame game) {
-		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID);
+		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
 		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 

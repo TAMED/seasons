@@ -12,16 +12,16 @@ import states.LevelState;
  *
  */
 public enum Level {
-	FOREST_1(Section.FOREST_CLIFF,
-			 Section.FOREST_VINES,
-			 Section.FOREST_HILLS,
-			 Section.FOREST_LONG),
-	FOREST_2(Section.FOREST_SEC1,
-			 Section.FOREST_SEC2,
-			 Section.FOREST_SEC3,
-			 Section.FOREST_SEC4,
-			 Section.FOREST_SEC5,
-			 Section.FOREST_SEC6);
+	FOREST_OLD(Section.FOREST_CLIFF,
+			   Section.FOREST_VINES,
+			   Section.FOREST_HILLS,
+			   Section.FOREST_LONG),
+	FOREST_NEW(Section.FOREST_SEC1,
+			   Section.FOREST_SEC2,
+			   Section.FOREST_SEC3,
+			   Section.FOREST_SEC4,
+			   Section.FOREST_SEC5,
+			   Section.FOREST_SEC6);
 	
 	private Section[] sections;
 	
