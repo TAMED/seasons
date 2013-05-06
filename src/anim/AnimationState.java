@@ -12,6 +12,7 @@ import config.Config;
 import util.Direction;
 
 import entities.Entity;
+import entities.Player;
 
 /**
  * An enumeration of all of the animations in the game, as well as their transitions
@@ -96,11 +97,15 @@ public enum AnimationState {
 	HOOKING {
 		@Override
 		public AnimationState getNextState(Entity entity) {
-			if (!entity.isTouching(Direction.DOWN)) {
-				if (entity.getPhysicsBody().getLinearVelocity().y < Config.VEL_EPSILON) {
-					return AnimationState.RISE;
+			if (!((Player) entity).getHookshot().isShooting()) {
+				if (!entity.isTouching(Direction.DOWN)) {
+					if (entity.getPhysicsBody().getLinearVelocity().y < Config.VEL_EPSILON) {
+						return AnimationState.RISE;
+					} else {
+						return AnimationState.FALL;
+					}
 				} else {
-					return AnimationState.FALL;
+					return AnimationState.IDLE;
 				}
 			}
 			return this;

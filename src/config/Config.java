@@ -1,6 +1,7 @@
 package config;
 
 
+
 public class Config {
 	
 	public static final String TITLE = "Seasons";
@@ -9,6 +10,10 @@ public class Config {
 	public static final int RESOLUTION_WIDTH = 1366;
 	public static final int RESOLUTION_HEIGHT = 768;
 	public static final boolean FULLSCREEN = false;
+	
+	// Frame Rate
+	public static final int ACTIVE_FRAME_RATE = 60;
+	public static final int INACTIVE_FRAME_RATE = 10;
 	
 	// Physics
 	public static final float PIXELS_PER_METER = 32;
@@ -23,6 +28,8 @@ public class Config {
 	public static final int[] WALL_IDS = {2};
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
+	public static final String MAP_PATH = "assets/maps/";
+	public static final String BACKGROUND_PATH = "assets/backgrounds/";
 	
 	// Object Filter Categories
 	public static final int HOOKABLE = 2;
@@ -54,4 +61,5 @@ public class Config {
 	public static final float CURSOR_DIST = 100;
 	public static final int CURSOR_SIZE = 15;
 	public static final int SALMON_TIME = -1000;
+
 }

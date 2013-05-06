@@ -5,6 +5,8 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.tiled.TiledMap;
 
+import config.Config;
+
 public class Camera {
 
    /** the map used for our scene */
@@ -27,9 +29,6 @@ public class Camera {
    
    /** the height of one tile of the map in pixel */
    protected int tileHeight;
-   
-   /** the GameContainer, used for getting the size of the GameCanvas */
-   protected GameContainer gc;
 
    /** the x-position of our "camera" in pixel */
    protected float cameraX;
@@ -54,8 +53,6 @@ public class Camera {
       
       this.mapWidth = this.numTilesX * this.tileWidth;
       this.mapHeight = this.numTilesY * this.tileHeight;
-      
-      this.gc = gc;
    }
    
    /**
@@ -66,16 +63,16 @@ public class Camera {
     */
    public void centerOn(float x, float y) {
       //try to set the given position as center of the camera by default
-      cameraX = x - gc.getWidth()  / 2;
-      cameraY = y - gc.getHeight() / 2;
+      cameraX = x - Config.RESOLUTION_WIDTH  / 2;
+      cameraY = y - Config.RESOLUTION_HEIGHT / 2;
       
       //if the camera is at the right or left edge lock it to prevent a black bar
       if(cameraX < 0) cameraX = 0;
-      if(cameraX + gc.getWidth() > mapWidth) cameraX = mapWidth - gc.getWidth();
+      if(cameraX + Config.RESOLUTION_WIDTH > mapWidth) cameraX = mapWidth - Config.RESOLUTION_WIDTH;
       
       //if the camera is at the top or bottom edge lock it to prevent a black bar
       if(cameraY < 0) cameraY = 0;
-      if(cameraY + gc.getHeight() > mapHeight) cameraY = mapHeight - gc.getHeight();
+      if(cameraY + Config.RESOLUTION_HEIGHT > mapHeight) cameraY = mapHeight - Config.RESOLUTION_HEIGHT;
    }
    
    /**
@@ -135,22 +132,22 @@ public Point getPosition() {
              tileOffsetY + offsetY, 
              tileIndexX,  
              tileIndexY,
-                (gc.getWidth()  - tileOffsetX) / tileWidth  + 1,
-                (gc.getHeight() - tileOffsetY) / tileHeight + 1,0,false);
+                (Config.RESOLUTION_WIDTH  - tileOffsetX) / tileWidth  + 1,
+                (Config.RESOLUTION_HEIGHT - tileOffsetY) / tileHeight + 1,0,false);
    }
    
    /**
     * Translates the Graphics-context to the coordinates of the map - now everything
     * can be drawn with it's NATURAL coordinates.
     */
-   public void translateGraphics() {
+   public void translateGraphics(GameContainer gc) {
       gc.getGraphics().translate(-cameraX, -cameraY);
    }
    /**
     * Reverses the Graphics-translation of Camera.translatesGraphics().
     * Call this before drawing HUD-elements or the like
     */
-   public void untranslateGraphics() {
+   public void untranslateGraphics(GameContainer gc) {
       gc.getGraphics().translate(cameraX, cameraY);
    }
    
