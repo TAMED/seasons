@@ -22,8 +22,8 @@ import entities.enemies.Enemy;
 import entities.enemies.Ent;
 
 public class Map {
-	TiledMap foreground;
-	World world;
+	private TiledMap foreground;
+	private World world;
 	private int height;
 	private int width;
 	private int tileHeight;
@@ -33,9 +33,9 @@ public class Map {
 	private Vec2 playerLoc;
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
-	public Map(String tmxMap, World world) throws SlickException {
+	public Map(String tmxMap, Vec2 gravity) throws SlickException {
 		foreground = new TiledMap(tmxMap);
-		this.world = world;
+		world = new World(gravity);
 		height = foreground.getHeight();
 		width = foreground.getWidth();
 		tileHeight = foreground.getTileHeight();
@@ -330,6 +330,12 @@ public class Map {
 		physicsFixture.setUserData(this);
 	}
 	
+	/**
+	 * @return the world
+	 */
+	public World getWorld() {
+		return world;
+	}
 	public ArrayList<Enemy> getEnemies() {
 		return this.enemies;
 	}

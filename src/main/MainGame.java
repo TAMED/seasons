@@ -1,18 +1,16 @@
 package main;
 import java.lang.reflect.Field;
 
-
-import org.jbox2d.common.Vec2;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import config.Config;
-
 import states.IntroState;
 import states.LevelState;
-
+import config.Config;
+import config.Section;
 import entities.Player;
 
 /**
@@ -48,34 +46,34 @@ public class MainGame extends StateBasedGame {
 			Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
 			fieldSysPath.setAccessible( true );
 			fieldSysPath.set( null, null );
-			
-			AppGameContainer app = new AppGameContainer(new MainGame("Seasons"));
-			app.setDisplayMode(Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT, Config.FULLSCREEN);
-			app.setTargetFrameRate(60);
+			ScalableGame game = new ScalableGame(new MainGame("Seasons"), Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
+			AppGameContainer app = new AppGameContainer(game);
+			setFullscreen(app, false);
+			app.setVSync(true);
+			app.setAlwaysRender(true);
+			app.setTargetFrameRate(Config.ACTIVE_FRAME_RATE);
 			app.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
 		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
-		addState(new IntroState(0));
-		addState(new LevelState("assets/maps/1.tmx", "assets/backgrounds/forest3.png", 1));
-		addState(new LevelState("assets/maps/2.tmx", "assets/backgrounds/forest3.png", 2));
-		addState(new LevelState("assets/maps/3.tmx", "assets/backgrounds/forest3.png", 3));
-		addState(new LevelState("assets/maps/4.tmx", "assets/backgrounds/forest3.png", 4));
-		addState(new LevelState("assets/maps/5.tmx", "assets/backgrounds/forest3.png", 5));
-		addState(new LevelState("assets/maps/6.tmx", "assets/backgrounds/forest3.png", 6));
-		
-		//addState(new LevelState("assets/maps/cliffForest.tmx", "assets/backgrounds/forest3.png", 3, new Vec2(0, Config.GRAVITY)));
-		//addState(new LevelState("assets/maps/entirelyVines.tmx", "assets/backgrounds/forest3.png", 2));
-		//addState(new LevelState("assets/maps/moreHillyForest.tmx", "assets/backgrounds/forest3.png", 1));
-		//addState(new LevelState("assets/maps/longMap.tmx", "assets/backgrounds/forest3.png", 4));
+		addState(new IntroState());
+		for (Section s : Section.values()) {
+			addState(new LevelState(s));
+		}
+	}
+	
+	public static void setFullscreen(AppGameContainer app, boolean fullscreen) throws SlickException {
+		if (fullscreen) {
+			app.setDisplayMode(app.getScreenWidth(), app.getScreenHeight(), true);
+		} else {
+			app.setDisplayMode(Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT, false);
+		}
 	}
 
 }
