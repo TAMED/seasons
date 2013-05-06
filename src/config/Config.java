@@ -11,6 +11,10 @@ public class Config {
 	public static final int RESOLUTION_HEIGHT = 768;
 	public static final boolean FULLSCREEN = false;
 	
+	// Frame Rate
+	public static final int ACTIVE_FRAME_RATE = 60;
+	public static final int INACTIVE_FRAME_RATE = 10;
+	
 	// Physics
 	public static final float PIXELS_PER_METER = 32;
 	public static final float DEFAULT_DENSITY = 1f;

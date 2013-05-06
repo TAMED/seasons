@@ -50,7 +50,8 @@ public class MainGame extends StateBasedGame {
 			AppGameContainer app = new AppGameContainer(game);
 			setFullscreen(app, false);
 			app.setVSync(true);
-			app.setTargetFrameRate(60);
+			app.setAlwaysRender(true);
+			app.setTargetFrameRate(Config.ACTIVE_FRAME_RATE);
 			app.start();
 		} catch (Exception e) {
 			e.printStackTrace();

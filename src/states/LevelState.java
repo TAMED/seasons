@@ -22,6 +22,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import ui.Cursor;
+import ui.PauseScreen;
 import ui.Time;
 import ui.Timer;
 import ui.Transitions;
@@ -55,12 +56,14 @@ public class LevelState extends BasicGameState{
 	private Time lastTime;
 	private Time bestTime;
 	private static Timer timer;
+	private static PauseScreen pauseScrn;
 	
 	static {
 		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		timer = new Timer(100, 100);
+		pauseScrn = new PauseScreen();
 	}
 	
 	public LevelState(Section section) {
@@ -100,11 +103,25 @@ public class LevelState extends BasicGameState{
 		
 		// so that transitions render correctly
 		camera.untranslateGraphics(gc);
+		
+		if (gc.isPaused()) pauseScrn.render(graphics);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
+		// check toggles
+		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
+		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
+		if (gc.getInput().isKeyPressed(Input.KEY_F11)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+		
+		if (gc.isPaused()) {
+			pauseScrn.update(gc, delta);
+			return;
+		}
+		// this goes second to avoid calling isKeyPressed() more than once
+		if (!gc.hasFocus() || gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) pause(gc);
+		
 		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
 			nextLevel(game);
 		}
@@ -119,9 +136,6 @@ public class LevelState extends BasicGameState{
 			}
 			nextLevel(game);
 		}
-		
-		// restart if the player falls into a pit
-//		if (player.getY() > map.getHeight()+64) game.enterState(this.getID());   
 		
 		// update world
 		map.getWorld().step(delta/1000f, Config.VELOCITY_ITERATIONS, Config.POSITION_ITERATIONS);
@@ -143,24 +157,10 @@ public class LevelState extends BasicGameState{
 		for (Salmon s : salmons) {
 			s.update(gc, delta);
 		}
-
-		// check toggles
-		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
-		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
-		if (gc.getInput().isKeyPressed(Input.KEY_F11)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
 		
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
 		currentTime.update(delta);
-	}
-
-	private boolean closeToGoal() {
-		return Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30;
-	}
-	
-	private void nextLevel(StateBasedGame game) {
-		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
-		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 
 	@Override
@@ -198,17 +198,19 @@ public class LevelState extends BasicGameState{
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
 	}
-	
-	@Override
-	public int getID() {
-		return section.getID();
+
+	private void pause(GameContainer gc) {
+		gc.setPaused(true);
+		gc.setTargetFrameRate(Config.INACTIVE_FRAME_RATE);
+	}
+
+	private boolean closeToGoal() {
+		return Math.abs(player.getCenterX()-goalLoc.x) < 30 && Math.abs(player.getCenterY() - goalLoc.y) < 30;
 	}
 	
-	/**
-	 * @return the camera
-	 */
-	public static Camera getCamera() {
-		return camera;
+	private void nextLevel(StateBasedGame game) {
+		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
+		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 	
 	// kinda janky, remove when paralaxing set up
@@ -218,6 +220,15 @@ public class LevelState extends BasicGameState{
 			graphics.drawImage(background,  backgroundX,  0);
 			backgroundX += background.getWidth();
 		}
+	}
+	
+	@Override
+	public int getID() {
+		return section.getID();
+	}
+	
+	public static Camera getCamera() {
+		return camera;
 	}
 
 }
