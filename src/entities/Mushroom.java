@@ -1,15 +1,11 @@
 package entities;
 
 import org.jbox2d.common.Vec2;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 
 import util.Direction;
-
-import anim.AnimationState;
 import config.Config;
 
 public class Mushroom extends StaticEntity{
@@ -30,7 +26,7 @@ public class Mushroom extends StaticEntity{
 	}
 	
 	/**
-	 * @param eat fish
+	 * @param bounce
 	 */
 	@Override
 	public void activate(Entity entity, Direction dir) {

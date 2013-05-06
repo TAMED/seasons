@@ -5,8 +5,6 @@ package entities;
 
 import items.Hookshot;
 
-import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

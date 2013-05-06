@@ -1,10 +1,5 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -12,32 +7,17 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.contacts.ContactEdge;
-import org.jbox2d.dynamics.joints.RevoluteJoint;
-import org.jbox2d.dynamics.joints.RevoluteJointDef;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 
-import states.LevelState;
 import ui.Time;
-import ui.Timer;
 import util.Direction;
 import util.Util;
-import anim.AnimationState;
 import config.Config;
 
 public abstract class StaticEntity extends Sprite{
-
-	/**
-	 * If the difference between the width and height of the entity is less than
-	 * this (in pixels), then the capsule shape is approximated with only two circles
-	 */
-	private static final float EPSILON = 5;
 	
 	private BodyDef physicsDef;
 	private FixtureDef boxDef;

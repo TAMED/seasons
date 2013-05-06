@@ -22,8 +22,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import com.sun.org.apache.xerces.internal.impl.io.MalformedByteSequenceException;
-
 import ui.Cursor;
 import ui.PauseScreen;
 import ui.Time;
@@ -36,7 +34,6 @@ import combat.CombatContact;
 
 import config.Config;
 import config.Section;
-
 import entities.Mushroom;
 import entities.Player;
 import entities.Salmon;
