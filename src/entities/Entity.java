@@ -40,6 +40,10 @@ public abstract class Entity extends Sprite {
 	 * this (in pixels), then the capsule shape is approximated with only two circles
 	 */
 	private static final float EPSILON = 5;
+	/**
+	 * How far down to offset the wheel, as a ratio.
+	 */
+	private static final float FOOT_OFFSET = 1.05f;
 	
 	private BodyDef physicsDef;
 	private FixtureDef circleDef1;
@@ -183,7 +187,7 @@ public abstract class Entity extends Sprite {
 		footDef.type = BodyType.DYNAMIC;
 		footDef.fixedRotation = false;
 		footFixtureDef = new FixtureDef();
-		footFixtureDef.shape = Util.getCircleShape(radius * 1.1f / Config.PIXELS_PER_METER);
+		footFixtureDef.shape = Util.getCircleShape(radius / Config.PIXELS_PER_METER);
 		footFixtureDef.density = Config.DEFAULT_DENSITY;
 		footFixtureDef.friction = Config.DEFAULT_TRACTION;
 	}
@@ -245,7 +249,7 @@ public abstract class Entity extends Sprite {
 		}
 
 		if (hasFeet) {
-			footDef.position.set(x / Config.PIXELS_PER_METER, (y + (height / 2) - radius) / Config.PIXELS_PER_METER);
+			footDef.position.set(x / Config.PIXELS_PER_METER, (y + (height / 2) - (1 / FOOT_OFFSET) * radius) / Config.PIXELS_PER_METER);
 			Body footBody = world.createBody(footDef);
 			footBody.createFixture(footFixtureDef);
 			RevoluteJointDef joint = new RevoluteJointDef();
@@ -303,6 +307,20 @@ public abstract class Entity extends Sprite {
 	 */
 	public FixtureDef[] getPhysicsFixtureDefs() {
 		return new FixtureDef[] {circleDef1, circleDef2, boxDef};
+	}
+	
+	/**
+	 * @return the width of the entity
+	 */
+	public float getBodyWidth() {
+		return width;
+	}
+	
+	/**
+	 * @return the height of the entity
+	 */
+	public float getBodyHeight() {
+		return height;
 	}
 	
 	/**
@@ -433,9 +451,9 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public boolean checkWater(GameContainer gc) {
-		boolean water = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0;
-		boolean low = this.getCenterY() > gc.getHeight();
-		return water || low;
+		boolean center = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0;
+		boolean top    = (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) > 0;
+		return center || top;
 	}
 	
 	private void waterUpdate(GameContainer gc) {

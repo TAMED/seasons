@@ -7,7 +7,6 @@ import java.util.EnumMap;
 
 import org.newdawn.slick.Animation;
 
-import util.Direction;
 import entities.Entity;
 
 

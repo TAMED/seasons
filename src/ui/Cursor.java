@@ -41,8 +41,8 @@ public class Cursor extends Sprite {
 	@Override
 	public void update(GameContainer gc, int delta) {
 		super.update(gc, delta);
-		Vector2f mouse = new Vector2f(gc.getInput().getAbsoluteMouseX(), 
-		                  gc.getInput().getAbsoluteMouseY());
+		Vector2f mouse = new Vector2f(gc.getInput().getMouseX(), 
+		                  gc.getInput().getMouseY());
 		Vector2f cam = Util.PointToVector2f(LevelState.getCamera().getPosition());
 		Vector2f p = Util.PointToVector2f(player.getPosition());
 		
