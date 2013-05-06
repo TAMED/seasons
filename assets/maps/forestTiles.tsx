@@ -42,6 +42,21 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+ <tile id="15">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
+ <tile id="16">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
+ <tile id="17">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
  <tile id="18">
   <properties>
    <property name="type" value="wall"/>
@@ -85,6 +100,21 @@
  <tile id="26">
   <properties>
    <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="27">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
+ <tile id="28">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
+ <tile id="29">
+  <properties>
+   <property name="water" value="true"/>
   </properties>
  </tile>
  <tile id="30">
@@ -132,6 +162,21 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+ <tile id="39">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
+ <tile id="40">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
+ <tile id="41">
+  <properties>
+   <property name="water" value="true"/>
+  </properties>
+ </tile>
  <tile id="42">
   <properties>
    <property name="type" value="wall"/>
@@ -154,105 +199,19 @@
  </tile>
  <tile id="48">
   <properties>
-   <property name="type" value="wall"/>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="49">
   <properties>
-   <property name="type" value="wall"/>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="50">
   <properties>
-   <property name="type" value="wall"/>
    <property name="hookable" value="true"/>
-  </properties>
- </tile>
- <tile id="60">
-  <properties>
-   <property name="type" value="wall"/>
-   <property name="hookable" value="true"/>
-  </properties>
- </tile>
- <tile id="61">
-  <properties>
-   <property name="type" value="wall"/>
-   <property name="hookable" value="true"/>
-  </properties>
- </tile>
- <tile id="62">
-  <properties>
-   <property name="type" value="wall"/>
-   <property name="hookable" value="true"/>
-  </properties>
- </tile>
- <tile id="84">
-  <properties>
-   <property name="type" value="wall"/>
-   <property name="hookable" value="true"/>
-  </properties>
- </tile>
- <tile id="85">
-  <properties>
-   <property name="type" value="wall"/>
-   <property name="hookable" value="true"/>
-  </properties>
- </tile>
- <tile id="86">
-  <properties>
-   <property name="type" value="wall"/>
-   <property name="hookable" value="true"/>
-  </properties>
- </tile>
- <tile id="111">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="112">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="120">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="121">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="122">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="123">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="124">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="132">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="133">
-  <properties>
-   <property name="type" value="wall"/>
-  </properties>
- </tile>
- <tile id="134">
-  <properties>
    <property name="type" value="wall"/>
   </properties>
  </tile>
@@ -278,6 +237,24 @@
  </tile>
  <tile id="55">
   <properties>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="60">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="61">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="62">
+  <properties>
+   <property name="hookable" value="true"/>
    <property name="type" value="wall"/>
   </properties>
  </tile>
@@ -321,6 +298,39 @@
    <property name="hookable" value="true"/>
   </properties>
  </tile>
+ <tile id="84">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="85">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="86">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="89">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="90">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="91">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
  <tile id="99">
   <properties>
    <property name="endpoint" value="second"/>
@@ -335,6 +345,21 @@
    <property name="flipped" value="false"/>
    <property name="slope" value="2"/>
    <property name="type" value="slope"/>
+  </properties>
+ </tile>
+ <tile id="101">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="102">
+  <properties>
+   <property name="type" value="goal"/>
+  </properties>
+ </tile>
+ <tile id="103">
+  <properties>
+   <property name="type" value="goal"/>
   </properties>
  </tile>
  <tile id="109">
@@ -353,34 +378,14 @@
    <property name="type" value="slope"/>
   </properties>
  </tile>
- <tile id="89">
+ <tile id="111">
   <properties>
-   <property name="type" value="goal"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="90">
+ <tile id="112">
   <properties>
-   <property name="type" value="goal"/>
-  </properties>
- </tile>
- <tile id="91">
-  <properties>
-   <property name="type" value="goal"/>
-  </properties>
- </tile>
- <tile id="101">
-  <properties>
-   <property name="type" value="goal"/>
-  </properties>
- </tile>
- <tile id="102">
-  <properties>
-   <property name="type" value="goal"/>
-  </properties>
- </tile>
- <tile id="103">
-  <properties>
-   <property name="type" value="goal"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="113">
@@ -398,49 +403,44 @@
    <property name="type" value="goal"/>
   </properties>
  </tile>
- <tile id="15">
+ <tile id="120">
   <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="16">
+ <tile id="121">
   <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="17">
+ <tile id="122">
   <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="27">
+ <tile id="123">
   <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="28">
+ <tile id="124">
   <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="29">
+ <tile id="132">
   <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="39">
+ <tile id="133">
   <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="40">
+ <tile id="134">
   <properties>
-   <property name="water" value="true"/>
-  </properties>
- </tile>
- <tile id="41">
-  <properties>
-   <property name="water" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
 </tileset>
