@@ -98,6 +98,9 @@ public class LevelState extends BasicGameState{
 			for (Salmon s : salmons) {
 				s.render(graphics);
 			}
+			for (Mushroom m : mushrooms) {
+				m.render(graphics);
+			}
 		}
 		cursor.render(graphics);
 		

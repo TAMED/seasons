@@ -34,8 +34,8 @@ public class Salmon extends StaticEntity{
 
 	public Salmon(float x, float y) throws SlickException {
 		super(x, y, true, Config.SALMON);
-		setAnima(new Animation(new SpriteSheet("assets/images/nonentities/salmon/spinning.png", 32, 32), 100));
-		anim.addAnimation(AnimationState.BASIC, getAnima());
+		Animation a = (new Animation(new SpriteSheet("assets/images/nonentities/salmon/spinning.png", 32, 32), 100));
+		anim.addAnimation(AnimationState.BASIC, a);
 		anim.setDefaultAnimation(AnimationState.BASIC);
 	}
 	
@@ -43,7 +43,7 @@ public class Salmon extends StaticEntity{
 	 * @param eat fish
 	 */
 	@Override
-	public void activate(Entity entity) {
+	public void activate(Entity entity, Direction dir) {
 		this.setDead(true);
 		getPhysicsBody().setActive(false);
 		getTimer().update(Config.SALMON_TIME);

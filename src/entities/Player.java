@@ -5,6 +5,7 @@ package entities;
 
 import items.Hookshot;
 
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -108,34 +109,6 @@ public class Player extends Entity {
 		
 		if(input.isKeyPressed(Input.KEY_SPACE)) {
 			jump(gc, delta);
-		}
-	}
-	
-	/**
-	 * Check if player is touching salmon
-	 */
-	public void staticEntityCheck() {
-		ContactEdge contactEdge = this.getPhysicsBody().getContactList();
-		
-		while(contactEdge != null) {
-			if(contactEdge.contact.isTouching()) {
-				int category = contactEdge.contact.getFixtureA().m_filter.categoryBits;
-				Object data = contactEdge.contact.getFixtureB().getUserData();
-				Object preEntity = contactEdge.contact.getFixtureA().getUserData();
-				if (category == Config.SALMON && preEntity instanceof Salmon) {
-					Salmon entity = (Salmon) preEntity;
-					if(!entity.isDead()){
-						entity.activate(this);
-					}
-				}
-				if (category == Config.MUSHROOM && preEntity instanceof Mushroom) {
-					Mushroom entity = (Mushroom) preEntity;
-					if(!entity.isDead()){
-						entity.activate(this);
-					}
-				}
-			}
-			contactEdge = contactEdge.next;
 		}
 	}
 	

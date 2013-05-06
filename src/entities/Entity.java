@@ -306,6 +306,13 @@ public abstract class Entity extends Sprite {
 	}
 	
 	/**
+	 * @return the entity's sensor defs
+	 */
+	public FixtureDef[] getSensorDefs() {
+		return sensors;
+	}
+	
+	/**
 	 * @return the entity's linear velocity
 	 */
 	public float getVelocity() {
@@ -432,6 +439,36 @@ public abstract class Entity extends Sprite {
 		return categories;
 	}
 	
+	/**
+	 * Check if player is touching salmon
+	 */
+	public void staticEntityCheck() {
+		ContactEdge contactEdge = this.getPhysicsBody().getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				int categoryA = contactEdge.contact.getFixtureA().m_filter.categoryBits;
+				int categoryB = contactEdge.contact.getFixtureB().m_filter.categoryBits;
+				Object fixB = contactEdge.contact.getFixtureB().getUserData();
+				Object fixA = contactEdge.contact.getFixtureA().getUserData();
+				if (categoryA == Config.SALMON && fixA instanceof Salmon) {
+					salmonUpdate(fixA);
+				}
+				if (categoryB == Config.SALMON && fixB instanceof Salmon) {
+					salmonUpdate(fixB);
+				}
+				if (categoryA == Config.MUSHROOM && fixA instanceof Mushroom && fixB instanceof Direction) {
+					mushroomUpdate(fixA, fixB);
+				}
+				if (categoryB == Config.MUSHROOM && fixB instanceof Mushroom && fixA instanceof Direction) {
+					mushroomUpdate(fixB, fixA);
+				}
+				
+			}
+			contactEdge = contactEdge.next;
+		}
+	}
+	
 	public boolean checkWater(GameContainer gc) {
 		boolean water = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.WATER) > 0;
 		boolean low = this.getCenterY() > gc.getHeight();
@@ -446,6 +483,22 @@ public abstract class Entity extends Sprite {
 		else {
 			this.getPhysicsBody().setGravityScale(1);
 			this.getPhysicsBody().setLinearDamping(0f);
+		}
+	}
+	
+	private void mushroomUpdate(Object preEntity, Object dir) {
+		Mushroom entity = (Mushroom) preEntity;
+		if(!entity.isDead()){
+			if ((dir != null) && (dir instanceof Direction)) {
+				entity.activate(this, (Direction) dir);
+			}
+		}
+	}
+	
+	private void salmonUpdate(Object preEntity) {
+		Salmon entity = (Salmon) preEntity;
+		if(!entity.isDead()){
+			entity.activate(this, null);
 		}
 	}
 	
