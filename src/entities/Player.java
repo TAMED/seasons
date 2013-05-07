@@ -96,11 +96,15 @@ public class Player extends Entity {
 		if(input.isKeyDown(Input.KEY_D)) {
 			run(Direction.RIGHT);
 			if (floating) move(Config.PLAYER_WATER_MOVE_SPEED, 0);
-			if (inAir) move(Config.PLAYER_AIR_ACCELERATION, 0);
+			if (inAir && this.getPhysicsBody().getLinearVelocity().x < Config.PLAYER_MAX_AIR_SPEED) {
+				move(Config.PLAYER_AIR_ACCELERATION, 0);
+			}
 		} else if(input.isKeyDown(Input.KEY_A)) {
 			run(Direction.LEFT);
 			if (floating) move(-Config.PLAYER_WATER_MOVE_SPEED, 0);
-			if (inAir) move(-Config.PLAYER_AIR_ACCELERATION, 0);
+			if (inAir && this.getPhysicsBody().getLinearVelocity().x > -Config.PLAYER_MAX_AIR_SPEED) {
+				move(-Config.PLAYER_AIR_ACCELERATION, 0);
+			}
 		} else {
 			run(Direction.DOWN);
 		}
