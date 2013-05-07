@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="400" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
  <tileset firstgid="145" source="salmonTiles.tsx"/>
  <tileset firstgid="161" source="mushrooms.tsx"/>
  <layer name="Tile Layer 1" width="400" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3Zu0rDYBzG4VyBoJMI6iKCuqi7duhdqJPnyfPiaVRv23+hg1TSpp8m+UKeB35DqVCSNr6mDouiGEqSNGeDAgDmMyjsBwDzsx8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKRocz/2ov2WXhumafqzeRqdRefRRfScSct1HjSd1+Z+HESHLb12Lqr+nrK15eo4N01/Nm+i2+guuo8+MmmjzoPuqD5fi0fRcXQyfmw/2lX1HDhX5eo4N3Wf78n7jZfoNXqL3qOvkjanNO1nU5/bresEdFifr8XL6Cq6Hj+2H+2yH3/Xxf2YvN/4LMo3o8p2TO7Afz1nP37r87X4ED1GT+PHo+1YkNRoP+83Zu1G2/ux2HBLGbw/qt6KpMYa/V+hyv1GLt9frTbcWrSewfukas36u0ZSPxvtx1bDbUc7GRy7qvUNsuokhACWAAA=
+   H4sIAAAAAAAAC+3ZyUojYRiG0boCQVciqJtGUDfqXrPIXbQTOA/g0IPSrS7V2/YLRAiRxMqv9adCnQPPIkRIqpL4WrFdFEVbkqQRaxUAMJpWYT8AGJ39ACCF/QAghf0AIIX9ACCF/QAghf0AIIX9ACCF/QAghf0AIIX9ACCF/QAghf0AIIX9ACCF/QAgxTj3Yz3aGNNjwzC535sH0WF0FB1H/2rSbJUHzcTr3Y/daC/az/TYm9FWpseqq7K/p2ztYFWcm9zvzavoOrqJbqPnmvSjyoOeUE3+LP6MtqOd7u3e/TiPLqLLTM/FfpQ/B87VYFWcm6rPd//1xv/oIXqMnqLXAS0NadjPpt63VtUJmGBN/iyeRKfRWfd27378je6i+0zPpcmvwzv78XWTuB/91xsvxeDNKLMd/TvwXffZj4+a/Fn8Ff2O/nRvd7ZjSlLWeq83PtuNce/HdOZmavD6qHxzkrLV+b9CmeuNunx/NZ+5hWixBq+TyvXZ3zWSmllnP5YztxKt1uDYVa432d9M3ACWAAA=
   </data>
  </layer>
  <layer name="Tile Layer 2" width="400" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3YOw6AIBAFQL1/xRG8qb0xcTXg8plJjCXu42HBtgEAAAAAAAAAAAAAAAAAAAAAAACQrWR/QGfkwejK5b2q1eePktN3sgMYh3/2uOxdPbJ8Fs1oxixrzTRjNhCh+4xCV9vIzPUIPOg+begV/MNZi8nMaU9c+w1d6p89uicXonQFHYB2nC9aiNztznrfu/Ls0APnDgAAAADyncdzJY4AlgAA
+   H4sIAAAAAAAAC+3YOw6AIBAFQL1/xRG8qb0xcTXg8plJjCXu42HBtgEAAAAAAAAAAAAAAAAAAAAAAACQrWR/QGfkwejK5b2q1eePktN3sgMYh3/2uOxdPbJ8Fs1oxixrzTRjNhCh+4xCV9vIzPUIPOg+begV/MNZi8nMaU9c+w1d6p89uicXonQFHYB2nC9aiNztznrfu/Ls0APnDgAAAADyncdzJY4AlgAA
   </data>
  </layer>
 </map>
