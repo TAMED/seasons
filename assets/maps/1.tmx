@@ -5,7 +5,7 @@
  <tileset firstgid="145" source="salmonTiles.tsx"/>
  <layer name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC3NmYGBwpiK2B2ImPDgUiMOIxPZEmGdCQB4ZD0bzooA4GohjqGReGhCnA3EGlcwrAuJiIC6hgnnocU+MeQ5Ujg9S8Kh5o+ZRYp4hEBtR0TxbILaj0Dw+KmMA50rX2kAGAAA=
+   H4sIAAAAAAAAC+3RKQqAUBhF4YcLcC+K1QFcgwbH5tgct++JIqjvwR8Mhi9dOOXGSqlYUAjrQYJUU6jR8172sy/2MuQohHoNWnRCvQkzFoHe9XudXiT8h4m/9/eelKhQ3/QcuAa9HgPGm56PwKC3YsN+6tnCDquQYh9ABgAA
   </data>
  </layer>
  <layer name="Tile Layer 2" width="20" height="20">
