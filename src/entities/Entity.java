@@ -83,7 +83,7 @@ public abstract class Entity extends Sprite {
 		super(0, 0, width, height, ground);
 		
 		try {
-			jmpSound = new Sound("assets/sounds/boop.wav");
+			jmpSound = new Sound("assets/sounds/bear_jump.wav");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
