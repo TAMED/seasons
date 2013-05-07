@@ -74,6 +74,9 @@ public class Map {
 				if (tileType.equals("goal")){
 					goalLoc = getPixelCenter(i,j);
 				}
+				if (tileType.equals("player")) {
+					playerLoc = getPixelCenter(i,j);
+				}
 			}
 		}
 	}
@@ -94,9 +97,6 @@ public class Map {
 						Enemy ent = new Ent(center.x, center.y);
 						enemies.add(ent);
 					}
-				}
-				if (tileType.equals("player")) {
-					playerLoc = getPixelCenter(i,j);
 				}
 				if (tileType.equals("salmon")) {
 					int xOffset = Integer.parseInt(foreground.getTileProperty(tileId, "xOffset", "0"));
