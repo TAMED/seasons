@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="400" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
  <tileset firstgid="145" source="salmonTiles.tsx"/>
+ <tileset firstgid="161" source="mushrooms.tsx"/>
  <layer name="Tile Layer 1" width="400" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Zu0rDYBzG4VyBoJMI6iKCuqi7duhdqJPnyfPiaVRv23+hg1TSpp8m+UKeB35DqVCSNr6mDouiGEqSNGeDAgDmMyjsBwDzsx8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKRocz/2ov2WXhumafqzeRqdRefRRfScSct1HjSd1+Z+HESHLb12Lqr+nrK15eo4N01/Nm+i2+guuo8+MmmjzoPuqD5fi0fRcXQyfmw/2lX1HDhX5eo4N3Wf78n7jZfoNXqL3qOvkjanNO1nU5/bresEdFifr8XL6Cq6Hj+2H+2yH3/Xxf2YvN/4LMo3o8p2TO7Afz1nP37r87X4ED1GT+PHo+1YkNRoP+83Zu1G2/ux2HBLGbw/qt6KpMYa/V+hyv1GLt9frTbcWrSewfukas36u0ZSPxvtx1bDbUc7GRy7qvUNsuokhACWAAA=
+   H4sIAAAAAAAAA+3Zu0rDYBzG4VyBoJMI6iKCuqi7duhdqJPnyfPiaVRv23+hg1TSpp8m+UKeB35DqVCSNr6mDouiGEqSNGeDAgDmMyjsBwDzsx8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKRocz/2ov2WXhumafqzeRqdRefRRfScSct1HjSd1+Z+HESHLb12Lqr+nrK15eo4N01/Nm+i2+guuo8+MmmjzoPuqD5fi0fRcXQyfmw/2lX1HDhX5eo4N3Wf78n7jZfoNXqL3qOvkjanNO1nU5/bresEdFifr8XL6Cq6Hj+2H+2yH3/Xxf2YvN/4LMo3o8p2TO7Afz1nP37r87X4ED1GT+PHo+1YkNRoP+83Zu1G2/ux2HBLGbw/qt6KpMYa/V+hyv1GLt9frTbcWrSewfukas36u0ZSPxvtx1bDbUc7GRy7qvUNsuokhACWAAA=
   </data>
  </layer>
  <layer name="Tile Layer 2" width="400" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3UMQ6AIBAEQPx/xY/tjYmnAeFgpqEE9hZKAQAAAAAAAAAAAAAAAAAAAAAAAGC0OvoAk5EH2dXLuqvd7x8lp+9kB5CHPzsvs2tHls+iGa2YZas7rZgNROg+WehqH3KdnxnRg17BP7y1mJE5HQP3fkOX5mdG9+RClK6gA9CP9wUAAAAAAEBLJ/7K0tkAlgAA
+   H4sIAAAAAAAAA+3YOw6AIBAFQL1/xRG8qb0xcTXg8plJjCXu42HBtgEAAAAAAAAAAAAAAAAAAAAAAACQrWR/QGfkwejK5b2q1eePktN3sgMYh3/2uOxdPbJ8Fs1oxixrzTRjNhCh+4xCV9vIzPUIPOg+begV/MNZi8nMaU9c+w1d6p89uicXonQFHYB2nC9aiNztznrfu/Ls0APnDgAAAADyncdzJY4AlgAA
   </data>
  </layer>
 </map>

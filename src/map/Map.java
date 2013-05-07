@@ -17,6 +17,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import util.Corner;
 
 import config.Config;
+import entities.Mushroom;
 import entities.Salmon;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
@@ -30,6 +31,7 @@ public class Map {
 	private int tileWidth;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Salmon> salmons;
+	private ArrayList<Mushroom> mushrooms;
 	private Vec2 playerLoc;
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
@@ -42,6 +44,7 @@ public class Map {
 		tileWidth = foreground.getTileWidth();
 		enemies = new ArrayList<Enemy>();
 		salmons = new ArrayList<Salmon>();
+		mushrooms = new ArrayList<Mushroom>();
 	}
 	public void parseMapObjects() throws SlickException {
 		parseSpecialObjects();
@@ -71,6 +74,9 @@ public class Map {
 				if (tileType.equals("goal")){
 					goalLoc = getPixelCenter(i,j);
 				}
+				if (tileType.equals("player")) {
+					playerLoc = getPixelCenter(i,j);
+				}
 			}
 		}
 	}
@@ -92,9 +98,6 @@ public class Map {
 						enemies.add(ent);
 					}
 				}
-				if (tileType.equals("player")) {
-					playerLoc = getPixelCenter(i,j);
-				}
 				if (tileType.equals("salmon")) {
 					int xOffset = Integer.parseInt(foreground.getTileProperty(tileId, "xOffset", "0"));
 					int yOffset = Integer.parseInt(foreground.getTileProperty(tileId, "yOffset", "0"));
@@ -103,6 +106,11 @@ public class Map {
 					center.y += yOffset;
 					Salmon salmon = new Salmon(center.x, center.y);
 					salmons.add(salmon);
+				}
+				if (tileType.equals("mushroom")) {
+					Vec2 center = getPixelCenter(i,j);
+					Mushroom mushroom = new Mushroom(center.x, center.y);
+					mushrooms.add(mushroom);
 				}
 			}
 		}
@@ -362,6 +370,10 @@ public class Map {
 	
 	public ArrayList<Salmon> getSalmons() {
 		return this.salmons;
+	}
+	
+	public ArrayList<Mushroom> getMushrooms() {
+		return this.mushrooms;
 	}
 	
 	public void render() {
