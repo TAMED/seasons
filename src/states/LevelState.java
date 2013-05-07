@@ -12,6 +12,7 @@ import map.Map;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -33,6 +34,7 @@ import combat.CombatContact;
 
 import config.Config;
 import config.Section;
+import entities.Mushroom;
 import entities.Player;
 import entities.Salmon;
 import entities.enemies.Enemy;
@@ -57,6 +59,7 @@ public class LevelState extends BasicGameState{
 	private Time bestTime;
 	private static Timer timer;
 	private static PauseScreen pauseScrn;
+	private ArrayList<Mushroom> mushrooms;
 	
 	static {
 		sectionQueue = new LinkedList<Section>();
@@ -97,6 +100,9 @@ public class LevelState extends BasicGameState{
 			}
 			for (Salmon s : salmons) {
 				s.render(graphics);
+			}
+			for (Mushroom m : mushrooms) {
+				m.render(graphics);
 			}
 		}
 		cursor.render(graphics);
@@ -157,6 +163,14 @@ public class LevelState extends BasicGameState{
 		for (Salmon s : salmons) {
 			s.update(gc, delta);
 		}
+		for (Mushroom m : mushrooms) {
+			m.update(gc, delta);
+		}
+
+		// check toggles
+		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
+		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
+		if (gc.getInput().isKeyPressed(Input.KEY_F11)) gc.setFullscreen(!gc.isFullscreen());
 		
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
@@ -184,19 +198,27 @@ public class LevelState extends BasicGameState{
 		
 		currentTime = new Time();
 		
-		enemies = map.getEnemies();
-		for (Enemy e : enemies) {
-			e.addToWorld(map.getWorld(), e.getX(), e.getY());
-		}
-		
-		salmons = map.getSalmons();
-		for (Salmon s : salmons) {
-			s.addToWorld(map.getWorld(), s.getX(), s.getY(), currentTime);
-		}
-		
 		goalLoc = map.getGoalLoc();
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
+
+		
+		currentTime = new Time();
+		
+		enemies = map.getEnemies();
+		salmons = map.getSalmons();
+		mushrooms = map.getMushrooms();
+		World world = map.getWorld();
+		for (Enemy e : enemies) {
+			e.addToWorld(world, e.getX(), e.getY());
+		}
+		for (Salmon s : salmons) {
+			s.addToWorld(world, s.getX(), s.getY(), currentTime);
+		}
+		
+		for (Mushroom m : mushrooms) {
+			m.addToWorld(world, m.getX(), m.getY());
+		}
 	}
 
 	private void pause(GameContainer gc) {
