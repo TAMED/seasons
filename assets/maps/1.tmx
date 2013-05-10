@@ -3,12 +3,12 @@
 <map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
  <tileset firstgid="145" source="salmonTiles.tsx"/>
- <layer name="Tile Layer 1" width="20" height="20">
+ <layer name="foreground" width="20" height="20">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3RKQqAUBhF4YcLcC+K1QFcgwbH5tgct++JIqjvwR8Mhi9dOOXGSqlYUAjrQYJUU6jR8172sy/2MuQohHoNWnRCvQkzFoHe9XudXiT8h4m/9/eelKhQ3/QcuAa9HgPGm56PwKC3YsN+6tnCDquQYh9ABgAA
   </data>
  </layer>
- <layer name="Tile Layer 2" width="20" height="20">
+ <layer name="object" width="20" height="20">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NiYGBgGsUE8cRB4Iah6r/hGHZD1U9Dyd2Mg8ANoxg/BgCVobs+QAYAAA==
   </data>

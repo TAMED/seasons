@@ -4,12 +4,12 @@
  <tileset firstgid="1" source="forestTiles.tsx"/>
  <tileset firstgid="145" source="salmonTiles.tsx"/>
  <tileset firstgid="161" source="mushrooms.tsx"/>
- <layer name="Tile Layer 1" width="300" height="24">
+ <layer name="foreground" width="300" height="24">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2by2vVQBSHZ6kuRK34Fm4VLIobRd1pR7uSojsVfO58goJPUPf9tz0hHUwnk5uZyTkzk8zvgw96aZKbznS+JOV2Rym1AyGEM3BbhXObvJNgnxAeRuyz67ndrUzGoEccw3ccfcfOEPvzNGg1bUyGjjl1/64x8+s6h+4xQxibt+b7oXOmIvcJoTunQz+DOYdtFder++SDBPuEINkrnckclNirBs1wDEm0Gu6WHpAT9GqYR+TjBPuEINmrmpDqlQ7cXuoY0miHKUCv5gV6xYNUr4As6NW8QK94QK/myRPy6YjPIo6LXsmAXvGAXi2TmPXRID3PuvM1erUerLk+6NUyKbVXXdCr9WDN9fF5roh9tgD5QK9kuEHejNgPvaqTQ+Rhh2dynlSBzKlXz8kX5EvrHErs1V3yXsR+vvcFuEdYDk2rTpLnHJ7PeF4lErM+Uq8R06u35Dvy/f7rJfYK1IVp1Yq84nAr25mBWEyvvpLfyO/7r3P1yudZD71qiX0uroGxVqFX82ToHtDc46XulU+L0KsWjIMbn1ahV8sEvSoXjEMf31ahV8uEs1dcz3pYpy0Yh4OEtAq9WiacveJqEdZpC8bhP6GtQq+Wid2rV+Rr8k3EsdArXmoch8/kF3LDMrRV6NUysXv1gfxIfrK2S/msV+M6dVHTOJhO/Sb/qP5nqVYqrFXo1TTMfLg+hxvqEcbzsnv1g/xJ/rK2S9mimtbpOmoYB7tTf1V4l9ArPuz5uMzgKcXXrKZVpyd6FIrLeY0qAclOoVfhuOZjj7zu4d6Il1TbrKmdMU7tp+t/ISCvnNeonNjrYqX4O4Ve+TPUKW6bZnHcqzVuCuj6/ZF4n6H3mqrPdcUocUxbc406Rh4vzBOq//dxo32fKHk/5epV7rEpYQ7WKd0pCaU6ksqcrQrp1pRemfV3gbyY2KsjXiPPKr/7xFXCudzKMFa5DJmDrnPqlPEfpU3dyoBwAAA=
   </data>
  </layer>
- <layer name="Tile Layer 2" width="300" height="24" visible="0">
+ <layer name="object" width="300" height="24" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3YSQ6AIBAEQP5/88fGk8ZoAm40puoFw9D0gVIAAAAAgCum3gMAVNBVdgAJvENgBLqq3pO7sncWckAq2WQrLQ9p83CP+wRaHfWGLoGxecO8Tcb+pdd9yhFvS8xY60yJZ/iaHQCsdCIwAl0FAAAAAKTZ/1v6xwQAAAAAODcDt4mteoBwAAA=
   </data>

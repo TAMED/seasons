@@ -3,12 +3,12 @@
 <map version="1.0" orientation="orthogonal" width="300" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
  <tileset firstgid="145" source="salmonTiles.tsx"/>
- <layer name="Tile Layer 1" width="300" height="24">
+ <layer name="foreground" width="300" height="24">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2ay2vVQBSHT10VN9pSFERLH9BSulKu7uo92lURu6tCn7s+dOfz3+8Jl9AhTCbzzmT6++Dj3gtJZnJJv0wuPSSiQwghnIBzCmfmsc+R5XZfPI79SfzssZ9K95x05zh0Duo+Q+dhOpbPd9Bi8118FY8djjmzlB3n2sd78UOkYzHZzz+XLvRdJyHXiOtYqcYbYk519irG9V1Lr2L+rbe0LWpf2/fqZ444Xoz7j0rq/rDjti6gV+GU1qtS1lesvC95feXKrPPawBS3USqxm8uUfr3EFuOwx9xPxG8av3sca4hae8Ue+5S+vuLOZ59eqYzVK9dnPRu485qaFM1lSre26o7THYs125VIrb3yofT1VZfUveq7b6a6d06JFM+0DalbpcIW25RGaddkrb1KuaZQidkr0E+K+0+DTX9Y85l7th+CY038kVJrr3KBXuUhxf2nwXatxKR/zgv9LQq4gV6FgV5NGyb9Wokt93dZW4Fw0Ksw0Ks68F0nMU3nt/MaQK/CQK/qAM900wC9CgO9qgMmtGoKqL16Ii5lHBu9AgC4oPbqrfgu49joFQDABbVXB+LHjGOb/hdt7P9LswW9AiAfY/aqBtArAPKBXoWBXgGQD12vLsRL8WqsSU0I22fa0p9rASiVU/FMPCd9r+7EH+LPUWYHAAAPXIs34i3pe/VX/Cf+H2V2AADwwC/xt/iHFq16ZvDpSHMEADxOlsWXBl8ZfEFoFgAgD02r1sRtgzsGt2jRrOfiCoQQJnKVFq3aEDcNmnrVuCu+FvcK8U1GS51zDd95DecA47ku7pO5VY33NNOkuoBwAAA=
   </data>
  </layer>
- <layer name="Tile Layer 2" width="300" height="24">
+ <layer name="object" width="300" height="24">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3UMQ5BURQE0G9PqNGzNwTBZt0d8Au5mffPSaaZaqqZJgBYtnX3AIAf+Ssghb8CUvgrIIW/AlL4q2ybynZGD8n8VbZ95TCjh2T+KtuxcprRQzJ/xb+cK5fKtXsIw9h1D2BYt8q98ugeAvDFs/KqvLuHAAAAAADAQFbdAwAAAAAAAACAxfoACURp6YBwAAA=
   </data>
