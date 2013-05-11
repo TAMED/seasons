@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="400" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
- <tileset firstgid="145" source="salmonTiles.tsx"/>
- <layer name="Tile Layer 1" width="400" height="24">
+ <tileset firstgid="217" source="salmonTiles.tsx"/>
+ <tileset firstgid="233" source="mushrooms.tsx"/>
+ <layer name="foreground" width="400" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Zu0rDYBzG4VyBoJMI6iKCuqi7duhdqJPnyfPiaVRv23+hg1TSpp8m+UKeB35DqVCSNr6mDouiGEqSNGeDAgDmMyjsBwDzsx8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKSwHwCksB8ApLAfAKRocz/2ov2WXhumafqzeRqdRefRRfScSct1HjSd1+Z+HESHLb12Lqr+nrK15eo4N01/Nm+i2+guuo8+MmmjzoPuqD5fi0fRcXQyfmw/2lX1HDhX5eo4N3Wf78n7jZfoNXqL3qOvkjanNO1nU5/bresEdFifr8XL6Cq6Hj+2H+2yH3/Xxf2YvN/4LMo3o8p2TO7Afz1nP37r87X4ED1GT+PHo+1YkNRoP+83Zu1G2/ux2HBLGbw/qt6KpMYa/V+hyv1GLt9frTbcWrSewfukas36u0ZSPxvtx1bDbUc7GRy7qvUNsuokhACWAAA=
+   H4sIAAAAAAAAA+3ZyUojYRiG0boCQVeNoG6kQd2oe83Cu+h2AOcBHHvAaaleo3ozfoEIIZJY+bX+VMg58CxChKQqia8V14qiWJMkqc8aBQD0p1HYDwD6Zz8ASGE/AEhhPwBIYT8ASGE/AEhhPwBIYT8ASGE/AEhhPwBIYT8ASGE/AEhhPwBIYT8ASGE/AEgxyP1YipYH9NjQS+735na0E+1Ge9F1TfpR5UEz9Nr3YyPajLYyPfZKtJrpseqq7O8pW9tdFecm93vzNDqLzqOL6KEmzVZ50ENqlD+Lv6Lf0Xrrdvt+HEXH0Umm52I/yp8D56q7Ks5N1ee783rjJrqN7qL76KlLP3vU62dT71us6gQMsVH+LO5HB9Fh63b7fvyN/kX/Mz2XUX4d3tmPrxvG/ei83ngsum9Gme3o3IHvus9+fFT2vfEcvUSv1T6drC6jq+hP63ZzO8YkZa39euOz3Rj0foxnbqIGr4/KNykpW83/K5S53qjL91dTmZuOZmrwOqlcn/1dI2k0a+7HXObmo4UaHLvK9QY0+wtmAJYAAA==
   </data>
  </layer>
- <layer name="Tile Layer 2" width="400" height="24">
+ <layer name="object" width="400" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3UMQ7CMAwF0F4UmIEZOEdvjGeE1AAtjtP3JKtjnG+n0wQAAAAAAAAAAAAAAAAAAAAAAABAtjm7gc7Ig+rml+9e7f3+reT0PdkB1OGfXZfZrUeWy1ozGjHLte40YjbQwu5ThV3dhlz7Z0ZswV7Bf3hrbbJyOkQdo05J53/CLvXPjN6TC60q7co56hJ1zW5kMJV2AKrxvvpwi7pHPbIbAQAAAAAA+NETgYkddgCWAAA=
+   H4sIAAAAAAAAA+3TsQ2AMAxEUbN/RZgOWAaPkBSRZfSe9PtrLgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADo5KgeAAAA0MyZjeyqHlLkzp7F3pKl8E+zH/Q7AAAAANjnA4ID0/8AlgAA
   </data>
  </layer>
 </map>

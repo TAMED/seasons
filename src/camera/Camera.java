@@ -127,13 +127,22 @@ public Point getPosition() {
        int tileIndexY = (int) (cameraY / tileHeight);
        
        //finally draw the section of the map on the screen
+       if (map.getLayerIndex("background") != -1) {
+	       map.render(   
+	               tileOffsetX + offsetX, 
+	               tileOffsetY + offsetY, 
+	               tileIndexX,  
+	               tileIndexY,
+	                  (Config.RESOLUTION_WIDTH  - tileOffsetX) / tileWidth  + 1,
+	                  (Config.RESOLUTION_HEIGHT - tileOffsetY) / tileHeight + 1,map.getLayerIndex("background"),false);
+       }
        map.render(   
              tileOffsetX + offsetX, 
              tileOffsetY + offsetY, 
              tileIndexX,  
              tileIndexY,
                 (Config.RESOLUTION_WIDTH  - tileOffsetX) / tileWidth  + 1,
-                (Config.RESOLUTION_HEIGHT - tileOffsetY) / tileHeight + 1,0,false);
+                (Config.RESOLUTION_HEIGHT - tileOffsetY) / tileHeight + 1,map.getLayerIndex("foreground"),false);
    }
    
    /**

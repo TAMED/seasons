@@ -326,6 +326,11 @@
    <property name="type" value="goal"/>
   </properties>
  </tile>
+ <tile id="93">
+  <properties>
+   <property name="type" value="player"/>
+  </properties>
+ </tile>
  <tile id="99">
   <properties>
    <property name="endpoint" value="second"/>

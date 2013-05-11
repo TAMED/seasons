@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="300" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
- <tileset firstgid="145" source="salmonTiles.tsx"/>
- <layer name="Tile Layer 1" width="300" height="24">
+ <tileset firstgid="217" source="salmonTiles.tsx"/>
+ <layer name="foreground" width="300" height="24">
   <data encoding="base64" compression="zlib">
-   eJztmktLw0AURq+uxI0PREFUfIAirpTqTnu1KxHdqaCu1bX6//GGEhhCMpl3J9PvwKENJJmkpCeT0gkRTSCEcACOyZ+Rwzb3hus9OOz7Vrxz2E6leU5t59h3Duo2feeh25fLZ1Bj8lk8ik8W+xwZypbH2sWleBVoX0zmx59KG7quE59rxHasWOP1MaYyexXi+i6lVyG/6zV1i+rX+r26zAHHC3H/UYndH7Zc1wb0yp/cepXL/IqV9znPr2wZNV4rmMI2SiV0c5niz5fYYBx2OPZn8aXFV4d99VFqr9hhm9znV9xYdumVyqx6ZfusZwI3XmMTo7lM8eZWzXGaY3HLejlSaq9cyH1+1SR2r7rum7HunUMixjNtRexWqbDBOrmR2zVZaq9izilUQvYKdBPj/lNh0h9uWeaO9fvgUAc+p5Taq1SgV2mIcf+pMJ0rMbU/5/n+FgXsQK/8QK+GDVP7XIkNt7eZWwF/0Cs/0KsycJ0nMQ3nt/MSQK/8QK/KAM90wwC98gO9KgMmtGoIqL1aFBcSjo1eAQBsUHt1Ll4kHBu9AgDYoPbqWrxJOLbuv2iz/l+aKegVAOmYZa9KAL0CIB3olR/oFQDpQK/8MH2mzf25FoBceRPfxQ9CrwAAefMpfonfhF4BAPLmR/wV/2jaqhWNyzM6RgDAfLIkbmnc1rhJaBYAIA1VqzbEI43HGg9p2qxVcQ1CCCO5TtNW7YsHGnW9qjwRd8TTTNxNaK7HXMJnXsI5wHDuiWekb1XlP0v6BV0=
+   eJztmstr1UAUh09dFTfaUhRESx/QUrpSru7qPdpVEburQp+7PnTn89/vCZfQIUwm885k+vvg494LSWZySb9MLj0kokMIIZyAcwpn5rHPkeV2XzyO/Un87LGfSvecdOc4dA7qPkPnYTqWz3fQYvNdfBWPHY45s5Qd59rHe/FDpGMx2c8/ly70XSch14jrWKnGG2JOdfYqxvVdS69i/q23tC1qX9v36meOOF6M+49K6v6w47YuoFfhlNarUtZXrLwveX3lyqzz2sAUt1EqsZvLlH69xBbjsMfcT8RvGr97HGuIWnvFHvuUvr7izmefXqmM1SvXZz0buPOamhTNZUq3tuqO0x2LNduVSK298qH09VWX1L3qu2+mundOiRTPtA2pW6XCFtuURmnXZK29SrmmUInZK9BPivtPg01/WPOZe7YfgmNN/JFSa69ygV7lIcX9p8F2rcSkf84L/S0KuIFehYFeTRsm/VqJLfd3WVuBcNCrMNCrOvBdJzFN57fzGkCvwkCv6gDPdNMAvQoDvaoDJrRqCqi9eiIuZRwbvQIAuKD26q34LuPY6BUAwAW1Vwfix4xjm/4Xbez/S7MFvQIgH2P2qgbQKwDygV6FgV4BkA9dry7ES/FqrElNCNtn2tKfawEolVPxTDwnfa/uxB/iz1FmBwAAD1yLN+It6Xv1V/wn/h9ldgAA8MAv8bf4hxatembw6UhzBAA8TpbFlwZfGXxBaBYAIA9Nq9bEbYM7Brdo0azn4gqEECZylRat2hA3DZp61bgrvhb3CvFNRkudcw3feQ3nAOO5Lu6TuVWN94UjCRc=
   </data>
  </layer>
- <layer name="Tile Layer 2" width="300" height="24">
+ <layer name="object" width="300" height="24">
   <data encoding="base64" compression="zlib">
-   eJztzrENgDAQBEHTfwTIIKBZrgOHj/CMtPm2BgAAAAAAAAAAAAAA37GmLe3VIwADPR3prB4BGLjSnZ7qEQAAAAAA+JGlegAAAAAAAAAAmNYLTccFSA==
+   eJztzsEJgDAUBcHYf4UqUdRGfB3k+MXMwN63NQAAAAAAAAAAAAAA+I41bWmvHgEY6OlIZ/UIwMCV7vRUjwAAAAAAwI8s1QMAAAAAAAAAwLRed+0H0A==
   </data>
  </layer>
 </map>

@@ -19,7 +19,9 @@ public enum Section {
 	FOREST_CLIFF("cliffForest.tmx", "forest3.png"),
 	FOREST_VINES("entirelyVines.tmx", "forest3.png"),
 	FOREST_HILLS("moreHillyForest.tmx", "forest3.png"),
-	FOREST_LONG("longMap.tmx", "forest3.png");
+	FOREST_LONG("longMap.tmx", "forest3.png"),
+	LAKE_UNDERWATER("lake1.tmx", "mountainLake3.png"),
+	FOREST_PLAINS("plains.tmx", "forest3.png");
 
 	private final String mapName;
 	private final String backgroundName;
