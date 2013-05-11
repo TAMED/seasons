@@ -23,6 +23,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import ui.Cursor;
+import ui.DebugInfo;
 import ui.PauseScreen;
 import ui.Time;
 import ui.Timer;
@@ -58,6 +59,7 @@ public class LevelState extends BasicGameState{
 	private Time lastTime;
 	private Time bestTime;
 	private static Timer timer;
+	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
 	private ArrayList<Mushroom> mushrooms;
 	
@@ -66,6 +68,7 @@ public class LevelState extends BasicGameState{
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		timer = new Timer(100, 100);
+		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
 	}
 	
@@ -93,6 +96,9 @@ public class LevelState extends BasicGameState{
 		if (viewDebug) {
 			debugdraw.setGraphics(graphics);
 			map.getWorld().drawDebugData();
+			camera.untranslateGraphics(gc);
+			info.render(graphics);
+			camera.translateGraphics(gc);
 		} else {
 			player.render(graphics);
 			for (Enemy e : enemies) {
