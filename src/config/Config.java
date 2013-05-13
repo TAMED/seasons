@@ -19,7 +19,7 @@ public class Config {
 	public static final float PIXELS_PER_METER = 32;
 	public static final float DEFAULT_DENSITY = 1f;
 	public static final float DEFAULT_FRICTION = .03f;
-	public static final float DEFAULT_TRACTION = 10f; // Friction for feet
+	public static final float DEFAULT_TRACTION = 20f; // Friction for feet
 	public static final int VELOCITY_ITERATIONS = 6;
 	public static final int POSITION_ITERATIONS = 2;
 	public static final float VEL_EPSILON = .5f;
