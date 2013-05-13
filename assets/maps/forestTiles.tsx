@@ -443,6 +443,36 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+  <tile id="135">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="136">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="137">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="138">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="139">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
  <tile id="144">
   <properties>
    <property name="type" value="mushroom"/>
