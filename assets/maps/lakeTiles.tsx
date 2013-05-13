@@ -538,32 +538,37 @@
   </tile>
   
 <!-- BROKEN LOG/BRANCH -->
- <tile id="147">
+  <tile id="135">
   <properties>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
-  <tile id="148">
+  <tile id="136">
   <properties>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="149">
+  <tile id="137">
   <properties>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="150">
+  <tile id="138">
   <properties>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="151">
+  <tile id="139">
   <properties>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
-  
+ 
 <!-- BASELESS VINES -->
 
  <tile id="162">

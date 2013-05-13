@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="24" height="300" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="forestTiles" tilewidth="32" tileheight="32">
+  <image source="forestTiles.png" width="384" height="600"/>
+ </tileset>
+ <tileset firstgid="217" name="SalmonTile" tilewidth="32" tileheight="32">
+  <image source="SalmonTile.png" width="128" height="128"/>
+ </tileset>
+ <layer name="background" width="24" height="300" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20ND6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAdwNwgAAB
+  </data>
+ </layer>
+ <layer name="foreground" width="24" height="300">
+  <data encoding="base64" compression="zlib">
+   eJztzDsOglAURVFG4AD90YloJ78xMQDm5ymJnYHX6NrJSW5usapKkrSlY3bKzoX8W9Zk90L+K+uyfmd3/vLP5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz+fz+Xw+n8/n8/l8Pp/P5/P5fD6fz/8f/5Jds7qQ32aP7Lmjv6zuIRuz6eO/pUPhSZIkSZIkSZIkSZIkSZIkSZJ+ozexm9qw
+  </data>
+ </layer>
+ <layer name="object" width="24" height="300">
+  <data encoding="base64" compression="zlib">
+   eJztzLERgCAUBUEaBWIlVtr3NUD4jXZnLr3WAAAAAAAAAAAAAAAAAAAAAP7T00iz6H+lO62i/5PetIv+AAAAAAAAAAAAAABw8gE4mAO7
+  </data>
+ </layer>
+</map>

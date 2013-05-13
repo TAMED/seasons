@@ -19,7 +19,8 @@ public enum Section {
 	FOREST_7("Forest_7.tmx", "forest3.png"),
 	FOREST_8("Forest_8.tmx", "forest3.png"),
 	
-	LAKE_1("lake1.tmx", "mountainLake3.png");
+	LAKE_1("lake1.tmx", "mountainLake3.png"),
+	LAKE_2("Forest_11.tmx", "forest3.png");
 
 	private final String mapName;
 	private final String backgroundName;

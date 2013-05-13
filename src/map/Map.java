@@ -36,6 +36,7 @@ public class Map {
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
 	private int foregroundLayer;
+	private int backgroundLayer;
 	private int objectLayer;
 	public Map(String tmxMap, Vec2 gravity) throws SlickException {
 		foreground = new TiledMap(tmxMap);
@@ -48,6 +49,7 @@ public class Map {
 		salmons = new ArrayList<Salmon>();
 		mushrooms = new ArrayList<Mushroom>();
 		foregroundLayer = foreground.getLayerIndex("foreground");
+		backgroundLayer = foreground.getLayerIndex("background");
 		objectLayer = foreground.getLayerIndex("object");
 	}
 	public void parseMapObjects() throws SlickException {
