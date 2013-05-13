@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="forestTiles" tilewidth="32" tileheight="32">
- <image source="forestTiles.png" width="384" height="384"/>
+ <image source="forestTiles.png" width="384" height="600"/>
  <tile id="7">
   <properties>
    <property name="endpoint" value="first"/>
@@ -443,9 +443,19 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
- <tile id="93">
+ <tile id="144">
   <properties>
-   <property name="type" value="player"/>
+   <property name="type" value="mushroom"/>
   </properties>
- </tile> 
+ </tile>
+ <tile id="145">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="146">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
 </tileset>

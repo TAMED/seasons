@@ -5,7 +5,7 @@
  <tileset firstgid="233" source="mushrooms.tsx"/>
  <layer name="foreground" width="400" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3ZyUojYRiG0boCQVeNoG6kQd2oe83Cu+h2AOcBHHvAaaleo3ozfoEIIZJY+bX+VMg58CxChKQqia8V14qiWJMkqc8aBQD0p1HYDwD6Zz8ASGE/AEhhPwBIYT8ASGE/AEhhPwBIYT8ASGE/AEhhPwBIYT8ASGE/AEhhPwBIYT8ASGE/AEgxyP1YipYH9NjQS+735na0E+1Ge9F1TfpR5UEz9Nr3YyPajLYyPfZKtJrpseqq7O8pW9tdFecm93vzNDqLzqOL6KEmzVZ50ENqlD+Lv6Lf0Xrrdvt+HEXH0Umm52I/yp8D56q7Ks5N1ee783rjJrqN7qL76KlLP3vU62dT71us6gQMsVH+LO5HB9Fh63b7fvyN/kX/Mz2XUX4d3tmPrxvG/ei83ngsum9Gme3o3IHvus9+fFT2vfEcvUSv1T6drC6jq+hP63ZzO8YkZa39euOz3Rj0foxnbqIGr4/KNykpW83/K5S53qjL91dTmZuOZmrwOqlcn/1dI2k0a+7HXObmo4UaHLvK9QY0+wtmAJYAAA==
+   H4sIAAAAAAAAA+3ZzUobURzG4bmCgq5KQd1Iwbqx3VcXuQv7BVr7YUFtbS21dVldq1en3kz/gSyGSJKTU+dkhjwP/MAhQpJJ4utor6qqniRJU7ZVAcB0tir7AcD07AcAOewHADnsBwA57AcAOewHADnsBwA57AcAOewHADnsBwA57AcAOewHADnsBwA57AcAOewHADlmuR/Poxczum8Yp/R7cyfajd5He9GvlvS4ySdN59X34030NnpX6L5fRpuF7qutUn9O2drRmjg3pd+bB9FhdBR9jf62pNUmn3RHzfNncTt6Fb0eHNf343O0H30p9FjsR/o5cK5Ga+LcNH2+h683TqPf0Z/oLLoY0dMxjfve3Ns2mjoBHTbPn8UP0cfo0+C4vh8/opPoZ6HHkvs6XEZX0XXi121mP/5fF/dj+HrjvBq9GSnbMbwDD3Wb/bgv9b1xE91Gd80+nKK+RcfR98FxfzseSSpa/Xpj0m7Mej8WCrfYgtdH6T2RVKz+/xVSrjfa8verpcItRysteJ2U1qTfayTNZ/39WCvcs2i9Bc9daf0DGoB1mgCWAAA=
   </data>
  </layer>
  <layer name="object" width="400" height="24">

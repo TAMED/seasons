@@ -63,8 +63,9 @@ public class Map {
 	
 	/**
 	 * Give bodies to things which can be hooked
+	 * @throws SlickException 
 	 */
-	private void parseSpecialObjects() {
+	private void parseSpecialObjects() throws SlickException {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
 				int tileId = foreground.getTileId(i, j, foregroundLayer);
@@ -82,6 +83,11 @@ public class Map {
 				}
 				if (tileType.equals("player")) {
 					playerLoc = getPixelCenter(i,j);
+				}
+				if (tileType.equals("mushroom")) {
+					Vec2 center = getPixelCenter(i,j);
+					Mushroom mushroom = new Mushroom(center.x, center.y);
+					mushrooms.add(mushroom);
 				}
 			}
 		}
@@ -112,11 +118,6 @@ public class Map {
 					center.y += yOffset;
 					Salmon salmon = new Salmon(center.x, center.y);
 					salmons.add(salmon);
-				}
-				if (tileType.equals("mushroom")) {
-					Vec2 center = getPixelCenter(i,j);
-					Mushroom mushroom = new Mushroom(center.x, center.y);
-					mushrooms.add(mushroom);
 				}
 			}
 		}
