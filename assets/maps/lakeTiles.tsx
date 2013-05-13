@@ -443,4 +443,169 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+ 
+ <!-- MUSHROOMS-->
+ <tile id="144">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="145">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="146">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="147">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="148">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="149">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+  <tile id="156">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="157">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="158">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="159">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="160">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="161">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="168">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="169">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="170">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="171">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="172">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="173">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="180">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="181">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="182">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="183">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="184">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="185">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  
+<!-- BASELESS VINES -->
+ <tile id="150">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+ </tile>
+ <tile id="151">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+ </tile>
+ <tile id="162">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+ </tile>
+ <tile id="163">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+ </tile>
+ <tile id="174">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+ </tile>
+ <tile id="175">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+  </tile> 
+ <tile id="186">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+ </tile>
+ <tile id="187">
+  <properties>
+   <property name="type" value="true"/>
+  </properties>
+  </tile> 
+
 </tileset>
