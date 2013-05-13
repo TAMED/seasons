@@ -96,7 +96,7 @@ public class LevelState extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
 			throws SlickException {
 		camera.translateGraphics(gc);
-		drawBackground(graphics);
+		drawBackground(graphics, gc, game);
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
 		timer.updateTime(currentTime, lastTime, bestTime);
@@ -207,7 +207,7 @@ public class LevelState extends BasicGameState{
 		map.getWorld().setDebugDraw(debugdraw);
 		
 		background = new Image(section.getBackgroundPath());
-		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
+		background = background.getScaledCopy((float) (map.getHeight() > gc.getHeight() ? map.getHeight() : gc.getHeight())/ (float) background.getHeight());
 
 		player = MainGame.player;
 		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
@@ -254,10 +254,10 @@ public class LevelState extends BasicGameState{
 	}
 	
 	// kinda janky, remove when paralaxing set up
-	private void drawBackground(Graphics graphics) {
-		int backgroundX = 0;
+	private void drawBackground(Graphics graphics, GameContainer gc, StateBasedGame game) {
+		int backgroundX = -gc.getWidth();
 		while (backgroundX < map.getWidth()){
-			graphics.drawImage(background,  backgroundX,  0);
+			graphics.drawImage(background,  backgroundX,  map.getHeight() > gc.getHeight() ? 0 : map.getHeight() - gc.getHeight());
 			backgroundX += background.getWidth();
 		}
 	}
