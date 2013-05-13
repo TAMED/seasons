@@ -89,7 +89,6 @@ public abstract class Entity extends Sprite {
 			e.printStackTrace();
 		}
 		
-		System.out.println(jmpSound);
 		this.width = width;
 		this.height = height;
 		this.radius = Math.min(width, height) / 2;
