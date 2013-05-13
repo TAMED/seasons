@@ -35,9 +35,11 @@ public class Mushroom extends StaticEntity{
 			switch(dir) {
 			case LEFT:
 				vel.x = mushX;
+				vel.y = -mushY;
 				break;
 			case RIGHT:
 				vel.x = -mushX;
+				vel.y = -mushY;
 				break;
 			case UP:
 				vel.y = mushY;

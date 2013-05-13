@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="forestTiles" tilewidth="32" tileheight="32">
- <image source="forestTiles.png" width="384" height="384"/>
+ <image source="forestTiles.png" width="384" height="600"/>
  <tile id="7">
   <properties>
    <property name="endpoint" value="first"/>
@@ -443,4 +443,175 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+
+ 
+ <!-- MUSHROOMS-->
+
+  <tile id="156">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="157">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="158">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="159">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="160">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="161">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="168">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="169">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="170">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="171">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="172">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="173">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="192">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="193">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="194">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  <tile id="195">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="196">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="197">
+  <properties>
+   <property name="type" value="mushroom"/>
+  </properties>
+  </tile>
+  
+<!-- BROKEN LOG/BRANCH -->
+  <tile id="135">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="136">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="137">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="138">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="139">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  
+<!-- BASELESS VINES -->
+
+ <tile id="162">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="163">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="174">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="175">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+  </tile> 
+ <tile id="186">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="187">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+  </tile> 
+ <tile id="198">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="199">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+  </tile> 
+
+ 
 </tileset>

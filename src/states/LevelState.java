@@ -18,11 +18,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import ui.Cursor;
+import ui.DebugInfo;
 import ui.PauseScreen;
 import ui.Time;
 import ui.Timer;
@@ -58,15 +60,25 @@ public class LevelState extends BasicGameState{
 	private Time lastTime;
 	private Time bestTime;
 	private static Timer timer;
+	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
 	private ArrayList<Mushroom> mushrooms;
+	
+	private static Music forestLoop;
 	
 	static {
 		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		timer = new Timer(100, 100);
+		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
+		try {
+			forestLoop = new Music("assets/sounds/Field19.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public LevelState(Section section) {
@@ -77,13 +89,14 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
+		forestLoop.loop();
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
 			throws SlickException {
 		camera.translateGraphics(gc);
-		drawBackground(graphics);
+		drawBackground(graphics, gc, game);
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
 		timer.updateTime(currentTime, lastTime, bestTime);
@@ -93,6 +106,9 @@ public class LevelState extends BasicGameState{
 		if (viewDebug) {
 			debugdraw.setGraphics(graphics);
 			map.getWorld().drawDebugData();
+			camera.untranslateGraphics(gc);
+			info.render(graphics);
+			camera.translateGraphics(gc);
 		} else {
 			player.render(graphics);
 			for (Enemy e : enemies) {
@@ -101,9 +117,11 @@ public class LevelState extends BasicGameState{
 			for (Salmon s : salmons) {
 				s.render(graphics);
 			}
+			/*
 			for (Mushroom m : mushrooms) {
 				m.render(graphics);
 			}
+			*/
 		}
 		cursor.render(graphics);
 		
@@ -189,7 +207,7 @@ public class LevelState extends BasicGameState{
 		map.getWorld().setDebugDraw(debugdraw);
 		
 		background = new Image(section.getBackgroundPath());
-		background = background.getScaledCopy((float) map.getHeight()/ (float) background.getHeight());
+		background = background.getScaledCopy((float) (map.getHeight() > gc.getHeight() ? map.getHeight() : gc.getHeight())/ (float) background.getHeight());
 
 		player = MainGame.player;
 		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
@@ -236,10 +254,10 @@ public class LevelState extends BasicGameState{
 	}
 	
 	// kinda janky, remove when paralaxing set up
-	private void drawBackground(Graphics graphics) {
-		int backgroundX = 0;
+	private void drawBackground(Graphics graphics, GameContainer gc, StateBasedGame game) {
+		int backgroundX = -gc.getWidth();
 		while (backgroundX < map.getWidth()){
-			graphics.drawImage(background,  backgroundX,  0);
+			graphics.drawImage(background,  backgroundX,  map.getHeight() > gc.getHeight() ? 0 : map.getHeight() - gc.getHeight());
 			backgroundX += background.getWidth();
 		}
 	}
