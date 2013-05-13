@@ -18,6 +18,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -63,6 +64,8 @@ public class LevelState extends BasicGameState{
 	private static PauseScreen pauseScrn;
 	private ArrayList<Mushroom> mushrooms;
 	
+	private static Music forestLoop;
+	
 	static {
 		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
@@ -70,6 +73,12 @@ public class LevelState extends BasicGameState{
 		timer = new Timer(100, 100);
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
+		try {
+			forestLoop = new Music("assets/sounds/Field19.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public LevelState(Section section) {
@@ -80,6 +89,7 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
+		forestLoop.loop();
 	}
 
 	@Override

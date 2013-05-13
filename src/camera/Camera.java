@@ -64,11 +64,17 @@ public class Camera {
    public void centerOn(float x, float y) {
       //try to set the given position as center of the camera by default
       cameraX = x - Config.RESOLUTION_WIDTH  / 2;
-      cameraY = y - Config.RESOLUTION_HEIGHT / 2;
+      // tend the player towards the bottom of the screen
+      cameraY = y - 2 * Config.RESOLUTION_HEIGHT / 3;
       
-      //if the camera is at the right or left edge lock it to prevent a black bar
-      if(cameraX < 0) cameraX = 0;
-      if(cameraX + Config.RESOLUTION_WIDTH > mapWidth) cameraX = mapWidth - Config.RESOLUTION_WIDTH;
+      // if the level is too narrow, center the camera view
+      if (mapWidth < Config.RESOLUTION_WIDTH) {
+    	  cameraX = (mapWidth - Config.RESOLUTION_WIDTH) / 2f;
+      } else {
+	      //if the camera is at the right or left edge lock it to prevent a black bar
+	      if(cameraX < 0) cameraX = 0;
+	      if(cameraX + Config.RESOLUTION_WIDTH > mapWidth) cameraX = mapWidth - Config.RESOLUTION_WIDTH;
+      }
       
       //if the camera is at the top or bottom edge lock it to prevent a black bar
       if(cameraY < 0) cameraY = 0;
