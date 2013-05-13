@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <tileset firstgid="217" source="salmonTiles.tsx"/>
+ <layer name="foreground" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3POQqAQBBE0b6ApmIo4hh6H9fMNXM9gte2DCYboQfarAte+qEMEd1CDOQkt0x72tPeb70GWuiEehPMsAj1Djjh8uwFEDHZXgkV1I5eDCmT7fUwwOjovT8KJttbYYP9o5cwhQw+vQdu82t+QAYAAA==
+  </data>
+ </layer>
+ <layer name="object" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBQMV3CTAH8UYAej4UQcAAAnLsm3QAYAAA==
+  </data>
+ </layer>
+</map>

@@ -35,6 +35,9 @@ public class Map {
 	private Vec2 playerLoc;
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
+	private int foregroundLayer;
+	private int backgroundLayer;
+	private int objectLayer;
 	public Map(String tmxMap, Vec2 gravity) throws SlickException {
 		foreground = new TiledMap(tmxMap);
 		world = new World(gravity);
@@ -45,6 +48,9 @@ public class Map {
 		enemies = new ArrayList<Enemy>();
 		salmons = new ArrayList<Salmon>();
 		mushrooms = new ArrayList<Mushroom>();
+		foregroundLayer = foreground.getLayerIndex("foreground");
+		backgroundLayer = foreground.getLayerIndex("background");
+		objectLayer = foreground.getLayerIndex("object");
 	}
 	public void parseMapObjects() throws SlickException {
 		parseSpecialObjects();
@@ -57,11 +63,12 @@ public class Map {
 	
 	/**
 	 * Give bodies to things which can be hooked
+	 * @throws SlickException 
 	 */
-	private void parseSpecialObjects() {
+	private void parseSpecialObjects() throws SlickException {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
-				int tileId = foreground.getTileId(i, j, 0);
+				int tileId = foreground.getTileId(i, j, foregroundLayer);
 				String tileType = foreground.getTileProperty(tileId, "hookable", "meh");
 				if (tileType.equals("true")) {
 					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.HOOKABLE, Config.HOOKABLE, false);
@@ -77,6 +84,11 @@ public class Map {
 				if (tileType.equals("player")) {
 					playerLoc = getPixelCenter(i,j);
 				}
+				if (tileType.equals("mushroom")) {
+					Vec2 center = getPixelCenter(i,j);
+					Mushroom mushroom = new Mushroom(center.x, center.y);
+					mushrooms.add(mushroom);
+				}
 			}
 		}
 	}
@@ -88,7 +100,7 @@ public class Map {
 	private void parseEntityObjects() throws SlickException {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
-				int tileId = foreground.getTileId(i, j, 1);
+				int tileId = foreground.getTileId(i, j, objectLayer);
 				String tileType = foreground.getTileProperty(tileId, "type", "meh");
 				if (tileType.equals("enemy")) {
 					String enemyType = foreground.getTileProperty(tileId, "enemyType", "none");
@@ -107,11 +119,6 @@ public class Map {
 					Salmon salmon = new Salmon(center.x, center.y);
 					salmons.add(salmon);
 				}
-				if (tileType.equals("mushroom")) {
-					Vec2 center = getPixelCenter(i,j);
-					Mushroom mushroom = new Mushroom(center.x, center.y);
-					mushrooms.add(mushroom);
-				}
 			}
 		}
 	}
@@ -124,7 +131,7 @@ public class Map {
 	private void parseSlopeObjects() {
 		for(int j = 0; j < height; j++) {
 			for(int i = 0; i < width; i++) {
-				int tileId = foreground.getTileId(i, j, 0);
+				int tileId = foreground.getTileId(i, j, foregroundLayer);
 				String tileType = foreground.getTileProperty(tileId, "type", "meh");
 				// find the first endpoint of all slopes...
 				if(tileType.equals("slope") && foreground.getTileProperty(tileId, "endpoint", "meh").equals("first")) {
@@ -179,7 +186,7 @@ public class Map {
 			Vec2 endVTop = new Vec2();
 			Vec2 endVBottom = new Vec2();
 			for(int i = 0; i < width; i++) {
-				int tileId = foreground.getTileId(i, j, 0);
+				int tileId = foreground.getTileId(i, j, foregroundLayer);
 				String tileType = foreground.getTileProperty(tileId, "type", "meh");
 				// create the start of a line
 				if (!running) {
@@ -218,7 +225,7 @@ public class Map {
 			Vec2 endVTop = new Vec2();
 			Vec2 endVBottom = new Vec2();
 			for(int i = 0; i < height; i++) {
-				int tileId = foreground.getTileId(j, i, 0);
+				int tileId = foreground.getTileId(j, i, foregroundLayer);
 				String tileType = foreground.getTileProperty(tileId, "type", "meh");
 				// create the start of a line
 				if (!running) {

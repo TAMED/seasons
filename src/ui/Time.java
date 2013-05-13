@@ -28,7 +28,7 @@ public class Time {
 		int extra = millis % 1000;
 		StringBuilder sb = new StringBuilder();
 		sb.append(((millis - extra)/1000));
-		sb.append(":");
+		sb.append(".");
 		sb.append(((extra - (extra % 10))/10));
 		return sb.toString();
 	}
