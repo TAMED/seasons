@@ -19,7 +19,7 @@ public enum Level {
 			Section.FOREST_5,
 			Section.FOREST_6,
 			Section.FOREST_7,
-			Section.FOREST_8);
+			Section.FOREST_8),
 //	FOREST_OLD(Section.FOREST_CLIFF,   
 //	FOREST_NEW(Section.FOREST_SEC1,
 //			   Section.FOREST_SEC2,
@@ -27,7 +27,7 @@ public enum Level {
 //			   Section.FOREST_SEC4,
 //			   Section.FOREST_SEC5,
 //			   Section.FOREST_SEC6),
-//	LAKE(Section.LAKE_UNDERWATER),
+	LAKE(Section.LAKE_1);
 //	FOREST_PLAINS(Section.FOREST_PLAINS);
 	
 	private Section[] sections;

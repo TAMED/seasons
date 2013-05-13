@@ -19,18 +19,7 @@ public enum Section {
 	FOREST_7("Forest_7.tmx", "forest3.png"),
 	FOREST_8("Forest_8.tmx", "forest3.png"),
 	
-	FOREST_SEC1("1.tmx", "forest3.png"),
-	FOREST_SEC2("2.tmx", "forest3.png"),
-	FOREST_SEC3("3.tmx", "forest3.png"),
-	FOREST_SEC4("4.tmx", "forest3.png"),
-	FOREST_SEC5("5.tmx", "forest3.png"),
-	FOREST_SEC6("6.tmx", "forest3.png"),
-	FOREST_CLIFF("cliffForest.tmx", "forest3.png"),
-	FOREST_VINES("entirelyVines.tmx", "forest3.png"),
-	FOREST_HILLS("moreHillyForest.tmx", "forest3.png"),
-	FOREST_LONG("longMap.tmx", "forest3.png"),
-	LAKE_UNDERWATER("lake1.tmx", "mountainLake3.png"),
-	FOREST_PLAINS("plains.tmx", "forest3.png");
+	LAKE_1("lake1.tmx", "mountainLake3.png");
 
 	private final String mapName;
 	private final String backgroundName;

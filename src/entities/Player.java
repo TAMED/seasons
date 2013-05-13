@@ -93,6 +93,9 @@ public class Player extends Entity {
 		boolean floating = checkWater(gc);
 		boolean inAir = !isTouching(Direction.DOWN) && !checkWater(gc);
 		
+		if (floating)
+			anim.play(AnimationState.RUN);
+		
 		if(input.isKeyDown(Input.KEY_D)) {
 			run(Direction.RIGHT);
 			if (floating) move(Config.PLAYER_WATER_MOVE_SPEED, 0);
