@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="400" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="lakeTiles.tsx"/>
+ <tileset firstgid="217" source="salmonTiles.tsx"/>
+ <layer name="background" width="400" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt1TENAAAIBDHs4N8gHggDybfz7VcFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8EMfNQBk8QYANvwDAAAAAAByDAIXAKU=
+  </data>
+ </layer>
+ <layer name="foreground" width="400" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt3DlPwzAAxXGPwMYIiJEiRo6FAdqFVoi5VOLcODfOr8D1oXlRazVCjmlCEjvk/5OeItWx5Hbok+u2xsRtO/QCAACN1J1cT5RT5SzgWgAAU5vKluPxgWesTrY/rpRr5SbgWgAAU3vKvvKhfCpfypvynhoL+RmS7Y8H5VF5CrgWAMCU7YifBqmx5D081F6k+/stAIAAZu2PrPuqRn8AQJzoDwBAEfQHAKCIvP1R9zkI/QEAccrqjwPj7o+69yH0BwDEqYz+6E8ymMzzpZ9jbXPKvLKQYw4AoB5l7T9shwyVUYRX/gcFAMpVtD+S92PXOcihclThtSg+BwOAcqX741y5UC7NeC/h64+ucfcO/QEA7WD7YFe5Ve6Ue0N/AAD80v3xrLwor4b+AAD42T5IzpmPUxmZ2fpj+GNO1efgRdEfAFCuJWVFWXQkGVv2JGteFbG/Wyw6P/T3v+z1r68DAMRiTVlXVh1JxjqeZM2rInbfU3T+zgz39Gp8PkUDALGw/bHhSNv6owkBgFi0Zf/Rq3Gt9AeANkj3x3/ef/iSdVYRuivoDwAxa9r+I/T5N/0BAGO2I1zfr/J1R8czj5AmBkA+3/Hw1sQ=
+  </data>
+ </layer>
+ <layer name="object" width="400" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt2aERACAMBMEI+u+PbuKRCJIMuxWc/o8AAAAAAAAAAE67OgCAkVZ1AAAA8A37FQAA8Ir/A4Ab9isAAAAAAAAAAAAAAAAAAAAAAAAAoJsE598ClA==
+  </data>
+ </layer>
+</map>
