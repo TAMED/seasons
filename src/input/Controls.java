@@ -37,23 +37,23 @@ public class Controls {
 		if (input.isKeyDown(Input.KEY_S)) cache.add(Action.DOWN);
 		if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
 		if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
-		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			cache.add(Action.FIRE);
-			cache.add(Action.PULL);
-		}
 		if (input.isKeyPressed(Input.KEY_SPACE)) {
 			cache.add(Action.JUMP);
 			cache.add(Action.RELEASE);
 		}
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			cache.add(Action.FIRE);
+			cache.add(Action.PULL);
+		}
 		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) cache.add(Action.PAUSE);
-		if (input.isKeyPressed(Input.KEY_F5)) cache.add(Action.RESET);
-		if (input.isKeyPressed(Input.KEY_F11)) cache.add(Action.FULLSCREEN);
+		if (input.isKeyPressed(Input.KEY_F5))     cache.add(Action.RESET);
+		if (input.isKeyPressed(Input.KEY_F11))    cache.add(Action.FULLSCREEN);
 
-		if (input.isKeyPressed(Input.KEY_F3)) cache.add(Action.DEBUG);
-		if (input.isKeyPressed(Input.KEY_F6)) cache.add(Action.SKIP);
 		if (input.isKeyPressed(Input.KEY_F2)) cache.add(Action.GOD_MODE);
+		if (input.isKeyPressed(Input.KEY_F3)) cache.add(Action.DEBUG);
 		if (input.isKeyPressed(Input.KEY_F4)) cache.add(Action.SLOW_DOWN);
+		if (input.isKeyPressed(Input.KEY_F6)) cache.add(Action.SKIP);
 	}
 	
 	public static double getAimAngle(Player player) {

@@ -18,7 +18,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -150,6 +149,7 @@ public class LevelState extends BasicGameState{
 		// should go after pause screen update
 		if (Controls.isKeyPressed(Action.PAUSE) || !gc.hasFocus()) pause(gc);
 		
+		if (Controls.isKeyPressed(Action.RESET)) { reset(game); }
 		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
 		
 		// slooooow dooooown
@@ -250,6 +250,10 @@ public class LevelState extends BasicGameState{
 	private void nextLevel(StateBasedGame game) {
 		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
 		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
+	}
+	
+	private void reset(StateBasedGame game) {
+		game.enterState(getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 	
 	// kinda janky, remove when paralaxing set up
