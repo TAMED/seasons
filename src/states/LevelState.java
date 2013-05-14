@@ -39,6 +39,7 @@ import config.Section;
 import entities.Mushroom;
 import entities.Player;
 import entities.Salmon;
+import entities.StaticObstacle;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
@@ -47,7 +48,7 @@ public class LevelState extends BasicGameState{
 	private Map map;
 	private Player player;
 	private ArrayList<Enemy> enemies;
-	private ArrayList<Salmon> salmons;
+	private ArrayList<StaticObstacle> staticObjects;
 	private static Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
@@ -62,7 +63,6 @@ public class LevelState extends BasicGameState{
 	private static Timer timer;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
-	private ArrayList<Mushroom> mushrooms;
 	
 	private static Music forestLoop;
 	
@@ -114,14 +114,9 @@ public class LevelState extends BasicGameState{
 			for (Enemy e : enemies) {
 				e.render(graphics);
 			}
-			for (Salmon s : salmons) {
+			for (StaticObstacle s : staticObjects) {
 				s.render(graphics);
 			}
-			/*
-			for (Mushroom m : mushrooms) {
-				m.render(graphics);
-			}
-			*/
 		}
 		cursor.render(graphics);
 		
@@ -178,11 +173,8 @@ public class LevelState extends BasicGameState{
 			}
 		}
 		
-		for (Salmon s : salmons) {
+		for (StaticObstacle s : staticObjects) {
 			s.update(gc, delta);
-		}
-		for (Mushroom m : mushrooms) {
-			m.update(gc, delta);
 		}
 
 		// check toggles
@@ -224,18 +216,13 @@ public class LevelState extends BasicGameState{
 		currentTime = new Time();
 		
 		enemies = map.getEnemies();
-		salmons = map.getSalmons();
-		mushrooms = map.getMushrooms();
+		staticObjects = map.getStaticObjects();
 		World world = map.getWorld();
 		for (Enemy e : enemies) {
 			e.addToWorld(world, e.getX(), e.getY());
 		}
-		for (Salmon s : salmons) {
+		for (StaticObstacle s : staticObjects) {
 			s.addToWorld(world, s.getX(), s.getY(), currentTime);
-		}
-		
-		for (Mushroom m : mushrooms) {
-			m.addToWorld(world, m.getX(), m.getY());
 		}
 	}
 

@@ -3,6 +3,8 @@
  */
 package entities;
 
+import items.Hook;
+
 import java.util.ArrayList;
 import java.util.EnumSet;
 
@@ -28,6 +30,7 @@ import util.Direction;
 import util.Util;
 import anim.AnimationState;
 import config.Config;
+import entities.enemies.Ent;
 
 /**
  * Base class for in-game objects and agents. Handles physics updates
@@ -210,6 +213,22 @@ public abstract class Entity extends Sprite {
 					footJoint.setMotorSpeed(0);
 					break;
 			}
+		}
+	}
+	
+	public void fly(Direction dir) {
+		float yVel = this.getPhysicsBody().getLinearVelocity().y;
+		switch (dir) {
+		case LEFT:
+			this.getPhysicsBody().setLinearVelocity(new Vec2(-Config.FLY_VEL, yVel));
+			setFacing(Direction.LEFT);
+			break;
+		case RIGHT:
+			this.getPhysicsBody().setLinearVelocity(new Vec2(Config.FLY_VEL, yVel));
+			setFacing(Direction.RIGHT);
+			break;
+		default:
+			break;
 		}
 	}
 	
@@ -458,7 +477,7 @@ public abstract class Entity extends Sprite {
 	/**
 	 * Check if player is touching salmon
 	 */
-	public void staticEntityCheck() {
+	public void obstacleCheck() {
 		ContactEdge contactEdge = this.getPhysicsBody().getContactList();
 		
 		while(contactEdge != null) {
@@ -491,6 +510,18 @@ public abstract class Entity extends Sprite {
 		return center || top;
 	}
 	
+	public boolean checkHook() {
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			Object a = contactEdge.contact.getFixtureA().getUserData();
+			Object b = contactEdge.contact.getFixtureB().getUserData();
+			if (a instanceof Hook || b instanceof Hook) return true;
+			contactEdge = contactEdge.next;
+		}
+		return false;
+	}
+	
 	private void waterUpdate(GameContainer gc) {
 		if (checkWater(gc)) {
 			this.getPhysicsBody().setLinearDamping(5f);
@@ -518,6 +549,10 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
+	private void entUpdate(Object preEntity) {
+		Ent entity = (Ent) preEntity;
+		entity.activate(this, null);
+	}
 	abstract public void reset();
 	
 	public boolean isStill() {

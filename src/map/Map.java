@@ -19,6 +19,8 @@ import util.Corner;
 import config.Config;
 import entities.Mushroom;
 import entities.Salmon;
+import entities.StaticObstacle;
+import entities.enemies.Bat;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
 
@@ -108,6 +110,11 @@ public class Map {
 						Vec2 center = getPixelCenter(i,j);
 						Enemy ent = new Ent(center.x, center.y);
 						enemies.add(ent);
+					}
+					if (enemyType.equals("bat")) {
+						Vec2 center = getPixelCenter(i,j);
+						Enemy bat = new Bat(center.x, center.y);
+						enemies.add(bat);
 					}
 				}
 				if (tileType.equals("salmon")) {
@@ -381,6 +388,12 @@ public class Map {
 	
 	public ArrayList<Mushroom> getMushrooms() {
 		return this.mushrooms;
+	}
+	public ArrayList<StaticObstacle> getStaticObjects(){
+		 ArrayList<StaticObstacle> staticObjects = new ArrayList<StaticObstacle>();
+		 staticObjects.addAll(this.salmons);
+		 staticObjects.addAll(this.mushrooms);
+		 return staticObjects;
 	}
 	
 	public void render() {

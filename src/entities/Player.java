@@ -84,7 +84,7 @@ public class Player extends Entity {
 		super.update(gc, delta);
 		movePlayer(gc,delta);
 		hookshot.update(gc, delta, anim);
-		staticEntityCheck();
+		obstacleCheck();
 	}
 	
 	private void movePlayer(GameContainer gc, int delta) {

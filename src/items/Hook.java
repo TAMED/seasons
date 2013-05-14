@@ -36,6 +36,7 @@ public class Hook extends Entity {
 		for (FixtureDef f : getPhysicsFixtureDefs()) {
 			f.filter.categoryBits = Config.HOOKABLE;
 			f.filter.maskBits = Config.HOOKABLE;
+			f.userData = this;
 		}
 		attached = false;
 		try {

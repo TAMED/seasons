@@ -6,6 +6,8 @@ package entities.enemies;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 
+import util.Direction;
+
 import ai.AI;
 import entities.Entity;
 
@@ -13,7 +15,7 @@ import entities.Entity;
  * @author Mullings
  *
  */
-public class Enemy extends Entity {
+public abstract class Enemy extends Entity {
 	private AI ai;
 
 	/**
@@ -44,5 +46,9 @@ public class Enemy extends Entity {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public void setAI(AI newAI) {
+		this.ai = newAI;
+	}
+	
 }

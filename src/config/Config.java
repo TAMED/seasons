@@ -53,6 +53,8 @@ public class Config {
 	public static final float PLAYER_JUMP_SPEED = 80;
 	public static final float PLAYER_MAX_AIR_SPEED = 20;
 
+	// Obstacles
+	public static final float FLY_VEL = 10;
 	
 	// Movement
 	public static final float GRAVITY = 25;
