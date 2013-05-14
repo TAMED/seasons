@@ -13,6 +13,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 
+import config.Config;
+
 
 import util.Util;
 import anim.AnimStateMachine;
@@ -21,15 +23,8 @@ import entities.Player;
 
 public class Hookshot extends ItemBase {
 
-	private static final float STARTING_VEL = 50;
-	// spring constant for grappling
-	private static final float K = 30;
-	// additional tolerance for deciding when to complete grapple
-	private static final float EPSILON = 30;
 	// how many millisconds to remain active (i.e. damage enemies) after grapple is completed
 	private static final int ACTIVE_TIME = 250;
-	// range the hook can travel before it will reset
-	private static final float MAX_RANGE = 500;
 	// number of segments the rope/chain is broken into (visually, for the wisps)
 	private static final float CHAIN_LENGTH = 530f;
 	private static final float CHAIN_HEIGHT = 16f;
@@ -110,7 +105,7 @@ public class Hookshot extends ItemBase {
 					state = HookState.OUT;
 					attachTether();
 				}
-				if (rangeCheck.length() > MAX_RANGE) {
+				if (rangeCheck.length() > Config.HOOKSHOT_MAX_RANGE) {
 					removeHook();
 					state = HookState.IN;
 				}
@@ -137,11 +132,12 @@ public class Hookshot extends ItemBase {
 //				b2.applyLinearImpulse(dist.mul(-K), b2.getPosition());
 				
 				// simple movement (try K=5)
-				b1.setLinearVelocity(dist.mul(K));
+				b1.setLinearVelocity(dist.mul(Config.HOOKSHOT_PULL_VEL));
 				
 
 				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
-				if ((xFlip && yFlip) || (diff.length() < owner.getMaxDim() / 2 + EPSILON) || ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
+				if ((xFlip && yFlip) || (diff.length() < owner.getMaxDim() / 2 + Config.HOOKSHOT_TOLERANCE) 
+						|| ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
 					removeHook();
 					state = HookState.IN;
 					break;
@@ -164,7 +160,7 @@ public class Hookshot extends ItemBase {
 		
 		hook = new Hook(owner);
 		hook.addToWorld(owner.getPhysicsWorld(), x + start.x, y + start.y);
-		hook.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(aim.copy().scale(STARTING_VEL)));
+		hook.getPhysicsBody().setLinearVelocity(Util.Vector2fToVec2(aim.copy().scale(Config.HOOKSHOT_SHOOT_VEL)));
 		
 		// drawing
 //		chain.draw(owner.getPosition().getX() - (chain.getWidth()/2) + halfDist.x, owner.getPosition().getY() - (chain.getHeight()/2) + halfDist.y);
@@ -238,7 +234,10 @@ public class Hookshot extends ItemBase {
 	public void drawRange(Graphics graphics) {
 		if (state == HookState.IN) {
 			graphics.setColor(Color.lightGray);
-			graphics.drawOval(owner.getX() - MAX_RANGE, owner.getY() - MAX_RANGE, MAX_RANGE*2, MAX_RANGE*2);
+			graphics.drawOval(owner.getX() - Config.HOOKSHOT_MAX_RANGE, 
+			                  owner.getY() - Config.HOOKSHOT_MAX_RANGE, 
+			                  Config.HOOKSHOT_MAX_RANGE*2, 
+			                  Config.HOOKSHOT_MAX_RANGE*2);
 		}
 	}
 	

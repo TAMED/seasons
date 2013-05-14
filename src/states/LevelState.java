@@ -51,6 +51,7 @@ public class LevelState extends BasicGameState{
 	private static Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
+	public static boolean slowMode = false;
 	private static Camera camera;
 	private Cursor cursor;
 	private Vec2 goalLoc;
@@ -137,6 +138,7 @@ public class LevelState extends BasicGameState{
 		// check toggles
 		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
 		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
+		if (gc.getInput().isKeyPressed(Input.KEY_F7)) slowMode = !slowMode;
 		if (gc.getInput().isKeyPressed(Input.KEY_F11)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
 		
 		if (gc.isPaused()) {
@@ -149,6 +151,9 @@ public class LevelState extends BasicGameState{
 		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
 			nextLevel(game);
 		}
+		
+		// slooooow dooooown
+		if (slowMode) delta /= 10;
 		
 		// if the goal is reached
 		if (closeToGoal()) {
@@ -185,11 +190,6 @@ public class LevelState extends BasicGameState{
 			m.update(gc, delta);
 		}
 
-		// check toggles
-		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
-		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
-		if (gc.getInput().isKeyPressed(Input.KEY_F11)) gc.setFullscreen(!gc.isFullscreen());
-		
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
 		currentTime.update(delta);
