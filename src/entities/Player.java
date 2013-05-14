@@ -3,6 +3,8 @@
  */
 package entities;
 
+import input.Controls;
+import input.Controls.Action;
 import items.Hookshot;
 
 import org.newdawn.slick.Animation;
@@ -10,7 +12,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 
 import util.Direction;
@@ -88,31 +89,34 @@ public class Player extends Entity {
 	}
 	
 	private void movePlayer(GameContainer gc, int delta) {
-		Input input = gc.getInput();
-		
 		boolean floating = checkWater(gc);
 		boolean inAir = !isTouching(Direction.DOWN) && !checkWater(gc);
+		float xVel = this.getPhysicsBody().getLinearVelocity().x;
 		
 		if (floating)
 			anim.play(AnimationState.RUN);
 		
-		if(input.isKeyDown(Input.KEY_D)) {
+		if(Controls.isKeyPressed(Action.RIGHT)) {
 			run(Direction.RIGHT);
 			if (floating) move(Config.PLAYER_WATER_MOVE_SPEED, 0);
-			if (inAir && this.getPhysicsBody().getLinearVelocity().x < Config.PLAYER_MAX_AIR_SPEED) {
-				move(Config.PLAYER_AIR_ACCELERATION, 0);
+			
+			if (inAir && xVel < Config.PLAYER_MAX_AIR_SPEED) {
+				if (xVel < 0) move(BRAKE_RATIO * Config.PLAYER_AIR_ACCELERATION, 0);
+				else          move(Config.PLAYER_AIR_ACCELERATION, 0);
 			}
-		} else if(input.isKeyDown(Input.KEY_A)) {
+		} else if(Controls.isKeyPressed(Action.LEFT)) {
 			run(Direction.LEFT);
 			if (floating) move(-Config.PLAYER_WATER_MOVE_SPEED, 0);
-			if (inAir && this.getPhysicsBody().getLinearVelocity().x > -Config.PLAYER_MAX_AIR_SPEED) {
-				move(-Config.PLAYER_AIR_ACCELERATION, 0);
+			
+			if (inAir && xVel > -Config.PLAYER_MAX_AIR_SPEED) {
+				if (xVel > 0) move(BRAKE_RATIO * -Config.PLAYER_AIR_ACCELERATION, 0);
+				else          move(-Config.PLAYER_AIR_ACCELERATION, 0);
 			}
 		} else {
 			run(Direction.DOWN);
 		}
 		
-		if(input.isKeyPressed(Input.KEY_SPACE)) {
+		if(Controls.isKeyPressed(Action.JUMP)) {
 			jump(gc, delta);
 		}
 	}

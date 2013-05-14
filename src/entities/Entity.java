@@ -47,6 +47,10 @@ public abstract class Entity extends Sprite {
 	 * How far down to offset the wheel, as a ratio.
 	 */
 	private static final float FOOT_OFFSET = 1.05f;
+	/**
+	 * How much more force to apply when trying to slow down
+	 */
+	protected static final float BRAKE_RATIO = 1.5f;
 	
 	private BodyDef physicsDef;
 	private FixtureDef circleDef1;
@@ -200,19 +204,24 @@ public abstract class Entity extends Sprite {
 	
 	public void run(Direction dir) {
 		if (hasFeet) {
+			float torque = acceleration;
+			float vel = 0;
 			switch (dir) {
 				case LEFT:
-					footJoint.setMotorSpeed(runSpeed);
+					if (getPhysicsBody().getLinearVelocity().x > 0)
+						torque *= BRAKE_RATIO;
+					vel = runSpeed;
 					setFacing(Direction.LEFT);
 					break;
 				case RIGHT:
-					footJoint.setMotorSpeed(-runSpeed);
+					if (getPhysicsBody().getLinearVelocity().x < 0)
+						torque *= BRAKE_RATIO;
+					vel = -runSpeed;
 					setFacing(Direction.RIGHT);
 					break;
-				default:
-					footJoint.setMotorSpeed(0);
-					break;
 			}
+			footJoint.setMaxMotorTorque(torque);
+			footJoint.setMotorSpeed(vel);
 		}
 	}
 	
@@ -524,8 +533,8 @@ public abstract class Entity extends Sprite {
 	
 	private void waterUpdate(GameContainer gc) {
 		if (checkWater(gc)) {
-			this.getPhysicsBody().setLinearDamping(5f);
 			this.getPhysicsBody().setGravityScale(Config.WATER_GRAVITY_SCALE);
+			this.getPhysicsBody().setLinearDamping(Config.WATER_DRAG);
 		}
 		else {
 			this.getPhysicsBody().setGravityScale(1);
