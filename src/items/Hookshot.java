@@ -1,6 +1,7 @@
 package items;
 
 import input.Controls;
+import input.Controls.Action;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -9,16 +10,13 @@ import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
-
-import config.Config;
-
 
 import util.Util;
 import anim.AnimStateMachine;
 import anim.AnimationState;
+import config.Config;
 import entities.Player;
 
 public class Hookshot extends ItemBase {
@@ -65,29 +63,28 @@ public class Hookshot extends ItemBase {
 	
 	@Override
 	public void update(GameContainer gc, int delta, AnimStateMachine anim) {
-		Input input = gc.getInput();
-		
 		if (hook != null) hook.update(gc, delta);
 		activeTimer = Math.max(0, activeTimer - delta);
 		
 		boolean startPull = false;
 		
-		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			switch (state) {
-				case IN:
-					spawnHook();
-					state = HookState.MOTION;
-					break;
-				case OUT:
-					detachTether();
-					startPull = true;
-					playerStart = owner.getPosition();
-					state = HookState.PULL;
-					break;
+		if (Controls.isKeyPressed(Action.FIRE)) {
+			if (state == HookState.IN) {
+				spawnHook();
+				state = HookState.MOTION;
 			}
 		}
 		
-		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+		if (Controls.isKeyPressed(Action.PULL)) {
+			if (state == HookState.OUT) {
+				detachTether();
+				startPull = true;
+				playerStart = owner.getPosition();
+				state = HookState.PULL;
+			}
+		}
+		
+		if (Controls.isKeyPressed(Action.RELEASE)) {
 			switch (state) {
 				case OUT: case PULL:
 					removeHook();

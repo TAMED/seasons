@@ -3,13 +3,15 @@
  */
 package ui;
 
+import input.Controls;
+import input.Controls.Action;
+
 import java.awt.Font;
 import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -51,7 +53,7 @@ public class PauseScreen extends Sprite {
 
 	@Override
 	public void update(GameContainer gc, int delta) {
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+		if (Controls.isKeyPressed(Action.PAUSE)) {
 			unpause(gc);
 		}
 	}

@@ -1,6 +1,7 @@
 package states;
 
 import input.Controls;
+import input.Controls.Action;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -135,22 +136,21 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
+		Controls.update(gc);
+		
 		// check toggles
-		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
-		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
-		if (gc.getInput().isKeyPressed(Input.KEY_F7)) slowMode = !slowMode;
-		if (gc.getInput().isKeyPressed(Input.KEY_F11)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+		if (Controls.isKeyPressed(Action.DEBUG)) viewDebug = !viewDebug;
+		if (Controls.isKeyPressed(Action.GOD_MODE)) godMode = !godMode;
+		if (Controls.isKeyPressed(Action.SLOW_DOWN)) slowMode = !slowMode;
+		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
 		
-		if (gc.isPaused()) {
-			pauseScrn.update(gc, delta);
-			return;
-		}
-		// this goes second to avoid calling isKeyPressed() more than once
-		if (!gc.hasFocus() || gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) pause(gc);
+		// show pause screen if paused
+		if (gc.isPaused()) { pauseScrn.update(gc, delta); return; }
 		
-		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
-			nextLevel(game);
-		}
+		// should go after pause screen update
+		if (Controls.isKeyPressed(Action.PAUSE) || !gc.hasFocus()) pause(gc);
+		
+		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
 		
 		// slooooow dooooown
 		if (slowMode) delta /= 10;
@@ -199,7 +199,6 @@ public class LevelState extends BasicGameState{
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		super.enter(gc, game);
-		Controls.setGC(gc);
 		
 		map = new Map(section.getMapPath(), section.getGravity());
 		map.parseMapObjects();
