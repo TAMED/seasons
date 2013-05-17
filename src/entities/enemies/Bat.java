@@ -55,6 +55,9 @@ public class Bat extends Enemy {
 				setAI(new FlyingGoomba(getFacing()));
 				hooked = false;
 			}
+			else {
+				player.getHookshot().getHook().setPosition(this.getPosition());
+			}
 		}
 	}
 	
@@ -65,9 +68,11 @@ public class Bat extends Enemy {
 	}
 	
 	public void hook(GameContainer gc, int delta, Player player) {
+		/*
 		setAI(new Still());
 		this.getPhysicsBodyDef().type = BodyType.STATIC;
 		this.getPhysicsBody().setGravityScale(0);
+		*/
 		hooked = true;
 	}
 }

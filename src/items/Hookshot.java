@@ -244,4 +244,8 @@ public class Hookshot extends ItemBase {
 		return state.equals(HookState.IN);
 	}
 	
+	public Hook getHook() {
+		return this.hook;
+	}
+	
 }
