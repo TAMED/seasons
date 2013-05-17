@@ -90,7 +90,7 @@ public class Player extends Entity {
 	
 	private void movePlayer(GameContainer gc, int delta) {
 		boolean floating = checkWater(gc);
-		boolean inAir = !isTouching(Direction.DOWN) && !checkWater(gc);
+		boolean inAir = (!isTouching(Direction.DOWN) && !checkWater(gc)) || checkSteam(gc);
 		float xVel = this.getPhysicsBody().getLinearVelocity().x;
 		
 		if (floating)

@@ -127,6 +127,7 @@ public abstract class Entity extends Sprite {
 		boxDef.density = Config.DEFAULT_DENSITY;
 		boxDef.friction = Config.DEFAULT_FRICTION;
 		boxDef.filter.maskBits |= Config.WATER;
+		boxDef.filter.maskBits |= Config.STEAM;
 		if (height - width > EPSILON) {
 			boxDef.shape = Util.getBoxShape(hw / Config.PIXELS_PER_METER,
 		                             (hh - hw) / Config.PIXELS_PER_METER);
@@ -243,6 +244,9 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void jump(GameContainer gc, int delta) {
+		if (checkSteam(gc)) {
+			return;
+		}
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
@@ -520,6 +524,12 @@ public abstract class Entity extends Sprite {
 		return center || top;
 	}
 	
+	public boolean checkSteam(GameContainer gc) {
+		boolean center = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.STEAM) > 0;
+		boolean top    = (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.STEAM) > 0;
+		return center || top;
+	}
+	
 	public boolean checkHook(GameContainer gc, int delta, Player player) {
 		ContactEdge contactEdge = physicsBody.getContactList();
 		boolean hooked = false;
@@ -547,6 +557,12 @@ public abstract class Entity extends Sprite {
 			this.getPhysicsBody().setGravityScale(Config.WATER_GRAVITY_SCALE);
 			this.getPhysicsBody().setLinearDamping(Config.WATER_DRAG);
 		}
+		
+		else if (checkSteam(gc)) {
+			this.getPhysicsBody().setGravityScale(Config.STEAM_GRAVITY_SCALE);
+			this.getPhysicsBody().setLinearDamping(Config.STEAM_DRAG);
+		}
+		
 		else {
 			this.getPhysicsBody().setGravityScale(1);
 			this.getPhysicsBody().setLinearDamping(0f);

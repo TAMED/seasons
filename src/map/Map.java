@@ -79,6 +79,10 @@ public class Map {
 				if (tileType.equals("true")) {
 					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.WATER, 1, true);
 				}
+				tileType = foreground.getTileProperty(tileId, "steam", "meh");
+				if (tileType.equals("true")) {
+					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.STEAM, 1, true);
+				}
 				tileType = foreground.getTileProperty(tileId, "type", "meh");
 				if (tileType.equals("goal")){
 					goalLoc = getPixelCenter(i,j);

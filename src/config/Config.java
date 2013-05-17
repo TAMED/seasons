@@ -37,6 +37,7 @@ public class Config {
 	public static final int WATER = 4;
 	public static final int SALMON = 8;
 	public static final int MUSHROOM = 16;
+	public static final int STEAM = 32;
 	public static final int STATICENTITY = 24;
 	
 	// Player
@@ -66,6 +67,8 @@ public class Config {
 	// Movement
 	public static final float WATER_GRAVITY_SCALE = -1f;
 	public static final float WATER_DRAG = 10;
+	public static final float STEAM_GRAVITY_SCALE = -1f;
+	public static final float STEAM_DRAG = 0f;
 	
 	// UI
 	// how far away from the player the aiming cursor appears

@@ -614,10 +614,15 @@
     <property name="type" value="enemy"/>
    </properties>
   </tile>
+  <tile id="1">
+   <properties>
+    <property name="steam" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="foreground" width="50" height="33">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2XSQrCQBBF+wK6ddgJ6sqFkAPkFCo4bpzdOLvRu/slNIQmCWVS1emEfHjL7qoHSVHtKaVGYGyBCfCUTHyhe23Xqzzcqld5uFWvzB41UAcNAk2GehyJurcF2kS6DPU4EnVvD/TBgMCQoR5HKo90Htw7kN514jwoDmk8JOKr8ntIfVcSKbuHrfeI/k+lPCiReg+lSRYP23tZUqgeUzADc+OsK6F6bMEO7I2zroTqcQU3cDfOuhLtkWY+ccwZrmT5z11KXh5rsFHBW40Lmx66/zO4KPpbjYIND7P/N/ioYPfhQtIjrn/qLv0PP48FWIJVAfsPexzAEZwK2H/Y4wGe4FXA/jUcM8/sv5MDHDMvqX/OmZTEFxeWoLXIGQAA
+   H4sIAAAAAAAAA+2XSwrCMBCGcwHd+tgJ6sqF0AP0FCr43Ph249uNXthT+JcSCKUtaZ1Jk9Ifvk0WmfmgHSaeEGIExgaYAE/wxGe613S9ysOuepWHXfXK7FEDddDQoElQjyJx97ZAW5MuQT2KxN3bA30w0GBIUI8ilUc+D+odSO46SR46Dnk8OOKL8ntwfVcccc3jm0CSh6n3iPxPuTx0wvUeSguHh+m9LMi/HlMwA3PlzEWPLdiBvXLmoscV3MBdObPRI898yjJnqMLxnxcR2zzWYCPCtxoVJj1k/2dwEfpvNR1MeET7f4OPCHcfKjg9kvrX3aWzEHgswBKsHOxf9TiAIzg52L/q8QBP8HKwfwnFzIv23ykAipmX1j/lTErjB1SJP4LIGQAA
   </data>
  </layer>
  <layer name="object" width="50" height="33">
