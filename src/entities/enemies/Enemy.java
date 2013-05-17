@@ -10,6 +10,7 @@ import util.Direction;
 
 import ai.AI;
 import entities.Entity;
+import entities.Player;
 
 /**
  * @author Mullings
@@ -37,6 +38,11 @@ public abstract class Enemy extends Entity {
 	
 	@Override
 	public void update(GameContainer gc, int delta) {
+		super.update(gc, delta);
+		ai.update(this, delta);
+	}
+	
+	public void update(GameContainer gc, int delta, Player player) {
 		super.update(gc, delta);
 		ai.update(this, delta);
 	}

@@ -246,4 +246,8 @@ public class Hookshot extends ItemBase {
 		return state.equals(HookState.MOTION);
 	}
 	
+	public boolean isIn() {
+		return state.equals(HookState.IN);
+	}
+	
 }

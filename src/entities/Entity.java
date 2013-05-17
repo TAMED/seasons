@@ -30,6 +30,7 @@ import util.Direction;
 import util.Util;
 import anim.AnimationState;
 import config.Config;
+import entities.enemies.Bat;
 import entities.enemies.Ent;
 
 /**
@@ -519,16 +520,26 @@ public abstract class Entity extends Sprite {
 		return center || top;
 	}
 	
-	public boolean checkHook() {
+	public boolean checkHook(GameContainer gc, int delta, Player player) {
 		ContactEdge contactEdge = physicsBody.getContactList();
-		
+		boolean hooked = false;
 		while(contactEdge != null) {
-			Object a = contactEdge.contact.getFixtureA().getUserData();
-			Object b = contactEdge.contact.getFixtureB().getUserData();
-			if (a instanceof Hook || b instanceof Hook) return true;
+			if(contactEdge.contact.isTouching()) {
+				Object a = contactEdge.contact.getFixtureA().getUserData();
+				Object b = contactEdge.contact.getFixtureB().getUserData();
+				hooked = true;
+				if (a instanceof Bat) {
+					((Bat) a).hook(gc, delta, player);
+					this.setPosition(((Bat) a).getPosition());
+				}
+				if (b instanceof Bat) {
+					((Bat) b).hook(gc, delta, player);
+					this.setPosition(((Bat) b).getPosition());
+				}
+			}
 			contactEdge = contactEdge.next;
 		}
-		return false;
+		return hooked;
 	}
 	
 	private void waterUpdate(GameContainer gc) {

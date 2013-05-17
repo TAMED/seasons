@@ -171,7 +171,7 @@ public class LevelState extends BasicGameState{
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
 			Enemy e = it.next();
 			if (e.getHp() > 0) {
-				e.update(gc, delta);
+				e.update(gc, delta, player);
 			} else {
 				it.remove();
 				e.kill();

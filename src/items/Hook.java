@@ -59,7 +59,7 @@ public class Hook extends Entity {
 	@Override
 	public void update(GameContainer gc, int delta) {
 		ArrayList<Body> touching = bodiesTouching();
-		if (touching.size() > 0) {
+		if (checkHook(gc, delta, owner)) {
 			attach(touching.get(0));
 		}
 	}

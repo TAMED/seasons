@@ -16,6 +16,7 @@ import ai.FlyingGoomba;
 import ai.Goomba;
 import ai.Still;
 import entities.Entity;
+import entities.Player;
 
 public class Bat extends Enemy {
 	private static final float WIDTH = 64;
@@ -25,6 +26,7 @@ public class Bat extends Enemy {
 	private static final int ACCELERATION = 2;
 	private static final int JMPSPEED = 2;
 	private static final int MAXHP = 1;
+	
 	private boolean hooked = false;
 
 	
@@ -43,20 +45,11 @@ public class Bat extends Enemy {
 		}
 	}
 	
-	@Override
-	public void update(GameContainer gc, int delta) {
+	public void update(GameContainer gc, int delta, Player player) {
 		super.update(gc, delta);
 		this.getPhysicsBody().setGravityScale(0);
-		if (!hooked){
-			if (checkHook()) {
-				setAI(new Still());
-				this.getPhysicsBodyDef().type = BodyType.STATIC;
-				this.getPhysicsBody().setGravityScale(0);
-				hooked = true;
-			}
-		}
-		else {
-			if(!checkHook()) {
+		if (hooked) {
+			if(player.getHookshot().isIn()) {
 				this.getPhysicsBodyDef().type = BodyType.DYNAMIC;
 				this.getPhysicsBody().setGravityScale(0);
 				setAI(new FlyingGoomba(getFacing()));
@@ -69,6 +62,13 @@ public class Bat extends Enemy {
 	public void addToWorld(World world, float x, float y) {
 		super.addToWorld(world, x, y);
 		this.getPhysicsBody().setGravityScale(0);
+	}
+	
+	public void hook(GameContainer gc, int delta, Player player) {
+		setAI(new Still());
+		this.getPhysicsBodyDef().type = BodyType.STATIC;
+		this.getPhysicsBody().setGravityScale(0);
+		hooked = true;
 	}
 }
 
