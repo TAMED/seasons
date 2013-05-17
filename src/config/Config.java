@@ -67,7 +67,7 @@ public class Config {
 	// Movement
 	public static final float WATER_GRAVITY_SCALE = -1f;
 	public static final float WATER_DRAG = 10;
-	public static final float STEAM_GRAVITY_SCALE = -1f;
+	public static final float STEAM_GRAVITY_SCALE = -.7f;
 	public static final float STEAM_DRAG = 0f;
 	
 	// UI

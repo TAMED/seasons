@@ -111,7 +111,6 @@ public class LevelState extends BasicGameState{
 			info.render(graphics);
 			camera.translateGraphics(gc);
 		} else {
-			player.render(graphics);
 			for (Enemy e : enemies) {
 				e.render(graphics);
 			}
@@ -119,6 +118,7 @@ public class LevelState extends BasicGameState{
 				s.render(graphics);
 			}
 		}
+		player.render(graphics);
 		cursor.render(graphics);
 		
 		// so that transitions render correctly
