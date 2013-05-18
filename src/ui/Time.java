@@ -33,7 +33,11 @@ public class Time {
 		return sb.toString();
 	}
 	
-	public void set(int millis) {
-		this.millis = millis;
+	public void set(Time t) {
+		this.millis = t.getMillis();
+	}
+
+	public boolean fasterThan(Time t) {
+		return millis < t.getMillis();
 	}
 }

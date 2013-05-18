@@ -13,12 +13,18 @@ import entities.Sprite;
  *
  */
 public class Timer extends Sprite {
-	private String current;
-	private String last;
-	private String best;
+	private static final int X = 100;
+	private static final int Y = 100;
+	
+	private Time current;
+	private Time last;
+	private Time best;
 
-	public Timer(float x, float y) {
-		super(x, y, 0, 0);
+	public Timer() {
+		super(X, Y, 0, 0);
+		current = new Time();
+		last = new Time();
+		best = new Time();
 	}
 
 	/* (non-Javadoc)
@@ -27,15 +33,24 @@ public class Timer extends Sprite {
 	@Override
 	public void render(Graphics graphics) {
 		graphics.setColor(Color.white);
-		graphics.drawString(current, getX(), getY());
-		graphics.drawString(last,    getX(), getY() + 25);
-		graphics.drawString(best,    getX(), getY() + 50);
+		graphics.drawString("Time: " + getTimeString(current), getX(), getY());
+		graphics.drawString("Last: " + getTimeString(last),    getX(), getY() + 25);
+		graphics.drawString("Best: " + getTimeString(best),    getX(), getY() + 50);
 	}
 	
-	public void updateTime(Time currentTime, Time lastTime, Time bestTime) {
-		current = "Time: " + getTimeString(currentTime);
-		last    = "Last: " + getTimeString(lastTime);
-		best    = "Best: " + getTimeString(bestTime);
+	public void update(int delta) {
+		current.update(delta);
+	}
+	
+	public void reset() {
+		current.reset();
+	}
+	
+	public void updateRecords() {
+		last.set(current);
+		if (current.fasterThan(best)) {
+			best.set(current);
+		}
 	}
 	
 	private String getTimeString(Time t) {
@@ -43,4 +58,7 @@ public class Timer extends Sprite {
 		return t.getTimeString();
 	}
 
+	public Time getCurrentTime() {
+		return current;
+	}
 }

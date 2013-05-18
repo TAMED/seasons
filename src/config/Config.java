@@ -1,5 +1,16 @@
 package config;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+
+import com.thoughtworks.xstream.XStream;
+
+import ui.Timer;
+
 
 
 public class Config {
@@ -69,5 +80,41 @@ public class Config {
 	public static final float CURSOR_DIST = 100;
 	public static final int CURSOR_SIZE = 15;
 	public static final int SALMON_TIME = -1000;
+	
+	public static HashMap<Integer, Timer> times;
+	
+	@SuppressWarnings("unchecked")
+	public static void loadTimes() {
+		XStream x = new XStream();
+		try {
+			File f = new File("times.xml");
+			if (f.exists()) {
+				times = (HashMap<Integer, Timer>) x.fromXML(new FileInputStream(f));
+			} else {
+				times = new HashMap<Integer, Timer>();
+				for (Section s : Section.values()) {
+					times.put(s.getID(), new Timer());
+				}
+				saveTimes();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void saveTimes() {
+		XStream x = new XStream();
+		File f = new File("times.xml");
+		try {
+			if (f.exists()) f.delete();
+			f.createNewFile();
+			FileWriter w = new FileWriter(f);
+			x.toXML(times, w);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
