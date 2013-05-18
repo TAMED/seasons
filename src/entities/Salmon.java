@@ -11,7 +11,7 @@ import anim.AnimationState;
 import config.Config;
 
 
-public class Salmon extends StaticEntity{
+public class Salmon extends StaticObstacle{
 	
 	public Salmon(float x, float y) throws SlickException {
 		super(x, y, true, Config.SALMON);
@@ -31,7 +31,7 @@ public class Salmon extends StaticEntity{
 	}
 	
 	public void addToWorld(World world, float x, float y, Time timer) {
-		super.addToWorld(world, x, y);
+		super.addToWorld(world, x, y, timer);
 		this.setTimer(timer);
 	}
 

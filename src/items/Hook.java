@@ -33,9 +33,11 @@ public class Hook extends Entity {
 		super(SIZE, SIZE, 1, false);
 		setColor(Color.red);
 		getPhysicsBodyDef().bullet = true;
+		getPhysicsBodyDef().gravityScale = 0;
 		for (FixtureDef f : getPhysicsFixtureDefs()) {
 			f.filter.categoryBits = Config.HOOKABLE;
 			f.filter.maskBits = Config.HOOKABLE;
+			f.userData = this;
 		}
 		attached = false;
 		try {
@@ -57,7 +59,7 @@ public class Hook extends Entity {
 	@Override
 	public void update(GameContainer gc, int delta) {
 		ArrayList<Body> touching = bodiesTouching();
-		if (touching.size() > 0) {
+		if (checkHook(gc, delta, owner)) {
 			attach(touching.get(0));
 		}
 	}

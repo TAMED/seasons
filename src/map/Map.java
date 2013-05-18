@@ -19,6 +19,8 @@ import util.Corner;
 import config.Config;
 import entities.Mushroom;
 import entities.Salmon;
+import entities.StaticObstacle;
+import entities.enemies.Bat;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
 
@@ -36,6 +38,7 @@ public class Map {
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
 	private int foregroundLayer;
+	@SuppressWarnings("unused")
 	private int backgroundLayer;
 	private int objectLayer;
 	public Map(String tmxMap, Vec2 gravity) throws SlickException {
@@ -77,6 +80,10 @@ public class Map {
 				if (tileType.equals("true")) {
 					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.WATER, 1, true);
 				}
+				tileType = foreground.getTileProperty(tileId, "steam", "meh");
+				if (tileType.equals("true")) {
+					createBox(i*tileWidth + tileWidth/2f, j*tileHeight + tileHeight/2f, Config.STEAM, 1, true);
+				}
 				tileType = foreground.getTileProperty(tileId, "type", "meh");
 				if (tileType.equals("goal")){
 					goalLoc = getPixelCenter(i,j);
@@ -108,6 +115,11 @@ public class Map {
 						Vec2 center = getPixelCenter(i,j);
 						Enemy ent = new Ent(center.x, center.y);
 						enemies.add(ent);
+					}
+					if (enemyType.equals("bat")) {
+						Vec2 center = getPixelCenter(i,j);
+						Enemy bat = new Bat(center.x, center.y);
+						enemies.add(bat);
 					}
 				}
 				if (tileType.equals("salmon")) {
@@ -381,6 +393,12 @@ public class Map {
 	
 	public ArrayList<Mushroom> getMushrooms() {
 		return this.mushrooms;
+	}
+	public ArrayList<StaticObstacle> getStaticObjects(){
+		 ArrayList<StaticObstacle> staticObjects = new ArrayList<StaticObstacle>();
+		 staticObjects.addAll(this.salmons);
+		 staticObjects.addAll(this.mushrooms);
+		 return staticObjects;
 	}
 	
 	public void render() {
