@@ -19,9 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import time.Time;
 import time.Timer;
 
+@SuppressWarnings("unchecked")
 public class TimeBar {
-	private static final int X = 100;
-	private static final int Y = 100;
 	private GradientFill timeFill;
 	private Rectangle timeShape;
 	private final Vec2 timePos = new Vec2(20,20);
@@ -59,13 +58,7 @@ public class TimeBar {
 	}
 
 	public void render(GameContainer gc, Graphics graphics, Timer timer) {
-		/*
-		graphics.setColor(Color.white);
-		graphics.drawString("Time: " + getTimeString(timer.getCurrentTime()), X, Y);
-		graphics.drawString("Last: " + getTimeString(timer.getLastTime()),    X, Y + 25);
-		graphics.drawString("Best: " + getTimeString(timer.getBestTime()),    X, Y + 50);
-		*/
-		
+
 		String goalStr = getTimeString(timer.getGoal());
 		graphics.fillRect(gc.getWidth()/2 - 1, timePos.y+timeHeight, 1, 20);
 		goalFont.drawString(gc.getWidth()/2 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
@@ -78,14 +71,6 @@ public class TimeBar {
 			goalFont.drawString(bestOffset - goalFont.getWidth("Best")/2, timeHeight + timePos.y + 20, "Best");
 			goalFont.drawString(bestOffset - goalFont.getWidth(bestStr)/2, goalFont.getHeight("Best")+timeHeight + timePos.y + 20, bestStr);
 		}
-		
-		/*
-		String currentStr = getTimeString(timer.getCurrentTime());
-		float currentOffset = Math.max(Math.min(timer.getCurrentTime().getMillis()/timeDivide, timeWidth),0) + timePos.x;
-		graphics.fillRect(currentOffset, timePos.y+timeHeight, 1, 20);
-		font.drawString(currentOffset - font.getWidth("Current")/2, timeHeight + timePos.y + 20, "Current");
-		font.drawString(currentOffset - font.getWidth(currentStr)/2, font.getHeight("Current")+timeHeight + timePos.y + 20, currentStr);
-		*/
 		
 		graphics.setColor(Color.black);
 		graphics.fillRect(timePos.x, timePos.y, timeWidth, timeHeight);
