@@ -3,7 +3,6 @@
  */
 package config;
 
-import org.jbox2d.common.Vec2;
 
 /**
  * @author Mullings
