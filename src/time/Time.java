@@ -11,7 +11,7 @@ public class Time {
 	public Time(int millis) {
 		this.millis = millis;
 	}
-
+	
 	public void update(int delta) {
 		millis += delta;
 	}
@@ -22,15 +22,6 @@ public class Time {
 	
 	public int getMillis() {
 		return millis;
-	}
-	
-	public String getTimeString() {
-		int extra = millis % 1000;
-		StringBuilder sb = new StringBuilder();
-		sb.append(((millis - extra)/1000));
-		sb.append(".");
-		sb.append(((extra - (extra % 10))/10));
-		return sb.toString();
 	}
 	
 	public void set(Time t) {

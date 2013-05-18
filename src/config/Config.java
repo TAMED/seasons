@@ -5,11 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-
-import com.thoughtworks.xstream.XStream;
+import java.util.EnumMap;
 
 import time.Timer;
+
+import com.thoughtworks.xstream.XStream;
 
 
 
@@ -85,9 +85,9 @@ public class Config {
 	// how far away from the player the aiming cursor appears
 	public static final float CURSOR_DIST = 100;
 	public static final int CURSOR_SIZE = 15;
-	public static final int SALMON_TIME = -1000;
+	public static final int SALMON_TIME = -100;
 	
-	public static HashMap<Integer, Timer> times;
+	public static EnumMap<Section, Timer> times;
 	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
@@ -95,11 +95,11 @@ public class Config {
 		try {
 			File f = new File("times.xml");
 			if (f.exists()) {
-				times = (HashMap<Integer, Timer>) x.fromXML(new FileInputStream(f));
+				times = (EnumMap<Section, Timer>) x.fromXML(new FileInputStream(f));
 			} else {
 				createAndSaveTimes();
 			}
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			createAndSaveTimes();
 		}
@@ -121,11 +121,10 @@ public class Config {
 	}
 	
 	private static void createAndSaveTimes() {
-		times = new HashMap<Integer, Timer>();
+		times = new EnumMap<Section, Timer>(Section.class);
 		for (Section s : Section.values()) {
-			times.put(s.getID(), new Timer());
+			times.put(s, new Timer());
 		}
 		saveTimes();
 	}
-
 }

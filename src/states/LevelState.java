@@ -23,6 +23,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import time.Time;
 import time.Timer;
 import ui.Cursor;
 import ui.DebugInfo;
@@ -55,19 +56,16 @@ public class LevelState extends BasicGameState{
 	private Cursor cursor;
 	private Vec2 goalLoc;
 	private Image background;
-	
 	private Timer timer;
 	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
-	
 	private static Music forestLoop;
 	
 	static {
 		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
-		timerBar = new TimeBar();
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
 		try {
@@ -80,12 +78,13 @@ public class LevelState extends BasicGameState{
 	public LevelState(Section section) {
 		super();
 		this.section = section;
-		timer = Config.times.get(getID());
+		timer = Config.times.get(section);
 	}
 		
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
+		timerBar = new TimeBar(gc);
 		forestLoop.loop();
 	}
 
@@ -96,7 +95,7 @@ public class LevelState extends BasicGameState{
 		drawBackground(graphics, gc, game);
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
-		timerBar.render(graphics, timer);
+		timerBar.render(gc, graphics, timer);
 		camera.translateGraphics(gc);
 		
 		if (viewDebug) {
@@ -182,8 +181,7 @@ public class LevelState extends BasicGameState{
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		super.enter(gc, game);
-		
-		map = new Map(section.getMapPath(), section.getGravity());
+		map = new Map(section.getMapPath(), new Vec2(0, Config.GRAVITY));
 		map.parseMapObjects();
 		map.getWorld().setContactListener(new CombatContact());
 		map.getWorld().setDebugDraw(debugdraw);
@@ -196,11 +194,14 @@ public class LevelState extends BasicGameState{
 				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
 		player.reset();
 		
+		this.timer.setGoal(new Time(section.getGoalTime()));
+
 		goalLoc = map.getGoalLoc();
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
 
 		timer.reset();
+		timerBar.enter(gc, game, timer);
 		
 		enemies = map.getEnemies();
 		staticObjects = map.getStaticObjects();
