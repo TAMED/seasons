@@ -18,6 +18,7 @@ import anim.AnimStateMachine;
 import anim.AnimationState;
 import config.Config;
 import entities.Player;
+import entities.Sprite;
 
 public class Hookshot extends ItemBase {
 
@@ -244,6 +245,14 @@ public class Hookshot extends ItemBase {
 	
 	public boolean isShooting() {
 		return state.equals(HookState.MOTION);
+	}
+	
+	public boolean isIn() {
+		return state.equals(HookState.IN);
+	}
+
+	public Sprite getHook() {
+		return hook;
 	}
 	
 }

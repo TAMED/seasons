@@ -35,9 +35,8 @@ import combat.CombatContact;
 
 import config.Config;
 import config.Section;
-import entities.Mushroom;
 import entities.Player;
-import entities.Salmon;
+import entities.StaticObstacle;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
@@ -46,7 +45,7 @@ public class LevelState extends BasicGameState{
 	private Map map;
 	private Player player;
 	private ArrayList<Enemy> enemies;
-	private ArrayList<Salmon> salmons;
+	private ArrayList<StaticObstacle> staticObjects;
 	private static Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
@@ -59,7 +58,6 @@ public class LevelState extends BasicGameState{
 	private Timer timer;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
-	private ArrayList<Mushroom> mushrooms;
 	
 	private static Music forestLoop;
 	
@@ -106,19 +104,14 @@ public class LevelState extends BasicGameState{
 			info.render(graphics);
 			camera.translateGraphics(gc);
 		} else {
-			player.render(graphics);
 			for (Enemy e : enemies) {
 				e.render(graphics);
 			}
-			for (Salmon s : salmons) {
+			for (StaticObstacle s : staticObjects) {
 				s.render(graphics);
 			}
-			/*
-			for (Mushroom m : mushrooms) {
-				m.render(graphics);
-			}
-			*/
 		}
+		player.render(graphics);
 		cursor.render(graphics);
 		
 		// so that transitions render correctly
@@ -167,18 +160,15 @@ public class LevelState extends BasicGameState{
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
 			Enemy e = it.next();
 			if (e.getHp() > 0) {
-				e.update(gc, delta);
+				e.update(gc, delta, player);
 			} else {
 				it.remove();
 				e.kill();
 			}
 		}
 		
-		for (Salmon s : salmons) {
+		for (StaticObstacle s : staticObjects) {
 			s.update(gc, delta);
-		}
-		for (Mushroom m : mushrooms) {
-			m.update(gc, delta);
 		}
 
 		camera.centerOn(player.getX(),player.getY());
@@ -211,18 +201,13 @@ public class LevelState extends BasicGameState{
 		timer.reset();
 		
 		enemies = map.getEnemies();
-		salmons = map.getSalmons();
-		mushrooms = map.getMushrooms();
+		staticObjects = map.getStaticObjects();
 		World world = map.getWorld();
 		for (Enemy e : enemies) {
 			e.addToWorld(world, e.getX(), e.getY());
 		}
-		for (Salmon s : salmons) {
+		for (StaticObstacle s : staticObjects) {
 			s.addToWorld(world, s.getX(), s.getY(), timer.getCurrentTime());
-		}
-		
-		for (Mushroom m : mushrooms) {
-			m.addToWorld(world, m.getX(), m.getY());
 		}
 	}
 

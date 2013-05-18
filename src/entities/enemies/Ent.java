@@ -5,6 +5,9 @@ package entities.enemies;
 
 import org.newdawn.slick.Image;
 
+import util.Direction;
+import entities.Entity;
+
 import ai.Goomba;
 
 /**
@@ -30,6 +33,12 @@ public class Ent extends Enemy {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	public void activate(Entity entity, Direction dir) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

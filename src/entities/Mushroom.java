@@ -2,13 +2,13 @@ package entities;
 
 import org.jbox2d.common.Vec2;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import util.Direction;
 import config.Config;
 
-public class Mushroom extends StaticEntity{
+public class Mushroom extends StaticObstacle{
 	int mushTimer = 0;
 	float mushX = 30;
 	float mushY = 30;
@@ -16,13 +16,6 @@ public class Mushroom extends StaticEntity{
 	
 	public Mushroom(float x, float y) throws SlickException {
 		super(x, y, false, Config.MUSHROOM);
-		
-		setImage(new Image("assets/rocks.png"));
-		/*
-		Animation a = (new Animation(new SpriteSheet("assets/images/nonentities/salmon/spinning.png", 32, 32), 100));
-		anim.addAnimation(AnimationState.BASIC, a);
-		anim.setDefaultAnimation(AnimationState.BASIC);
-		*/
 	}
 	
 	/**
@@ -51,6 +44,10 @@ public class Mushroom extends StaticEntity{
 			mushTimer = 100;
 			entity.getPhysicsBody().setLinearVelocity(vel);
 		}
+	}
+	
+	@Override
+	public void render(Graphics g) {
 	}
 	
 	@Override

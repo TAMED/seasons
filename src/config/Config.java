@@ -48,6 +48,7 @@ public class Config {
 	public static final int WATER = 4;
 	public static final int SALMON = 8;
 	public static final int MUSHROOM = 16;
+	public static final int STEAM = 32;
 	public static final int STATICENTITY = 24;
 	
 	// Player
@@ -65,6 +66,9 @@ public class Config {
 	public static final float PLAYER_JUMP_SPEED = 115;
 	public static final float PLAYER_WATER_MOVE_SPEED = 2f;
 
+	// Obstacles
+	public static final float FLY_VEL = 10;
+
 	// Hookshot
 	public static final float HOOKSHOT_SHOOT_VEL = 100;
 	public static final float HOOKSHOT_PULL_VEL = 40;
@@ -74,6 +78,8 @@ public class Config {
 	// Movement
 	public static final float WATER_GRAVITY_SCALE = -1f;
 	public static final float WATER_DRAG = 10;
+	public static final float STEAM_GRAVITY_SCALE = -.7f;
+	public static final float STEAM_DRAG = 0f;
 	
 	// UI
 	// how far away from the player the aiming cursor appears

@@ -28,6 +28,8 @@ import util.Direction;
 import util.Util;
 import anim.AnimationState;
 import config.Config;
+import entities.enemies.Bat;
+import entities.enemies.Ent;
 
 /**
  * Base class for in-game objects and agents. Handles physics updates
@@ -123,6 +125,7 @@ public abstract class Entity extends Sprite {
 		boxDef.density = Config.DEFAULT_DENSITY;
 		boxDef.friction = Config.DEFAULT_FRICTION;
 		boxDef.filter.maskBits |= Config.WATER;
+		boxDef.filter.maskBits |= Config.STEAM;
 		if (height - width > EPSILON) {
 			boxDef.shape = Util.getBoxShape(hw / Config.PIXELS_PER_METER,
 		                             (hh - hw) / Config.PIXELS_PER_METER);
@@ -222,7 +225,26 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
+	public void fly(Direction dir) {
+		float yVel = this.getPhysicsBody().getLinearVelocity().y;
+		switch (dir) {
+		case LEFT:
+			this.getPhysicsBody().setLinearVelocity(new Vec2(-Config.FLY_VEL, yVel));
+			setFacing(Direction.LEFT);
+			break;
+		case RIGHT:
+			this.getPhysicsBody().setLinearVelocity(new Vec2(Config.FLY_VEL, yVel));
+			setFacing(Direction.RIGHT);
+			break;
+		default:
+			break;
+		}
+	}
+	
 	public void jump(GameContainer gc, int delta) {
+		if (checkSteam(gc)) {
+			return;
+		}
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
@@ -467,7 +489,7 @@ public abstract class Entity extends Sprite {
 	/**
 	 * Check if player is touching salmon
 	 */
-	public void staticEntityCheck() {
+	public void obstacleCheck() {
 		ContactEdge contactEdge = this.getPhysicsBody().getContactList();
 		
 		while(contactEdge != null) {
@@ -500,11 +522,45 @@ public abstract class Entity extends Sprite {
 		return center || top;
 	}
 	
+	public boolean checkSteam(GameContainer gc) {
+		boolean center = (categoriesTouchingSensors()[Direction.CENTER.ordinal()] & Config.STEAM) > 0;
+		boolean top    = (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.STEAM) > 0;
+		return center || top;
+	}
+	
+	public boolean checkHook(GameContainer gc, int delta, Player player) {
+		ContactEdge contactEdge = physicsBody.getContactList();
+		boolean hooked = false;
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				Object a = contactEdge.contact.getFixtureA().getUserData();
+				Object b = contactEdge.contact.getFixtureB().getUserData();
+				hooked = true;
+				if (a instanceof Bat) {
+					((Bat) a).hook(gc, delta, player);
+					this.setPosition(((Bat) a).getPosition());
+				}
+				if (b instanceof Bat) {
+					((Bat) b).hook(gc, delta, player);
+					this.setPosition(((Bat) b).getPosition());
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		return hooked;
+	}
+	
 	private void waterUpdate(GameContainer gc) {
 		if (checkWater(gc)) {
 			this.getPhysicsBody().setGravityScale(Config.WATER_GRAVITY_SCALE);
 			this.getPhysicsBody().setLinearDamping(Config.WATER_DRAG);
 		}
+		
+		else if (checkSteam(gc)) {
+			this.getPhysicsBody().setGravityScale(Config.STEAM_GRAVITY_SCALE);
+			this.getPhysicsBody().setLinearDamping(Config.STEAM_DRAG);
+		}
+		
 		else {
 			this.getPhysicsBody().setGravityScale(1);
 			this.getPhysicsBody().setLinearDamping(0f);
@@ -527,6 +583,11 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
+	@SuppressWarnings("unused")
+	private void entUpdate(Object preEntity) {
+		Ent entity = (Ent) preEntity;
+		entity.activate(this, null);
+	}
 	abstract public void reset();
 	
 	public boolean isStill() {
