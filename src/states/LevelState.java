@@ -36,9 +36,7 @@ import combat.CombatContact;
 
 import config.Config;
 import config.Section;
-import entities.Mushroom;
 import entities.Player;
-import entities.Salmon;
 import entities.StaticObstacle;
 import entities.enemies.Enemy;
 

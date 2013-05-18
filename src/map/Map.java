@@ -38,6 +38,7 @@ public class Map {
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
 	private int foregroundLayer;
+	@SuppressWarnings("unused")
 	private int backgroundLayer;
 	private int objectLayer;
 	public Map(String tmxMap, Vec2 gravity) throws SlickException {

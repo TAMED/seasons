@@ -1,21 +1,12 @@
 package entities.enemies;
 
-import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.World;
-import org.jbox2d.dynamics.joints.RevoluteJoint;
-import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 
-import config.Config;
-
-import util.Direction;
 import ai.FlyingGoomba;
-import ai.Goomba;
-import ai.Still;
-import entities.Entity;
+import config.Config;
 import entities.Player;
 
 public class Bat extends Enemy {
@@ -23,14 +14,11 @@ public class Bat extends Enemy {
 	private static final float HEIGHT = 64;
 	private static final float GROUND = 6;
 	private static final int RUNSPEED = 2;
-	private static final int ACCELERATION = 2;
 	private static final int JMPSPEED = 2;
 	private static final int MAXHP = 1;
 	
 	private boolean hooked = false;
 
-	
-	
 	public Bat(float x, float y) {
 		super(x, y, WIDTH, HEIGHT, GROUND, RUNSPEED, JMPSPEED, MAXHP, new FlyingGoomba());
 		try {
