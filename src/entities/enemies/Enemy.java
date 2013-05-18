@@ -8,12 +8,13 @@ import org.newdawn.slick.GameContainer;
 
 import ai.AI;
 import entities.Entity;
+import entities.Player;
 
 /**
  * @author Mullings
  *
  */
-public class Enemy extends Entity {
+public abstract class Enemy extends Entity {
 	private AI ai;
 
 	/**
@@ -38,11 +39,20 @@ public class Enemy extends Entity {
 		super.update(gc, delta);
 		ai.update(this, delta);
 	}
+	
+	public void update(GameContainer gc, int delta, Player player) {
+		super.update(gc, delta);
+		ai.update(this, delta);
+	}
 
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public void setAI(AI newAI) {
+		this.ai = newAI;
+	}
+	
 }

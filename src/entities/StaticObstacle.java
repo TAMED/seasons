@@ -17,7 +17,7 @@ import util.Direction;
 import util.Util;
 import config.Config;
 
-public abstract class StaticEntity extends Sprite{
+public abstract class StaticObstacle extends Sprite{
 	
 	private BodyDef physicsDef;
 	private FixtureDef boxDef;
@@ -31,7 +31,7 @@ public abstract class StaticEntity extends Sprite{
 	private boolean dead = false;
 	private Time timer;
 
-	public StaticEntity(float x, float y, boolean isSensor, int category) throws SlickException {
+	public StaticObstacle(float x, float y, boolean isSensor, int category) throws SlickException {
 		super(x, y, width, height);
 		/*
 		anima = new Animation(new SpriteSheet("assets/images/nonentities/salmon/spinning.png", 32, 32), 100);
@@ -70,7 +70,7 @@ public abstract class StaticEntity extends Sprite{
 		}
 	}
 	
-	public void addToWorld(World world, float x, float y) {
+	public void addToWorld(World world, float x, float y, Time timer) {
 		physicsDef.position.set(x / Config.PIXELS_PER_METER, y / Config.PIXELS_PER_METER);
 		physicsBody = world.createBody(physicsDef);
 		physicsBody.setUserData(this);

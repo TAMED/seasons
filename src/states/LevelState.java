@@ -1,6 +1,7 @@
 package states;
 
 import input.Controls;
+import input.Controls.Action;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +18,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -36,9 +36,8 @@ import combat.CombatContact;
 
 import config.Config;
 import config.Section;
-import entities.Mushroom;
 import entities.Player;
-import entities.Salmon;
+import entities.StaticObstacle;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
@@ -47,10 +46,11 @@ public class LevelState extends BasicGameState{
 	private Map map;
 	private Player player;
 	private ArrayList<Enemy> enemies;
-	private ArrayList<Salmon> salmons;
+	private ArrayList<StaticObstacle> staticObjects;
 	private static Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
+	public static boolean slowMode = false;
 	private static Camera camera;
 	private Cursor cursor;
 	private Vec2 goalLoc;
@@ -62,7 +62,6 @@ public class LevelState extends BasicGameState{
 	private static Timer timer;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
-	private ArrayList<Mushroom> mushrooms;
 	
 	private static Music forestLoop;
 	
@@ -110,19 +109,14 @@ public class LevelState extends BasicGameState{
 			info.render(graphics);
 			camera.translateGraphics(gc);
 		} else {
-			player.render(graphics);
 			for (Enemy e : enemies) {
 				e.render(graphics);
 			}
-			for (Salmon s : salmons) {
+			for (StaticObstacle s : staticObjects) {
 				s.render(graphics);
 			}
-			/*
-			for (Mushroom m : mushrooms) {
-				m.render(graphics);
-			}
-			*/
 		}
+		player.render(graphics);
 		cursor.render(graphics);
 		
 		// so that transitions render correctly
@@ -134,21 +128,25 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
+		Controls.update(gc);
+		
 		// check toggles
-		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
-		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
-		if (gc.getInput().isKeyPressed(Input.KEY_F11)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+		if (Controls.isKeyPressed(Action.DEBUG)) viewDebug = !viewDebug;
+		if (Controls.isKeyPressed(Action.GOD_MODE)) godMode = !godMode;
+		if (Controls.isKeyPressed(Action.SLOW_DOWN)) slowMode = !slowMode;
+		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
 		
-		if (gc.isPaused()) {
-			pauseScrn.update(gc, delta);
-			return;
-		}
-		// this goes second to avoid calling isKeyPressed() more than once
-		if (!gc.hasFocus() || gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) pause(gc);
+		// show pause screen if paused
+		if (gc.isPaused()) { pauseScrn.update(gc, delta); return; }
 		
-		if (gc.getInput().isKeyPressed(Input.KEY_F5)) {
-			nextLevel(game);
-		}
+		// should go after pause screen update
+		if (Controls.isKeyPressed(Action.PAUSE) || !gc.hasFocus()) pause(gc);
+		
+		if (Controls.isKeyPressed(Action.RESET)) { reset(game); }
+		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
+		
+		// slooooow dooooown
+		if (slowMode) delta /= 10;
 		
 		// if the goal is reached
 		if (closeToGoal()) {
@@ -171,25 +169,17 @@ public class LevelState extends BasicGameState{
 		for (Iterator<Enemy> it = enemies.iterator(); it.hasNext(); ) {
 			Enemy e = it.next();
 			if (e.getHp() > 0) {
-				e.update(gc, delta);
+				e.update(gc, delta, player);
 			} else {
 				it.remove();
 				e.kill();
 			}
 		}
 		
-		for (Salmon s : salmons) {
+		for (StaticObstacle s : staticObjects) {
 			s.update(gc, delta);
 		}
-		for (Mushroom m : mushrooms) {
-			m.update(gc, delta);
-		}
 
-		// check toggles
-		if (gc.getInput().isKeyPressed(Input.KEY_F3)) viewDebug = !viewDebug;
-		if (gc.getInput().isKeyPressed(Input.KEY_F4)) godMode = !godMode;
-		if (gc.getInput().isKeyPressed(Input.KEY_F11)) gc.setFullscreen(!gc.isFullscreen());
-		
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
 		currentTime.update(delta);
@@ -199,7 +189,6 @@ public class LevelState extends BasicGameState{
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		super.enter(gc, game);
-		Controls.setGC(gc);
 		
 		map = new Map(section.getMapPath(), section.getGravity());
 		map.parseMapObjects();
@@ -224,18 +213,13 @@ public class LevelState extends BasicGameState{
 		currentTime = new Time();
 		
 		enemies = map.getEnemies();
-		salmons = map.getSalmons();
-		mushrooms = map.getMushrooms();
+		staticObjects = map.getStaticObjects();
 		World world = map.getWorld();
 		for (Enemy e : enemies) {
 			e.addToWorld(world, e.getX(), e.getY());
 		}
-		for (Salmon s : salmons) {
+		for (StaticObstacle s : staticObjects) {
 			s.addToWorld(world, s.getX(), s.getY(), currentTime);
-		}
-		
-		for (Mushroom m : mushrooms) {
-			m.addToWorld(world, m.getX(), m.getY());
 		}
 	}
 
@@ -251,6 +235,10 @@ public class LevelState extends BasicGameState{
 	private void nextLevel(StateBasedGame game) {
 		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
 		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
+	}
+	
+	private void reset(StateBasedGame game) {
+		game.enterState(getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 	
 	// kinda janky, remove when paralaxing set up
