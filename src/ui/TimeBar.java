@@ -53,11 +53,12 @@ public class TimeBar {
 	public TimeBar(GameContainer gc) {
 		timeWidth = gc.getWidth() - 2*timePos.x;
 		timeShape = new Rectangle(timePos.x, timePos.y, 0, timeHeight);
-		timeFill = new GradientFill(timePos.x, timePos.y, new Color(0, 0, 255), (gc.getWidth() - timePos.x)/4, timePos.y,
-                new Color(255, 0, 0), true);
+		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153), (gc.getWidth() - timePos.x)/4, timePos.y,
+                new Color(138, 217, 235), true);
 	}
 
 	public void render(GameContainer gc, Graphics graphics, Timer timer) {
+		graphics.setColor(Color.white);
 
 		String goalStr = getTimeString(timer.getGoal());
 		graphics.fillRect(gc.getWidth()/2 - 1, timePos.y+timeHeight, 1, 20);
@@ -86,8 +87,8 @@ public class TimeBar {
 	}
 	
 	private String getTimeString(Time t) {
-		if (t == null) return "N/A";
-		return t.getTimeString();
+		if (t == null || t.getMillis() == Integer.MAX_VALUE) return "N/A";
+		return String.format("%.2f", t.getMillis() / 1000f);
 	}
 
 }
