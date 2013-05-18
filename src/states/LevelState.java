@@ -29,11 +29,12 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import time.Time;
+import time.Timer;
 import ui.Cursor;
 import ui.DebugInfo;
 import ui.PauseScreen;
-import ui.Time;
-import ui.Timer;
+import ui.TimeBar;
 import ui.Transitions;
 import util.Box2DDebugDraw;
 import camera.Camera;
@@ -42,9 +43,7 @@ import combat.CombatContact;
 
 import config.Config;
 import config.Section;
-import entities.Mushroom;
 import entities.Player;
-import entities.Salmon;
 import entities.StaticObstacle;
 import entities.enemies.Enemy;
 
@@ -63,35 +62,21 @@ public class LevelState extends BasicGameState{
 	private Cursor cursor;
 	private Vec2 goalLoc;
 	private Image background;
-	
-	private Time currentTime;
-	private Time lastTime;
-	private Time bestTime;
-	private Time goalTime;
-	private GradientFill timeFill;
-	private Rectangle timeShape;
-	private final Vec2 timePos = new Vec2(20,20);
-	private final float timeHeight = 30;
-	private float timeWidth;
-	private float timeDivide;
-	private static Timer timer;
+	private Timer timer;
+	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
-	private static UnicodeFont font;
 	private static Music forestLoop;
 	
 	static {
 		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
-		timer = new Timer(100, 100);
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
-		font = new UnicodeFont(new Font("", Font.PLAIN,30));
 		try {
 			forestLoop = new Music("assets/sounds/Field19.wav");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -99,11 +84,13 @@ public class LevelState extends BasicGameState{
 	public LevelState(Section section) {
 		super();
 		this.section = section;
+		timer = Config.times.get(getID());
 	}
 		
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
+		timerBar = new TimeBar(gc);
 		forestLoop.loop();
 	}
 
@@ -114,17 +101,7 @@ public class LevelState extends BasicGameState{
 		drawBackground(graphics, gc, game);
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
-		timer.updateTime(currentTime, lastTime, bestTime, goalTime);
-		timer.render(graphics);
-		graphics.fillRect(gc.getWidth()/2 - 2, timePos.y+timeHeight, 4, 20);
-		font.addAsciiGlyphs();
-		graphics.setFont(font);
-		font.drawString(gc.getWidth()/2 - font.getWidth(timer.getGoal())/2, timeHeight + timePos.y, timer.getGoal());
-		graphics.setColor(Color.black);
-		graphics.fillRect(timePos.x, timePos.y, timeWidth, timeHeight);
-		timeShape.setWidth(Math.max(Math.min(currentTime.getMillis()/timeDivide, timeWidth),0));
-		
-		graphics.fill(timeShape, timeFill);
+		timerBar.render(gc, graphics, timer);
 		camera.translateGraphics(gc);
 		
 		if (viewDebug) {
@@ -175,12 +152,8 @@ public class LevelState extends BasicGameState{
 		
 		// if the goal is reached
 		if (closeToGoal()) {
-			if (lastTime == null) lastTime = new Time();
-			lastTime.set(currentTime.getMillis());
-			if (bestTime == null) bestTime = new Time(currentTime.getMillis());
-			else if (lastTime.getMillis() < bestTime.getMillis()) {
-				bestTime.set(currentTime.getMillis());
-			}
+			timer.updateRecords();
+			Config.saveTimes();
 			nextLevel(game);
 		}
 		
@@ -207,17 +180,13 @@ public class LevelState extends BasicGameState{
 
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
-		currentTime.update(delta);
+		timer.update(delta);
 	}
 
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		super.enter(gc, game);
-		timeWidth = gc.getWidth() - 2*timePos.x;
-		timeShape = new Rectangle(timePos.x, timePos.y, 0, timeHeight);
-		timeFill = new GradientFill(timePos.x, timePos.y, new Color(0, 0, 255), (gc.getWidth() - timePos.x)/4, timePos.y,
-                new Color(255, 0, 0), true);
 		map = new Map(section.getMapPath(), new Vec2(0, Config.GRAVITY));
 		map.parseMapObjects();
 		map.getWorld().setContactListener(new CombatContact());
@@ -231,15 +200,14 @@ public class LevelState extends BasicGameState{
 				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
 		player.reset();
 		
-		this.goalTime = new Time(section.getGoalTime());
-		currentTime = new Time();
-		timeDivide = 2*goalTime.getMillis()/timeWidth;
+		this.timer.setGoal(new Time(section.getGoalTime()));
+
 		goalLoc = map.getGoalLoc();
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
 
-		
-		currentTime = new Time();
+		timer.reset();
+		timerBar.enter(gc, game, timer);
 		
 		enemies = map.getEnemies();
 		staticObjects = map.getStaticObjects();
@@ -248,7 +216,7 @@ public class LevelState extends BasicGameState{
 			e.addToWorld(world, e.getX(), e.getY());
 		}
 		for (StaticObstacle s : staticObjects) {
-			s.addToWorld(world, s.getX(), s.getY(), currentTime);
+			s.addToWorld(world, s.getX(), s.getY(), timer.getCurrentTime());
 		}
 	}
 

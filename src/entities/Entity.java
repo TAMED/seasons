@@ -3,8 +3,6 @@
  */
 package entities;
 
-import items.Hook;
-
 import java.util.ArrayList;
 import java.util.EnumSet;
 
@@ -585,6 +583,7 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void entUpdate(Object preEntity) {
 		Ent entity = (Ent) preEntity;
 		entity.activate(this, null);

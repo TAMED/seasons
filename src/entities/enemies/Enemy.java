@@ -6,8 +6,6 @@ package entities.enemies;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 
-import util.Direction;
-
 import ai.AI;
 import entities.Entity;
 import entities.Player;

@@ -18,6 +18,7 @@ import anim.AnimStateMachine;
 import anim.AnimationState;
 import config.Config;
 import entities.Player;
+import entities.Sprite;
 
 public class Hookshot extends ItemBase {
 
@@ -131,8 +132,14 @@ public class Hookshot extends ItemBase {
 				// simple movement (try K=5)
 				b1.setLinearVelocity(dist.mul(Config.HOOKSHOT_PULL_VEL));
 				
-				removeHook();
-				state = HookState.IN;
+
+				// stop pulling the hook if you are close enough to the hook OR the player stops moving (is blocked)
+				if ((xFlip && yFlip) || (diff.length() < owner.getMaxDim() / 2 + Config.HOOKSHOT_TOLERANCE) 
+						|| ((owner.getVelocity() < 1) && !owner.sidesTouching().isEmpty() && !startPull)) {
+					removeHook();
+					state = HookState.IN;
+					break;
+				}
 				
 				break;
 		}
@@ -243,9 +250,9 @@ public class Hookshot extends ItemBase {
 	public boolean isIn() {
 		return state.equals(HookState.IN);
 	}
-	
-	public Hook getHook() {
-		return this.hook;
+
+	public Sprite getHook() {
+		return hook;
 	}
 	
 }
