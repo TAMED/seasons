@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import com.thoughtworks.xstream.XStream;
 
-import ui.Timer;
+import time.Timer;
 
 
 
@@ -97,14 +97,11 @@ public class Config {
 			if (f.exists()) {
 				times = (HashMap<Integer, Timer>) x.fromXML(new FileInputStream(f));
 			} else {
-				times = new HashMap<Integer, Timer>();
-				for (Section s : Section.values()) {
-					times.put(s.getID(), new Timer());
-				}
-				saveTimes();
+				createAndSaveTimes();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			createAndSaveTimes();
 		}
 	}
 	
@@ -121,6 +118,14 @@ public class Config {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static void createAndSaveTimes() {
+		times = new HashMap<Integer, Timer>();
+		for (Section s : Section.values()) {
+			times.put(s.getID(), new Timer());
+		}
+		saveTimes();
 	}
 
 }

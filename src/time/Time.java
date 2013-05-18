@@ -1,4 +1,4 @@
-package ui;
+package time;
 
 public class Time {
 

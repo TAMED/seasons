@@ -23,10 +23,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import time.Timer;
 import ui.Cursor;
 import ui.DebugInfo;
 import ui.PauseScreen;
-import ui.Timer;
+import ui.TimeBar;
 import ui.Transitions;
 import util.Box2DDebugDraw;
 import camera.Camera;
@@ -56,6 +57,7 @@ public class LevelState extends BasicGameState{
 	private Image background;
 	
 	private Timer timer;
+	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
 	
@@ -65,12 +67,12 @@ public class LevelState extends BasicGameState{
 		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
+		timerBar = new TimeBar();
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
 		try {
 			forestLoop = new Music("assets/sounds/Field19.wav");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -94,7 +96,7 @@ public class LevelState extends BasicGameState{
 		drawBackground(graphics, gc, game);
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
-		timer.render(graphics);
+		timerBar.render(graphics, timer);
 		camera.translateGraphics(gc);
 		
 		if (viewDebug) {
