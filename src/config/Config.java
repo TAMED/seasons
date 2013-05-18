@@ -74,6 +74,6 @@ public class Config {
 	// how far away from the player the aiming cursor appears
 	public static final float CURSOR_DIST = 100;
 	public static final int CURSOR_SIZE = 15;
-	public static final int SALMON_TIME = -1000;
+	public static final int SALMON_TIME = -100;
 
 }
