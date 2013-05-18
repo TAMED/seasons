@@ -12,7 +12,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
-import ui.Time;
+import time.Time;
 import util.Direction;
 import util.Util;
 import config.Config;

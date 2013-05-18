@@ -5,7 +5,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-import ui.Time;
+import time.Time;
 import util.Direction;
 import anim.AnimationState;
 import config.Config;

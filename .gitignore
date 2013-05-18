@@ -3,6 +3,8 @@ bin/
 seasons.jar
 seasons.tar.gz
 seasons.zip
+times.xml
+config.xml
 
 # Package Files #
 *.war

@@ -23,11 +23,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import time.Timer;
 import ui.Cursor;
 import ui.DebugInfo;
 import ui.PauseScreen;
-import ui.Time;
-import ui.Timer;
+import ui.TimeBar;
 import ui.Transitions;
 import util.Box2DDebugDraw;
 import camera.Camera;
@@ -56,10 +56,8 @@ public class LevelState extends BasicGameState{
 	private Vec2 goalLoc;
 	private Image background;
 	
-	private Time currentTime;
-	private Time lastTime;
-	private Time bestTime;
-	private static Timer timer;
+	private Timer timer;
+	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
 	
@@ -69,13 +67,12 @@ public class LevelState extends BasicGameState{
 		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
-		timer = new Timer(100, 100);
+		timerBar = new TimeBar();
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
 		try {
 			forestLoop = new Music("assets/sounds/Field19.wav");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -83,6 +80,7 @@ public class LevelState extends BasicGameState{
 	public LevelState(Section section) {
 		super();
 		this.section = section;
+		timer = Config.times.get(getID());
 	}
 		
 	@Override
@@ -98,8 +96,7 @@ public class LevelState extends BasicGameState{
 		drawBackground(graphics, gc, game);
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
-		timer.updateTime(currentTime, lastTime, bestTime);
-		timer.render(graphics);
+		timerBar.render(graphics, timer);
 		camera.translateGraphics(gc);
 		
 		if (viewDebug) {
@@ -150,12 +147,8 @@ public class LevelState extends BasicGameState{
 		
 		// if the goal is reached
 		if (closeToGoal()) {
-			if (lastTime == null) lastTime = new Time();
-			lastTime.set(currentTime.getMillis());
-			if (bestTime == null) bestTime = new Time(currentTime.getMillis());
-			else if (lastTime.getMillis() < bestTime.getMillis()) {
-				bestTime.set(currentTime.getMillis());
-			}
+			timer.updateRecords();
+			Config.saveTimes();
 			nextLevel(game);
 		}
 		
@@ -182,7 +175,7 @@ public class LevelState extends BasicGameState{
 
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
-		currentTime.update(delta);
+		timer.update(delta);
 	}
 
 	@Override
@@ -203,14 +196,11 @@ public class LevelState extends BasicGameState{
 				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
 		player.reset();
 		
-		currentTime = new Time();
-		
 		goalLoc = map.getGoalLoc();
 		camera = new Camera(gc, map.getTiledMap());
 		cursor = new Cursor(player);
 
-		
-		currentTime = new Time();
+		timer.reset();
 		
 		enemies = map.getEnemies();
 		staticObjects = map.getStaticObjects();
@@ -219,7 +209,7 @@ public class LevelState extends BasicGameState{
 			e.addToWorld(world, e.getX(), e.getY());
 		}
 		for (StaticObstacle s : staticObjects) {
-			s.addToWorld(world, s.getX(), s.getY(), currentTime);
+			s.addToWorld(world, s.getX(), s.getY(), timer.getCurrentTime());
 		}
 	}
 
