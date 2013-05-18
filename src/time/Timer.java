@@ -12,11 +12,13 @@ public class Timer {
 	private Time current;
 	private Time last;
 	private Time best;
+	private Time goal;
 
 	public Timer() {
 		current = new Time();
-		last = new Time();
-		best = new Time();
+		last = new Time(Integer.MAX_VALUE);
+		best = new Time(Integer.MAX_VALUE);
+		goal = new Time();
 	}
 	
 	public void update(int delta) {
@@ -44,5 +46,13 @@ public class Timer {
 
 	public Time getBestTime() {
 		return best;
+	}
+	
+	public Time getGoal() {
+		return goal;
+	}
+
+	public void setGoal(Time goal) {
+		this.goal = goal;
 	}
 }
