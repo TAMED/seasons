@@ -34,12 +34,14 @@ public class Controls {
 		
 		cache = EnumSet.noneOf(Action.class);
 		if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
-		if (input.isKeyDown(Input.KEY_S)) cache.add(Action.DOWN);
+		if (input.isKeyDown(Input.KEY_S)) {
+			cache.add(Action.DOWN);
+			cache.add(Action.RELEASE);
+		}
 		if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
 		if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
 		if (input.isKeyPressed(Input.KEY_SPACE)) {
 			cache.add(Action.JUMP);
-			cache.add(Action.RELEASE);
 		}
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			cache.add(Action.FIRE);
