@@ -3,9 +3,11 @@ package states;
 import input.Controls;
 import input.Controls.Action;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import main.MainGame;
@@ -20,6 +22,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -53,6 +58,7 @@ public class LevelState extends BasicGameState{
 	public static boolean godMode = false;
 	public static boolean slowMode = false;
 	public static boolean replayMode = false;
+	private boolean timerGo = false;
 	private static Camera camera;
 	private Cursor cursor;
 	private Vec2 goalLoc;
@@ -62,6 +68,8 @@ public class LevelState extends BasicGameState{
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
 	private static Music forestLoop;
+	private static UnicodeFont plainFont;
+	private static UnicodeFont boldFont;
 	
 	static {
 		sectionQueue = new LinkedList<Section>();
@@ -71,6 +79,23 @@ public class LevelState extends BasicGameState{
 		pauseScrn = new PauseScreen();
 		try {
 			forestLoop = new Music("assets/sounds/Field19.wav");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		plainFont = new UnicodeFont(new Font("", Font.PLAIN,16));
+        plainFont.addAsciiGlyphs();
+        ((List<Effect>) plainFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        try {
+			plainFont.loadGlyphs();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+        
+        boldFont = new UnicodeFont(new Font("", Font.BOLD,16));
+        boldFont.addAsciiGlyphs();
+        ((List<Effect>) boldFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        try {
+			boldFont.loadGlyphs();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -85,7 +110,7 @@ public class LevelState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
-		timerBar = new TimeBar(gc);
+		timerBar = new TimeBar(gc, plainFont, boldFont);
 		forestLoop.loop();
 	}
 
@@ -96,7 +121,7 @@ public class LevelState extends BasicGameState{
 		drawBackground(graphics, gc, game);
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
-		timerBar.render(gc, graphics, timer);
+		timerBar.render(gc, graphics, timer, timerGo);
 		camera.translateGraphics(gc);
 		
 		if (viewDebug) {
@@ -118,7 +143,9 @@ public class LevelState extends BasicGameState{
 		
 		// so that transitions render correctly
 		camera.untranslateGraphics(gc);
-		
+		if (replayMode) {
+			plainFont.drawString(0, Config.RESOLUTION_HEIGHT- plainFont.getHeight("Replay On"), "Replay On");
+		}
 		if (gc.isPaused()) pauseScrn.render(graphics);
 	}
 
@@ -145,6 +172,10 @@ public class LevelState extends BasicGameState{
 		
 		// slooooow dooooown
 		if (slowMode) delta /= 10;
+		
+		if (Controls.moveKeyPressed()) {
+			timerGo = true;
+		}
 		
 		// if the goal is reached
 		if (closeToGoal()) {
@@ -181,13 +212,16 @@ public class LevelState extends BasicGameState{
 
 		camera.centerOn(player.getX(),player.getY());
 		cursor.update(gc, delta);
-		timer.update(delta);
+		if (timerGo) {
+			timer.update(delta);
+		}
 	}
 
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		super.enter(gc, game);
+		timerGo = false;
 		map = new Map(section.getMapPath(), new Vec2(0, Config.GRAVITY));
 		map.parseMapObjects();
 		map.getWorld().setContactListener(new CombatContact());

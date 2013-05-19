@@ -33,35 +33,21 @@ public class TimeBar {
 	private static UnicodeFont currentFont;
 	
 	static {
-		goalFont = new UnicodeFont(new Font("", Font.PLAIN,16));
-        goalFont.addAsciiGlyphs();
-        ((List<Effect>) goalFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			goalFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-        
-        currentFont = new UnicodeFont(new Font("", Font.BOLD,16));
-        currentFont.addAsciiGlyphs();
-        ((List<Effect>) currentFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			currentFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
-	public TimeBar(GameContainer gc) {
+	public TimeBar(GameContainer gc, UnicodeFont goalFont, UnicodeFont currentFont) {
 		timeWidth = Config.RESOLUTION_WIDTH - 2*timePos.x;
 		timeShape = new Rectangle(timePos.x, timePos.y, 0, timeHeight);
 		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
                 new Color(138, 217, 235, 100), true);
+		TimeBar.goalFont = goalFont;
+		TimeBar.currentFont = currentFont;
 	}
 
-	public void render(GameContainer gc, Graphics graphics, Timer timer) {
+	public void render(GameContainer gc, Graphics graphics, Timer timer, boolean timerGo) {
 		graphics.setColor(Color.white);
-
+		
 		String goalStr = getTimeString(timer.getGoal());
 		graphics.fillRect(Config.RESOLUTION_WIDTH/2 - 1, timePos.y+timeHeight, 1, 20);
 		goalFont.drawString(Config.RESOLUTION_WIDTH/2 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
@@ -81,6 +67,10 @@ public class TimeBar {
 		graphics.fill(timeShape, timeFill);
 		
 		String currentStr = "Time: "+getTimeString(timer.getCurrentTime());
+		if (!timerGo) {
+			currentStr = " Ready!";
+		}
+		
 		currentFont.drawString(timePos.x + 10, (timeHeight - currentFont.getHeight("Current"))/2+timePos.y, currentStr);
 	}
 	
