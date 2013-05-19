@@ -89,7 +89,7 @@ public class LevelState extends BasicGameState{
 		timerBar = new TimeBar(gc);
 		forestLoop.loop();
 		forestLoop.setVolume(0f);
-		forestLoop.fade(2000, .8f, false);
+		if (Config.soundOn) forestLoop.fade(2000, 1f, false);
 	}
 
 	@Override
@@ -136,6 +136,15 @@ public class LevelState extends BasicGameState{
 		if (Controls.isKeyPressed(Action.SLOW_DOWN)) slowMode = !slowMode;
 		if (Controls.isKeyPressed(Action.REPLAY)) replayMode = !replayMode;
 		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+		if (Controls.isKeyPressed(Action.MUTE)) {
+			if (Config.soundOn) {
+				forestLoop.setVolume(0f);
+				Config.soundOn = false;
+			} else {
+				forestLoop.setVolume(Config.gameVolume);
+				Config.soundOn = true;
+			}
+		}
 		
 		// show pause screen if paused
 		if (gc.isPaused()) { pauseScrn.update(gc, delta); return; }

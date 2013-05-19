@@ -248,13 +248,13 @@ public abstract class Entity extends Sprite {
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
-				jumpSound.play();
+				if (Config.soundOn) jumpSound.play(1, Config.gameVolume);
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
 		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
 			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
-			jumpSound.play();
+			if (Config.soundOn) jumpSound.play(1, Config.gameVolume);
 			anim.play(AnimationState.JUMP);
 		}
 		

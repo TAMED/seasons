@@ -23,7 +23,7 @@ import entities.Player;
 public class Controls {
 	public enum Action { UP, DOWN, LEFT, RIGHT, JUMP, FIRE, PULL, RELEASE,
 	                     PAUSE, RESET, FULLSCREEN,
-	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN, REPLAY }
+	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN, REPLAY, MUTE }
 	
 	private static Set<Action> cache;
 	private static float mouseX;
@@ -35,7 +35,7 @@ public class Controls {
 		mouseY = input.getMouseY();
 		cache = EnumSet.noneOf(Action.class);
 		
-		if (InputContext.getInstance().getLocale().getVariant().equals("UserDefined_ Ž#ÿ")) {
+		if (InputContext.getInstance().getLocale().getVariant().equals("UserDefined_ ï¿½ï¿½")) {
 			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
 			if (input.isKeyDown(Input.KEY_R)) {
 				cache.add(Action.DOWN);
@@ -66,6 +66,8 @@ public class Controls {
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) cache.add(Action.PAUSE);
 		if (input.isKeyPressed(Input.KEY_F5))     cache.add(Action.RESET);
 		if (input.isKeyPressed(Input.KEY_F11))    cache.add(Action.FULLSCREEN);
+		
+		if (input.isKeyPressed(Input.KEY_M)) cache.add(Action.MUTE);
 
 		if (input.isKeyPressed(Input.KEY_F2)) cache.add(Action.GOD_MODE);
 		if (input.isKeyPressed(Input.KEY_F3)) cache.add(Action.DEBUG);

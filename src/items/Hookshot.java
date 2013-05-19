@@ -84,7 +84,7 @@ public class Hookshot extends ItemBase {
 			if (state == HookState.IN) {
 				spawnHook();
 				state = HookState.MOTION;
-				hookSound.play();
+				if (Config.soundOn) hookSound.play(1, Config.gameVolume);
 			}
 		}
 		

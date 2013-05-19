@@ -81,6 +81,10 @@ public class Config {
 	public static final float STEAM_GRAVITY_SCALE = -.7f;
 	public static final float STEAM_DRAG = 0f;
 	
+	// Sound
+	public static boolean soundOn = true;
+	public static float gameVolume = 1;
+	
 	// UI
 	// how far away from the player the aiming cursor appears
 	public static final float CURSOR_DIST = 100;
