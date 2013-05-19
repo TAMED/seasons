@@ -67,6 +67,7 @@ public class LevelState extends BasicGameState{
 	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
+	
 	private static Music forestLoop;
 	private static UnicodeFont plainFont;
 	private static UnicodeFont boldFont;
@@ -78,7 +79,7 @@ public class LevelState extends BasicGameState{
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
 		try {
-			forestLoop = new Music("assets/sounds/Field19.wav");
+			forestLoop = new Music("assets/sounds/Song1.wav");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -112,6 +113,8 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		timerBar = new TimeBar(gc, plainFont, boldFont);
 		forestLoop.loop();
+		forestLoop.setVolume(0f);
+		forestLoop.fade(2000, .8f, false);
 	}
 
 	@Override

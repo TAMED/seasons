@@ -10,6 +10,8 @@ import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -40,9 +42,18 @@ public class Hookshot extends ItemBase {
 	
 	private Point playerStart;
 	
+	private Sound hookSound;
+	
 	public Hookshot(Player player) {
 		super(player);
 		state = HookState.IN;
+		
+		try {
+			hookSound = new Sound("assets/sounds/Hook_Sound.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -73,6 +84,7 @@ public class Hookshot extends ItemBase {
 			if (state == HookState.IN) {
 				spawnHook();
 				state = HookState.MOTION;
+				hookSound.play();
 			}
 		}
 		

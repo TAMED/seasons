@@ -79,7 +79,7 @@ public abstract class Entity extends Sprite {
 	private float acceleration;
 	private float jmpSpeed;
 	
-	private Sound jmpSound; 
+	private Sound jumpSound;
 
 	public Entity(float width, float height, int maxHp, boolean hasSensors) {
 		this(width, height, 0, maxHp, hasSensors);
@@ -89,7 +89,7 @@ public abstract class Entity extends Sprite {
 		super(0, 0, width, height, ground);
 		
 		try {
-			jmpSound = new Sound("assets/sounds/bear_jump.wav");
+			jumpSound = new Sound("assets/sounds/Jump_Sound.wav");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -248,13 +248,13 @@ public abstract class Entity extends Sprite {
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
-				jmpSound.play();
+				jumpSound.play();
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
 		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
 			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
-			jmpSound.play();
+			jumpSound.play();
 			anim.play(AnimationState.JUMP);
 		}
 		
