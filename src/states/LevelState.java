@@ -234,9 +234,9 @@ public class LevelState extends BasicGameState{
 	
 	// kinda janky, remove when paralaxing set up
 	private void drawBackground(Graphics graphics, GameContainer gc, StateBasedGame game) {
-		int backgroundX = -gc.getWidth();
+		int backgroundX = -Config.RESOLUTION_WIDTH;
 		while (backgroundX < map.getWidth()){
-			graphics.drawImage(background,  backgroundX,  map.getHeight() > gc.getHeight() ? 0 : map.getHeight() - gc.getHeight());
+			graphics.drawImage(background,  backgroundX,  map.getHeight() > Config.RESOLUTION_HEIGHT ? 0 : map.getHeight() - Config.RESOLUTION_HEIGHT);
 			backgroundX += background.getWidth();
 		}
 	}

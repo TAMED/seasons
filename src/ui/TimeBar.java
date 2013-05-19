@@ -15,6 +15,8 @@ import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import config.Config;
+
 
 import time.Time;
 import time.Timer;
@@ -51,19 +53,19 @@ public class TimeBar {
 	}
 
 	public TimeBar(GameContainer gc) {
-		timeWidth = gc.getWidth() - 2*timePos.x;
+		timeWidth = Config.RESOLUTION_WIDTH - 2*timePos.x;
 		timeShape = new Rectangle(timePos.x, timePos.y, 0, timeHeight);
-		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153), (gc.getWidth() - timePos.x)/4, timePos.y,
-                new Color(138, 217, 235), true);
+		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
+                new Color(138, 217, 235, 100), true);
 	}
 
 	public void render(GameContainer gc, Graphics graphics, Timer timer) {
 		graphics.setColor(Color.white);
 
 		String goalStr = getTimeString(timer.getGoal());
-		graphics.fillRect(gc.getWidth()/2 - 1, timePos.y+timeHeight, 1, 20);
-		goalFont.drawString(gc.getWidth()/2 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
-		goalFont.drawString(gc.getWidth()/2 - goalFont.getWidth(goalStr)/2, goalFont.getHeight("Goal")+timeHeight + timePos.y + 20, goalStr);
+		graphics.fillRect(Config.RESOLUTION_WIDTH/2 - 1, timePos.y+timeHeight, 1, 20);
+		goalFont.drawString(Config.RESOLUTION_WIDTH/2 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
+		goalFont.drawString(Config.RESOLUTION_WIDTH/2 - goalFont.getWidth(goalStr)/2, goalFont.getHeight("Goal")+timeHeight + timePos.y + 20, goalStr);
 		
 		if (timer.getBestTime().getMillis() < Integer.MAX_VALUE) {
 			String bestStr = getTimeString(timer.getBestTime());
@@ -73,7 +75,7 @@ public class TimeBar {
 			goalFont.drawString(bestOffset - goalFont.getWidth(bestStr)/2, goalFont.getHeight("Best")+timeHeight + timePos.y + 20, bestStr);
 		}
 		
-		graphics.setColor(Color.black);
+		graphics.setColor(new Color(0,0,0,100));
 		graphics.fillRect(timePos.x, timePos.y, timeWidth, timeHeight);
 		timeShape.setWidth(Math.max(Math.min(timer.getCurrentTime().getMillis()/timeDivide, timeWidth),0));
 		graphics.fill(timeShape, timeFill);

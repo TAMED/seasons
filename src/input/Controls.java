@@ -3,7 +3,9 @@
  */
 package input;
 
+import java.awt.im.InputContext;
 import java.util.EnumSet;
+import java.util.Locale;
 import java.util.Set;
 
 import org.newdawn.slick.GameContainer;
@@ -31,15 +33,28 @@ public class Controls {
 		Input input = gc.getInput();
 		mouseX = input.getMouseX();
 		mouseY = input.getMouseY();
-		
 		cache = EnumSet.noneOf(Action.class);
-		if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
-		if (input.isKeyDown(Input.KEY_S)) {
-			cache.add(Action.DOWN);
-			cache.add(Action.RELEASE);
+		
+		if (InputContext.getInstance().getLocale().getVariant().equals("UserDefined_ Ž#ÿ")) {
+			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
+			if (input.isKeyDown(Input.KEY_R)) {
+				cache.add(Action.DOWN);
+				cache.add(Action.RELEASE);
+			}
+			if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
+			if (input.isKeyDown(Input.KEY_S)) cache.add(Action.RIGHT);
 		}
-		if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
-		if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
+		
+		else {
+			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
+			if (input.isKeyDown(Input.KEY_S)) {
+				cache.add(Action.DOWN);
+				cache.add(Action.RELEASE);
+			}
+			if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
+			if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
+		}
+		
 		if (input.isKeyPressed(Input.KEY_SPACE)) {
 			cache.add(Action.JUMP);
 		}
