@@ -44,6 +44,7 @@ import config.Config;
 import config.Section;
 import entities.Player;
 import entities.StaticObstacle;
+import entities.Steam;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
@@ -53,6 +54,7 @@ public class LevelState extends BasicGameState{
 	private Player player;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<StaticObstacle> staticObjects;
+	private ArrayList<Steam> steams;
 	private static Box2DDebugDraw debugdraw;
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
@@ -138,6 +140,9 @@ public class LevelState extends BasicGameState{
 				e.render(graphics);
 			}
 			for (StaticObstacle s : staticObjects) {
+				s.render(graphics);
+			}
+			for (Steam s : steams) {
 				s.render(graphics);
 			}
 		}
@@ -249,6 +254,7 @@ public class LevelState extends BasicGameState{
 		
 		enemies = map.getEnemies();
 		staticObjects = map.getStaticObjects();
+		steams = map.getSteams();
 		World world = map.getWorld();
 		for (Enemy e : enemies) {
 			e.addToWorld(world, e.getX(), e.getY());

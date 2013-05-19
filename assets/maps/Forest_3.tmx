@@ -2,28 +2,14 @@
 <map version="1.0" orientation="orthogonal" width="50" height="33" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
  <tileset firstgid="217" source="salmonTiles.tsx"/>
- <tileset firstgid="233" name="bat" tilewidth="32" tileheight="32">
-  <image source="../rocks.png" width="128" height="128"/>
-  <tile id="0">
-   <properties>
-    <property name="enemyType" value="bat"/>
-    <property name="type" value="enemy"/>
-   </properties>
-  </tile>
-  <tile id="1">
-   <properties>
-    <property name="steam" value="true"/>
-   </properties>
-  </tile>
- </tileset>
  <layer name="foreground" width="50" height="33">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2XSwrCMBCGcwHd+tgJ6sqF0AP0FCr43Ph249uNXthT+JcSCKUtaZ1Jk9Ifvk0WmfmgHSaeEGIExgaYAE/wxGe613S9ysOuepWHXfXK7FEDddDQoElQjyJx97ZAW5MuQT2KxN3bA30w0GBIUI8ilUc+D+odSO46SR46Dnk8OOKL8ntwfVcccc3jm0CSh6n3iPxPuTx0wvUeSguHh+m9LMi/HlMwA3PlzEWPLdiBvXLmoscV3MBdObPRI898yjJnqMLxnxcR2zzWYCPCtxoVJj1k/2dwEfpvNR1MeET7f4OPCHcfKjg9kvrX3aWzEHgswBKsHOxf9TiAIzg52L/q8QBP8HKwfwnFzIv23ykAipmX1j/lTErjB1SJP4LIGQAA
+   H4sIAAAAAAAAA+2XSQrCQBBF+wK6ddgJ6sqFkAPkFCo4bpzdOLvRu/slNIQmCWVS1emEfHjL7qoHSVHtKaVGYGyBCfCUTHyhe23Xqzzcqld5uFWvzB41UAcNAk2GehyJurcF2kS6DPU4EnVvD/TBgMCQoR5HKo90Htw7kN514jwoDmk8JOKr8ntIfVcSKbuHrfeI/k+lPCiReg+lSRYP23tZUqgeUzADc+OsK6F6bMEO7I2zroTqcQU3cDfOuhLtkWY+ccwZrmT5z11KXh5rsFHBW40Lmx66/zO4KPpbjYIND7P/N/ioYPfhQtIjrn/qLv0PP48FWIJVAfsPexzAEZwK2H/Y4wGe4FXA/jUcM8/sv5MDHDMvqX/OmZTEFxeWoLXIGQAA
   </data>
  </layer>
  <layer name="object" width="50" height="33">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3OMQEAAAgDoPVvagsT7PYQEpAAAAAAzVwHAAB4bQEoclFjyBkAAA==
+   H4sIAAAAAAAAA+3OsQ0AIAwEsey/J2QNWqpvEYotXX9VAAAA3HYIftWvByBYIQCY7gAyFmqIyBkAAA==
   </data>
  </layer>
 </map>
