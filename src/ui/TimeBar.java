@@ -24,6 +24,7 @@ import time.Timer;
 @SuppressWarnings("unchecked")
 public class TimeBar {
 	private GradientFill timeFill;
+	private GradientFill salmonTimeFill;
 	private Rectangle timeShape;
 	private final Vec2 timePos = new Vec2(20,20);
 	private final float timeHeight = 30;
@@ -57,6 +58,8 @@ public class TimeBar {
 		timeShape = new Rectangle(timePos.x, timePos.y, 0, timeHeight);
 		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
                 new Color(138, 217, 235, 100), true);
+		salmonTimeFill = new GradientFill(timePos.x, timePos.y, new Color(240, 74, 74, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
+                new Color(205, 134, 134, 100), true);
 	}
 
 	public void render(GameContainer gc, Graphics graphics, Timer timer) {
@@ -81,7 +84,9 @@ public class TimeBar {
 		graphics.fill(timeShape, timeFill);
 		
 		String currentStr = "Time: "+getTimeString(timer.getCurrentTime());
+		
 		currentFont.drawString(timePos.x + 10, (timeHeight - currentFont.getHeight("Current"))/2+timePos.y, currentStr);
+		
 	}
 	
 	public void enter(GameContainer gc, StateBasedGame game, Timer timer) {
