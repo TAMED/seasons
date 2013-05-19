@@ -23,7 +23,7 @@ import entities.Player;
 public class Controls {
 	public enum Action { UP, DOWN, LEFT, RIGHT, JUMP, FIRE, PULL, RELEASE,
 	                     PAUSE, RESET, FULLSCREEN,
-	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN }
+	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN, REPLAY }
 	
 	private static Set<Action> cache;
 	private static float mouseX;
@@ -71,6 +71,7 @@ public class Controls {
 		if (input.isKeyPressed(Input.KEY_F3)) cache.add(Action.DEBUG);
 		if (input.isKeyPressed(Input.KEY_F4)) cache.add(Action.SLOW_DOWN);
 		if (input.isKeyPressed(Input.KEY_F6)) cache.add(Action.SKIP);
+		if (input.isKeyPressed(Input.KEY_F7)) cache.add(Action.REPLAY);
 	}
 	
 	public static double getAimAngle(Player player) {

@@ -52,6 +52,7 @@ public class LevelState extends BasicGameState{
 	private boolean viewDebug = false;
 	public static boolean godMode = false;
 	public static boolean slowMode = false;
+	public static boolean replayMode = false;
 	private static Camera camera;
 	private Cursor cursor;
 	private Vec2 goalLoc;
@@ -130,6 +131,7 @@ public class LevelState extends BasicGameState{
 		if (Controls.isKeyPressed(Action.DEBUG)) viewDebug = !viewDebug;
 		if (Controls.isKeyPressed(Action.GOD_MODE)) godMode = !godMode;
 		if (Controls.isKeyPressed(Action.SLOW_DOWN)) slowMode = !slowMode;
+		if (Controls.isKeyPressed(Action.REPLAY)) replayMode = !replayMode;
 		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
 		
 		// show pause screen if paused
@@ -148,7 +150,12 @@ public class LevelState extends BasicGameState{
 		if (closeToGoal()) {
 			timer.updateRecords();
 			Config.saveTimes();
-			nextLevel(game);
+			if (!replayMode) {
+				nextLevel(game);
+			}
+			else {
+				this.reset(game);
+			}
 		}
 		
 		// update world
