@@ -43,12 +43,15 @@ import combat.CombatContact;
 import config.Config;
 import config.Section;
 import entities.Player;
+import entities.Salmon;
 import entities.StaticObstacle;
 import entities.Steam;
 import entities.enemies.Enemy;
 
+@SuppressWarnings("unchecked")
 public class LevelState extends BasicGameState{
 	public static Queue<Section> sectionQueue;
+	public static List<Section> completedSections;
 	private Section section;
 	private Map map;
 	private Player player;
@@ -76,6 +79,7 @@ public class LevelState extends BasicGameState{
 	
 	static {
 		sectionQueue = new LinkedList<Section>();
+		completedSections = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
@@ -118,6 +122,7 @@ public class LevelState extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		timerBar = new TimeBar(gc, plainFont, boldFont);
+		Salmon.timerBar = timerBar;
 		forestLoop.loop();
 		forestLoop.setVolume(0f);
 		if (Config.soundOn) forestLoop.fade(2000, 1f, false);
@@ -149,8 +154,8 @@ public class LevelState extends BasicGameState{
 			for (Steam s : steams) {
 				s.render(graphics);
 			}
+			player.render(graphics);
 		}
-		player.render(graphics);
 		cursor.render(graphics);
 		
 		// so that transitions render correctly
@@ -240,6 +245,7 @@ public class LevelState extends BasicGameState{
 		if (timerGo) {
 			timer.update(delta);
 		}
+		timerBar.update(gc, game, delta);
 	}
 
 	@Override
@@ -253,7 +259,7 @@ public class LevelState extends BasicGameState{
 		map.getWorld().setDebugDraw(debugdraw);
 		
 		background = new Image(section.getBackgroundPath());
-		background = background.getScaledCopy((float) (map.getHeight() > gc.getHeight() ? map.getHeight() : gc.getHeight())/ (float) background.getHeight());
+		background = background.getScaledCopy((float) Math.max(map.getHeight(), Config.RESOLUTION_HEIGHT) / background.getHeight());
 
 		player = MainGame.player;
 		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
@@ -291,7 +297,8 @@ public class LevelState extends BasicGameState{
 	}
 	
 	private void nextLevel(StateBasedGame game) {
-		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
+		completedSections.add(section);
+		if (sectionQueue.isEmpty()) game.enterState(ResultsState.ID, Transitions.fadeOut(), Transitions.fadeIn());
 		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 	

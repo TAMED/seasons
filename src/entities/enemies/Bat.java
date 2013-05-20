@@ -4,7 +4,6 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import ai.FlyingGoomba;
