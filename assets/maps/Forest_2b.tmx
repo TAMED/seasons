@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="60" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <tileset firstgid="217" source="instructions.tsx"/>
+ <tileset firstgid="1017" source="salmonTiles.tsx"/>
+ <layer name="background" width="60" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzt0stSj3Ecx/GnGiUhW+nMlnRw2JYOkm1RqWxJR21RuoIOdAUUrkApbqBIbiDlsJVO1KLX3m/V4j/zjOcz89r85ll83zNPFCVL9n/sV1oUbfCbTbbYZift32/fpkfRLHO8Y54F3vMhPfW3H2ZH3JlJFkfJ5hg5gfsXvS3xkU8s85kVvsSk97Q78zhDPgUUUhS4f9XbV9ZY5xvf+cHPmPSed+cFyrhIORVUBu7f8rbNDrv84S977Mekt9qdNVyjljrqaQjcn53hXyeH45zgJLmcykj97YdZs64WbnGbVtpoD/QWaCqkiGJKKOUs52LSe0/Xfbp5QA+99AV6yzVVUEkVl7jMFa7GpPeRrsc8YZgRnjIa6K3TVE8D12nkBk3cjEnvmK5xJpjkGc+ZCvS2amqjnTt00EkXd2PS+0LXS6aZ4RWveRPo7dHUSx/9DDDIQ4Zi0pssWbJkyZKlage5VESy
+  </data>
+ </layer>
+ <layer name="foreground" width="60" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzl1TdPQmEUgOEPWI0RnIw1McjgoIOL6A9wUXdFjZpYF6MCs73N9jbbWyyLBWyxrOpkWdU/oIPlJSxXE0nuCYhXTvIshPPd770hIVd9nU2TUlvYxo5J/auxI/fbZ2c0nuMClzHQe0vjHe7xEAO9oeaF/lfBO/CZlfLj0Kx/N5yjtzdOeN8r9q5xY7DeDOF9H9l7wrPBevOE931j7x0fBustEt7XalHKhkSLbD9co7fXJey105kFh8F6W4S9+XQ6UWCw3m5hbzGdJSjV9CYhWXacePT2jgl7q+msQa2m14lC2XHi0fZWoBJVIb6/SO+SoNlNpwfeP/R7bkQTmgXndNDRiS50owe96EM/BjCIoT/U64YHXsE5w3SMYBRjGMcEJjGFacxgNgq9ZSiHSwV743+gZ+bomMcCFrGEZaxgFWtYx0YUeutQjwYVvt5dOvawjwP44MchjnCME5xGobcVbWhXoXsTYI0Q2y89x/qtyR7ivaQgNULSkK6C/7+RfE5ApkY0e7Ph+IXeHI1A7yc/dFpN
+  </data>
+ </layer>
+ <layer name="object" width="60" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztzEEJAAAIBLB7CPZvbIxD2AIsAQCArp0fJwDQccLkABc=
+  </data>
+ </layer>
+</map>
