@@ -17,11 +17,14 @@ public class Salmon extends StaticObstacle{
 	
 	public SoundEffect salmonSound;
 	public static TimeBar timerBar;
+	private boolean isStopped;
 	
 	public Salmon(float x, float y) throws SlickException {
 		super(x, y, true, Config.SALMON);
 		Animation a = (new Animation(new SpriteSheet("assets/images/nonentities/salmon/spinning.png", 32, 32), 100));
+		Animation s = new Animation(new SpriteSheet("assets/images/nonentities/salmon/salmon.png", 32, 32), 100);
 		anim.addAnimation(AnimationState.BASIC, a);
+		anim.addAnimation(AnimationState.STATIC, s);
 		anim.setDefaultAnimation(AnimationState.BASIC);
 		salmonSound = new SoundEffect("assets/sounds/Salmon_Sound.wav");
 	}
@@ -41,6 +44,22 @@ public class Salmon extends StaticObstacle{
 	public void addToWorld(World world, float x, float y, Time timer) {
 		super.addToWorld(world, x, y, timer);
 		this.setTimer(timer);
+	}
+	
+	// pause and play methods for menu
+	public void stop() {
+		anim.play(AnimationState.STATIC);
+		isStopped = true;
+	}
+	
+	public void play() {
+		anim.play(AnimationState.BASIC);
+		anim.getCurrentAnimation().setCurrentFrame(0);
+		isStopped = false;
+	}
+	
+	public boolean isStopped() {
+		return isStopped;
 	}
 
 }

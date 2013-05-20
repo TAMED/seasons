@@ -3,11 +3,9 @@ package entities.enemies;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
 
 import ai.FlyingGoomba;
 import anim.AnimationState;

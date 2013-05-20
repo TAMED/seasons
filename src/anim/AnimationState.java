@@ -20,6 +20,9 @@ import entities.Player;
  *
  */
 public enum AnimationState {
+	STATIC {
+		
+	},
 	
 	BASIC { 
 		
@@ -158,13 +161,13 @@ public enum AnimationState {
 	}
 	
 	static {
+		STATIC.prohibitTransitions();
 		BASIC.prohibitTransitions();
-		
 		IDLE.prohibitTransitions();
 		RUN.prohibitTransitions();
-		JUMP.prohibitTransitions(IDLE, RUN);
-		RISE.prohibitTransitions(IDLE, RUN);
-		FALL.prohibitTransitions(RUN);
+		JUMP.prohibitTransitions();
+		RISE.prohibitTransitions();
+		FALL.prohibitTransitions();
 		HOOKING.prohibitTransitions();
 		SOMERSAULT.prohibitTransitions();
 	}
