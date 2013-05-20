@@ -36,6 +36,8 @@ public class ResultsState extends BasicGameState {
 	private UnicodeFont smallFont;
 	private UnicodeFont bigFont;
 	private Image background;
+	private int counter;
+	private static final int PULSE_RATE = 500;
 	
 	@SuppressWarnings("unchecked")
 	public ResultsState() throws SlickException {
@@ -48,6 +50,8 @@ public class ResultsState extends BasicGameState {
         bigFont.addAsciiGlyphs();
         ((List<Effect>) bigFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
         bigFont.loadGlyphs();
+        
+        counter = 0;
 	}
 
 	@Override
@@ -64,7 +68,7 @@ public class ResultsState extends BasicGameState {
 		int gradeX = 750;
 		int bestX = 916;
 		int bestGradeX = 1016;
-		int y = (Config.RESOLUTION_HEIGHT / 2) - (SPACING * (grades.size() + 1) / 2);
+		int y = (Config.RESOLUTION_HEIGHT / 2) - (SPACING * (grades.size() + 2) / 2);
 		
 		drawBackground(graphics);
 		graphics.setColor(new Color(0, 0, 0, 128));
@@ -95,11 +99,15 @@ public class ResultsState extends BasicGameState {
 			FontUtils.drawCenter(bigFont,   bestGrade, bestGradeX, y-30, 0);
 			y += SPACING;
 		}
+		
+		String helpText = "Press Left Click to Continue" + ".....".substring(0, counter / PULSE_RATE + 1);
+		FontUtils.drawCenter(smallFont, helpText, Config.RESOLUTION_WIDTH / 2, y, 0);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		Controls.update(gc);
+		counter = (counter + delta) % (5 * PULSE_RATE);
 		if (Controls.isKeyPressed(Action.FIRE)) {
 			game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
 		}
