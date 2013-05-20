@@ -16,43 +16,41 @@ import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.gui.MouseOverArea;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.Effect;
 
+import states.LevelState;
+import ui.Transitions;
+
 import config.Config;
 import config.Level;
+import config.Section;
 import entities.Salmon;
 import entities.Sprite;
 
 public class SectionWidget {
 	private Salmon salmonSprite;
 	MouseOverArea mouseOver;
+	private Section section;
 	private final int WIDTH = Config.RESOLUTION_WIDTH/5;
 	private final int HEIGHT = 50;
-	private final int MARGIN_TOP = 50;
+	private final int MARGIN_TOP = 100;
 	private final int PADDING = 5;
+	private final int MARGIN_LEFT = 20;
 	private UnicodeFont font;
 	private ColorEffect alpha = new ColorEffect();
 	private int x;
 	private int y;
 	
 	@SuppressWarnings("unchecked")
-	public SectionWidget(GUIContext container, Level level, final int index) {
+	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
 		x = level.ordinal() * WIDTH;
 		y = index * HEIGHT + MARGIN_TOP + PADDING * index;
 		
 		Image image;
-		try {
-			image = new Image(0,0);
-			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
-				public void componentActivated(AbstractComponent source) {
-					System.out.println(index);
-				}
-			});
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		
 		
 		font = new UnicodeFont(new Font("", Font.PLAIN,30));
         font.addAsciiGlyphs();
@@ -66,7 +64,24 @@ public class SectionWidget {
 		}
         
         try {
-			salmonSprite = new Salmon(x + 4*PADDING, y + 4*PADDING);
+			salmonSprite = new Salmon(x + 4*PADDING + MARGIN_LEFT, y + 4*PADDING);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+        
+        this.section = level.getSection(index);
+        try {
+			image = new Image(0,0);
+			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
+				public void componentActivated(AbstractComponent source) {
+					System.out.println(section.getDisplayName());
+						for (int i = index+1; i < level.getNumSections(); i++) {							
+							LevelState.sectionQueue.add(level.getSection(i));
+						}
+						game.enterState(section.getID(), Transitions.fadeOut(), Transitions.fadeIn());
+						
+				}
+			});
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -84,7 +99,7 @@ public class SectionWidget {
 		}
 
 		
-		font.drawString((float)x + PADDING + 40, (float)y , "Forest 1", new org.newdawn.slick.Color(1,1,1, alpha));
+		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , section.getDisplayName(), new org.newdawn.slick.Color(1,1,1, alpha));
 		
 	}
 	
@@ -94,5 +109,9 @@ public class SectionWidget {
 	
 	public Sprite getSalmonSprite() {
 		return salmonSprite;
+	}
+	
+	public Section getSection() {
+		return section;
 	}
 }

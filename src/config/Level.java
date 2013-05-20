@@ -40,4 +40,13 @@ public enum Level {
 			sectionQueue.add(s);
 		}
 	}
+	
+	
+	public Section getSection(int index) {
+		return sections[index];
+	}
+	
+	public int getNumSections() {
+		return sections.length;
+	}
 }

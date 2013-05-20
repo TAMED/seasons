@@ -22,6 +22,7 @@ import org.newdawn.slick.util.FontUtils;
 import ui.Transitions;
 import config.Config;
 import config.Level;
+import config.Section;
 
 public class IntroState extends BasicGameState{
 	private static final int KEYCODE_NUMBER_OFFSET = 2;
@@ -29,6 +30,7 @@ public class IntroState extends BasicGameState{
 	private UnicodeFont font;
 	private Image background;
 	private ArrayList<SectionWidget> sections = new ArrayList<SectionWidget>();
+	private Section enterSection;
 	
 	public IntroState() {
 		super();
@@ -43,11 +45,21 @@ public class IntroState extends BasicGameState{
         ((List<Effect>) font.getEffects()).add(new ColorEffect(Color.WHITE));
         font.loadGlyphs();
         background = new Image("assets/backgrounds/menuA.png");
-		Image image = new Image("assets/images/nonentities/salmon/salmon.png");
-		for (int i = 0; i < 4; i++) {
-			SectionWidget sw = new SectionWidget(gc, Level.FOREST, i);
-			sections.add(sw);
+
+	}
+
+	@Override
+	public void enter(GameContainer gc, StateBasedGame game)
+			throws SlickException {
+		super.enter(gc, game);
+		for (int i = 0; i < Level.values().length; i++) {
+			for (int j = 0; j < Level.values()[i].getNumSections(); j++) {
+				SectionWidget sw = new SectionWidget(gc, Level.values()[i], j, game);
+				sections.add(sw);
+				System.out.println(sw.getSection().getDisplayName());
+			}			
 		}
+		
 	}
 
 	@Override
@@ -56,9 +68,9 @@ public class IntroState extends BasicGameState{
 		
 		background.draw(0, 0, Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
 		
-		for (int i=0;i<4;i++) {
-			sections.get(i).render(gc, g);
-			sections.get(i).getSalmonSprite().render(g);
+		for (int i = 0; i < sections.size(); i++) {
+				sections.get(i).render(gc, g);
+				sections.get(i).getSalmonSprite().render(g);
 		}
 		
 		String title = "Scare Bear: 5 Seasons of Hell";
@@ -77,18 +89,26 @@ public class IntroState extends BasicGameState{
 		
 	}
 
+	public void enterSection(Section section) {
+		enterSection = section;
+	}
+	
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
-		for (int i=0;i<4;i++) {
+		for (int i = 0; i < sections.size(); i++) {
 			sections.get(i).update(gc, delta);
 		}
-		for (int i = 0; i < Level.values().length; i++) {
-			if(gc.getInput().isKeyPressed(KEYCODE_NUMBER_OFFSET + i)) {
-				Level.values()[i].addToQueue();
-				game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
-			}
-		}
+//		for (int i = 0; i < Level.values().length; i++) {
+//			if(gc.getInput().isKeyPressed(KEYCODE_NUMBER_OFFSET + i)) {
+//				Level.values()[i].addToQueue();
+//				game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
+//			}
+//		}
+//		if (enterSection != null) {
+//			enterSection = null;
+//			game.enterState(enterSection.getID(), Transitions.fadeOut(), Transitions.fadeIn());
+//		}
 	}
 
 	@Override
