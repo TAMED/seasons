@@ -227,6 +227,10 @@ public class LevelState extends BasicGameState{
 			}
 		}
 		
+		for (Steam s : map.getSteams()) {
+			s.update(gc, delta);
+		}
+		
 		for (StaticObstacle s : staticObjects) {
 			s.update(gc, delta);
 		}
