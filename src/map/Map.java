@@ -20,6 +20,7 @@ import config.Config;
 import entities.Mushroom;
 import entities.Salmon;
 import entities.StaticObstacle;
+import entities.Steam;
 import entities.enemies.Bat;
 import entities.enemies.Enemy;
 import entities.enemies.Ent;
@@ -34,6 +35,7 @@ public class Map {
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Salmon> salmons;
 	private ArrayList<Mushroom> mushrooms;
+	private ArrayList<Steam> steams;
 	private Vec2 playerLoc;
 	private Vec2 goalLoc;
 	private final float EPS = .01f;
@@ -51,6 +53,7 @@ public class Map {
 		enemies = new ArrayList<Enemy>();
 		salmons = new ArrayList<Salmon>();
 		mushrooms = new ArrayList<Mushroom>();
+		steams = new ArrayList<Steam>();
 		foregroundLayer = foreground.getLayerIndex("foreground");
 		backgroundLayer = foreground.getLayerIndex("background");
 		objectLayer = foreground.getLayerIndex("object");
@@ -122,6 +125,14 @@ public class Map {
 						enemies.add(bat);
 					}
 				}
+				if (tileType.equals("steam")) {
+					String location = foreground.getTileProperty(tileId, "location", "meh");
+					if(location.equals("top")) {
+						float height = parseSteam(i,j);
+						Vec2 center = getPixelCenter(i,j);
+						steams.add(new Steam(center.x, (j+height/2)*tileHeight, height));
+					}
+				}
 				if (tileType.equals("salmon")) {
 					int xOffset = Integer.parseInt(foreground.getTileProperty(tileId, "xOffset", "0"));
 					int yOffset = Integer.parseInt(foreground.getTileProperty(tileId, "yOffset", "0"));
@@ -133,6 +144,22 @@ public class Map {
 				}
 			}
 		}
+	}
+	
+	private float parseSteam(int i, int j) {
+		int y = j;
+		float height = 0;
+		String location = "top";
+		while (!location.equals("bottom")) {
+				createBox(i*tileWidth + tileWidth/2f, y*tileHeight + tileHeight/2f, Config.STEAM, 1, true);
+				y++;
+				height++;
+				int tileId = foreground.getTileId(i, y, objectLayer);
+				location = foreground.getTileProperty(tileId, "location", "meh"); 
+		}
+		height++;
+		createBox(i*tileWidth + tileWidth/2f, y*tileHeight + tileHeight/2f, Config.STEAM, 1, true);
+		return height;
 	}
 	
 	/**
@@ -403,5 +430,8 @@ public class Map {
 	
 	public void render() {
 		foreground.render(0, 0);
+	}
+	public ArrayList<Steam> getSteams() {
+		return steams;
 	}
 }

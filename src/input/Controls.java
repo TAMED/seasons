@@ -35,11 +35,11 @@ public class Controls {
 		mouseY = input.getMouseY();
 		cache = EnumSet.noneOf(Action.class);
 		
-		if (InputContext.getInstance().getLocale().getVariant().equals("UserDefined_ ��")) {
+		if (InputContext.getInstance().getLocale().getDisplayVariant().length() > 10) {
 			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
+			if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
 			if (input.isKeyDown(Input.KEY_R)) {
 				cache.add(Action.DOWN);
-				cache.add(Action.RELEASE);
 			}
 			if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
 			if (input.isKeyDown(Input.KEY_S)) cache.add(Action.RIGHT);
@@ -47,9 +47,9 @@ public class Controls {
 		
 		else {
 			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
+			if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
 			if (input.isKeyDown(Input.KEY_S)) {
 				cache.add(Action.DOWN);
-				cache.add(Action.RELEASE);
 			}
 			if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
 			if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
@@ -61,6 +61,10 @@ public class Controls {
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			cache.add(Action.FIRE);
 			cache.add(Action.PULL);
+		}
+		
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
+			cache.add(Action.RELEASE);
 		}
 		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) cache.add(Action.PAUSE);
@@ -85,5 +89,12 @@ public class Controls {
 	
 	public static boolean isKeyPressed(Action action) {
 		return cache.contains(action);
+	}
+	
+	public static boolean moveKeyPressed() {
+		return (cache.contains(Action.UP) || cache.contains(Action.LEFT)
+				|| cache.contains(Action.DOWN) || cache.contains(Action.RIGHT)
+				|| cache.contains(Action.JUMP) || cache.contains(Action.FIRE)
+				|| cache.contains(Action.PULL) || cache.contains(Action.RELEASE));
 	}
 }
