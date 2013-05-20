@@ -5,7 +5,6 @@ package input;
 
 import java.awt.im.InputContext;
 import java.util.EnumSet;
-import java.util.Locale;
 import java.util.Set;
 
 import org.newdawn.slick.GameContainer;

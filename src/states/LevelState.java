@@ -47,6 +47,7 @@ import entities.StaticObstacle;
 import entities.Steam;
 import entities.enemies.Enemy;
 
+@SuppressWarnings("unchecked")
 public class LevelState extends BasicGameState{
 	public static Queue<Section> sectionQueue;
 	public static List<Section> completedSections;
