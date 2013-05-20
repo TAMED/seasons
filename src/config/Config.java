@@ -7,8 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
 
-import org.newdawn.slick.Color;
-
 import time.Timer;
 
 import com.thoughtworks.xstream.XStream;

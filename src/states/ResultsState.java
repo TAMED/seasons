@@ -25,7 +25,27 @@ import config.Config;
 import config.Section;
 
 public class ResultsState extends BasicGameState {
-	private enum Grade { S, A, B, C };
+	private enum Grade {
+		S("assets/images/ui/grades/S.png", new Color(229, 0, 0)), 
+		A("assets/images/ui/grades/A.png", new Color(255, 215, 0)), 
+		B("assets/images/ui/grades/B.png", new Color(191, 198, 214)), 
+		C("assets/images/ui/grades/C.png", new Color(150, 75, 0));
+	
+		private Image img;
+		
+		private Grade(String imgPath, Color color) {
+			try {
+				this.img = new Image(imgPath);
+				img.setImageColor(color.r, color.g, color.b);
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public Image getImage() {
+			return img;
+		}
+	};
 
 	public static final int ID = 2;
 	private static final int SPACING = 65;
@@ -74,12 +94,12 @@ public class ResultsState extends BasicGameState {
 		graphics.setColor(new Color(0, 0, 0, 128));
 		graphics.fillRect(0, 0, Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
 		
-		FontUtils.drawCenter(smallFont, "Section", sectionX, y, 0);
-		FontUtils.drawCenter(smallFont, "Goal",    goalX,    y, 0);
-		FontUtils.drawCenter(smallFont, "Time",    timeX,    y, 0);
-		FontUtils.drawCenter(smallFont, "Rank",    gradeX,   y, 0);
-		FontUtils.drawCenter(smallFont, "Best",    bestX,    y, 0);
-		FontUtils.drawCenter(smallFont, "Rank",    bestGradeX,   y, 0);
+		FontUtils.drawCenter(smallFont, "Stage", sectionX, y, 0);
+		FontUtils.drawCenter(smallFont, "Goal",  goalX,    y, 0);
+		FontUtils.drawCenter(smallFont, "Time",  timeX,    y, 0);
+		FontUtils.drawCenter(smallFont, "Rank",  gradeX,   y, 0);
+		FontUtils.drawCenter(smallFont, "Best",  bestX,    y, 0);
+		FontUtils.drawCenter(smallFont, "Rank",  bestGradeX,   y, 0);
 		y += SPACING;
 		
 		for (int i = 0; i < grades.size(); i++) {
@@ -87,16 +107,16 @@ public class ResultsState extends BasicGameState {
 			Timer t = Config.times.get(s);
 			String goal = String.format("%.2fs", s.getGoalTime() / 1000f);
 			String time = String.format("%.2fs", t.getLastTime().getMillis() / 1000f);
-			String grade = grades.get(i).name();
+			Grade grade = grades.get(i);
 			String best = String.format("%.2fs", t.getBestTime().getMillis() / 1000f);
-			String bestGrade = getGrade(t.getBestTime().getMillis(), t.getGoal().getMillis()).name();
+			Grade bestGrade = getGrade(t.getBestTime().getMillis(), t.getGoal().getMillis());
 			
-			FontUtils.drawCenter(smallFont, s.name(),  sectionX,   y, 0);
-			FontUtils.drawCenter(smallFont, goal,      goalX,      y, 0);
-			FontUtils.drawCenter(smallFont, time,      timeX,      y, 0);
-			FontUtils.drawCenter(bigFont,   grade,     gradeX,     y-30, 0);
-			FontUtils.drawCenter(smallFont, best,      bestX,      y, 0);
-			FontUtils.drawCenter(bigFont,   bestGrade, bestGradeX, y-30, 0);
+			FontUtils.drawCenter(smallFont, s.name(), sectionX, y, 0);
+			FontUtils.drawCenter(smallFont, goal,     goalX,    y, 0);
+			FontUtils.drawCenter(smallFont, time,     timeX,    y, 0);
+			FontUtils.drawCenter(smallFont, best,     bestX,    y, 0);
+			grade.getImage().drawCentered(gradeX, y+20);
+			bestGrade.getImage().drawCentered(bestGradeX, y+20);
 			y += SPACING;
 		}
 		
