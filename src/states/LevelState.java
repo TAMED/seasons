@@ -168,7 +168,7 @@ public class LevelState extends BasicGameState{
 		}
 		String mapName = section.getDisplayName();
 		plainFont.drawString(Config.RESOLUTION_WIDTH/2 - plainFont.getWidth(mapName)/2, 0, mapName);
-		if (gc.isPaused()) pauseScrn.render(graphics);
+		if (gc.isPaused()) pauseScrn.render(gc, graphics);
 	}
 
 	@Override
