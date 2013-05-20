@@ -48,6 +48,7 @@ public class Timer {
 		return best;
 	}
 	
+	
 	public Time getGoal() {
 		return goal;
 	}

@@ -15,6 +15,8 @@ import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import config.Config;
+
 
 import time.Time;
 import time.Timer;
@@ -22,6 +24,7 @@ import time.Timer;
 @SuppressWarnings("unchecked")
 public class TimeBar {
 	private GradientFill timeFill;
+	private GradientFill salmonTimeFill;
 	private Rectangle timeShape;
 	private final Vec2 timePos = new Vec2(20,20);
 	private final float timeHeight = 30;
@@ -31,39 +34,27 @@ public class TimeBar {
 	private static UnicodeFont currentFont;
 	
 	static {
-		goalFont = new UnicodeFont(new Font("", Font.PLAIN,16));
-        goalFont.addAsciiGlyphs();
-        ((List<Effect>) goalFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			goalFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-        
-        currentFont = new UnicodeFont(new Font("", Font.BOLD,16));
-        currentFont.addAsciiGlyphs();
-        ((List<Effect>) currentFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			currentFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
-	public TimeBar(GameContainer gc) {
-		timeWidth = gc.getWidth() - 2*timePos.x;
+	public TimeBar(GameContainer gc, UnicodeFont goalFont, UnicodeFont currentFont) {
+		timeWidth = Config.RESOLUTION_WIDTH - 2*timePos.x;
 		timeShape = new Rectangle(timePos.x, timePos.y, 0, timeHeight);
-		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153), (gc.getWidth() - timePos.x)/4, timePos.y,
-                new Color(138, 217, 235), true);
+		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
+                new Color(138, 217, 235, 100), true);
+		TimeBar.goalFont = goalFont;
+		TimeBar.currentFont = currentFont;
+		salmonTimeFill = new GradientFill(timePos.x, timePos.y, new Color(240, 74, 74, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
+                new Color(205, 134, 134, 100), true);
 	}
 
-	public void render(GameContainer gc, Graphics graphics, Timer timer) {
+	public void render(GameContainer gc, Graphics graphics, Timer timer, boolean timerGo) {
 		graphics.setColor(Color.white);
-
+		
 		String goalStr = getTimeString(timer.getGoal());
-		graphics.fillRect(gc.getWidth()/2 - 1, timePos.y+timeHeight, 1, 20);
-		goalFont.drawString(gc.getWidth()/2 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
-		goalFont.drawString(gc.getWidth()/2 - goalFont.getWidth(goalStr)/2, goalFont.getHeight("Goal")+timeHeight + timePos.y + 20, goalStr);
+		graphics.fillRect(Config.RESOLUTION_WIDTH/2 - 1, timePos.y+timeHeight, 1, 20);
+		goalFont.drawString(Config.RESOLUTION_WIDTH/2 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
+		goalFont.drawString(Config.RESOLUTION_WIDTH/2 - goalFont.getWidth(goalStr)/2, goalFont.getHeight("Goal")+timeHeight + timePos.y + 20, goalStr);
 		
 		if (timer.getBestTime().getMillis() < Integer.MAX_VALUE) {
 			String bestStr = getTimeString(timer.getBestTime());
@@ -73,13 +64,18 @@ public class TimeBar {
 			goalFont.drawString(bestOffset - goalFont.getWidth(bestStr)/2, goalFont.getHeight("Best")+timeHeight + timePos.y + 20, bestStr);
 		}
 		
-		graphics.setColor(Color.black);
+		graphics.setColor(new Color(0,0,0,100));
 		graphics.fillRect(timePos.x, timePos.y, timeWidth, timeHeight);
 		timeShape.setWidth(Math.max(Math.min(timer.getCurrentTime().getMillis()/timeDivide, timeWidth),0));
 		graphics.fill(timeShape, timeFill);
 		
 		String currentStr = "Time: "+getTimeString(timer.getCurrentTime());
+
+		if (!timerGo) {
+			currentStr = " Ready!";
+		}
 		currentFont.drawString(timePos.x + 10, (timeHeight - currentFont.getHeight("Current"))/2+timePos.y, currentStr);
+		
 	}
 	
 	public void enter(GameContainer gc, StateBasedGame game, Timer timer) {

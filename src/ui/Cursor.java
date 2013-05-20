@@ -3,11 +3,15 @@
  */
 package ui;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
+
+import anim.AnimationState;
 
 import states.LevelState;
 import util.Util;
@@ -32,6 +36,9 @@ public class Cursor extends Sprite {
 		super(0, 0, Config.CURSOR_SIZE, Config.CURSOR_SIZE);
 		Image wisp = new Image("assets/images/nonentities/wisp/sprite.png");
 		setImage(wisp);
+		Animation a = (new Animation(new SpriteSheet("assets/images/nonentities/wisp/pulsate.png", 32, 32), 150));
+		anim.addAnimation(AnimationState.BASIC, a);
+		anim.setDefaultAnimation(AnimationState.BASIC);
 		this.player = p;
 	}
 
