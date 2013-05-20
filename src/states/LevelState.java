@@ -80,7 +80,11 @@ public class LevelState extends BasicGameState{
 	public LevelState(Section section) {
 		super();
 		this.section = section;
-		timer = Config.times.get(section);
+		if (Config.times.containsKey(section)) timer = Config.times.get(section);
+		else {
+			timer = new Timer();
+			Config.times.put(section, timer);
+		}
 	}
 		
 	@Override
