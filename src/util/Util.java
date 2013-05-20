@@ -25,6 +25,10 @@ public class Util {
 		return new Color(color.x, color.y, color.z, 1);
 	}
 	
+	public static Color Color3fToColor(Color3f color, float alpha) {
+		return new Color(color.x, color.y, color.z, alpha);
+	}
+	
 	public static Vec2 PointToVec2(Point p) {
 		return new Vec2(p.getX(), p.getY());
 	}

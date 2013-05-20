@@ -157,17 +157,8 @@ public class LevelState extends BasicGameState{
 			for (Steam s : steams) {
 				s.render(graphics);
 			}
+			player.render(graphics);
 		}
-		for (Enemy e : enemies) {
-			e.render(graphics, biome);
-		}
-		for (StaticObstacle s : staticObjects) {
-			s.render(graphics);
-		}
-		for (Steam s : steams) {
-			s.render(graphics);
-		}
-		player.render(graphics);
 		cursor.render(graphics);
 		
 		// so that transitions render correctly
