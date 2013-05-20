@@ -15,6 +15,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 
+import sounds.SoundEffect;
 import util.Util;
 import anim.AnimStateMachine;
 import anim.AnimationState;
@@ -42,18 +43,13 @@ public class Hookshot extends ItemBase {
 	
 	private Point playerStart;
 	
-	private Sound hookSound;
+	private SoundEffect hookSound;
 	
 	public Hookshot(Player player) {
 		super(player);
 		state = HookState.IN;
 		
-		try {
-			hookSound = new Sound("assets/sounds/Hook_Sound.wav");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		hookSound = new SoundEffect("assets/sounds/Hook_Sound.wav");
 	}
 
 	@Override

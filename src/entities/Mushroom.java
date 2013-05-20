@@ -28,11 +28,11 @@ public class Mushroom extends StaticObstacle{
 			switch(dir) {
 			case LEFT:
 				vel.x = mushX;
-				vel.y = -mushY;
+				//vel.y = -mushY;
 				break;
 			case RIGHT:
 				vel.x = -mushX;
-				vel.y = -mushY;
+				//vel.y = -mushY;
 				break;
 			case UP:
 				vel.y = mushY;
