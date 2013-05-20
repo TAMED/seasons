@@ -13,7 +13,6 @@ import time.Time;
 import time.Timer;
 import config.Config;
 
-@SuppressWarnings("unchecked")
 public class TimeBar {
 	private GradientFill timeFill;
 	private GradientFill salmonTimeFill;
