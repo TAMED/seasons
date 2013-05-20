@@ -43,6 +43,10 @@ public enum Section {
 		return Config.MAP_PATH + mapName;
 	}
 	
+	public String getMapName() {
+		return mapName;
+	}
+	
 	public String getBackgroundPath() {
 		return Config.BACKGROUND_PATH + backgroundName;
 	}
