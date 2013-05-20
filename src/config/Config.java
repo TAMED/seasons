@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
 
+import org.newdawn.slick.Color;
+
 import time.Timer;
 
 import com.thoughtworks.xstream.XStream;
@@ -81,11 +83,19 @@ public class Config {
 	public static final float STEAM_GRAVITY_SCALE = -.7f;
 	public static final float STEAM_DRAG = 0f;
 	
+	// Sound
+	public static boolean soundOn = true;
+	public static float gameVolume = 1;
+	
 	// UI
 	// how far away from the player the aiming cursor appears
 	public static final float CURSOR_DIST = 100;
 	public static final int CURSOR_SIZE = 15;
-	public static final int SALMON_TIME = -100;
+	public static final int SALMON_TIME = -500;
+	
+	// Biome Colors
+	public static final Color FOREST_COLOR = new Color(76, 178, 76);
+	public static final Color LAKE_COLOR = new Color(185, 69, 201);
 	
 	public static EnumMap<Section, Timer> times;
 	

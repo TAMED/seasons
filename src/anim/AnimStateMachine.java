@@ -93,6 +93,10 @@ public class AnimStateMachine {
 		}
 	}
 	
+	public void setFrames(AnimationState as, int numFrames) {
+		setFrames(as, numFrames, animMap.get(as).getDuration(0));
+	}
+	
 	public void reset() {
 		currentState = defaultState;
 	}

@@ -2,10 +2,13 @@ package entities.enemies;
 
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 
 import ai.FlyingGoomba;
+import anim.AnimationState;
 import config.Config;
 import entities.Player;
 
@@ -22,7 +25,10 @@ public class Bat extends Enemy {
 	public Bat(float x, float y) {
 		super(x, y, WIDTH, HEIGHT, GROUND, RUNSPEED, JMPSPEED, MAXHP, new FlyingGoomba());
 		try {
-			setImage(new Image("assets/images/enemies/bat/sprite.png"));
+			Animation a = (new Animation(new SpriteSheet("assets/images/enemies/bat/flying.png", 117, 108), 100));
+			anim.addAnimation(AnimationState.BASIC, a);
+			anim.setDefaultAnimation(AnimationState.BASIC);
+			anim.setFrames(AnimationState.BASIC, 5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
