@@ -236,9 +236,7 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void jump(GameContainer gc, int delta) {
-		if (checkSteam(gc)) {
-			return;
-		}
+		
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
@@ -246,7 +244,7 @@ public abstract class Entity extends Sprite {
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
-		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
+		} else if (jumpCheck() || LevelState.godMode) {
 			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
 			jumpSound.play();
 			anim.play(AnimationState.JUMP);
@@ -403,7 +401,29 @@ public abstract class Entity extends Sprite {
 		alive = false;
 		physicsBody.setActive(false);
 	}
-
+	
+	public boolean jumpCheck() {
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				Fixture a = contactEdge.contact.getFixtureA();
+				Fixture b = contactEdge.contact.getFixtureA();
+				Object dataA = contactEdge.contact.getFixtureB().getUserData();
+				Object dataB = contactEdge.contact.getFixtureB().getUserData();
+				if (dataA != null && Direction.DOWN.equals(dataA) && !b.getBody().equals(this.getPhysicsBody()) && !b.m_isSensor) {
+					return true;					
+				}
+				if (dataB != null && Direction.DOWN.equals(dataB) && !a.getBody().equals(this.getPhysicsBody()) && !a.m_isSensor) {
+					return true;					
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * @return whether or not the given side of the entity is touching another body
 	 */
