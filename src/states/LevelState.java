@@ -43,6 +43,7 @@ import combat.CombatContact;
 import config.Config;
 import config.Section;
 import entities.Player;
+import entities.Salmon;
 import entities.StaticObstacle;
 import entities.Steam;
 import entities.enemies.Enemy;
@@ -121,6 +122,7 @@ public class LevelState extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		timerBar = new TimeBar(gc, plainFont, boldFont);
+		Salmon.timerBar = timerBar;
 		forestLoop.loop();
 		forestLoop.setVolume(0f);
 		if (Config.soundOn) forestLoop.fade(2000, 1f, false);
@@ -243,6 +245,7 @@ public class LevelState extends BasicGameState{
 		if (timerGo) {
 			timer.update(delta);
 		}
+		timerBar.update(gc, game, delta);
 	}
 
 	@Override
