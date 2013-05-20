@@ -138,10 +138,10 @@ public class LevelState extends BasicGameState{
 		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
 		if (Controls.isKeyPressed(Action.MUTE)) {
 			if (Config.soundOn) {
-				forestLoop.setVolume(0f);
+				forestLoop.pause();
 				Config.soundOn = false;
 			} else {
-				forestLoop.setVolume(Config.gameVolume);
+				forestLoop.resume();
 				Config.soundOn = true;
 			}
 		}

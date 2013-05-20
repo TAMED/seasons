@@ -23,6 +23,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 
+import sounds.SoundEffect;
 import states.LevelState;
 import util.Direction;
 import util.Util;
@@ -79,7 +80,7 @@ public abstract class Entity extends Sprite {
 	private float acceleration;
 	private float jmpSpeed;
 	
-	private Sound jumpSound;
+	private SoundEffect jumpSound;
 
 	public Entity(float width, float height, int maxHp, boolean hasSensors) {
 		this(width, height, 0, maxHp, hasSensors);
@@ -88,12 +89,7 @@ public abstract class Entity extends Sprite {
 	public Entity(float width, float height, float ground, int maxHp, boolean hasSensors) {
 		super(0, 0, width, height, ground);
 		
-		try {
-			jumpSound = new Sound("assets/sounds/Jump_Sound.wav");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		jumpSound = new SoundEffect("assets/sounds/Jump_Sound.wav");
 		
 		this.width = width;
 		this.height = height;
@@ -248,13 +244,13 @@ public abstract class Entity extends Sprite {
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
-				if (Config.soundOn) jumpSound.play(1, Config.gameVolume);
+				jumpSound.play();
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
 		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
 			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
-			if (Config.soundOn) jumpSound.play(1, Config.gameVolume);
+			jumpSound.play();
 			anim.play(AnimationState.JUMP);
 		}
 		
