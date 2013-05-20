@@ -166,6 +166,8 @@ public class LevelState extends BasicGameState{
 		if (replayMode) {
 			plainFont.drawString(0, Config.RESOLUTION_HEIGHT- plainFont.getHeight("Replay On"), "Replay On");
 		}
+		String mapName = section.getDisplayName();
+		plainFont.drawString(Config.RESOLUTION_WIDTH/2 - plainFont.getWidth(mapName)/2, 0, mapName);
 		if (gc.isPaused()) pauseScrn.render(graphics);
 	}
 
