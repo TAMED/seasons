@@ -40,6 +40,7 @@ import camera.Camera;
 
 import combat.CombatContact;
 
+import config.Biome;
 import config.Config;
 import config.Section;
 import entities.Player;
@@ -69,6 +70,7 @@ public class LevelState extends BasicGameState{
 	private Vec2 goalLoc;
 	private Image background;
 	private Timer timer;
+	private Biome biome;
 	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
@@ -111,6 +113,7 @@ public class LevelState extends BasicGameState{
 	public LevelState(Section section) {
 		super();
 		this.section = section;
+		biome = section.getBiome();
 		if (Config.times.containsKey(section)) timer = Config.times.get(section);
 		else {
 			timer = new Timer();
@@ -154,6 +157,15 @@ public class LevelState extends BasicGameState{
 			for (Steam s : steams) {
 				s.render(graphics);
 			}
+		}
+		for (Enemy e : enemies) {
+			e.render(graphics, biome);
+		}
+		for (StaticObstacle s : staticObjects) {
+			s.render(graphics);
+		}
+		for (Steam s : steams) {
+			s.render(graphics);
 		}
 		player.render(graphics);
 		cursor.render(graphics);

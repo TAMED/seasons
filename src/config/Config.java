@@ -93,10 +93,6 @@ public class Config {
 	public static final int CURSOR_SIZE = 15;
 	public static final int SALMON_TIME = -500;
 	
-	// Biome Colors
-	public static final Color FOREST_COLOR = new Color(76, 178, 76);
-	public static final Color LAKE_COLOR = new Color(185, 69, 201);
-	
 	public static EnumMap<Section, Timer> times;
 	
 	@SuppressWarnings("unchecked")
