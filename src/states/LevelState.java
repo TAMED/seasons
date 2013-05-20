@@ -149,7 +149,7 @@ public class LevelState extends BasicGameState{
 			camera.translateGraphics(gc);
 		} else {
 			for (Enemy e : enemies) {
-				e.render(graphics);
+				e.render(graphics, biome);
 			}
 			for (StaticObstacle s : staticObjects) {
 				s.render(graphics);
