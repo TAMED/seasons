@@ -152,8 +152,8 @@ public class LevelState extends BasicGameState{
 			for (Steam s : steams) {
 				s.render(graphics);
 			}
+			player.render(graphics);
 		}
-		player.render(graphics);
 		cursor.render(graphics);
 		
 		// so that transitions render correctly

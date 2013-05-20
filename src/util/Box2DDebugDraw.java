@@ -72,7 +72,7 @@ public class Box2DDebugDraw extends DebugDraw {
 	 */
 	@Override
 	public void drawSolidCircle(Vec2 center, float radius, Vec2 axis, Color3f color) {
-		graphics.setColor(Util.Color3fToColor(color));
+		graphics.setColor(Util.Color3fToColor(color, 0.75f));
 		graphics.fill(new Circle(center.x * Config.PIXELS_PER_METER,
 		                         center.y * Config.PIXELS_PER_METER,
 		                         radius * Config.PIXELS_PER_METER));
@@ -88,7 +88,7 @@ public class Box2DDebugDraw extends DebugDraw {
 			v[2*i+0] = vertices[i].x * Config.PIXELS_PER_METER;
 			v[2*i+1] = vertices[i].y * Config.PIXELS_PER_METER;
 		}
-		graphics.setColor(Util.Color3fToColor(color));
+		graphics.setColor(Util.Color3fToColor(color, 0.75f));
 		graphics.fill(new Polygon(v));
 	}
 
