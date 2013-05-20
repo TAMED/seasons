@@ -4,12 +4,12 @@
  <tileset firstgid="217" source="salmonTiles.tsx"/>
  <layer name="foreground" width="50" height="33">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2XSQrCQBBF+wK6ddgJ6sqFkAPkFCo4bpzdOLvRu/slNIQmCWVS1emEfHjL7qoHSVHtKaVGYGyBCfCUTHyhe23Xqzzcqld5uFWvzB41UAcNAk2GehyJurcF2kS6DPU4EnVvD/TBgMCQoR5HKo90Htw7kN514jwoDmk8JOKr8ntIfVcSKbuHrfeI/k+lPCiReg+lSRYP23tZUqgeUzADc+OsK6F6bMEO7I2zroTqcQU3cDfOuhLtkWY+ccwZrmT5z11KXh5rsFHBW40Lmx66/zO4KPpbjYIND7P/N/ioYPfhQtIjrn/qLv0PP48FWIJVAfsPexzAEZwK2H/Y4wGe4FXA/jUcM8/sv5MDHDMvqX/OmZTEFxeWoLXIGQAA
+   H4sIAAAAAAAAC+2XSwrCMBCGcwHd+tgJ6sqF0AN4ChV8bny78e1Gr+CZ/UsJlNCGaTtJ09IfvpUkMx/YYeIJIcZgYoEp8ISZjAzda7te5eFWvcrDrXpl9qiBOmgQaDLU40jUvS3QJtJlqMeRqHt7oA8GBIYM9ThSeaTz4N6B5K4T50FxSONhIiNRfg9T/ysTKbuHrfeI/E5NeVBi6j2UJlk8bO9lulA9ZmAOFspZV0L12IE9OChnXQnV4wbu4KGcdSXSI8184pgzXMnynbuUvDw2YCuCtxqVnwb/d5sesv8LuAr6W42CDQ+1/w/4imD34cKkR1z/1F06Cb7HEqzAuoD9hz2O4ATOBew/7PEEL/AuYP+SJLMvDrX/Tg5wzDxd/5wzSccfT0bb4MgZAAA=
   </data>
  </layer>
  <layer name="object" width="50" height="33">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3OsQ0AIAwEsey/J2QNWqpvEYotXX9VAAAA3HYIftWvByBYIQCY7gAyFmqIyBkAAA==
+   H4sIAAAAAAAAC+3OsQ0AIAwEsey/J2QNWqpvEYotXX9VAAAA3HYIftWvByBYIQCY7gAyFmqIyBkAAA==
   </data>
  </layer>
 </map>

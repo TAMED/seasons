@@ -7,6 +7,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import sounds.SoundEffect;
 import time.Time;
+import ui.TimeBar;
 import util.Direction;
 import anim.AnimationState;
 import config.Config;
@@ -15,6 +16,7 @@ import config.Config;
 public class Salmon extends StaticObstacle{
 	
 	public SoundEffect salmonSound;
+	public static TimeBar timerBar;
 	
 	public Salmon(float x, float y) throws SlickException {
 		super(x, y, true, Config.SALMON);
@@ -33,6 +35,7 @@ public class Salmon extends StaticObstacle{
 		getPhysicsBody().setActive(false);
 		getTimer().update(Config.SALMON_TIME);
 		salmonSound.play();
+		timerBar.gotSalmon();
 	}
 	
 	public void addToWorld(World world, float x, float y, Time timer) {
