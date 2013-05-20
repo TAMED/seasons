@@ -16,6 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.Effect;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
 import config.Config;
@@ -26,35 +27,66 @@ import entities.Sprite;
  *
  */
 public class PauseScreen extends Sprite {
-	private static final Color color = new Color(0, 0, 0, 128);
-	private UnicodeFont font;
+	private static final Color color = new Color(0, 0, 0, 180);
+	private UnicodeFont smallFont;
+	private UnicodeFont bigFont;
 
 	@SuppressWarnings("unchecked")
 	public PauseScreen() {
 		super(0, 0, Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
-		font = new UnicodeFont(new Font("", Font.PLAIN,64));
-        font.addAsciiGlyphs();
-        ((List<Effect>) font.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+		smallFont = new UnicodeFont(new Font("", Font.PLAIN,40));
+        smallFont.addAsciiGlyphs();
+        ((List<Effect>) smallFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
+		bigFont = new UnicodeFont(new Font("", Font.PLAIN,70));
+        bigFont.addAsciiGlyphs();
+        ((List<Effect>) bigFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+
+        
         try {
-			font.loadGlyphs();
+			smallFont.loadGlyphs();
+			bigFont.loadGlyphs();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
-	public void render(Graphics graphics) {
+	// see below for update
+	public void render(GameContainer gc, Graphics graphics) {
 		graphics.setColor(color);
 		graphics.fillRect(0, 0, Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
+		
+		int offset = 20;
 
-		int y = Config.RESOLUTION_HEIGHT / 2 - font.getLineHeight() / 2;
-		FontUtils.drawCenter(font, "Paused", 0, y, Config.RESOLUTION_WIDTH);
+		int pauseY = offset;// - font.getLineHeight() / 2;
+		int optionsY = Config.RESOLUTION_HEIGHT / 8 + offset;
+		int controlsY = Config.RESOLUTION_HEIGHT / 4;
+		int controlListY = Config.RESOLUTION_HEIGHT * 3 / 8;
+		
+		FontUtils.drawCenter(bigFont, "Game paused", 0, pauseY, Config.RESOLUTION_WIDTH);
+		FontUtils.drawCenter(smallFont, "Press J to return to the Menu. Press Q to quit", 0, optionsY, Config.RESOLUTION_WIDTH);
+		FontUtils.drawCenter(bigFont, "Controls:", 0, controlsY, Config.RESOLUTION_WIDTH);
+		FontUtils.drawCenter(smallFont, 
+				"'A' and 'D' - move left and right\n" +
+				"'W' or 'Space' - jump\n" +
+				"Left Click - shoot or pull hookshot\n" +
+				"Right Click - release hookshot\n" +
+				"Escape - pause or unpause\n" +
+				"'M' - mute/unmute sounds\n" + 
+				"'R' - reset level\n" +
+				"'U' - turn fullscreen on or off\n",
+				0, controlListY, Config.RESOLUTION_WIDTH);
 	}
 
-	@Override
-	public void update(GameContainer gc, int delta) {
+	// No longer an override because we need the param game to change states, if necessary
+	public void update(GameContainer gc, StateBasedGame game, int delta) {
 		if (Controls.isKeyPressed(Action.PAUSE)) {
 			unpause(gc);
+		} else if (Controls.isKeyPressed(Action.MENU)) {
+			unpause(gc);
+			game.enterState(0);
+		} else if (Controls.isKeyPressed(Action.QUIT)) {
+			gc.exit();
 		}
 	}
 
