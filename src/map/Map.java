@@ -130,7 +130,7 @@ public class Map {
 					if(location.equals("top")) {
 						float height = parseSteam(i,j);
 						Vec2 center = getPixelCenter(i,j);
-						steams.add(new Steam(center.x, (j+height/2)*tileHeight, height));
+						steams.add(new Steam(center.x, (j+height/2)*tileHeight, height, i));
 					}
 				}
 				if (tileType.equals("salmon")) {
