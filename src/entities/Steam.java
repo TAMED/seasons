@@ -14,7 +14,7 @@ public class Steam extends Sprite{
 	public Steam(float x, float y, float height, int frameIndex) {
 		super(x, y, WIDTH, height*HEIGHT_MUL);
 		try {
-			Animation a = (new Animation(new SpriteSheet("assets/images/nonentities/steam/steam.png", 64, 64), 100));
+			Animation a = (new Animation(new SpriteSheet("assets/images/nonentities/steam/steam-high.png", 320, 320), 100));
 			a.setCurrentFrame(frameIndex % 9);
 			anim.addAnimation(AnimationState.BASIC, a);
 			anim.setDefaultAnimation(AnimationState.BASIC);
