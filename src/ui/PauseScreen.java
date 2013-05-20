@@ -16,6 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.Effect;
+import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
 import config.Config;
@@ -51,10 +52,15 @@ public class PauseScreen extends Sprite {
 		FontUtils.drawCenter(font, "Paused", 0, y, Config.RESOLUTION_WIDTH);
 	}
 
-	@Override
-	public void update(GameContainer gc, int delta) {
+	// No longer an override because we need the param game to change states, if necessary
+	public void update(GameContainer gc, StateBasedGame game, int delta) {
 		if (Controls.isKeyPressed(Action.PAUSE)) {
 			unpause(gc);
+		} else if (Controls.isKeyPressed(Action.MENU)) {
+			unpause(gc);
+			game.enterState(0);
+		} else if (Controls.isKeyPressed(Action.QUIT)) {
+			gc.exit();
 		}
 	}
 

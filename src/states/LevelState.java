@@ -174,12 +174,14 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		Controls.update(gc);
 		
-		// check toggles
+		// check toggles for special commands
+		// TODO: remove
 		if (Controls.isKeyPressed(Action.DEBUG)) viewDebug = !viewDebug;
 		if (Controls.isKeyPressed(Action.GOD_MODE)) godMode = !godMode;
 		if (Controls.isKeyPressed(Action.SLOW_DOWN)) slowMode = !slowMode;
 		if (Controls.isKeyPressed(Action.REPLAY)) replayMode = !replayMode;
-		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+
+		// check for these even if game is paused
 		if (Controls.isKeyPressed(Action.MUTE)) {
 			if (Config.soundOn) {
 				forestLoop.pause();
@@ -189,15 +191,15 @@ public class LevelState extends BasicGameState{
 				Config.soundOn = true;
 			}
 		}
+		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+		if (Controls.isKeyPressed(Action.RESET)) { reset(game); }
+		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
 		
 		// show pause screen if paused
-		if (gc.isPaused()) { pauseScrn.update(gc, delta); return; }
+		if (gc.isPaused()) { pauseScrn.update(gc, game, delta); return; }
 		
 		// should go after pause screen update
 		if (Controls.isKeyPressed(Action.PAUSE) || !gc.hasFocus()) pause(gc);
-		
-		if (Controls.isKeyPressed(Action.RESET)) { reset(game); }
-		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
 		
 		// slooooow dooooown
 		if (slowMode) delta /= 10;
