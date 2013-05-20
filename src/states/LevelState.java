@@ -200,7 +200,7 @@ public class LevelState extends BasicGameState{
 		map.getWorld().setDebugDraw(debugdraw);
 		
 		background = new Image(section.getBackgroundPath());
-		background = background.getScaledCopy((float) (map.getHeight() > gc.getHeight() ? map.getHeight() : gc.getHeight())/ (float) background.getHeight());
+		background = background.getScaledCopy((float) Math.max(map.getHeight(), Config.RESOLUTION_HEIGHT) / background.getHeight());
 
 		player = MainGame.player;
 		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
