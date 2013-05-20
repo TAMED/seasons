@@ -14,6 +14,7 @@ import states.LevelState;
 public enum Level {
 	FOREST(Section.FOREST_1,
 			Section.FOREST_2,
+			Section.FOREST_2A,
 			Section.FOREST_3,
 			Section.FOREST_4,
 			Section.FOREST_5,
