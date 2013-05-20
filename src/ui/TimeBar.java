@@ -84,7 +84,6 @@ public class TimeBar {
 	
 	public void gotSalmon() {
 		salmonTimer = 250;
-		System.out.println("Hi");
 		currentFill = salmonTimeFill;
 	}
 	

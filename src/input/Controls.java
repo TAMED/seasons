@@ -22,7 +22,7 @@ import entities.Player;
 public class Controls {
 	public enum Action { UP, DOWN, LEFT, RIGHT, JUMP, FIRE, PULL, RELEASE,
 	                     PAUSE, RESET, FULLSCREEN,
-	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN, REPLAY, MUTE }
+	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN, REPLAY, MUTE, QUIT, MENU }
 	
 	private static Set<Action> cache;
 	private static float mouseX;
@@ -33,7 +33,8 @@ public class Controls {
 		mouseX = input.getMouseX();
 		mouseY = input.getMouseY();
 		cache = EnumSet.noneOf(Action.class);
-		
+
+		// in other words, if you are mike a.k.a. a bitch
 		if (InputContext.getInstance().getLocale().getDisplayVariant().length() > 10) {
 			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
 			if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
@@ -47,31 +48,32 @@ public class Controls {
 		else {
 			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
 			if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
-			if (input.isKeyDown(Input.KEY_S)) {
-				cache.add(Action.DOWN);
-			}
+			if (input.isKeyDown(Input.KEY_S)) cache.add(Action.DOWN);
 			if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
 			if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
 		}
 		
-		if (input.isKeyPressed(Input.KEY_SPACE)) {
-			cache.add(Action.JUMP);
-		}
+		if (input.isKeyPressed(Input.KEY_SPACE)) cache.add(Action.JUMP);
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			cache.add(Action.FIRE);
 			cache.add(Action.PULL);
 		}
 		
-		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) {
-			cache.add(Action.RELEASE);
-		}
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)) cache.add(Action.RELEASE);
 		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) cache.add(Action.PAUSE);
-		if (input.isKeyPressed(Input.KEY_F5))     cache.add(Action.RESET);
-		if (input.isKeyPressed(Input.KEY_F11))    cache.add(Action.FULLSCREEN);
-		
 		if (input.isKeyPressed(Input.KEY_M)) cache.add(Action.MUTE);
+		if (input.isKeyPressed(Input.KEY_R)) cache.add(Action.RESET);
+		if (input.isKeyPressed(Input.KEY_U)) cache.add(Action.FULLSCREEN);
+		
+		// only to do when paused
+		if (input.isKeyPressed(Input.KEY_Q)) cache.add(Action.QUIT);
+		if (input.isKeyPressed(Input.KEY_J)) cache.add(Action.MENU);
 
+		// Function keys are for testing and we'll eventually take them out
+		// TODO: remove
+		if (input.isKeyPressed(Input.KEY_F5)) cache.add(Action.RESET);
+		if (input.isKeyPressed(Input.KEY_F11)) cache.add(Action.FULLSCREEN);
 		if (input.isKeyPressed(Input.KEY_F2)) cache.add(Action.GOD_MODE);
 		if (input.isKeyPressed(Input.KEY_F3)) cache.add(Action.DEBUG);
 		if (input.isKeyPressed(Input.KEY_F4)) cache.add(Action.SLOW_DOWN);
