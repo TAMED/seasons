@@ -12,6 +12,7 @@ public enum Section {
 	FOREST_1("Forest_1.tmx", "forest3.png", 20000),
 	FOREST_2("Forest_2.tmx", "forest3.png", 20000),
 	FOREST_2A("Forest_2a.tmx", "forest3.png", 20000),
+	FOREST_2B("Forest_2b.tmx", "forest3.png", 20000),
 	FOREST_3("Forest_3.tmx", "forest3.png", 20000),
 	FOREST_4("Forest_4.tmx", "forest3.png", 20000),
 	FOREST_5("Forest_5.tmx", "forest3.png", 20000),
