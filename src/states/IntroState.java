@@ -14,23 +14,18 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.Effect;
-import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
-import ui.Transitions;
 import config.Config;
 import config.Level;
-import config.Section;
 
 public class IntroState extends BasicGameState{
-	private static final int KEYCODE_NUMBER_OFFSET = 2;
 	public static final int ID = 0;
 	private UnicodeFont font;
 	private Image background;
 	private ArrayList<SectionWidget> sections = new ArrayList<SectionWidget>();
-	private Section enterSection;
 	
 	public IntroState() {
 		super();
@@ -40,10 +35,8 @@ public class IntroState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame arg1)
 			throws SlickException {
-		font = new UnicodeFont(new Font("", Font.PLAIN,30));
-        font.addAsciiGlyphs();
+		font = Config.MENU_FONT;
         ((List<Effect>) font.getEffects()).add(new ColorEffect(Color.WHITE));
-        font.loadGlyphs();
         background = new Image("assets/backgrounds/menuA.png");
 
 	}
@@ -88,10 +81,6 @@ public class IntroState extends BasicGameState{
 		}
 		
 	}
-
-	public void enterSection(Section section) {
-		enterSection = section;
-	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
@@ -99,16 +88,6 @@ public class IntroState extends BasicGameState{
 		for (int i = 0; i < sections.size(); i++) {
 			sections.get(i).update(gc, delta);
 		}
-//		for (int i = 0; i < Level.values().length; i++) {
-//			if(gc.getInput().isKeyPressed(KEYCODE_NUMBER_OFFSET + i)) {
-//				Level.values()[i].addToQueue();
-//				game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
-//			}
-//		}
-//		if (enterSection != null) {
-//			enterSection = null;
-//			game.enterState(enterSection.getID(), Transitions.fadeOut(), Transitions.fadeIn());
-//		}
 	}
 
 	@Override

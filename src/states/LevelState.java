@@ -91,23 +91,10 @@ public class LevelState extends BasicGameState{
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		plainFont = new UnicodeFont(new Font("", Font.PLAIN,16));
-        plainFont.addAsciiGlyphs();
-        ((List<Effect>) plainFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			plainFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		plainFont = Config.PLAIN_FONT;
         
-        boldFont = new UnicodeFont(new Font("", Font.BOLD,16));
-        boldFont.addAsciiGlyphs();
-        ((List<Effect>) boldFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			boldFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+        boldFont = Config.BOLD_FONT;
+        
 	}
 	
 	public LevelState(Section section) {

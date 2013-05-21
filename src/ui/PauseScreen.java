@@ -19,6 +19,8 @@ import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
+import states.LevelState;
+
 import config.Config;
 import entities.Sprite;
 
@@ -34,21 +36,12 @@ public class PauseScreen extends Sprite {
 	@SuppressWarnings("unchecked")
 	public PauseScreen() {
 		super(0, 0, Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
-		smallFont = new UnicodeFont(new Font("", Font.PLAIN,40));
-        smallFont.addAsciiGlyphs();
+		smallFont = Config.MENU_FONT;
         ((List<Effect>) smallFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
         
-		bigFont = new UnicodeFont(new Font("", Font.PLAIN,70));
-        bigFont.addAsciiGlyphs();
+		bigFont = Config.BIG_FONT;
         ((List<Effect>) bigFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
 
-        
-        try {
-			smallFont.loadGlyphs();
-			bigFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 
 	// see below for update
@@ -84,6 +77,7 @@ public class PauseScreen extends Sprite {
 			unpause(gc);
 		} else if (Controls.isKeyPressed(Action.MENU)) {
 			unpause(gc);
+			LevelState.sectionQueue.clear();
 			game.enterState(0);
 		} else if (Controls.isKeyPressed(Action.QUIT)) {
 			gc.exit();

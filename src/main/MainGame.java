@@ -62,6 +62,7 @@ public class MainGame extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		Config.loadTimes();
+		Config.loadFonts();
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
 		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
 		addState(new IntroState());

@@ -1,11 +1,19 @@
 package config;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
+import java.util.List;
+
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.Effect;
 
 import time.Timer;
 
@@ -92,6 +100,10 @@ public class Config {
 	public static final int SALMON_TIME = -500;
 	
 	public static EnumMap<Section, Timer> times;
+	public static final UnicodeFont MENU_FONT = new UnicodeFont(new Font("", Font.PLAIN, 30));
+	public static final UnicodeFont PLAIN_FONT = new UnicodeFont(new Font("", Font.PLAIN,16));
+	public static final UnicodeFont BOLD_FONT = new UnicodeFont(new Font("", Font.BOLD,16));
+	public static final UnicodeFont BIG_FONT = new UnicodeFont(new Font("", Font.PLAIN, 70));
 	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
@@ -130,5 +142,29 @@ public class Config {
 			times.put(s, new Timer());
 		}
 		saveTimes();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void loadFonts() {
+		MENU_FONT.addAsciiGlyphs();
+		((List<Effect>) MENU_FONT.getEffects()).add(new ColorEffect(new Color(1, 1, 1, 0.8f)));
+
+		PLAIN_FONT.addAsciiGlyphs();
+        ((List<Effect>) PLAIN_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
+        BOLD_FONT.addAsciiGlyphs();
+        ((List<Effect>) BOLD_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
+        BIG_FONT.addAsciiGlyphs();
+        ((List<Effect>) BIG_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
+		try {
+			MENU_FONT.loadGlyphs();
+			PLAIN_FONT.loadGlyphs();
+			BOLD_FONT.loadGlyphs();
+			BIG_FONT.loadGlyphs();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 }

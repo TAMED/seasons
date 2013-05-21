@@ -50,18 +50,7 @@ public class SectionWidget {
 		y = index * HEIGHT + MARGIN_TOP + PADDING * index;
 		
 		Image image;
-		
-		
-		font = new UnicodeFont(new Font("", Font.PLAIN,30));
-        font.addAsciiGlyphs();
-        alpha.setColor(new Color(1, 1, 1, 0.8f));
-
-        ((List<Effect>) font.getEffects()).add(alpha);
-        try {
-			font.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		font = Config.MENU_FONT;
         
         try {
 			salmonSprite = new Salmon(x + 4*PADDING + MARGIN_LEFT, y + 4*PADDING);

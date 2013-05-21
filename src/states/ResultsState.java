@@ -61,15 +61,10 @@ public class ResultsState extends BasicGameState {
 	
 	@SuppressWarnings("unchecked")
 	public ResultsState() throws SlickException {
-		smallFont = new UnicodeFont(new Font("", Font.PLAIN, 30));
-        smallFont.addAsciiGlyphs();
+		smallFont = Config.MENU_FONT;
         ((List<Effect>) smallFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        smallFont.loadGlyphs();
 
-		bigFont = new UnicodeFont(new Font("", Font.PLAIN, 70));
-        bigFont.addAsciiGlyphs();
-        ((List<Effect>) bigFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        bigFont.loadGlyphs();
+		bigFont = Config.BIG_FONT;
         
         counter = 0;
 	}
