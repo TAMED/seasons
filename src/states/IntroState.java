@@ -65,19 +65,17 @@ public class IntroState extends BasicGameState{
 				sections.get(i).getSalmonSprite().render(g);
 		}
 		
-		String title = "Scare Bear: 5 Seasons of Hell";
-		String pressKey = "Use the number keys to select a level";
+		String title = "Level Select";
 		int w = Config.RESOLUTION_WIDTH;
 		int lh = font.getLineHeight();
-		int y = Config.RESOLUTION_HEIGHT / 2 - lh;
-		FontUtils.drawCenter(font, title, 0, y, w);
-		y += lh;
-		FontUtils.drawCenter(font, pressKey, 0, y, w);
-		for (int i = 0; i < Level.values().length; i++) {
-			y += lh;
-			String str = (i+1) + ": " + Level.values()[i].name();
-			FontUtils.drawCenter(font, str, 0, y, w);
-		}
+		FontUtils.drawCenter(font, title, 0, 0, w);
+//		y += lh;
+//		FontUtils.drawCenter(font, pressKey, 0, y, w);
+//		for (int i = 0; i < Level.values().length; i++) {
+//			y += lh;
+//			String str = (i+1) + ": " + Level.values()[i].name();
+//			FontUtils.drawCenter(font, str, 0, y, w);
+//		}
 		
 	}
 	
