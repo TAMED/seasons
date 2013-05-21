@@ -1,7 +1,6 @@
 package states;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 

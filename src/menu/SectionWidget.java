@@ -1,29 +1,18 @@
 package menu;
 
-import java.awt.Font;
-import java.util.List;
-import java.awt.Color;
-
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.gui.AbstractComponent;
 import org.newdawn.slick.gui.ComponentListener;
 import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.Effect;
 
 import states.LevelState;
 import ui.Transitions;
-
 import config.Config;
 import config.Level;
 import config.Section;
@@ -40,11 +29,9 @@ public class SectionWidget {
 	private final int PADDING = 5;
 	private final int MARGIN_LEFT = 20;
 	private UnicodeFont font;
-	private ColorEffect alpha = new ColorEffect();
 	private int x;
 	private int y;
 	
-	@SuppressWarnings("unchecked")
 	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
 		x = level.ordinal() * WIDTH;
 		y = index * HEIGHT + MARGIN_TOP + PADDING * index;

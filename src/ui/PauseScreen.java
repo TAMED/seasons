@@ -6,13 +6,11 @@ package ui;
 import input.Controls;
 import input.Controls.Action;
 
-import java.awt.Font;
 import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.Effect;
@@ -20,7 +18,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
 import states.LevelState;
-
 import config.Config;
 import entities.Sprite;
 

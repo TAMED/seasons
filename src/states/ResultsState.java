@@ -3,7 +3,6 @@ package states;
 import input.Controls;
 import input.Controls.Action;
 
-import java.awt.Font;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,7 +53,6 @@ public class ResultsState extends BasicGameState {
 	private static final float B_THRESHOLD = 2.0f;
 	private List<Grade> grades;
 	private UnicodeFont smallFont;
-	private UnicodeFont bigFont;
 	private Image background;
 	private int counter;
 	private static final int PULSE_RATE = 500;
@@ -64,7 +62,6 @@ public class ResultsState extends BasicGameState {
 		smallFont = Config.MENU_FONT;
         ((List<Effect>) smallFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
 
-		bigFont = Config.BIG_FONT;
         
         counter = 0;
 	}
