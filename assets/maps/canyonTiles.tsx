@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="canyonTiles" tilewidth="32" tileheight="32">
- <image source="canyonTiles.png" width="384" height="600"/>
+ <image source="canyonTiles.png" width="384" height="512"/>
  <tile id="7">
   <properties>
    <property name="endpoint" value="first"/>
@@ -278,6 +278,18 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+ <tile id="72">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="73">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
  <tile id="75">
   <properties>
    <property name="hookable" value="true"/>
@@ -433,6 +445,16 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+ <tile id="130">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="131">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
  <tile id="132">
   <properties>
    <property name="type" value="wall"/>
@@ -451,25 +473,21 @@
  <tile id="135">
   <properties>
    <property name="hookable" value="true"/>
-   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="136">
   <properties>
    <property name="hookable" value="true"/>
-   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="137">
   <properties>
    <property name="hookable" value="true"/>
-   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="138">
   <properties>
    <property name="hookable" value="true"/>
-   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="139">
@@ -491,6 +509,11 @@
  <tile id="142">
   <properties>
    <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="143">
+  <properties>
+   <property name="hookable" value="true"/>
   </properties>
  </tile>
  <tile id="144">
@@ -521,6 +544,28 @@
  <tile id="149">
   <properties>
    <property name="type" value="mushroom"/>
+  </properties>
+ </tile>
+ <tile id="152">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="153">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="154">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="155">
+  <properties>
+   <property name="hookable" value="true"/>
   </properties>
  </tile>
  <tile id="156">
@@ -559,6 +604,28 @@
   </properties>
  </tile>
  <tile id="163">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="164">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="165">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="166">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="167">
   <properties>
    <property name="hookable" value="true"/>
   </properties>
@@ -603,12 +670,56 @@
    <property name="hookable" value="true"/>
   </properties>
  </tile>
+ <tile id="176">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="177">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="178">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="179">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
  <tile id="186">
   <properties>
    <property name="hookable" value="true"/>
   </properties>
  </tile>
  <tile id="187">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="188">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="189">
+  <properties>
+   <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+ <tile id="190">
+  <properties>
+   <property name="hookable" value="true"/>
+  </properties>
+ </tile>
+ <tile id="191">
   <properties>
    <property name="hookable" value="true"/>
   </properties>
@@ -654,3 +765,4 @@
   </properties>
  </tile>
 </tileset>
+
