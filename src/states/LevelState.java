@@ -118,7 +118,12 @@ public class LevelState extends BasicGameState{
 		Salmon.timerBar = timerBar;
 		forestLoop.loop();
 		forestLoop.setVolume(0f);
-		if (Config.soundOn) forestLoop.fade(2000, 1f, false);
+		if (Config.soundOn) {
+			forestLoop.fade(2000, 1f, false);
+		} else {
+			forestLoop.setVolume(Config.gameVolume);
+			forestLoop.pause();
+		}
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import entities.Player;
 public class Controls {
 	public enum Action { UP, DOWN, LEFT, RIGHT, JUMP, FIRE, PULL, RELEASE,
 	                     PAUSE, RESET, FULLSCREEN,
-	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN, REPLAY, MUTE, QUIT, MENU }
+	                     DEBUG, SKIP, GOD_MODE, SLOW_DOWN, REPLAY, MUTE, QUIT, MENU, OPTIONS }
 	
 	private static Set<Action> cache;
 	private static float mouseX;
@@ -69,6 +69,7 @@ public class Controls {
 		// only to do when paused
 		if (input.isKeyPressed(Input.KEY_Q)) cache.add(Action.QUIT);
 		if (input.isKeyPressed(Input.KEY_J)) cache.add(Action.MENU);
+		if (input.isKeyPressed(Input.KEY_O)) cache.add(Action.OPTIONS);
 
 		// Function keys are for testing and we'll eventually take them out
 		// TODO: remove
