@@ -7,10 +7,8 @@ import java.util.EnumSet;
 
 import org.newdawn.slick.Animation;
 
-import config.Config;
-
 import util.Direction;
-
+import config.Config;
 import entities.Entity;
 import entities.Player;
 

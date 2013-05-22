@@ -20,8 +20,10 @@ public enum Section {
 	FOREST_7("Forest_7.tmx", "forest3.png", 20000, Biome.FOREST, "Bearance"),
 	FOREST_8("Forest_8.tmx", "forest3.png", 20000, Biome.FOREST, "Bearant"),
 	
-	LAKE_1("lake1.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bear"), ;
+	LAKE_1("lake1.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bear"),
 	//LAKE_2("Forest_11.tmx", "forest3.png");
+	
+	CANYON_1("Canyon_1.tmx", "canyon2.png", 20000, Biome.CANYON, "Air I dunno");
 
 	private final String mapName;
 	private final String backgroundName;
