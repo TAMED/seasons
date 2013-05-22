@@ -53,6 +53,7 @@ public class TitleState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		name = new Image("assets/images/ui/title screen/title.png");
+		Config.playMusic(Config.titleMusic);
 	}
 
 	@Override

@@ -70,8 +70,6 @@ public class LevelState extends BasicGameState{
 	
 	private UnicodeFont pauseFont;
 	private float pauseCounter;
-	
-	private static Music forestLoop;
 	private static UnicodeFont plainFont;
 	private static UnicodeFont boldFont;
 	
@@ -80,11 +78,6 @@ public class LevelState extends BasicGameState{
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
-		try {
-			forestLoop = new Music("assets/sounds/Song1.wav");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 		plainFont = Config.PLAIN_FONT;
         
         boldFont = Config.BOLD_FONT;
@@ -107,14 +100,6 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		timerBar = new TimeBar(gc, plainFont, boldFont);
 		Salmon.timerBar = timerBar;
-		forestLoop.loop();
-		forestLoop.setVolume(0f);
-		if (Config.soundOn) {
-			forestLoop.fade(2000, 1f, false);
-		} else {
-			forestLoop.setVolume(Config.gameVolume);
-			forestLoop.pause();
-		}
 	}
 
 	@Override
@@ -174,10 +159,10 @@ public class LevelState extends BasicGameState{
 		// check for these even if game is paused
 		if (Controls.isKeyPressed(Action.MUTE)) {
 			if (Config.soundOn) {
-				forestLoop.pause();
+				Config.musicLoop.pause();
 				Config.soundOn = false;
 			} else {
-				forestLoop.resume();
+				Config.musicLoop.resume();
 				Config.soundOn = true;
 			}
 		}
@@ -251,6 +236,9 @@ public class LevelState extends BasicGameState{
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		super.enter(gc, game);
+		if(!Config.musicLoop.equals(section.getBiome().getMusic())) {
+			Config.playMusic(section.getBiome().getMusic());
+		}
 		timerGo = false;
 		map = new Map(section.getMapPath(), new Vec2(0, Config.GRAVITY));
 		map.parseMapObjects();
@@ -332,4 +320,5 @@ public class LevelState extends BasicGameState{
 	public static Camera getCamera() {
 		return camera;
 	}
+	
 }
