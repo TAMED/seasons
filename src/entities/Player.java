@@ -52,7 +52,7 @@ public class Player extends Entity {
 			
 			anim.addAnimation(AnimationState.IDLE, idle);
 			anim.addAnimation(AnimationState.RUN, running);
-			anim.setFrames(AnimationState.RUN, 14, 80);
+			anim.setFrames(AnimationState.RUN, 14, 45);
 			anim.addAnimation(AnimationState.JUMP, jumpTransition);
 			anim.addAnimation(AnimationState.RISE, jumping);
 			anim.addAnimation(AnimationState.FALL, falling);

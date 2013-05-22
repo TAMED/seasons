@@ -10,15 +10,31 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
+import anim.AnimationState;
+
 import config.Config;
+import entities.BearSprite;
+import entities.Player;
+import entities.Salmon;
 
 public class TitleState extends BasicGameState {
 	
 	private Image name;
+	private Salmon salmon;
+	private BearSprite bear;
 	private float jigglin = 0;
 
 	public TitleState() {
-		// TODO Auto-generated constructor stub
+		  
+        try {
+			salmon = new Salmon(800, 500);
+			salmon.setDrawWidth(130);
+			salmon.setDrawHeight(130);
+			bear = new BearSprite(550, 500, 150, 150);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+        
 	}
 
 	@Override
@@ -33,6 +49,10 @@ public class TitleState extends BasicGameState {
 		name.drawCentered(Config.RESOLUTION_WIDTH / 2, Config.RESOLUTION_HEIGHT / 2);
 		
 		FontUtils.drawCenter(Config.MENU_FONT, "Press any key to continue", 0, Config.RESOLUTION_HEIGHT * 3 / 4, Config.RESOLUTION_WIDTH);
+	
+
+		bear.render(graphics);
+		salmon.render(graphics);
 	}
 
 	@Override
@@ -46,6 +66,9 @@ public class TitleState extends BasicGameState {
 		
 		rotateTitle();
 		jigglin += delta/100f;
+		
+		salmon.update(gc, delta);
+		bear.update(gc, delta);
 	}
 
 	public void rotateTitle() {
