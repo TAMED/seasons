@@ -22,7 +22,11 @@ public enum Level {
 			Section.FOREST_6,
 			Section.FOREST_7,
 			Section.FOREST_8),
-	LAKE(Section.LAKE_1);
+	LAKE(Section.LAKE_1),
+	
+	DESERT(),
+	
+	CANYON(Section.CANYON_1);
 //	FOREST_PLAINS(Section.FOREST_PLAINS);
 	
 	private Section[] sections;
