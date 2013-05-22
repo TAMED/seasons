@@ -3,7 +3,6 @@
  */
 package input;
 
-import java.awt.im.InputContext;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -34,25 +33,12 @@ public class Controls {
 		mouseY = input.getMouseY();
 		cache = EnumSet.noneOf(Action.class);
 
-		// in other words, if you are mike a.k.a. a bitch
-		if (InputContext.getInstance().getLocale().getDisplayVariant().length() > 10) {
-			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
-			if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
-			if (input.isKeyDown(Input.KEY_R)) {
-				cache.add(Action.DOWN);
-			}
-			if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
-			if (input.isKeyDown(Input.KEY_S)) cache.add(Action.RIGHT);
-		}
-		
-		else {
-			if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
-			if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
-			if (input.isKeyDown(Input.KEY_S)) cache.add(Action.DOWN);
-			if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
-			if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
-		}
-		
+		if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
+		if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
+		if (input.isKeyDown(Input.KEY_S)) cache.add(Action.DOWN);
+		if (input.isKeyDown(Input.KEY_A)) cache.add(Action.LEFT);
+		if (input.isKeyDown(Input.KEY_D)) cache.add(Action.RIGHT);
+			
 		if (input.isKeyPressed(Input.KEY_SPACE)) cache.add(Action.JUMP);
 		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 			cache.add(Action.FIRE);
