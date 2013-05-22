@@ -99,7 +99,7 @@ public class PauseScreen extends Sprite {
 		}
 	}
 
-	private void unpause(GameContainer gc) {
+	public void unpause(GameContainer gc) {
 		gc.setPaused(false);
 		gc.setTargetFrameRate(Config.ACTIVE_FRAME_RATE);
 	}

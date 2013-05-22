@@ -182,7 +182,7 @@ public class LevelState extends BasicGameState{
 			}
 		}
 		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
-		if (Controls.isKeyPressed(Action.RESET)) { reset(game); }
+		if (Controls.isKeyPressed(Action.RESET)) { reset(game); pauseScrn.unpause(gc); }
 		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
 		
 		// show pause screen if paused
