@@ -28,7 +28,7 @@ import entities.Player;
 public class Ent extends Enemy {
 	private static final float WIDTH = 64;
 	private static final float HEIGHT = 64;
-	private static final float GROUND = 0;
+	private static final float GROUND = 6;
 	private static final int RUNSPEED = 2;
 	private static final int JMPSPEED = 2;
 	private static final int MAXHP = 1;
@@ -55,11 +55,11 @@ public class Ent extends Enemy {
 
 	public void update(GameContainer gc, int delta, Player player) {
 		super.update(gc, delta);
-		this.getPhysicsBody().setGravityScale(1);
+		this.getPhysicsBody().setGravityScale(0);
 		if (hooked) {
 			if(player.getHookshot().isIn()) {
 				this.getPhysicsBodyDef().type = BodyType.DYNAMIC;
-				this.getPhysicsBody().setGravityScale(1);
+				this.getPhysicsBody().setGravityScale(0);
 				setAI(new FlyingGoomba(getFacing()));
 				hooked = false;
 			}
@@ -72,7 +72,7 @@ public class Ent extends Enemy {
 	@Override
 	public void addToWorld(World world, float x, float y) {
 		super.addToWorld(world, x, y);
-		this.getPhysicsBody().setGravityScale(1);
+		this.getPhysicsBody().setGravityScale(0);
 	}
 	
 	public void hook(GameContainer gc, int delta, Player player) {

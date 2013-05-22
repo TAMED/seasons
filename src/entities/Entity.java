@@ -559,6 +559,14 @@ public abstract class Entity extends Sprite {
 					((Bat) b).hook(gc, delta, player);
 					this.setPosition(((Bat) b).getPosition());
 				}
+				if (a instanceof Ent) {
+					((Ent) a).hook(gc, delta, player);
+					this.setPosition(((Ent) a).getPosition());
+				}
+				if (b instanceof Ent) {
+					((Ent) b).hook(gc, delta, player);
+					this.setPosition(((Ent) b).getPosition());
+				}
 			}
 			contactEdge = contactEdge.next;
 		}

@@ -24,7 +24,7 @@ public enum Level {
 	LAKE(Section.LAKE_1,
 		 Section.LAKE_2),
 	
-	DESERT(),
+	DESERT(Section.DESERT_1),
 	
 	CANYON(Section.CANYON_1,
 			Section.CANYON_2),
