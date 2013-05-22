@@ -25,7 +25,8 @@ public enum Level {
 	
 	DESERT(),
 	
-	CANYON(Section.CANYON_1),
+	CANYON(Section.CANYON_1,
+			Section.CANYON_2),
 	HELL(Section.HELL_1,
 		 Section.HELL_2,
 		 Section.HELL_3);

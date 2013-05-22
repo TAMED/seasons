@@ -73,7 +73,8 @@ public class PauseScreen extends Sprite {
 			FontUtils.drawCenter(bigFont, "Options:", 0, controlsY, Config.RESOLUTION_WIDTH);
 			FontUtils.drawCenter(smallFont,
 					"'M' - mute/unmute sounds\n" +
-					"'U' - turn fullscreen on or off\n",
+					"'U' - turn fullscreen on or off\n" +
+					"'T' - toggle auto-replay mode",
 					0, controlListY, Config.RESOLUTION_WIDTH);
 			FontUtils.drawCenter(smallFont,	"Press 'O' to return to pause screen.", 0, extraY, Config.RESOLUTION_WIDTH);
 		}
