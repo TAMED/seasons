@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import states.IntroState;
 import states.LevelState;
 import states.ResultsState;
+import states.TitleState;
 import config.Config;
 import config.Section;
 import entities.Player;
@@ -65,6 +66,7 @@ public class MainGame extends StateBasedGame {
 		Config.loadFonts();
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
 		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
+		addState(new TitleState());
 		addState(new IntroState());
 		addState(new ResultsState());
 		for (Section s : Section.values()) {

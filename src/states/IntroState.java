@@ -21,7 +21,7 @@ import config.Config;
 import config.Level;
 
 public class IntroState extends BasicGameState{
-	public static final int ID = 0;
+	public static final int ID = 1;
 	private UnicodeFont font;
 	private Image background;
 	private ArrayList<SectionWidget> sections = new ArrayList<SectionWidget>();
