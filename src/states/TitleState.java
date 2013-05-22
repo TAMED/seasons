@@ -66,6 +66,8 @@ public class TitleState extends BasicGameState {
 		name.drawCentered(Config.RESOLUTION_WIDTH / 2, Config.RESOLUTION_HEIGHT / 2);
 		
 		FontUtils.drawCenter(Config.MENU_FONT, "Press any key to continue", 0, Config.RESOLUTION_HEIGHT * 3 / 4, Config.RESOLUTION_WIDTH);
+		String credits = "By: Elizabeth Findley, Daniel Heins, Tiffany Huang, Adrian Mullings, Mike Salvato";
+		FontUtils.drawCenter(Config.PLAIN_FONT, credits, 0, Config.RESOLUTION_HEIGHT -Config.PLAIN_FONT.getHeight(credits), Config.RESOLUTION_WIDTH);
 	
 
 		bear.render(graphics);
