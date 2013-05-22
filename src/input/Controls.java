@@ -3,7 +3,6 @@
  */
 package input;
 
-import java.awt.im.InputContext;
 import java.util.EnumSet;
 import java.util.Set;
 

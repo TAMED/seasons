@@ -3,7 +3,6 @@ package states;
 import input.Controls;
 import input.Controls.Action;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -23,8 +22,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
@@ -326,7 +323,6 @@ public class LevelState extends BasicGameState{
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void renderPauseNotice(GameContainer gc, Graphics graphics) {
 		if (pauseCounter > 0 && pauseCounter < Config.PAUSE_BLINK / 2) {
 			FontUtils.drawRight(pauseFont, "Press 'Escape' to pause  ", 0,
