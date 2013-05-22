@@ -99,6 +99,8 @@ public class Config {
 	public static final int CURSOR_SIZE = 15;
 	public static final int SALMON_TIME = -500;
 	
+	public static final float PAUSE_BLINK = 2000;
+	
 	public static EnumMap<Section, Timer> times;
 	public static final UnicodeFont MENU_FONT = new UnicodeFont(new Font("", Font.PLAIN, 30));
 	public static final UnicodeFont PLAIN_FONT = new UnicodeFont(new Font("", Font.PLAIN,16));
