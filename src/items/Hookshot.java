@@ -56,6 +56,8 @@ public class Hookshot extends ItemBase {
 		switch (state) {
 			case OUT: case PULL: case MOTION:
 				chain.render(graphics);
+		default:
+			break;
 
 		}
 		
@@ -64,6 +66,8 @@ public class Hookshot extends ItemBase {
 			case MOTION: case OUT: case PULL:
 				hook.render(graphics);
 				break;
+		default:
+			break;
 		}
 	}
 	
@@ -98,6 +102,8 @@ public class Hookshot extends ItemBase {
 					detachTether();
 					state = HookState.IN;
 					break;
+			default:
+				break;
 			}
 		}
 		
@@ -148,6 +154,8 @@ public class Hookshot extends ItemBase {
 				}
 				
 				break;
+		default:
+			break;
 		}
 		
 		if (chain != null)  chain.update(gc, delta);

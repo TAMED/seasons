@@ -54,14 +54,13 @@ public class PauseScreen extends Sprite {
 		int controlListY = Config.RESOLUTION_HEIGHT * 3 / 8;
 		
 		FontUtils.drawCenter(bigFont, "Game paused", 0, pauseY, Config.RESOLUTION_WIDTH);
-		FontUtils.drawCenter(smallFont, "Press J to return to the Menu. Press Q to quit", 0, optionsY, Config.RESOLUTION_WIDTH);
+		FontUtils.drawCenter(smallFont, "Press 'J' to return to the Menu. Press 'Q' to quit.\nPress 'Escape' to unpause.", 0, optionsY, Config.RESOLUTION_WIDTH);
 		FontUtils.drawCenter(bigFont, "Controls:", 0, controlsY, Config.RESOLUTION_WIDTH);
 		FontUtils.drawCenter(smallFont, 
 				"'A' and 'D' - move left and right\n" +
 				"'W' or 'Space' - jump\n" +
 				"Left Click - shoot or pull hookshot\n" +
 				"Right Click - release hookshot\n" +
-				"Escape - pause or unpause\n" +
 				"'M' - mute/unmute sounds\n" + 
 				"'R' - reset level\n" +
 				"'U' - turn fullscreen on or off\n",

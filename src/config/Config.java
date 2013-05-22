@@ -90,7 +90,7 @@ public class Config {
 	public static final float STEAM_DRAG = 0f;
 	
 	// Sound
-	public static boolean soundOn = true;
+	public static boolean soundOn = false;
 	public static float gameVolume = 1;
 	
 	// UI

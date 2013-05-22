@@ -40,6 +40,8 @@ public class Mushroom extends StaticObstacle{
 			case DOWN:
 				vel.y = -mushY;
 				break;
+			default:
+				break;
 			}
 			mushTimer = 100;
 			entity.getPhysicsBody().setLinearVelocity(vel);

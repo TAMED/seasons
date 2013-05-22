@@ -67,16 +67,7 @@ public class IntroState extends BasicGameState{
 		
 		String title = "Level Select";
 		int w = Config.RESOLUTION_WIDTH;
-		int lh = font.getLineHeight();
 		FontUtils.drawCenter(font, title, 0, 0, w);
-//		y += lh;
-//		FontUtils.drawCenter(font, pressKey, 0, y, w);
-//		for (int i = 0; i < Level.values().length; i++) {
-//			y += lh;
-//			String str = (i+1) + ": " + Level.values()[i].name();
-//			FontUtils.drawCenter(font, str, 0, y, w);
-//		}
-		
 	}
 	
 	@Override

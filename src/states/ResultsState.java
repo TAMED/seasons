@@ -25,10 +25,10 @@ import config.Section;
 
 public class ResultsState extends BasicGameState {
 	private enum Grade {
-		S("assets/images/ui/grades/S.png", new Color(229, 0, 0)), 
-		A("assets/images/ui/grades/A.png", new Color(255, 215, 0)), 
-		B("assets/images/ui/grades/B.png", new Color(191, 198, 214)), 
-		C("assets/images/ui/grades/C.png", new Color(150, 75, 0));
+		S("assets/images/ui/grades/S.png", new Color(255, 215, 0)), 
+		A("assets/images/ui/grades/A.png", new Color(0, 198, 100)), 
+		B("assets/images/ui/grades/B.png", new Color(150, 75, 0)), 
+		C("assets/images/ui/grades/C.png", new Color(229, 0, 0));
 	
 		private Image img;
 		

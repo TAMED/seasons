@@ -213,6 +213,8 @@ public abstract class Entity extends Sprite {
 					vel = -runSpeed;
 					setFacing(Direction.RIGHT);
 					break;
+			default:
+				break;
 			}
 			footJoint.setMaxMotorTorque(torque);
 			footJoint.setMotorSpeed(vel);
@@ -467,7 +469,6 @@ public abstract class Entity extends Sprite {
 	 * @return a list of bodies touching the object
 	 */
 	public final ArrayList<Body> bodiesTouching() {
-		// TODO: this function will currently add the same body multiple times
 		ArrayList<Body> list = new ArrayList<Body>();
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
