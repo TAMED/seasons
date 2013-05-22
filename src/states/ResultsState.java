@@ -41,12 +41,14 @@ public class ResultsState extends BasicGameState {
 			}
 		}
 		
+		@SuppressWarnings("unused")
 		public Image getImage() {
-			return img;
+			return getImage((float) Math.PI / 2);
 		}
 		
-		public void rotateGrade() {
-			img.setRotation(25f *  (float) Math.cos(jigglin));
+		public Image getImage(float jiggle) {
+			img.setRotation(25f *  (float) Math.cos(jiggle));
+			return img;
 		}
 	};
 
@@ -67,7 +69,6 @@ public class ResultsState extends BasicGameState {
 	public ResultsState() throws SlickException {
 		smallFont = Config.MENU_FONT;
         ((List<Effect>) smallFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-
         counter = 0;
 	}
 
@@ -109,13 +110,11 @@ public class ResultsState extends BasicGameState {
 			Grade bestGrade = getGrade(t.getBestTime().getMillis(), t.getGoal().getMillis());
 			
 			FontUtils.drawCenter(smallFont, s.getDisplayName(), sectionX, y, 0);
-			
 			FontUtils.drawCenter(smallFont, goal, goalX, y, 0);
 			FontUtils.drawCenter(smallFont, time, timeX, y, 0);
 			FontUtils.drawCenter(smallFont, best, bestX, y, 0);
-			grade.getImage().drawCentered(gradeX, y+20);
-			
-			bestGrade.getImage().drawCentered(bestGradeX, y+20);
+			grade.getImage(jigglin).drawCentered(gradeX, y+20);
+			bestGrade.getImage(jigglin).drawCentered(bestGradeX, y+20);
 			y += SPACING;
 		}
 		
@@ -126,11 +125,8 @@ public class ResultsState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		Controls.update(gc);
-		for (int i = 0; i < grades.size(); i++) {
-			grades.get(i).rotateGrade();
-		}
-		jigglin += delta/100f;
 		
+		jigglin += delta/100f;
 		counter = (counter + delta) % (5 * PULSE_RATE);
 		if (Controls.isKeyPressed(Action.FIRE)) {
 			game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
