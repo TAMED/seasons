@@ -129,7 +129,8 @@ public class ResultsState extends BasicGameState {
 		for (int i = 0; i < grades.size(); i++) {
 			grades.get(i).rotateGrade();
 		}
-		jigglin =+ delta/100;
+		jigglin += delta/100f;
+		
 		counter = (counter + delta) % (5 * PULSE_RATE);
 		if (Controls.isKeyPressed(Action.FIRE)) {
 			game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
