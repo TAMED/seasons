@@ -4,7 +4,7 @@
  <tileset firstgid="217" source="salmonTiles.tsx"/>
  <layer name="background" width="400" height="24">
   <data encoding="base64" compression="zlib">
-   eJzt18ERhCAQBEDLPAzA/BO8vw+FEUS87jeslFUwu8sCAAAAAAAAAAAAAAAAAAAAAAAAADCndfQBAJiS/AAgIT8AAAAA4Dl7ozVHW7DnrFbLer2MOOMM/wX4piQbSrR81/bG9XqRH8A/ucqP9H0q3Ve6ribn0nnl7pxzJ4vT7/bKf+bwRP+gRyH1lvyokc4rI+ccd5SE/ODN0v62x1xRI607qp83R5CQHwDwHT8+uwXU
+   eJzt18kNwyAQBVCUPlKA+2/Q1yiHGIYtjN47s8lgPlMKAAAAAAAAAAAAAAAAAAAAAAAAAMCZXrsXAMCR5AcAEfIDAAAAANa5BrX59g70+TXWyPFm2bHGE74LkFMkG2qMvNeuwePNIj/4tGJv7D87PeVH9HzW9qtt15Jz0Xqlt87pyeLovLPyn35Z8kNGEfUv+dEiWq/srHP8o/lkududTaKi79sZdUWL6Li73vPqiHxW7GmWOQCAUm5XtwaJ
   </data>
  </layer>
  <layer name="foreground" width="400" height="24">

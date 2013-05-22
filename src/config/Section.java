@@ -21,6 +21,7 @@ public enum Section {
 	FOREST_8("Forest_8.tmx", "forest3.png", 20000, Biome.FOREST, "Bearant"),
 	
 	LAKE_1("lake1.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bear"),
+	LAKE_2("Lake_2.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearlake"),
 	//LAKE_2("Forest_11.tmx", "forest3.png");
 	
 	CANYON_1("Canyon_1.tmx", "canyon2.png", 20000, Biome.CANYON, "Air I dunno"),
@@ -28,7 +29,7 @@ public enum Section {
 	
 	HELL_1("Hell_1.tmx", "hell2.png", 20000, Biome.HELL, "Bearvents"),
 	HELL_2("Hell_2.tmx", "hell2.png", 20000, Biome.HELL, "Hellbear"), 
-	HELL_3("Hell_3.tmx", "hell2.png", 20000, Biome.HELL, "Childbeard");
+	HELL_3("Hell_3.tmx", "hell2.png", 20000, Biome.HELL, "Childbeard"), ;
 
 	private final String mapName;
 	private final String backgroundName;
