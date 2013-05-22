@@ -2,7 +2,6 @@ package states;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import input.Controls;
 
@@ -14,11 +13,9 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
-import anim.AnimationState;
 
 import config.Config;
 import entities.BearSprite;
-import entities.Player;
 import entities.Salmon;
 
 public class TitleState extends BasicGameState {
@@ -28,7 +25,10 @@ public class TitleState extends BasicGameState {
 	private BearSprite bear;
 	private float jigglin = 0;
 	private List<Image> backgrounds = new ArrayList<Image>();
-	private Random rGen = new Random();
+
+	private float screenChange = 0;
+	private final float CHANGE_TIME = 700;
+	private int section = 0;
 
 	public TitleState() {
 		  
@@ -60,8 +60,7 @@ public class TitleState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
 			throws SlickException {
 
-		int randInt = rGen.nextInt(5);
-		Image background = backgrounds.get(randInt);
+		Image background = backgrounds.get(section);
 		background.drawCentered(Config.RESOLUTION_WIDTH/2, Config.RESOLUTION_HEIGHT/2);
 		
 		name.drawCentered(Config.RESOLUTION_WIDTH / 2, Config.RESOLUTION_HEIGHT / 2);
@@ -87,10 +86,16 @@ public class TitleState extends BasicGameState {
 		
 		salmon.update(gc, delta);
 		bear.update(gc, delta);
+		
+		screenChange += delta;
+		if (screenChange > CHANGE_TIME) {
+			screenChange = screenChange % CHANGE_TIME;
+			section = (section + 1) % backgrounds.size();
+		}
 	}
 
 	public void rotateTitle() {
-		name.setRotation(25f *  (float) Math.cos(jigglin));
+		name.setRotation(12f *  (float) Math.cos(jigglin));
 	}
 	
 	@Override
