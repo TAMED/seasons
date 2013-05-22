@@ -7,9 +7,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import config.Biome;
-
 import ai.AI;
+import config.Biome;
 import entities.Entity;
 import entities.Player;
 

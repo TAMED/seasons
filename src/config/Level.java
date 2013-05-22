@@ -3,9 +3,8 @@
  */
 package config;
 
+import java.util.LinkedList;
 import java.util.Queue;
-
-import states.LevelState;
 
 /**
  * @author Mullings
@@ -28,24 +27,46 @@ public enum Level {
 	
 	CANYON(Section.CANYON_1);
 //	FOREST_PLAINS(Section.FOREST_PLAINS);
-	
+
+	private static final Queue<Section> sectionQueue = new LinkedList<Section>();
 	private Section[] sections;
 	
 	private Level(Section...sections) {
 		this.sections = sections;
 	}
 	
-	public void addToQueue() {
-		addToQueue(LevelState.sectionQueue);
+	public static void addToQueue(Section section) {
+		sectionQueue.add(section);
 	}
-
-	private void addToQueue(Queue<Section> sectionQueue) {
-		for (Section s : sections) {
-			sectionQueue.add(s);
+	
+	public static void addToQueue(Level level) {
+		addToQueue(level, 0);
+	}
+	
+	public static void addToQueue(Level level, int start) {
+		System.out.println("Adding sections");
+		for (int i = start; i < level.getNumSections(); i++) {
+			sectionQueue.add(level.getSection(i));
 		}
 	}
 	
+	public static void clearQueue() {
+		System.out.println("Clearing queue");
+		sectionQueue.clear();
+	}
 	
+	public static Section getNextSection() {
+		return sectionQueue.poll();
+	}
+	
+	public static boolean isQueueEmpty() {
+		return sectionQueue.isEmpty();
+	}
+
+	public Section[] getSections() {
+		return sections;
+	}
+
 	public Section getSection(int index) {
 		return sections[index];
 	}

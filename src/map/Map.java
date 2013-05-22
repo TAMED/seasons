@@ -15,7 +15,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import util.Corner;
-
 import config.Config;
 import entities.Mushroom;
 import entities.Salmon;

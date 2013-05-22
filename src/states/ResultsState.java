@@ -55,6 +55,7 @@ public class ResultsState extends BasicGameState {
 	private static final float S_THRESHOLD = 1.0f;
 	private static final float A_THRESHOLD = 1.25f;
 	private static final float B_THRESHOLD = 2.0f;
+	private static final List<Section> completedSections = new LinkedList<Section>();
 	private List<Grade> grades;
 	private UnicodeFont smallFont;
 	private Image background;
@@ -67,7 +68,6 @@ public class ResultsState extends BasicGameState {
 		smallFont = Config.MENU_FONT;
         ((List<Effect>) smallFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
 
-        
         counter = 0;
 	}
 
@@ -100,7 +100,7 @@ public class ResultsState extends BasicGameState {
 		y += SPACING;
 		
 		for (int i = 0; i < grades.size(); i++) {
-			Section s = LevelState.completedSections.get(i);
+			Section s = completedSections.get(i);
 			Timer t = Config.times.get(s);
 			String goal = String.format("%.2fs", s.getGoalTime() / 1000f);
 			String time = String.format("%.2fs", t.getLastTime().getMillis() / 1000f);
@@ -109,10 +109,12 @@ public class ResultsState extends BasicGameState {
 			Grade bestGrade = getGrade(t.getBestTime().getMillis(), t.getGoal().getMillis());
 			
 			FontUtils.drawCenter(smallFont, s.getDisplayName(), sectionX, y, 0);
-			FontUtils.drawCenter(smallFont, goal,     goalX,    y, 0);
-			FontUtils.drawCenter(smallFont, time,     timeX,    y, 0);
-			FontUtils.drawCenter(smallFont, best,     bestX,    y, 0);
-			grade.getImage().draw(gradeX, y+20);
+			
+			FontUtils.drawCenter(smallFont, goal, goalX, y, 0);
+			FontUtils.drawCenter(smallFont, time, timeX, y, 0);
+			FontUtils.drawCenter(smallFont, best, bestX, y, 0);
+			grade.getImage().drawCentered(gradeX, y+20);
+			
 			bestGrade.getImage().drawCentered(bestGradeX, y+20);
 			y += SPACING;
 		}
@@ -138,11 +140,11 @@ public class ResultsState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
 		grades.clear();
-		for (Section s : LevelState.completedSections) {
+		for (Section s : completedSections) {
 			int time = Config.times.get(s).getLastTime().getMillis();
 			grades.add(getGrade(time, s.getGoalTime()));
 		}
-		Section lastSection = LevelState.completedSections.get(LevelState.completedSections.size() - 1);
+		Section lastSection = completedSections.get(completedSections.size() - 1);
 		background = new Image(lastSection.getBackgroundPath());
 		background = background.getScaledCopy((float) Config.RESOLUTION_HEIGHT / background.getHeight());
 	}
@@ -150,7 +152,15 @@ public class ResultsState extends BasicGameState {
 	@Override
 	public void leave(GameContainer gc, StateBasedGame game) throws SlickException {
 		super.leave(gc, game);
-		LevelState.completedSections.clear();
+		completedSections.clear();
+	}
+	
+	public static void recordResult(Section section) {
+		completedSections.add(section);
+	}
+	
+	public static void clearResults() {
+		completedSections.clear();
 	}
 	
 	private Grade getGrade(int time, int goal) {

@@ -6,9 +6,8 @@ package entities.enemies;
 import org.newdawn.slick.Image;
 
 import util.Direction;
-import entities.Entity;
-
 import ai.Goomba;
+import entities.Entity;
 
 /**
  * @author Mullings

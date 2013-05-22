@@ -8,7 +8,6 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 import util.Corner;
-
 import config.Config;
 
 public class Box2DTile {

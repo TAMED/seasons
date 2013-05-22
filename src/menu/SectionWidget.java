@@ -11,7 +11,6 @@ import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
 
-import states.LevelState;
 import ui.Transitions;
 import config.Config;
 import config.Level;
@@ -50,12 +49,8 @@ public class SectionWidget {
 			image = new Image(0,0);
 			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
 				public void componentActivated(AbstractComponent source) {
-					System.out.println(section.getDisplayName());
-						for (int i = index+1; i < level.getNumSections(); i++) {							
-							LevelState.sectionQueue.add(level.getSection(i));
-						}
-						game.enterState(section.getID(), Transitions.fadeOut(), Transitions.fadeIn());
-						
+					Level.addToQueue(level, index);
+					game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 				}
 			});
 		} catch (SlickException e) {
@@ -74,9 +69,7 @@ public class SectionWidget {
 			salmonSprite.stop();
 		}
 
-		
 		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , section.getDisplayName(), new org.newdawn.slick.Color(1,1,1, alpha));
-		
 	}
 	
 	public void update(GameContainer gc, int delta) {

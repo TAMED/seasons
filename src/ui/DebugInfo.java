@@ -11,7 +11,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 
 import config.Config;
-
 import entities.Player;
 import entities.Sprite;
 
