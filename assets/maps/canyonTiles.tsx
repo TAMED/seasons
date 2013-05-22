@@ -213,6 +213,7 @@
  <tile id="51">
   <properties>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="52">
@@ -256,6 +257,7 @@
  <tile id="63">
   <properties>
    <property name="hookable" value="true"/>
+   <property name="type" value="wall"/>
   </properties>
  </tile>
  <tile id="64">
