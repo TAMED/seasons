@@ -7,9 +7,9 @@ import org.newdawn.slick.SlickException;
 public enum Biome {
 	FOREST(new Color(76, 178, 76), "assets/sounds/Song1.wav"),
 	LAKE(new Color(185, 69, 201), "assets/sounds/Field08.wav"),
-	DESERT(new Color(200, 200, 200)),
+	DESERT(new Color(200, 200, 200), "assets/sounds/Field35.wav"),
 	CANYON(new Color(200, 200, 200), "assets/sounds/Field35.wav"),
-	HELL(new Color(200, 200, 200));
+	HELL(new Color(200, 200, 200), "assets/sounds/Song1.wav");
 	
 	private Color color;
 	private Music music;
