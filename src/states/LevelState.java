@@ -3,6 +3,7 @@ package states;
 import input.Controls;
 import input.Controls.Action;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,8 +23,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.FontUtils;
 
 import time.Time;
 import time.Timer;
@@ -70,6 +74,9 @@ public class LevelState extends BasicGameState{
 	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
+	
+	private UnicodeFont pauseFont;
+	private float pauseCounter;
 	
 	private static Music forestLoop;
 	private static UnicodeFont plainFont;
@@ -151,7 +158,9 @@ public class LevelState extends BasicGameState{
 		}
 		String mapName = section.getDisplayName();
 		plainFont.drawString(Config.RESOLUTION_WIDTH/2 - plainFont.getWidth(mapName)/2, 0, mapName);
+
 		if (gc.isPaused()) pauseScrn.render(gc, graphics);
+		else renderPauseNotice(gc, graphics);
 	}
 
 	@Override
@@ -191,7 +200,11 @@ public class LevelState extends BasicGameState{
 		
 		if (Controls.moveKeyPressed()) {
 			timerGo = true;
+			pauseCounter = -Config.PAUSE_BLINK;
 		}
+		
+		pauseCounter += delta;
+		if (pauseCounter > 0) pauseCounter = pauseCounter % Config.PAUSE_BLINK;
 		
 		// if the goal is reached
 		if (closeToGoal()) {
@@ -264,6 +277,9 @@ public class LevelState extends BasicGameState{
 
 		timer.reset();
 		timerBar.enter(gc, game, timer);
+
+		pauseFont = Config.MENU_FONT;
+		pauseCounter = -Config.PAUSE_BLINK;
 		
 		enemies = map.getEnemies();
 		staticObjects = map.getStaticObjects();
@@ -305,6 +321,14 @@ public class LevelState extends BasicGameState{
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	private void renderPauseNotice(GameContainer gc, Graphics graphics) {
+		if (pauseCounter > 0 && pauseCounter < Config.PAUSE_BLINK / 2) {
+			FontUtils.drawRight(pauseFont, "Press 'Escape' to pause  ", 0,
+					Config.RESOLUTION_HEIGHT - Config.MENU_FONT.getLineHeight(), Config.RESOLUTION_WIDTH);
+		}
+	}
+	
 	@Override
 	public int getID() {
 		return section.getID();
@@ -313,5 +337,4 @@ public class LevelState extends BasicGameState{
 	public static Camera getCamera() {
 		return camera;
 	}
-
 }
