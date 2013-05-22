@@ -14,7 +14,7 @@ public class BearSprite extends Sprite {
 		try {
 			running = new Animation(new SpriteSheet("assets/images/player/running.png", 152, 152), 1);
 			anim.addAnimation(AnimationState.BASIC, running);
-			anim.setFrames(AnimationState.BASIC, 14, 45);
+			anim.setFrames(AnimationState.BASIC, 14, 60);
 			anim.setDefaultAnimation(AnimationState.BASIC);
 		} catch (SlickException e) {
 			e.printStackTrace();
