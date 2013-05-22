@@ -44,6 +44,10 @@ public class ResultsState extends BasicGameState {
 		public Image getImage() {
 			return img;
 		}
+		
+		public void rotateGrade() {
+			img.setRotation(25f *  (float) Math.cos(jigglin));
+		}
 	};
 
 	public static final int ID = 2;
@@ -56,6 +60,7 @@ public class ResultsState extends BasicGameState {
 	private Image background;
 	private int counter;
 	private static final int PULSE_RATE = 500;
+	private static float jigglin = 0;
 	
 	@SuppressWarnings("unchecked")
 	public ResultsState() throws SlickException {
@@ -107,7 +112,7 @@ public class ResultsState extends BasicGameState {
 			FontUtils.drawCenter(smallFont, goal,     goalX,    y, 0);
 			FontUtils.drawCenter(smallFont, time,     timeX,    y, 0);
 			FontUtils.drawCenter(smallFont, best,     bestX,    y, 0);
-			grade.getImage().drawCentered(gradeX, y+20);
+			grade.getImage().draw(gradeX, y+20);
 			bestGrade.getImage().drawCentered(bestGradeX, y+20);
 			y += SPACING;
 		}
@@ -119,6 +124,10 @@ public class ResultsState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		Controls.update(gc);
+		for (int i = 0; i < grades.size(); i++) {
+			grades.get(i).rotateGrade();
+		}
+		jigglin =+ delta/100;
 		counter = (counter + delta) % (5 * PULSE_RATE);
 		if (Controls.isKeyPressed(Action.FIRE)) {
 			game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
