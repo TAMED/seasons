@@ -1,5 +1,9 @@
 package states;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import input.Controls;
 
 import org.newdawn.slick.GameContainer;
@@ -23,6 +27,8 @@ public class TitleState extends BasicGameState {
 	private Salmon salmon;
 	private BearSprite bear;
 	private float jigglin = 0;
+	private List<Image> backgrounds = new ArrayList<Image>();
+	private Random rGen = new Random();
 
 	public TitleState() {
 		  
@@ -31,6 +37,12 @@ public class TitleState extends BasicGameState {
 			salmon.setDrawWidth(130);
 			salmon.setDrawHeight(130);
 			bear = new BearSprite(550, 500, 150, 150);
+			
+			backgrounds.add(new Image(Config.BACKGROUND_PATH + "forest3.png"));
+			backgrounds.add(new Image(Config.BACKGROUND_PATH + "mountainLake3.png"));
+			backgrounds.add(new Image(Config.BACKGROUND_PATH + "desert4.png"));
+			backgrounds.add(new Image(Config.BACKGROUND_PATH + "canyon2.png"));
+			backgrounds.add(new Image(Config.BACKGROUND_PATH + "hell2.png"));
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -46,6 +58,11 @@ public class TitleState extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
 			throws SlickException {
+
+		int randInt = rGen.nextInt(5);
+		Image background = backgrounds.get(randInt);
+		background.drawCentered(Config.RESOLUTION_WIDTH/2, Config.RESOLUTION_HEIGHT/2);
+		
 		name.drawCentered(Config.RESOLUTION_WIDTH / 2, Config.RESOLUTION_HEIGHT / 2);
 		
 		FontUtils.drawCenter(Config.MENU_FONT, "Press any key to continue", 0, Config.RESOLUTION_HEIGHT * 3 / 4, Config.RESOLUTION_WIDTH);
