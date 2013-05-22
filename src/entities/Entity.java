@@ -598,11 +598,6 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private void entUpdate(Object preEntity) {
-		Ent entity = (Ent) preEntity;
-		entity.activate(this, null);
-	}
 	abstract public void reset();
 	
 	public boolean isStill() {

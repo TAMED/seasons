@@ -16,7 +16,7 @@ import entities.Player;
 public class Bat extends Enemy {
 	private static final float WIDTH = 64;
 	private static final float HEIGHT = 64;
-	private static final float GROUND = 6;
+	private static final float GROUND = 0;
 	private static final int RUNSPEED = 2;
 	private static final int JMPSPEED = 2;
 	private static final int MAXHP = 1;
