@@ -11,6 +11,7 @@ import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
 
+import sounds.SoundEffect;
 import ui.Transitions;
 import config.Config;
 import config.Level;
@@ -31,7 +32,11 @@ public class SectionWidget {
 	private int x;
 	private int y;
 	
+	private SoundEffect btnSound;
+	
 	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
+		
+		btnSound = new SoundEffect("assets/sounds/Jump_Sound.wav");
 		x = level.ordinal() * WIDTH;
 		y = index * HEIGHT + MARGIN_TOP + PADDING * index;
 		
@@ -65,6 +70,7 @@ public class SectionWidget {
 		float alpha = mouseOver.isMouseOver() ? 0.8f : 1.0f;
 		if (mouseOver.isMouseOver() && salmonSprite.isStopped()) {
 			salmonSprite.play();
+			btnSound.play();
 		} else if (!mouseOver.isMouseOver()) {
 			salmonSprite.stop();
 		}
