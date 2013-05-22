@@ -32,18 +32,12 @@ public class IntroState extends BasicGameState{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void init(GameContainer gc, StateBasedGame arg1)
+	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		font = Config.MENU_FONT;
         ((List<Effect>) font.getEffects()).add(new ColorEffect(Color.WHITE));
         background = new Image("assets/backgrounds/menuA.png");
-
-	}
-
-	@Override
-	public void enter(GameContainer gc, StateBasedGame game)
-			throws SlickException {
-		super.enter(gc, game);
+        
 		for (int i = 0; i < Level.values().length; i++) {
 			for (int j = 0; j < Level.values()[i].getNumSections(); j++) {
 				SectionWidget sw = new SectionWidget(gc, Level.values()[i], j, game);
@@ -51,6 +45,15 @@ public class IntroState extends BasicGameState{
 				System.out.println(sw.getSection().getDisplayName());
 			}			
 		}
+
+	}
+
+	@Override
+	public void enter(GameContainer gc, StateBasedGame game)
+			throws SlickException {
+		super.enter(gc, game);
+		Level.clearQueue();
+		ResultsState.clearResults();
 		
 	}
 

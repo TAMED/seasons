@@ -5,9 +5,6 @@ import input.Controls.Action;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
 import main.MainGame;
 import map.Map;
@@ -39,6 +36,7 @@ import combat.CombatContact;
 
 import config.Biome;
 import config.Config;
+import config.Level;
 import config.Section;
 import entities.Player;
 import entities.Salmon;
@@ -47,8 +45,6 @@ import entities.Steam;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
-	public static Queue<Section> sectionQueue;
-	public static List<Section> completedSections;
 	private Section section;
 	private Map map;
 	private Player player;
@@ -76,8 +72,6 @@ public class LevelState extends BasicGameState{
 	private static UnicodeFont boldFont;
 	
 	static {
-		sectionQueue = new LinkedList<Section>();
-		completedSections = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
@@ -287,9 +281,9 @@ public class LevelState extends BasicGameState{
 	}
 	
 	private void nextLevel(StateBasedGame game) {
-		completedSections.add(section);
-		if (sectionQueue.isEmpty()) game.enterState(ResultsState.ID, Transitions.fadeOut(), Transitions.fadeIn());
-		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
+		ResultsState.recordResult(section);
+		if (Level.isQueueEmpty()) game.enterState(ResultsState.ID, Transitions.fadeOut(), Transitions.fadeIn());
+		else game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 	
 	private void reset(StateBasedGame game) {

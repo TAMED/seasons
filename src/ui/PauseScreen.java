@@ -17,7 +17,6 @@ import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
-import states.LevelState;
 import config.Config;
 import entities.Sprite;
 
@@ -73,7 +72,6 @@ public class PauseScreen extends Sprite {
 			unpause(gc);
 		} else if (Controls.isKeyPressed(Action.MENU)) {
 			unpause(gc);
-			LevelState.sectionQueue.clear();
 			game.enterState(0);
 		} else if (Controls.isKeyPressed(Action.QUIT)) {
 			gc.exit();
