@@ -120,6 +120,7 @@ public abstract class Entity extends Sprite {
 		boxDef.friction = Config.DEFAULT_FRICTION;
 		boxDef.filter.maskBits |= Config.WATER;
 		boxDef.filter.maskBits |= Config.STEAM;
+		boxDef.restitution = 0;
 		if (height - width > EPSILON) {
 			boxDef.shape = Util.getBoxShape(hw / Config.PIXELS_PER_METER,
 		                             (hh - hw) / Config.PIXELS_PER_METER);
@@ -441,6 +442,7 @@ public abstract class Entity extends Sprite {
 			}
 			contactEdge = contactEdge.next;
 		}
+		
 		
 		return false;
 	}

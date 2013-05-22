@@ -67,7 +67,10 @@ public enum AnimationState {
 		public AnimationState getNextState(Entity entity) {
 			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
 				return AnimationState.SOMERSAULT;
-			} 
+			}
+			if (entity.isTouching(Direction.DOWN)){
+				return AnimationState.IDLE;
+			}
 			return this;
 		}
 

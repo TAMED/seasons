@@ -7,7 +7,7 @@ public class FlyingGoomba extends AI {
 	private Direction walkDir;
 	
 	public FlyingGoomba() {
-		walkDir = Direction.LEFT;
+		walkDir = Direction.RIGHT;
 	}
 	
 	public FlyingGoomba(Direction dir) {
