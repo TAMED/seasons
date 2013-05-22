@@ -50,7 +50,7 @@ public class MainGame extends StateBasedGame {
 			fieldSysPath.set( null, null );
 			ScalableGame game = new ScalableGame(new MainGame("Seasons"), Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
 			AppGameContainer app = new AppGameContainer(game);
-			setFullscreen(app, false);
+			setFullscreen(app, Config.FULLSCREEN);
 			app.setVSync(true);
 			app.setAlwaysRender(true);
 			app.setTargetFrameRate(Config.ACTIVE_FRAME_RATE);
