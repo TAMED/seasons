@@ -66,6 +66,7 @@ public class Controls {
 		if (input.isKeyPressed(Input.KEY_M)) cache.add(Action.MUTE);
 		if (input.isKeyPressed(Input.KEY_R)) cache.add(Action.RESET);
 		if (input.isKeyPressed(Input.KEY_U)) cache.add(Action.FULLSCREEN);
+		if (input.isKeyPressed(Input.KEY_T)) cache.add(Action.REPLAY);
 		
 		// only to do when paused
 		if (input.isKeyPressed(Input.KEY_Q)) cache.add(Action.QUIT);
