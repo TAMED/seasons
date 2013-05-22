@@ -261,9 +261,7 @@ public class LevelState extends BasicGameState{
 		background = background.getScaledCopy((float) Math.max(map.getHeight(), Config.RESOLUTION_HEIGHT) / background.getHeight());
 
 		player = MainGame.player;
-		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
-				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
-		player.reset();
+
 		
 		this.timer.setGoal(new Time(section.getGoalTime()));
 
@@ -287,6 +285,9 @@ public class LevelState extends BasicGameState{
 		for (StaticObstacle s : staticObjects) {
 			s.addToWorld(world, s.getX(), s.getY(), timer.getCurrentTime());
 		}
+		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
+				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
+		player.reset();
 	}
 
 	private void pause(GameContainer gc) {
