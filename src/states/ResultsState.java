@@ -1,4 +1,4 @@
-package states;
+	package states;
 
 import input.Controls;
 import input.Controls.Action;
@@ -103,7 +103,7 @@ public class ResultsState extends BasicGameState {
 			String best = String.format("%.2fs", t.getBestTime().getMillis() / 1000f);
 			Grade bestGrade = getGrade(t.getBestTime().getMillis(), t.getGoal().getMillis());
 			
-			FontUtils.drawCenter(smallFont, s.name(), sectionX, y, 0);
+			FontUtils.drawCenter(smallFont, s.getDisplayName(), sectionX, y, 0);
 			FontUtils.drawCenter(smallFont, goal,     goalX,    y, 0);
 			FontUtils.drawCenter(smallFont, time,     timeX,    y, 0);
 			FontUtils.drawCenter(smallFont, best,     bestX,    y, 0);
