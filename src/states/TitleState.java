@@ -5,6 +5,8 @@ import java.util.List;
 
 import input.Controls;
 
+import main.MainGame;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,6 +17,7 @@ import org.newdawn.slick.util.FontUtils;
 
 
 import config.Config;
+import config.Section;
 import entities.BearSprite;
 import entities.Salmon;
 
@@ -29,6 +32,7 @@ public class TitleState extends BasicGameState {
 	private float screenChange = 0;
 	private final float CHANGE_TIME = 700;
 	private int section = 0;
+	private static int load = 0;
 
 	public TitleState() {
 		  
@@ -53,23 +57,25 @@ public class TitleState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		name = new Image("assets/images/ui/title screen/title.png");
-		Config.playMusic(Config.titleMusic);
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics graphics)
 			throws SlickException {
-
+		if (load == 0) {
+			graphics.drawString("Loading...", Config.RESOLUTION_WIDTH/2 - 30, Config.RESOLUTION_HEIGHT/2 - 20);
+			load += 1;
+			return;
+		}
 		Image background = backgrounds.get(section);
 		background.drawCentered(Config.RESOLUTION_WIDTH/2, Config.RESOLUTION_HEIGHT/2);
+		
 		
 		name.drawCentered(Config.RESOLUTION_WIDTH / 2, Config.RESOLUTION_HEIGHT / 2);
 		
 		FontUtils.drawCenter(Config.MENU_FONT, "Press any key to continue", 0, Config.RESOLUTION_HEIGHT * 3 / 4, Config.RESOLUTION_WIDTH);
 		String credits = "By: Elizabeth Findley, Daniel Heins, Tiffany Huang, Adrian Mullings, Mike Salvato";
 		FontUtils.drawCenter(Config.PLAIN_FONT, credits, 0, Config.RESOLUTION_HEIGHT -Config.PLAIN_FONT.getHeight(credits), Config.RESOLUTION_WIDTH);
-	
-
 		bear.render(graphics);
 		salmon.render(graphics);
 	}
@@ -77,6 +83,16 @@ public class TitleState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
+		if (load == 0){
+			return;
+		}
+		if (load == 1){
+			Config.loadFonts();
+			Config.initMusic();
+			Config.playMusic(Config.titleMusic);
+			MainGame.initStatesAftesLoad(gc, game);
+			load++;
+		}
 		Controls.update(gc);
 		
 		if (Controls.moveKeyPressed()) {

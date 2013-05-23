@@ -62,17 +62,23 @@ public class MainGame extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
-		
 		Config.loadTimes();
-		Config.loadFonts();
-		Config.initMusic();
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
 		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
 		addState(new TitleState());
-		addState(new LevelSelectState());
-		addState(new ResultsState());
+	}
+	
+	public static void initStatesAftesLoad(GameContainer gc, StateBasedGame game) throws SlickException {
+		LevelSelectState levelSelect = new LevelSelectState();
+		levelSelect.init(gc, game);
+		game.addState(levelSelect);
+		ResultsState resState = new ResultsState();
+		resState.init(gc, game);
+		game.addState(resState);
 		for (Section s : Section.values()) {
-			addState(new LevelState(s));
+			LevelState levelS = new LevelState(s);
+			levelS.init(gc, game);
+			game.addState(levelS);
 		}
 	}
 	
