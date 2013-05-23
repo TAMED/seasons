@@ -67,7 +67,18 @@ public class SectionWidget {
         
         this.displayName = "ALL " + level.toString();
         this.opacity = .9f;
-        this.locked = false;
+        
+        int levelIndex = level.ordinal();
+        
+        if (levelIndex == 0) {
+        	this.locked = false;
+        } else {
+        	Level prevLevel = Level.values()[levelIndex-1];
+        	this.prevSection = prevLevel.getSection(prevLevel.getNumSections()-1);
+        	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+            	this.locked = false;
+            } 
+        }
 	}
 	
 	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
@@ -100,15 +111,32 @@ public class SectionWidget {
         this.displayName = Integer.toString(index + 1) + ": " + section.getDisplayName();
         this.opacity = .6f;
         
-        if (index == 0) {
-        	this.locked = false;
-        } else {
-        	this.prevSection = level.getSection(index-1);
+        int levelIndex = level.ordinal();
+        
+        // forest case
+        if (levelIndex == 0) {
+        	if (index == 0) {
+        		this.locked = false;
+        	} else {
+            	this.prevSection = level.getSection(index-1);
+            	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+                	this.locked = false;
+                } 
+        	}
+        } else if (index == 0) {// first section of every other level 
+        	Level prevLevel = Level.values()[levelIndex-1];
+        	this.prevSection = prevLevel.getSection(prevLevel.getNumSections()-1);
         	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
             	this.locked = false;
             } 
         }
         
+        else {
+        	this.prevSection = level.getSection(index-1);
+        	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+            	this.locked = false;
+            } 
+        }
         
 	}
 

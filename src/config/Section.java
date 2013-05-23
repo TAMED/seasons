@@ -7,6 +7,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import states.ResultsState;
+
 
 /**
  * @author Mullings
@@ -43,9 +45,9 @@ public enum Section {
 	private final int goalTime;
 	private Biome biome;
 	private String displayName;
-	private Image instruction;
-	private int x;
-	private int y;
+	private Image instructionImg;
+	private int instructionX;
+	private int instructionY;
 	
 	static {
 		try {
@@ -97,17 +99,18 @@ public enum Section {
 		return biome;
 	}
 	
+	
 	public void setInstruction(Image image, int x, int y) {
-		this.instruction = image;
-		this.x = x;
-		this.y = y;
+		instructionImg = image;
+		instructionX = x;
+		instructionY = y;
 	}
 	
 	public void renderInstruction(Graphics g) {
-		this.instruction.draw(this.x, this.y);
+		g.drawImage(instructionImg, instructionX, instructionY);
 	}
 	
 	public boolean hasInstruction() {
-		return this.instruction != null;
+		return instructionImg != null;
 	}
 }
