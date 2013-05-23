@@ -7,6 +7,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import states.ResultsState;
+
 
 /**
  * @author Mullings
@@ -94,6 +96,7 @@ public enum Section {
 	public Biome getBiome() {
 		return biome;
 	}
+	
 	
 	public void setInstruction(Image image, int x, int y) {
 		this.instruction = image;
