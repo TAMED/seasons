@@ -29,7 +29,7 @@ public class Config {
 	// Resolution
 	public static final int RESOLUTION_WIDTH = 1366;
 	public static final int RESOLUTION_HEIGHT = 768;
-	public static final boolean FULLSCREEN = false;
+	public static final boolean FULLSCREEN = true;
 	
 	// Frame Rate
 	public static final int ACTIVE_FRAME_RATE = 60;
@@ -112,6 +112,10 @@ public class Config {
 	public static Music musicLoop;
 	public static Music levelSelectMusic;
 	public static Music titleMusic;
+	
+	// debug mode
+	public static final boolean DEBUG = false;
+	public static final boolean COLEMAK = false;
 	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
