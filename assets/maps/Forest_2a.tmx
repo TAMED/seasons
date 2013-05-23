@@ -6,7 +6,7 @@
  <tileset firstgid="1049" source="salmonTiles.tsx"/>
  <layer name="background" width="25" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt0ldvT2EABvB/NbbYIlVFjFJUVWtUUatFjbZWrdgjttgjttgjttgjttjjzj3iIyB8ATGK2L+L/61zTlI3Eif5XT3P+z7JyRuL/f/+f//29yUhFvvKN77zg5/8IlYhFkuoUP6NGu6oSS1qU4e61KM+Df7CRjN3NKcFLWlFKq1pQ9pf2Mh2Rxe60o0cupNLD3qWc+ONfz7QHYUMZghDGUYRxZRE2HibEJxPcMdEJjGZKUxlGtOZEWEjMaSzSL6YJSxlGctZwUpWRdhoGNLZIt/KNrazg53sYjd7Imy0C+kckx/nBCc5xWnOcJZzETbyQjo35De5xW3ucJd73OdBhI0RIZ133sR7PvCRMj7xOf5WZkbYmBXSqSivRGWqUJVqVI+fWx1hY01IJ0neiGQak0ITmsbP7Y2wsS+kky7vQAYdyaQTWfFz5yNsXAjp9JH3pR/9yaeAAfFzDyNsPAroPJaNYjSljGEs4xjPE55G2HgW0Hkum80c5jKP+SxgIS94GWHjVUDntWwt61jPBjayic28432EjQ8BnTLZfg5wkEMc5ghHqZjoXSeGb1QO6FSVXXTXJS5zhatc4zpJ8kYRNpIDOikRzqfqtKYNabSlHe1JpwMZAfdkyjqRRTad6UJXupFDd3LpQU96kUdv+tCXfgEb+bICBjCQQRQymCEMZRhFFFPCcEYwklGMpvQPG78BFR5jpA==
+   eJzt0tdvjWEABvBTTVESW0RrxehQ1Eopqloz3VVqxh6xxR6xxR6xxR6xxR537hF/AsI/IFrjwvxdnEvO94leiTf53Zzned8nOfkikf/n//k3zpe4SOQr3/jODyK1IpG4WjXzfgPvNKQRjWlCU5rRvAY22nmjPR3oSCdSSCWN9BrY6O2NLPrQl2z60Z8B5Pzlxlv/+QhvFFBIEcWUUEoZ5SE23sXFzid6YxKTmcJUpjGdGcwMsREf0FksX8JSlrGcFaxkFatDbLQI6GyVb2M7O9jJLnazh70hNjICOsflJzjJKU5zhrOc43yIjdyAzk35LW5zh7vc4z4PeBhioyKg8943UUU1H/jIJz5Hv5VZITZmB3QS5LWpQ10SqUf96L01ITbWBnRaypNIphWtaUPb6L19ITb2B3S6yruRSXd60JNe0XsXQmxcDOjkyfMZzBCGMozh0XuPQmw8jtF5IhtNJWMYyzjGM4GnPAux8TxG54VsDnOZx3wWsJBFvORViI3XMTpvZOtYzwY2sonNbOE9VSE2qmN0PsoOcJBDHOYIRzlGQrzvOj54o06MTqLskrcuc4WrXOM6N2gpTwqxkRyiE+ukuJ9KGul0JoMudKUbmX+4kaXfh75k04/+DCCHgeQyiDzyGRxjY+gvsgK/FVJEMSWUUkY5I6lgFKOpZMxvNn4C1GhfSg==
   </data>
  </layer>
  <layer name="foreground" width="25" height="30">
@@ -14,7 +14,7 @@
    eJzt1jsKg0AUhWE3EHvtLNRmIE06m6zDRO3yslOj2/fcbhDG9ymUufCBXNCfwWYc5xxzhWilYAb5vhq8pzRjO70z1VUrLTmnPCdE0ojHf9fsuRn2oW3YxoEaKTzgSWy84A0fYqOCGhpS4wKuhtHwwNfs2bgb9ns2TGMbx2tkkENBbHzhByWx8YcWuo0Nl0gacvfxibbcQ5foAfcUKcQ=
   </data>
  </layer>
- <layer name="object" width="25" height="30">
+ <layer name="object" width="25" height="30" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwTEBAAAAwqD1T20ND6AAAIB3Awu4AAE=
   </data>
