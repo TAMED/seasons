@@ -177,7 +177,7 @@ public class Config {
 	}
 	public static void initMusic() {
 		try {
-			titleMusic = new Music("assets/sounds/Field07.wav");
+			titleMusic = new Music("assets/sounds/Field07.ogg");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
