@@ -10,8 +10,8 @@ import config.Config;
 
 public class Mushroom extends StaticObstacle{
 	int mushTimer = 0;
-	float mushX = 30;
-	float mushY = 30;
+	float mushX = 40;
+	float mushY = 50;
 	
 	
 	public Mushroom(float x, float y) throws SlickException {
@@ -39,6 +39,8 @@ public class Mushroom extends StaticObstacle{
 				break;
 			case DOWN:
 				vel.y = -mushY;
+				break;
+			default:
 				break;
 			}
 			mushTimer = 100;

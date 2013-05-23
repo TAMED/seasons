@@ -47,7 +47,7 @@
  </tile>
  <tile id="15">
   <properties>
-   <property name="enemyType" value="bat"/>
+   <property name="enemyType" value="ent"/>
    <property name="type" value="enemy"/>
   </properties>
  </tile>

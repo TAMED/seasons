@@ -4,7 +4,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import anim.AnimStateMachine;
-
 import entities.Player;
 
 public abstract class ItemBase {

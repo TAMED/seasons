@@ -19,8 +19,6 @@ import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.jbox2d.dynamics.joints.RevoluteJoint;
 import org.jbox2d.dynamics.joints.RevoluteJointDef;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 
 import sounds.SoundEffect;
@@ -122,6 +120,7 @@ public abstract class Entity extends Sprite {
 		boxDef.friction = Config.DEFAULT_FRICTION;
 		boxDef.filter.maskBits |= Config.WATER;
 		boxDef.filter.maskBits |= Config.STEAM;
+		boxDef.restitution = 0;
 		if (height - width > EPSILON) {
 			boxDef.shape = Util.getBoxShape(hw / Config.PIXELS_PER_METER,
 		                             (hh - hw) / Config.PIXELS_PER_METER);
@@ -215,6 +214,8 @@ public abstract class Entity extends Sprite {
 					vel = -runSpeed;
 					setFacing(Direction.RIGHT);
 					break;
+			default:
+				break;
 			}
 			footJoint.setMaxMotorTorque(torque);
 			footJoint.setMotorSpeed(vel);
@@ -238,9 +239,7 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void jump(GameContainer gc, int delta) {
-		if (checkSteam(gc)) {
-			return;
-		}
+		
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
@@ -248,7 +247,7 @@ public abstract class Entity extends Sprite {
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
-		} else if (isTouching(Direction.DOWN) || LevelState.godMode) {
+		} else if (jumpCheck() || LevelState.godMode) {
 			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
 			jumpSound.play();
 			anim.play(AnimationState.JUMP);
@@ -405,17 +404,20 @@ public abstract class Entity extends Sprite {
 		alive = false;
 		physicsBody.setActive(false);
 	}
-
-	/**
-	 * @return whether or not the given side of the entity is touching another body
-	 */
-	public final boolean isTouching(Direction side) {
+	
+	public boolean jumpCheck() {
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
 		while(contactEdge != null) {
 			if(contactEdge.contact.isTouching()) {
-				Object data = contactEdge.contact.getFixtureB().getUserData();
-				if (data != null && side.equals(data)) {
+				Fixture a = contactEdge.contact.getFixtureA();
+				Fixture b = contactEdge.contact.getFixtureA();
+				Object dataA = contactEdge.contact.getFixtureB().getUserData();
+				Object dataB = contactEdge.contact.getFixtureB().getUserData();
+				if (dataA != null && Direction.DOWN.equals(dataA) && !b.getBody().equals(this.getPhysicsBody()) && !b.m_isSensor) {
+					return true;					
+				}
+				if (dataB != null && Direction.DOWN.equals(dataB) && !a.getBody().equals(this.getPhysicsBody()) && !a.m_isSensor) {
 					return true;					
 				}
 			}
@@ -424,6 +426,28 @@ public abstract class Entity extends Sprite {
 		
 		return false;
 	}
+	
+	/**
+	 * @return whether or not the given side of the entity is touching another body
+	 */
+	public boolean isTouching(Direction side) {
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				if (data != null && side.equals(data)) {
+					return true;
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		
+		return false;
+	}
+	
+
 	
 	/**
 	 * @return a set containing the sides of the entity that are touching another both
@@ -449,7 +473,6 @@ public abstract class Entity extends Sprite {
 	 * @return a list of bodies touching the object
 	 */
 	public final ArrayList<Body> bodiesTouching() {
-		// TODO: this function will currently add the same body multiple times
 		ArrayList<Body> list = new ArrayList<Body>();
 		ContactEdge contactEdge = physicsBody.getContactList();
 		
@@ -540,6 +563,14 @@ public abstract class Entity extends Sprite {
 					((Bat) b).hook(gc, delta, player);
 					this.setPosition(((Bat) b).getPosition());
 				}
+				if (a instanceof Ent) {
+					((Ent) a).hook(gc, delta, player);
+					this.setPosition(((Ent) a).getPosition());
+				}
+				if (b instanceof Ent) {
+					((Ent) b).hook(gc, delta, player);
+					this.setPosition(((Ent) b).getPosition());
+				}
 			}
 			contactEdge = contactEdge.next;
 		}
@@ -579,11 +610,6 @@ public abstract class Entity extends Sprite {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private void entUpdate(Object preEntity) {
-		Ent entity = (Ent) preEntity;
-		entity.activate(this, null);
-	}
 	abstract public void reset();
 	
 	public boolean isStill() {

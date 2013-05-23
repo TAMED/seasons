@@ -7,7 +7,7 @@ public class FlyingGoomba extends AI {
 	private Direction walkDir;
 	
 	public FlyingGoomba() {
-		walkDir = Direction.LEFT;
+		walkDir = Direction.RIGHT;
 	}
 	
 	public FlyingGoomba(Direction dir) {
@@ -19,7 +19,9 @@ public class FlyingGoomba extends AI {
 	 */
 	@Override
 	public void update(Enemy enemy, int delta) {
-		if (enemy.isTouching(walkDir)) walkDir = walkDir.opposite();
+		if (enemy.isTouching(walkDir)) {
+			walkDir = walkDir.opposite();
+		}
 		enemy.fly(walkDir);
 	}
 

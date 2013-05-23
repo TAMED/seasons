@@ -16,6 +16,10 @@ public class Goomba extends AI {
 	public Goomba() {
 		walkDir = Direction.LEFT;
 	}
+	
+	public Goomba(Direction dir) {
+		walkDir = dir;
+	}
 
 	/* (non-Javadoc)
 	 * @see ai.AI#update(Enemy, int)
