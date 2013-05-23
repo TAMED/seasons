@@ -33,6 +33,8 @@ public class SectionWidget {
 	private int y;
 	private String displayName;
 	private float opacity;
+	private boolean locked = true;
+	private Section prevSection;
 	
 	private SoundEffect btnSound;
 	
@@ -65,6 +67,7 @@ public class SectionWidget {
         
         this.displayName = "ALL " + level.toString();
         this.opacity = .9f;
+        this.locked = false;
 	}
 	
 	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
@@ -96,25 +99,51 @@ public class SectionWidget {
         
         this.displayName = Integer.toString(index + 1) + ": " + section.getDisplayName();
         this.opacity = .6f;
+        
+        if (index == 0) {
+        	this.locked = false;
+        } else {
+        	this.prevSection = level.getSection(index-1);
+        	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+            	this.locked = false;
+            } 
+        }
+        
+        
 	}
 
 	
 	
 	public void render(GameContainer gc, Graphics g) {
+		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, opacity));
 		mouseOver.render(gc, g);
-		float alpha = mouseOver.isMouseOver() ? 1.0f : opacity;
-		if (mouseOver.isMouseOver() && salmonSprite.isStopped()) {
-			salmonSprite.play();
-			btnSound.play();
-		} else if (!mouseOver.isMouseOver()) {
-			salmonSprite.stop();
-		}
+		salmonSprite.display(!locked);
+		if (locked) {
+			mouseOver.setAcceptingInput(false);
 
-		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, alpha));
+		} else {
+			mouseOver.setAcceptingInput(true);
+			float alpha = mouseOver.isMouseOver() ? 1.0f : opacity;
+			if (mouseOver.isMouseOver() && salmonSprite.isStopped()) {
+				btnSound.play();
+				salmonSprite.play();
+			} else if (!mouseOver.isMouseOver()) {
+				salmonSprite.stop();
+			}
+			font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, alpha));
+		}
+		
+
+
 	}
 	
 	public void update(GameContainer gc, int delta) {
 		salmonSprite.update(gc, delta);
+		if (this.locked == true) {
+		  if (this.prevSection != null && Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+	        	this.locked = false;
+	        } 
+		}
 	}
 	
 	public Sprite getSalmonSprite() {

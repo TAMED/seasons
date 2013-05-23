@@ -2,6 +2,7 @@ package entities;
 
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
@@ -18,6 +19,7 @@ public class Salmon extends StaticObstacle{
 	public SoundEffect salmonSound;
 	public static TimeBar timerBar;
 	private boolean isStopped;
+	private boolean display = true;
 	
 	public Salmon(float x, float y) throws SlickException {
 		super(x, y, true, Config.SALMON);
@@ -63,5 +65,18 @@ public class Salmon extends StaticObstacle{
 	public boolean isStopped() {
 		return isStopped;
 	}
+	
+	public void display(boolean b) {
+		this.display = b;
+	}
+	
+	@Override
+	public void render(Graphics g) {
+		if (display) {
+			super.render(g);
+		} 
+	}
+	
+	
 
 }
