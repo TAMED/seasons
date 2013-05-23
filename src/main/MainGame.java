@@ -62,6 +62,7 @@ public class MainGame extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
+		
 		Config.loadTimes();
 		Config.loadFonts();
 		Config.initMusic();

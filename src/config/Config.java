@@ -144,6 +144,20 @@ public class Config {
 		}
 	}
 	
+	
+	// only used in debug!
+	public static void clearTimes() {
+		File f = new File("times.xml");
+		try {
+			if (f.exists()) f.delete();
+			f.createNewFile();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static void createAndSaveTimes() {
 		times = new EnumMap<Section, Timer>(Section.class);
 		for (Section s : Section.values()) {
@@ -151,7 +165,7 @@ public class Config {
 		}
 		saveTimes();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public static void loadFonts() {
 		MENU_FONT.addAsciiGlyphs();
