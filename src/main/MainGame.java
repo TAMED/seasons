@@ -7,7 +7,7 @@ import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import states.IntroState;
+import states.LevelSelectState;
 import states.LevelState;
 import states.ResultsState;
 import states.TitleState;
@@ -50,7 +50,7 @@ public class MainGame extends StateBasedGame {
 			fieldSysPath.set( null, null );
 			ScalableGame game = new ScalableGame(new MainGame("Seasons"), Config.RESOLUTION_WIDTH, Config.RESOLUTION_HEIGHT);
 			AppGameContainer app = new AppGameContainer(game);
-			setFullscreen(app, false);
+			setFullscreen(app, Config.FULLSCREEN);
 			app.setVSync(true);
 			app.setAlwaysRender(true);
 			app.setTargetFrameRate(Config.ACTIVE_FRAME_RATE);
@@ -64,10 +64,11 @@ public class MainGame extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		Config.loadTimes();
 		Config.loadFonts();
+		Config.initMusic();
 		player = new Player(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT, Config.PLAYER_GROUND);
 		player.setDrawWidth(Config.PLAYER_DRAW_WIDTH);
 		addState(new TitleState());
-		addState(new IntroState());
+		addState(new LevelSelectState());
 		addState(new ResultsState());
 		for (Section s : Section.values()) {
 			addState(new LevelState(s));

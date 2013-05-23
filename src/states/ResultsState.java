@@ -129,7 +129,7 @@ public class ResultsState extends BasicGameState {
 		jigglin += delta/100f;
 		counter = (counter + delta) % (5 * PULSE_RATE);
 		if (Controls.isKeyPressed(Action.FIRE)) {
-			game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
+			game.enterState(LevelSelectState.ID, Transitions.fadeOut(), Transitions.fadeIn());
 		}
 	}
 

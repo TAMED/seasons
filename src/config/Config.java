@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.EnumMap;
 import java.util.List;
 
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -28,7 +29,7 @@ public class Config {
 	// Resolution
 	public static final int RESOLUTION_WIDTH = 1366;
 	public static final int RESOLUTION_HEIGHT = 768;
-	public static final boolean FULLSCREEN = false;
+	public static final boolean FULLSCREEN = true;
 	
 	// Frame Rate
 	public static final int ACTIVE_FRAME_RATE = 60;
@@ -90,7 +91,7 @@ public class Config {
 	public static final float STEAM_DRAG = 0f;
 	
 	// Sound
-	public static boolean soundOn = false;
+	public static boolean soundOn = true;
 	public static float gameVolume = 1;
 	
 	// UI
@@ -106,6 +107,11 @@ public class Config {
 	public static final UnicodeFont PLAIN_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN,16));
 	public static final UnicodeFont BOLD_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.BOLD,16));
 	public static final UnicodeFont BIG_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN, 70));
+	
+	// music
+	public static Music musicLoop;
+	public static Music levelSelectMusic;
+	public static Music titleMusic;
 	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
@@ -167,6 +173,29 @@ public class Config {
 			BIG_FONT.loadGlyphs();
 		} catch (SlickException e) {
 			e.printStackTrace();
+		}
+	}
+	public static void initMusic() {
+		try {
+			titleMusic = new Music("assets/sounds/Field07.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		musicLoop = titleMusic;
+		levelSelectMusic = titleMusic;
+	}
+	
+	public static void playMusic(Music music) {
+		musicLoop.stop();
+		musicLoop = music;
+		musicLoop.loop();
+		musicLoop.setVolume(0f);
+		if (soundOn) {
+			musicLoop.fade(2000, 1f, false);
+		} else {
+			musicLoop.setVolume(gameVolume);
+			musicLoop.pause();
 		}
 	}
 }
