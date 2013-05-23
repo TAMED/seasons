@@ -50,13 +50,6 @@ public enum Section {
 	private int instructionY;
 	
 	static {
-		try {
-			Image bat = new Image("assets/instructions/hookbat.png");
-			FOREST_2A.setInstruction(bat, 30, 30);
-			System.out.println(FOREST_2A.hasInstruction());
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private Section(String map, String background) {
