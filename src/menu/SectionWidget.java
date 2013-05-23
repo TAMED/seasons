@@ -13,7 +13,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import sounds.SoundEffect;
 import ui.Transitions;
-import config.Biome;
 import config.Config;
 import config.Level;
 import config.Section;
@@ -58,7 +57,7 @@ public class SectionWidget {
 			image = new Image(0,0);
 			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
 				public void componentActivated(AbstractComponent source) {
-					Level.addAllToQueue(level);
+					Level.addToQueue(level);
 					game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 				}
 			});
@@ -90,7 +89,7 @@ public class SectionWidget {
 			image = new Image(0,0);
 			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
 				public void componentActivated(AbstractComponent source) {
-					Level.addToQueue(level, index);
+					Level.addToQueue(level.getSection(index));
 					game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 				}
 			});
