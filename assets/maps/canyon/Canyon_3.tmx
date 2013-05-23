@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="300" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="../../School/Spring2013/CMS617/seasons/assets/maps/forestTiles.tsx"/>
+ <tileset firstgid="217" source="../../School/Spring2013/CMS617/seasons/assets/maps/salmonTiles.tsx"/>
+ <tileset firstgid="249" source="../../School/Spring2013/CMS617/seasons/assets/maps/canyonTiles.tsx"/>
+ <layer name="foreground" width="300" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztm09P1EAYxrcegBhigBBjdMWDB8R44KK7X0L3pCSwHMQEuKgJ8EXAPzf0TDgDX49nopNsJu327czbnens80t+IW2ns/OnfTpNw3bR621TSmkHHEDDEH/f0GCJLucY04uaca0rI6nDMuQctoLGuA4m8srWydzyl9e6PpcY0z8141pXRlIHSR83ryw2t3ysupcHjr55ENKGpvXU1emWIfporK9ucOyW89N5qvIqBI0sGFZkglYbtPpF2kdjfUXyoI288qEsB5gJxCBZX3H9lBe7cA+Onf2p5BUhVXDtNH8cwiN47OxnXpHUibV2eo/f/JCZo4Bx3MK5r2c0DyfwFJ45+5lXhEznJ/zVcX8H9N/m9lv4rqWskDwbRgXzqm1yfEbHfMaTeLSZV1KYV7Mhh2d0zGc8iQ/zihDSFWxexVw7M68IIRK4viIkXc7hRWb+CBgP5hUh6TBv30Yk726TY8K8IoR0BeYVIaQrpJpXH7H9Ce4kmmNjtGsfLni6kmi/iD6X8G/sRmRCqnn1GdsH8Eti97XNqRN4Cp8FSPKgLo+u4PWM2pI7qebVV2x/g98Tua/dnDqDmwG+SqRfRIb5Tlf1XesG3k05t+44kZNKXi0q+EDQj6b/L6mdU5NK+sT3xhkR8G5P50uTV2sKPirqM0uaz25OPSn0csoqeWfsC9oqQZrTknKadfmUVT8H28vC+aDU5NWGgk+Lf5m1BFd75dq8qjpufFi0m1NN3xt91pruGEj6LS2nWZdPWc1zzFwv/59njWuQ5q9WXhlfwHX4vFeuvV6rjhsf4/jLIm5ONV2HTdovGQNJv6XlNOvyKat5jp3r2PcA7Y4mr+4BObu2Tg==
+  </data>
+ </layer>
+ <layer name="object" width="300" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt3MENgCAMAED339CPJrqITKAg1hK9SxofAvJqKESmCQDazTci6lsAAAAAAABPOTt7uDqX6Hkf2RcAAACA/3p676h3PHtZ8C+j5aDo8QAAgDg16/faNX5LLdBaN9ypM9QmAADf5F4cYBTyEVGWEmv2JBL1/mdW2ya6bUYfOYm3bSX27EkAr5kvngAAAADwNQcDQTPU
+  </data>
+ </layer>
+</map>

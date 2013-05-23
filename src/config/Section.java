@@ -16,7 +16,7 @@ public enum Section {
 	FOREST_1("Forest_1.tmx", "forest3.png", 20000, Biome.FOREST, "W, A"),
 	FOREST_2("Forest_2.tmx", "forest3.png", 20000, Biome.FOREST, "Jump!"),
 	FOREST_2A("Forest_2a.tmx", "forest3.png", 20000, Biome.FOREST, "Hook!"),
-	FOREST_2B("Forest_2b.tmx", "forest3.png", 20000, Biome.FOREST, "Bats!"),
+	FOREST_2B("Forest_2b.tmx", "forest3.png", 20000, Biome.FOREST, "Release!"),
 	FOREST_3("Forest_3.tmx", "forest3.png", 20000, Biome.FOREST, "Bearina"),
 	FOREST_4("Forest_4.tmx", "forest3.png", 20000, Biome.FOREST, "Bearable"),
 	FOREST_5("Forest_5.tmx", "forest3.png", 20000, Biome.FOREST, "Unbearable"),
@@ -25,11 +25,14 @@ public enum Section {
 	LAKE_1("Forest_8.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearant"),
 	LAKE_2("lake1.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bear"),
 	LAKE_3("Lake_2.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearlake"),
-	//LAKE_2("Forest_11.tmx", "forest3.png");
+	LAKE_4("Lake_4.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Water Bear"),
+	
 	DESERT_1("Desert_1.tmx", "desert4.png", 20000, Biome.DESERT, "Bearsert"),
+	DESERT_2("Desert_2.tmx", "desert4.png", 20000, Biome.DESERT, "Revenge of Bearsert"),
 	
 	CANYON_1("Canyon_1.tmx", "canyon2.png", 20000, Biome.CANYON, "Canbearyon"),
 	CANYON_2("Canyon_Climb.tmx", "canyon2.png", 30000, Biome.CANYON, "Nothing"),
+	CANYON_3("Canyon_3", "canyon2,png", 20000, Biome.CANYON, "Shrooooms"),
 	
 	HELL_1("Hell_1.tmx", "hell2.png", 20000, Biome.HELL, "Bearvents"),
 	HELL_2("Hell_2.tmx", "hell2.png", 20000, Biome.HELL, "Hellbear"), 
@@ -68,7 +71,7 @@ public enum Section {
 	}
 	
 	public String getMapPath() {
-		return Config.MAP_PATH + mapName;
+		return Config.MAP_PATH + biome.getName() + "/" + mapName;
 	}
 	
 	public String getMapName() {
