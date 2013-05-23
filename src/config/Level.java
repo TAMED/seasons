@@ -21,14 +21,18 @@ public enum Level {
 			Section.FOREST_4,
 			Section.FOREST_5,
 			Section.FOREST_6),
+			
 	LAKE(Section.LAKE_1,
 		 Section.LAKE_2,
-		 Section.LAKE_3),
+		 Section.LAKE_3,
+		 Section.LAKE_4),
 	
-	DESERT(Section.DESERT_1),
+	DESERT(Section.DESERT_1,
+			Section.DESERT_2),
 	
 	CANYON(Section.CANYON_1,
-			Section.CANYON_2),
+			Section.CANYON_2,
+			Section.CANYON_3),
 			
 	HELL(Section.HELL_1,
 		 Section.HELL_2,
