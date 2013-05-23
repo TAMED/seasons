@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="300" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="desertTiles" tilewidth="32" tileheight="32">
+  <image source="desertTiles.png" width="384" height="512"/>
+  <tile id="7">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="1"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="-1"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="41">
+   <properties>
+    <property name="water" value="true"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="43">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="46">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="47">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="51">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="52">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="53">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="54">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="55">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="60">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="61">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="62">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="63">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="64">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="65">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="66">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="67">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="72">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="73">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="75">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="76">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="77">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="84">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="85">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="86">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="89">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="90">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="91">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="93">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </tile>
+  <tile id="99">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="2"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="100">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="2"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="101">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="102">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="103">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="109">
+   <properties>
+    <property name="endpoint" value="second"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="2"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="110">
+   <properties>
+    <property name="endpoint" value="first"/>
+    <property name="flipped" value="false"/>
+    <property name="slope" value="2"/>
+    <property name="type" value="slope"/>
+   </properties>
+  </tile>
+  <tile id="111">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="112">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="113">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="114">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="115">
+   <properties>
+    <property name="type" value="goal"/>
+   </properties>
+  </tile>
+  <tile id="117">
+   <properties>
+    <property name="type" value="player"/>
+   </properties>
+  </tile>
+  <tile id="120">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="121">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="122">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="123">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="124">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="130">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="131">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="132">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="133">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="134">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="135">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="136">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="137">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="138">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="139">
+   <properties>
+    <property name="hookable" value="true"/>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="140">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="141">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="142">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="143">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="144">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="145">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="146">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="147">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="148">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="149">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="153">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="154">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="155">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="156">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="157">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="158">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="159">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="160">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="161">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="162">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="163">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="165">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="166">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="167">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="168">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="169">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="170">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="171">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="172">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="173">
+   <properties>
+    <property name="type" value="mushroom"/>
+   </properties>
+  </tile>
+  <tile id="174">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="175">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="177">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="178">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="179">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="186">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="187">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="190">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+  <tile id="191">
+   <properties>
+    <property name="hookable" value="true"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="193" source="salmonTiles.tsx"/>
+ <layer name="foreground" width="300" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztm7mP1TAQh90uEohD3JeWUxwSV7EVbFrQ+ws4O04JJE4B2wI1UAMlV8lVwp/GjHajeL1OPD7Gz36Zn/Q1L449L/F+sbN6C0qpBUEQhApYVOVnAjQ9TDLW8Rn4knG8NqHfkXpe6nautlz3rElwvo1UNXAc822bahzf+PZta7+o6vAVxnTWROV1FeYH8DPzmBJ6mgTn20hVA8cx37apxvGNb9+29jX5CjNR0/FUm7/AvymNLXEndl40PaSqYaiv0PN8+ompITa+fdva1+YriYQz7bOwUeG+GkpoXyXUUELEVxLJ6kwspEqT+TzuvnJHfCWR5Av3/01y95U74iuJRFJLxFcSas4laMN9fD2wAVjnaCepM9y+wvkjc4c3H4BPDH1+NPqlzBNXG+7jO4FdwDYl824Ww+0rnD9jnjvt8z6E7cCccl+7r8D3xHVjn9+Mfmvw1WHgJHBAjXve1ZQzwFliW25f4fwZ89zZDxyMgLJWEF91aX0lzqonF4FLxLY5fHVKjXfu4Pc/Eghet3nlvnbiqy4nVOcrcVYdOQ9cILbN5SuXs3zWhDUlha9czhJfdTF9Jc4qPyWur1zOwpqpjg3NfeCBWn4vpLODccxUvhpylviqi81X4qyyU+r6ashZWDPVsb5pPfUCeKnWviM6xDQuJqWv+pwV4ivb///0zJqvxFnlpuT1VZ+zfGqmxvTUa+CNpZbTicfVk9pXNmeF+MrmI9fx2n2lO+s5AfFansSsr64B14EbiWrp85XpLJ+aXenzVEvtvtKdhXtZ8VUXl6/w/uO1e0VA1mJ5YlurXAauAFeNz01f3QHuAvcS1TLkK91Z7bukjcCmCDarzlNLarWnZslXrbNwLyu+6kLxFRXZP+aJba1yE7gF3DY+N331BHgKPEtUi8tXrbPwPdJuYA+wN4LjannODs3DWfHV/Ert4qsuKX2F9yCXs94C7wzeM4/pqiXX+Lb11UPgEfDY+Bzv/xwB6v3Srzt+X4qvEJwbR5X4SsflKvHV2qT2le6s2LX/GMD9zRZGcA+2lYC+Z/NBfMXnqyMrtf8C/ljGHnpO4jm/e87rOz5WX+lz8xgjMfPeZFq17FPxv+lwQd3Lh/SN75AorhJf+e0F9bbU3/VMi9jfI/kw5CrxFX8d6Cv8+6OsUULxuYchlO4rhOtZsKTCfNW3vgrtqxRcPtGh7If160LpU3zFv77i9tV/MMfZPA==
+  </data>
+ </layer>
+ <layer name="object" width="300" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt2UsOhCAMAFDufytu4JHcThij80Eo9b0VRJK2iZQESgEAAAAAAACyqUlj9fZP7ivXDZGssJd65rhCvT3UMqbWT2Jcrbn7ewS/5tirtiznbaRciK2WcX0Qjvj3gFm+7T+j+tXdcWb2XT0fAAAAIAf3PLF5/wMAAACezJ0IAAAZeQMEeLcFm0N2WzNu52dj+wcAeLUD0XQo9Q==
+  </data>
+ </layer>
+</map>
