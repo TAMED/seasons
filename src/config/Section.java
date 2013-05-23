@@ -23,11 +23,10 @@ public enum Section {
 	FOREST_4("Forest_4.tmx", "forest3.png", 20000, Biome.FOREST, "Bearable"),
 	FOREST_5("Forest_5.tmx", "forest3.png", 20000, Biome.FOREST, "Unbearable"),
 	FOREST_6("Forest_6.tmx", "forest3.png", 20000, Biome.FOREST, "Bearinger"),
-	FOREST_7("Forest_7.tmx", "forest3.png", 20000, Biome.FOREST, "Bearance"),
-	FOREST_8("Forest_8.tmx", "forest3.png", 20000, Biome.FOREST, "Bearant"),
 	
-	LAKE_1("lake1.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bear"),
-	LAKE_2("Lake_2.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearlake"),
+	LAKE_1("Forest_8.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearant"),
+	LAKE_2("lake1.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bear"),
+	LAKE_3("Lake_2.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearlake"),
 	//LAKE_2("Forest_11.tmx", "forest3.png");
 	DESERT_1("Desert_1.tmx", "desert4.png", 20000, Biome.DESERT, "Bearsert"),
 	
