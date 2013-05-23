@@ -1,7 +1,5 @@
 package ai;
 
-import org.jbox2d.dynamics.contacts.ContactEdge;
-
 import util.Direction;
 import entities.enemies.Enemy;
 

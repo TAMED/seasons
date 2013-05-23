@@ -8,17 +8,13 @@ import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
-
-import config.Biome;
-import config.Config;
 
 import util.Direction;
 import ai.FlyingGoomba;
-import ai.Goomba;
 import anim.AnimationState;
-import entities.Entity;
+import config.Biome;
+import config.Config;
 import entities.Player;
 
 /**
@@ -28,16 +24,17 @@ import entities.Player;
 public class Ent extends Enemy {
 	private static final float WIDTH = 64;
 	private static final float HEIGHT = 64;
-	private static final float GROUND = 6;
-	private static final int RUNSPEED = 2;
+	private static final float GROUND = 0;
+	private static final int RUNSPEED =2;
 	private static final int JMPSPEED = 2;
 	private static final int MAXHP = 1;
+
 	
 	private boolean hooked = false;
 	
 	public Ent(float x, float y) {
-		super(x, y, WIDTH, HEIGHT, GROUND, RUNSPEED, JMPSPEED, MAXHP, new FlyingGoomba());
-		addFeet(RUNSPEED, 1, JMPSPEED);
+		super(x, y, WIDTH, HEIGHT, GROUND, RUNSPEED, JMPSPEED, MAXHP, new FlyingGoomba(Direction.LEFT));
+		addFeet(RUNSPEED, Config.PLAYER_ACCELERATION, JMPSPEED);
 		try {
 			Animation a = (new Animation(new SpriteSheet("assets/images/enemies/ent/running.png", 103, 92), 100));
 			anim.addAnimation(AnimationState.BASIC, a);
@@ -60,7 +57,8 @@ public class Ent extends Enemy {
 			if(player.getHookshot().isIn()) {
 				this.getPhysicsBodyDef().type = BodyType.DYNAMIC;
 				this.getPhysicsBody().setGravityScale(0);
-				setAI(new FlyingGoomba(getFacing()));
+				setAI(new FlyingGoomba(getFacing().opposite()));
+				
 				hooked = false;
 			}
 			else {
@@ -85,6 +83,13 @@ public class Ent extends Enemy {
 		float offset = (float) (.1*Config.PIXELS_PER_METER);
 		g.drawRect(getX() - getWidth()/2-offset, getY() - getHeight()/2-offset, getWidth()+2*offset, getHeight()+2*offset);
 		super.render(g);
+	}
+	
+	@Override
+	public boolean isTouching(Direction side) {
+		boolean isTouchingAnything = super.isTouching(side.opposite());
+		
+		return isTouchingAnything;
 	}
 
 }

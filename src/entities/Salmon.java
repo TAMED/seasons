@@ -39,6 +39,8 @@ public class Salmon extends StaticObstacle{
 		getTimer().update(Config.SALMON_TIME);
 		salmonSound.play();
 		timerBar.gotSalmon();
+		
+		
 	}
 	
 	public void addToWorld(World world, float x, float y, Time timer) {
