@@ -5,6 +5,8 @@ import java.util.List;
 
 import input.Controls;
 
+import main.MainGame;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,6 +17,7 @@ import org.newdawn.slick.util.FontUtils;
 
 
 import config.Config;
+import config.Section;
 import entities.BearSprite;
 import entities.Salmon;
 
@@ -87,6 +90,7 @@ public class TitleState extends BasicGameState {
 			Config.loadFonts();
 			Config.initMusic();
 			Config.playMusic(Config.titleMusic);
+			MainGame.initStatesAftesLoad(gc, game);
 			load++;
 		}
 		Controls.update(gc);
