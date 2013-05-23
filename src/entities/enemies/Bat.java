@@ -2,15 +2,19 @@ package entities.enemies;
 
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 
+import util.Direction;
+
 import ai.FlyingGoomba;
 import anim.AnimationState;
 import config.Biome;
 import config.Config;
+import entities.Entity;
 import entities.Player;
 
 public class Bat extends Enemy {
@@ -77,6 +81,27 @@ public class Bat extends Enemy {
 		float offset = (float) (.1*Config.PIXELS_PER_METER);
 		g.drawRect(getX() - getWidth()/2-offset, getY() - getHeight()/2-offset, getWidth()+2*offset, getHeight()+2*offset);
 		super.render(g);
+	}
+	
+	@Override
+	public boolean isTouching(Direction side) {
+		boolean isTouchingAnything = super.isTouching(side);
+		ContactEdge contactEdge = getPhysicsBody().getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				boolean isEntity = contactEdge.contact.getFixtureA().m_body.getUserData() instanceof Entity;
+				if (data != null &&
+						side.equals(data) && !isEntity && isTouchingAnything) {
+					return true;
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		
+		return false;
 	}
 }
 

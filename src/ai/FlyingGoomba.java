@@ -21,7 +21,7 @@ public class FlyingGoomba extends AI {
 	 */
 	@Override
 	public void update(Enemy enemy, int delta) {
-		if (enemy.isTouching(walkDir) && enemy.isTouchingWall(walkDir)) {
+		if (enemy.isTouching(walkDir)) {
 			walkDir = walkDir.opposite();
 		}
 		enemy.fly(walkDir);
