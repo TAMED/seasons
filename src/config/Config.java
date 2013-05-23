@@ -114,8 +114,8 @@ public class Config {
 	public static Music titleMusic;
 	
 	// debug mode
-	public static final boolean DEBUG = true;
-	public static final boolean COLEMAK = true;
+	public static final boolean DEBUG = false;
+	public static final boolean COLEMAK = false;
 	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
