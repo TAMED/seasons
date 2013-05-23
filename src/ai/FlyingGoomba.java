@@ -1,5 +1,7 @@
 package ai;
 
+import org.jbox2d.dynamics.contacts.ContactEdge;
+
 import util.Direction;
 import entities.enemies.Enemy;
 
@@ -19,7 +21,9 @@ public class FlyingGoomba extends AI {
 	 */
 	@Override
 	public void update(Enemy enemy, int delta) {
-		if (enemy.isTouching(walkDir)) walkDir = walkDir.opposite();
+		if (enemy.isTouching(walkDir) && enemy.isTouchingWall(walkDir)) {
+			walkDir = walkDir.opposite();
+		}
 		enemy.fly(walkDir);
 	}
 

@@ -102,10 +102,10 @@ public class Config {
 	public static final float PAUSE_BLINK = 2000;
 	
 	public static EnumMap<Section, Timer> times;
-	public static final UnicodeFont MENU_FONT = new UnicodeFont(new Font("", Font.PLAIN, 30));
-	public static final UnicodeFont PLAIN_FONT = new UnicodeFont(new Font("", Font.PLAIN,16));
-	public static final UnicodeFont BOLD_FONT = new UnicodeFont(new Font("", Font.BOLD,16));
-	public static final UnicodeFont BIG_FONT = new UnicodeFont(new Font("", Font.PLAIN, 70));
+	public static final UnicodeFont MENU_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN, 30));
+	public static final UnicodeFont PLAIN_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN,16));
+	public static final UnicodeFont BOLD_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.BOLD,16));
+	public static final UnicodeFont BIG_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN, 70));
 	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {

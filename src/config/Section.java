@@ -3,6 +3,10 @@
  */
 package config;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 
 /**
  * @author Mullings
@@ -37,10 +41,24 @@ public enum Section {
 	private final int goalTime;
 	private Biome biome;
 	private String displayName;
+	private Image instruction;
+	private int x;
+	private int y;
+	
+	static {
+		try {
+			Image bat = new Image("assets/instructions/hookbat.png");
+			FOREST_2A.setInstruction(bat, 30, 30);
+			System.out.println(FOREST_2A.hasInstruction());
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private Section(String map, String background) {
 		this(map, background, 20000, Biome.FOREST, "Make a name!");
 	}
+
 	
 	private Section(String map, String background, int goalTime, Biome biome, String displayName) {
 		this.mapName = map;
@@ -75,5 +93,19 @@ public enum Section {
 	}
 	public Biome getBiome() {
 		return biome;
+	}
+	
+	public void setInstruction(Image image, int x, int y) {
+		this.instruction = image;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void renderInstruction(Graphics g) {
+		this.instruction.draw(this.x, this.y);
+	}
+	
+	public boolean hasInstruction() {
+		return this.instruction != null;
 	}
 }

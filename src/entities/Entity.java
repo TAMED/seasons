@@ -28,6 +28,7 @@ import util.Util;
 import anim.AnimationState;
 import config.Config;
 import entities.enemies.Bat;
+import entities.enemies.Enemy;
 import entities.enemies.Ent;
 
 /**
@@ -437,7 +438,29 @@ public abstract class Entity extends Sprite {
 			if(contactEdge.contact.isTouching()) {
 				Object data = contactEdge.contact.getFixtureB().getUserData();
 				if (data != null && side.equals(data)) {
-					return true;					
+					return true;
+				}
+			}
+			contactEdge = contactEdge.next;
+		}
+		
+		
+		return false;
+	}
+	
+	/**
+	 * @return whether or not the given side of the entity is touching another body
+	 */
+	public final boolean isTouchingWall(Direction side) {
+		ContactEdge contactEdge = physicsBody.getContactList();
+		
+		while(contactEdge != null) {
+			if(contactEdge.contact.isTouching()) {
+				Object data = contactEdge.contact.getFixtureB().getUserData();
+				boolean isEntity = contactEdge.contact.getFixtureA().m_body.getUserData() instanceof Player;
+				if (data != null &&
+						side.equals(data) && !isEntity) {
+					return true;
 				}
 			}
 			contactEdge = contactEdge.next;

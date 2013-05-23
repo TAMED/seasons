@@ -122,6 +122,9 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		camera.translateGraphics(gc);
 		drawBackground(graphics, gc, game);
+		if (section.hasInstruction()) {
+			section.renderInstruction(graphics);
+		}
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
 		timerBar.render(gc, graphics, timer, timerGo);

@@ -6,6 +6,8 @@ package config;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.newdawn.slick.Image;
+
 /**
  * @author Mullings
  *
@@ -35,9 +37,17 @@ public enum Level {
 
 	private static final Queue<Section> sectionQueue = new LinkedList<Section>();
 	private Section[] sections;
+	private Image instruction;
+	private int x;
+	private int y;
 	
 	private Level(Section...sections) {
 		this.sections = sections;
+	}
+	
+	private Level(Image instruction, int x, int y, Section...sections) {
+		this.sections = sections;
+
 	}
 	
 	public static void addToQueue(Section section) {
