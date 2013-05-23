@@ -156,7 +156,6 @@ public class LevelState extends BasicGameState{
 		if (Controls.isKeyPressed(Action.DEBUG)) viewDebug = !viewDebug;
 		if (Controls.isKeyPressed(Action.GOD_MODE)) godMode = !godMode;
 		if (Controls.isKeyPressed(Action.SLOW_DOWN)) slowMode = !slowMode;
-		if (Controls.isKeyPressed(Action.REPLAY)) replayMode = !replayMode;
 
 		// check for these even if game is paused
 		if (Controls.isKeyPressed(Action.MUTE)) {

@@ -113,6 +113,10 @@ public class Config {
 	public static Music levelSelectMusic;
 	public static Music titleMusic;
 	
+	// debug mode
+	public static final boolean DEBUG = true;
+	public static final boolean COLEMAK = true;
+	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
 		XStream x = new XStream();

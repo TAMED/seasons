@@ -17,7 +17,6 @@ import org.newdawn.slick.util.FontUtils;
 
 
 import config.Config;
-import config.Section;
 import entities.BearSprite;
 import entities.Salmon;
 

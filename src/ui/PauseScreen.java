@@ -18,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
 import states.LevelSelectState;
+import states.LevelState;
 import config.Config;
 import entities.Sprite;
 
@@ -57,7 +58,9 @@ public class PauseScreen extends Sprite {
 		int extraY = Config.RESOLUTION_HEIGHT * 7 / 8;
 		
 		FontUtils.drawCenter(bigFont, "Game paused", 0, pauseY, Config.RESOLUTION_WIDTH);
-		
+		if (LevelState.replayMode) {
+			Config.PLAIN_FONT.drawString(0, Config.RESOLUTION_HEIGHT- Config.PLAIN_FONT.getHeight("Replay On"), "Replay On");
+		}
 		if (main) {
 			FontUtils.drawCenter(smallFont, "Press 'J' to return to level select. Press 'Q' to quit.\nPress 'Escape' to unpause.", 0, optionsY, Config.RESOLUTION_WIDTH);
 			FontUtils.drawCenter(bigFont, "Controls:", 0, controlsY, Config.RESOLUTION_WIDTH);
@@ -98,6 +101,7 @@ public class PauseScreen extends Sprite {
 				main = true;
 			}
 		}
+		if (Controls.isKeyPressed(Action.REPLAY)) LevelState.replayMode = !LevelState.replayMode;
 	}
 
 	public void unpause(GameContainer gc) {
