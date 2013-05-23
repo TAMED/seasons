@@ -36,9 +36,6 @@ public enum Level {
 
 	private static final Queue<Section> sectionQueue = new LinkedList<Section>();
 	private Section[] sections;
-	private Image instruction;
-	private int x;
-	private int y;
 	
 	private Level(Section...sections) {
 		this.sections = sections;
@@ -53,16 +50,16 @@ public enum Level {
 		sectionQueue.add(section);
 	}
 	
-	public static void addToQueue(Level level) {
-		addToQueue(level, 0);
+	public static void addToQueue(Level level, int index) {
+		sectionQueue.add(level.getSection(index));
 	}
-	
-	public static void addToQueue(Level level, int start) {
-		System.out.println("Adding sections");
-		for (int i = start; i < level.getNumSections(); i++) {
+
+	public static void addAllToQueue(Level level) {
+		for (int i = 0; i < level.getNumSections(); i++) {
 			sectionQueue.add(level.getSection(i));
 		}
 	}
+	
 	
 	public static void clearQueue() {
 		System.out.println("Clearing queue");

@@ -28,7 +28,6 @@ import util.Util;
 import anim.AnimationState;
 import config.Config;
 import entities.enemies.Bat;
-import entities.enemies.Enemy;
 import entities.enemies.Ent;
 
 /**

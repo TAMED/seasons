@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import sounds.SoundEffect;
 import ui.Transitions;
+import config.Biome;
 import config.Config;
 import config.Level;
 import config.Section;
@@ -31,14 +32,46 @@ public class SectionWidget {
 	private UnicodeFont font;
 	private int x;
 	private int y;
+	private String displayName;
+	private float opacity;
 	
 	private SoundEffect btnSound;
 	
-	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
-		
+	public SectionWidget(GUIContext container, final Level level, final StateBasedGame game) {
 		btnSound = new SoundEffect("assets/sounds/Jump_Sound.wav");
 		x = level.ordinal() * WIDTH;
-		y = index * HEIGHT + MARGIN_TOP + PADDING * index;
+		y = MARGIN_TOP;
+		
+		Image image;
+		font = Config.MENU_FONT;
+        
+        try {
+			salmonSprite = new Salmon(x + 4*PADDING + MARGIN_LEFT, y + 4*PADDING);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+        
+        this.section = level.getSection(0);
+        try {
+			image = new Image(0,0);
+			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
+				public void componentActivated(AbstractComponent source) {
+					Level.addAllToQueue(level);
+					game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
+				}
+			});
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+        
+        this.displayName = "ALL " + level.toString();
+        this.opacity = .9f;
+	}
+	
+	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
+		btnSound = new SoundEffect("assets/sounds/Jump_Sound.wav");
+		x = level.ordinal() * WIDTH;
+		y = (index+1) * HEIGHT + MARGIN_TOP + PADDING * (index+1);
 		
 		Image image;
 		font = Config.MENU_FONT;
@@ -61,13 +94,16 @@ public class SectionWidget {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+        
+        this.displayName = Integer.toString(index + 1) + ": " + section.getDisplayName();
+        this.opacity = .6f;
 	}
 
 	
 	
 	public void render(GameContainer gc, Graphics g) {
 		mouseOver.render(gc, g);
-		float alpha = mouseOver.isMouseOver() ? 0.8f : 1.0f;
+		float alpha = mouseOver.isMouseOver() ? 1.0f : opacity;
 		if (mouseOver.isMouseOver() && salmonSprite.isStopped()) {
 			salmonSprite.play();
 			btnSound.play();
@@ -75,7 +111,7 @@ public class SectionWidget {
 			salmonSprite.stop();
 		}
 
-		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , section.getDisplayName(), new org.newdawn.slick.Color(1,1,1, alpha));
+		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, alpha));
 	}
 	
 	public void update(GameContainer gc, int delta) {

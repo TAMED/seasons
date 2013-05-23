@@ -39,6 +39,9 @@ public class LevelSelectState extends BasicGameState{
         background = new Image("assets/backgrounds/menuA.png");
         
 		for (int i = 0; i < Level.values().length; i++) {
+			SectionWidget allsw = new SectionWidget(gc, Level.values()[i], game);
+			sections.add(allsw);
+			
 			for (int j = 0; j < Level.values()[i].getNumSections(); j++) {
 				SectionWidget sw = new SectionWidget(gc, Level.values()[i], j, game);
 				sections.add(sw);
