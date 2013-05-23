@@ -2,7 +2,6 @@ package entities;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import anim.AnimationState;
@@ -15,7 +14,7 @@ public class Steam extends Sprite{
 		super(x, y, WIDTH, height*HEIGHT_MUL);
 		try {
 			Animation a = (new Animation(new SpriteSheet("assets/images/nonentities/steam/steam-high.png", 320, 320), 100));
-			a.setCurrentFrame(frameIndex % 9);
+			a.setCurrentFrame((int) (Math.random() * 9));
 			anim.addAnimation(AnimationState.BASIC, a);
 			anim.setDefaultAnimation(AnimationState.BASIC);
 		} catch (Exception e) {

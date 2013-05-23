@@ -5,8 +5,10 @@ package entities.enemies;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 import ai.AI;
+import config.Biome;
 import entities.Entity;
 import entities.Player;
 
@@ -32,6 +34,10 @@ public abstract class Enemy extends Entity {
 		this.ai = ai;
 		setColor(Color.red);
 		setPosition(x, y);
+	}
+	
+	public void render(Graphics graphics, Biome biome) {
+		super.render(graphics);
 	}
 	
 	@Override

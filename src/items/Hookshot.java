@@ -10,8 +10,6 @@ import org.jbox2d.dynamics.joints.RopeJointDef;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -58,6 +56,8 @@ public class Hookshot extends ItemBase {
 		switch (state) {
 			case OUT: case PULL: case MOTION:
 				chain.render(graphics);
+		default:
+			break;
 
 		}
 		
@@ -66,6 +66,8 @@ public class Hookshot extends ItemBase {
 			case MOTION: case OUT: case PULL:
 				hook.render(graphics);
 				break;
+		default:
+			break;
 		}
 	}
 	
@@ -100,6 +102,8 @@ public class Hookshot extends ItemBase {
 					detachTether();
 					state = HookState.IN;
 					break;
+			default:
+				break;
 			}
 		}
 		
@@ -150,6 +154,8 @@ public class Hookshot extends ItemBase {
 				}
 				
 				break;
+		default:
+			break;
 		}
 		
 		if (chain != null)  chain.update(gc, delta);

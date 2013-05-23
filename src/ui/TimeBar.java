@@ -1,30 +1,23 @@
 package ui;
 
-import java.awt.Font;
-import java.util.List;
-
 import org.jbox2d.common.Vec2;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.fills.GradientFill;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import config.Config;
-
-
 import time.Time;
 import time.Timer;
+import config.Config;
 
-@SuppressWarnings("unchecked")
 public class TimeBar {
 	private GradientFill timeFill;
 	private GradientFill salmonTimeFill;
+	private GradientFill currentFill;
+	private float salmonTimer = 0;
 	private Rectangle timeShape;
 	private final Vec2 timePos = new Vec2(20,20);
 	private final float timeHeight = 30;
@@ -32,6 +25,7 @@ public class TimeBar {
 	private float timeDivide;
 	private static UnicodeFont goalFont;
 	private static UnicodeFont currentFont;
+	
 	
 	static {
 		
@@ -41,11 +35,12 @@ public class TimeBar {
 		timeWidth = Config.RESOLUTION_WIDTH - 2*timePos.x;
 		timeShape = new Rectangle(timePos.x, timePos.y, 0, timeHeight);
 		timeFill = new GradientFill(timePos.x, timePos.y, new Color(32, 131, 153, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
-                new Color(138, 217, 235, 100), true);
+                new Color(255, 217, 235, 100), true);
 		TimeBar.goalFont = goalFont;
 		TimeBar.currentFont = currentFont;
-		salmonTimeFill = new GradientFill(timePos.x, timePos.y, new Color(240, 74, 74, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
+		salmonTimeFill = new GradientFill(timePos.x, timePos.y, new Color(255, 189, 180, 100), (Config.RESOLUTION_WIDTH - timePos.x)/4, timePos.y,
                 new Color(205, 134, 134, 100), true);
+		currentFill = timeFill;
 	}
 
 	public void render(GameContainer gc, Graphics graphics, Timer timer, boolean timerGo) {
@@ -67,7 +62,7 @@ public class TimeBar {
 		graphics.setColor(new Color(0,0,0,100));
 		graphics.fillRect(timePos.x, timePos.y, timeWidth, timeHeight);
 		timeShape.setWidth(Math.max(Math.min(timer.getCurrentTime().getMillis()/timeDivide, timeWidth),0));
-		graphics.fill(timeShape, timeFill);
+		graphics.fill(timeShape, currentFill);
 		
 		String currentStr = "Time: "+getTimeString(timer.getCurrentTime());
 
@@ -80,6 +75,16 @@ public class TimeBar {
 	
 	public void enter(GameContainer gc, StateBasedGame game, Timer timer) {
 		timeDivide = 2*timer.getGoal().getMillis()/timeWidth;
+	}
+	
+	public void update(GameContainer gc, StateBasedGame game, int delta) {
+		salmonTimer -= delta;
+		if (salmonTimer <= 0) currentFill = timeFill;
+	}
+	
+	public void gotSalmon() {
+		salmonTimer = 250;
+		currentFill = salmonTimeFill;
 	}
 	
 	private String getTimeString(Time t) {

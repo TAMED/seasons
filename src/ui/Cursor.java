@@ -11,10 +11,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
-import anim.AnimationState;
-
 import states.LevelState;
 import util.Util;
+import anim.AnimationState;
 import config.Config;
 import entities.Player;
 import entities.Sprite;

@@ -93,6 +93,36 @@ public class Sprite {
 		}
 	}
 	
+	protected void draw(Graphics graphics, Color cFilter) {
+		float hw = drawWidth / 2;
+		float hh = drawHeight / 2;
+		float x = getX();
+		float y = getY();
+		
+		Animation currentAnim = anim.getCurrentAnimation();
+		if (currentAnim != null || image != null) {
+			Image img;
+			if (currentAnim != null) {
+				img = currentAnim.getCurrentFrame()
+				           .getFlippedCopy(facing == Direction.RIGHT, false);
+				img.setRotation(this.angle);
+			} else {
+				img = image.getFlippedCopy(facing == Direction.RIGHT, false);
+				img.setRotation(this.angle);
+			}
+			img.draw(x - hw, y - hh, drawWidth + 2*ground, drawHeight + 2*ground, cFilter);
+		} else if (color != null) {
+			graphics.setColor(color);
+			graphics.drawRect(x - hw, y - hh, width, height);
+			// marker to indicate direction of sprite
+			int offset = (facing == Direction.RIGHT) ? 1 : -1;
+			graphics.drawOval(x + offset * hw - 5, y - hh, 10, 10);
+			// text to indicate current animation
+			if (anim.getCurrentState() != null)
+				graphics.drawString(anim.getCurrentState().toString(), x - hw, y - hh);
+		}
+	}
+	
 	public void setDrawWidth(float f) {
 		drawWidth = f;
 	}

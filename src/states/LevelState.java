@@ -3,12 +3,8 @@ package states;
 import input.Controls;
 import input.Controls.Action;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
 import main.MainGame;
 import map.Map;
@@ -20,13 +16,11 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.Effect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.FontUtils;
 
 import time.Time;
 import time.Timer;
@@ -40,15 +34,17 @@ import camera.Camera;
 
 import combat.CombatContact;
 
+import config.Biome;
 import config.Config;
+import config.Level;
 import config.Section;
 import entities.Player;
+import entities.Salmon;
 import entities.StaticObstacle;
 import entities.Steam;
 import entities.enemies.Enemy;
 
 public class LevelState extends BasicGameState{
-	public static Queue<Section> sectionQueue;
 	private Section section;
 	private Map map;
 	private Player player;
@@ -66,47 +62,31 @@ public class LevelState extends BasicGameState{
 	private Vec2 goalLoc;
 	private Image background;
 	private Timer timer;
+	private Biome biome;
 	private static TimeBar timerBar;
 	private static DebugInfo info;
 	private static PauseScreen pauseScrn;
 	
-	private static Music forestLoop;
+	private UnicodeFont pauseFont;
+	private float pauseCounter;
 	private static UnicodeFont plainFont;
 	private static UnicodeFont boldFont;
 	
 	static {
-		sectionQueue = new LinkedList<Section>();
 		debugdraw = new Box2DDebugDraw();
 		debugdraw.setFlags(DebugDraw.e_shapeBit | DebugDraw.e_jointBit | DebugDraw.e_centerOfMassBit);
 		info = new DebugInfo(Config.RESOLUTION_WIDTH - 500, 100);
 		pauseScrn = new PauseScreen();
-		try {
-			forestLoop = new Music("assets/sounds/Song1.wav");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		plainFont = new UnicodeFont(new Font("", Font.PLAIN,16));
-        plainFont.addAsciiGlyphs();
-        ((List<Effect>) plainFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			plainFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		plainFont = Config.PLAIN_FONT;
         
-        boldFont = new UnicodeFont(new Font("", Font.BOLD,16));
-        boldFont.addAsciiGlyphs();
-        ((List<Effect>) boldFont.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
-        try {
-			boldFont.loadGlyphs();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+        boldFont = Config.BOLD_FONT;
+        
 	}
 	
 	public LevelState(Section section) {
 		super();
 		this.section = section;
+		biome = section.getBiome();
 		if (Config.times.containsKey(section)) timer = Config.times.get(section);
 		else {
 			timer = new Timer();
@@ -118,9 +98,7 @@ public class LevelState extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		timerBar = new TimeBar(gc, plainFont, boldFont);
-		forestLoop.loop();
-		forestLoop.setVolume(0f);
-		if (Config.soundOn) forestLoop.fade(2000, 1f, false);
+		Salmon.timerBar = timerBar;
 	}
 
 	@Override
@@ -128,6 +106,9 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		camera.translateGraphics(gc);
 		drawBackground(graphics, gc, game);
+		if (section.hasInstruction()) {
+			section.renderInstruction(graphics);
+		}
 		camera.untranslateGraphics(gc);
 		camera.drawMap();
 		timerBar.render(gc, graphics, timer, timerGo);
@@ -141,7 +122,7 @@ public class LevelState extends BasicGameState{
 			camera.translateGraphics(gc);
 		} else {
 			for (Enemy e : enemies) {
-				e.render(graphics);
+				e.render(graphics, biome);
 			}
 			for (StaticObstacle s : staticObjects) {
 				s.render(graphics);
@@ -149,8 +130,8 @@ public class LevelState extends BasicGameState{
 			for (Steam s : steams) {
 				s.render(graphics);
 			}
+			player.render(graphics);
 		}
-		player.render(graphics);
 		cursor.render(graphics);
 		
 		// so that transitions render correctly
@@ -158,7 +139,11 @@ public class LevelState extends BasicGameState{
 		if (replayMode) {
 			plainFont.drawString(0, Config.RESOLUTION_HEIGHT- plainFont.getHeight("Replay On"), "Replay On");
 		}
-		if (gc.isPaused()) pauseScrn.render(graphics);
+		String mapName = section.getDisplayName();
+		plainFont.drawString(Config.RESOLUTION_WIDTH/2 - plainFont.getWidth(mapName)/2, 0, mapName);
+
+		if (gc.isPaused()) pauseScrn.render(gc, graphics);
+		else renderPauseNotice(gc, graphics);
 	}
 
 	@Override
@@ -166,37 +151,43 @@ public class LevelState extends BasicGameState{
 			throws SlickException {
 		Controls.update(gc);
 		
-		// check toggles
+		// check toggles for special commands
+		// TODO: remove
 		if (Controls.isKeyPressed(Action.DEBUG)) viewDebug = !viewDebug;
 		if (Controls.isKeyPressed(Action.GOD_MODE)) godMode = !godMode;
 		if (Controls.isKeyPressed(Action.SLOW_DOWN)) slowMode = !slowMode;
 		if (Controls.isKeyPressed(Action.REPLAY)) replayMode = !replayMode;
-		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+
+		// check for these even if game is paused
 		if (Controls.isKeyPressed(Action.MUTE)) {
 			if (Config.soundOn) {
-				forestLoop.pause();
+				Config.musicLoop.pause();
 				Config.soundOn = false;
 			} else {
-				forestLoop.resume();
+				Config.musicLoop.resume();
 				Config.soundOn = true;
 			}
 		}
+		if (Controls.isKeyPressed(Action.FULLSCREEN)) MainGame.setFullscreen((AppGameContainer) gc, !gc.isFullscreen());
+		if (Controls.isKeyPressed(Action.RESET)) { reset(game); pauseScrn.unpause(gc); }
+		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
 		
 		// show pause screen if paused
-		if (gc.isPaused()) { pauseScrn.update(gc, delta); return; }
+		if (gc.isPaused()) { pauseScrn.update(gc, game, delta); return; }
 		
 		// should go after pause screen update
 		if (Controls.isKeyPressed(Action.PAUSE) || !gc.hasFocus()) pause(gc);
-		
-		if (Controls.isKeyPressed(Action.RESET)) { reset(game); }
-		if (Controls.isKeyPressed(Action.SKIP)) { nextLevel(game); }
 		
 		// slooooow dooooown
 		if (slowMode) delta /= 10;
 		
 		if (Controls.moveKeyPressed()) {
 			timerGo = true;
+			pauseCounter = -Config.PAUSE_BLINK;
 		}
+		
+		pauseCounter += delta;
+		if (pauseCounter > 0) pauseCounter = pauseCounter % Config.PAUSE_BLINK;
 		
 		// if the goal is reached
 		if (closeToGoal()) {
@@ -240,12 +231,16 @@ public class LevelState extends BasicGameState{
 		if (timerGo) {
 			timer.update(delta);
 		}
+		timerBar.update(gc, game, delta);
 	}
 
 	@Override
 	public void enter(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		super.enter(gc, game);
+		if(!Config.musicLoop.equals(section.getBiome().getMusic())) {
+			Config.playMusic(section.getBiome().getMusic());
+		}
 		timerGo = false;
 		map = new Map(section.getMapPath(), new Vec2(0, Config.GRAVITY));
 		map.parseMapObjects();
@@ -253,12 +248,10 @@ public class LevelState extends BasicGameState{
 		map.getWorld().setDebugDraw(debugdraw);
 		
 		background = new Image(section.getBackgroundPath());
-		background = background.getScaledCopy((float) (map.getHeight() > gc.getHeight() ? map.getHeight() : gc.getHeight())/ (float) background.getHeight());
+		background = background.getScaledCopy((float) Math.max(map.getHeight(), Config.RESOLUTION_HEIGHT) / background.getHeight());
 
 		player = MainGame.player;
-		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
-				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
-		player.reset();
+
 		
 		this.timer.setGoal(new Time(section.getGoalTime()));
 
@@ -268,6 +261,9 @@ public class LevelState extends BasicGameState{
 
 		timer.reset();
 		timerBar.enter(gc, game, timer);
+
+		pauseFont = Config.MENU_FONT;
+		pauseCounter = -Config.PAUSE_BLINK;
 		
 		enemies = map.getEnemies();
 		staticObjects = map.getStaticObjects();
@@ -279,6 +275,9 @@ public class LevelState extends BasicGameState{
 		for (StaticObstacle s : staticObjects) {
 			s.addToWorld(world, s.getX(), s.getY(), timer.getCurrentTime());
 		}
+		player.addToWorld(map.getWorld(), map.getPlayerLoc().x, map.getPlayerLoc().y 
+				+ (Config.TILE_HEIGHT / 2) - (Config.PLAYER_HEIGHT / 2)); // move up to avoid getting stuck in the ground
+		player.reset();
 	}
 
 	private void pause(GameContainer gc) {
@@ -291,8 +290,9 @@ public class LevelState extends BasicGameState{
 	}
 	
 	private void nextLevel(StateBasedGame game) {
-		if (sectionQueue.isEmpty()) game.enterState(IntroState.ID, Transitions.fadeOut(), Transitions.fadeIn());
-		else game.enterState(LevelState.sectionQueue.poll().getID(), Transitions.fadeOut(), Transitions.fadeIn());
+		ResultsState.recordResult(section);
+		if (Level.isQueueEmpty()) game.enterState(ResultsState.ID, Transitions.fadeOut(), Transitions.fadeIn());
+		else game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 	}
 	
 	private void reset(StateBasedGame game) {
@@ -308,6 +308,13 @@ public class LevelState extends BasicGameState{
 		}
 	}
 	
+	private void renderPauseNotice(GameContainer gc, Graphics graphics) {
+		if (pauseCounter > 0 && pauseCounter < Config.PAUSE_BLINK / 2) {
+			FontUtils.drawRight(pauseFont, "Press 'Escape' to pause  ", 0,
+					Config.RESOLUTION_HEIGHT - Config.MENU_FONT.getLineHeight(), Config.RESOLUTION_WIDTH);
+		}
+	}
+	
 	@Override
 	public int getID() {
 		return section.getID();
@@ -316,5 +323,5 @@ public class LevelState extends BasicGameState{
 	public static Camera getCamera() {
 		return camera;
 	}
-
+	
 }

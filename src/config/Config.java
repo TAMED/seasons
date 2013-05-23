@@ -1,13 +1,20 @@
 package config;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.EnumMap;
+import java.util.List;
 
-import org.newdawn.slick.Color;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.Effect;
 
 import time.Timer;
 
@@ -93,11 +100,18 @@ public class Config {
 	public static final int CURSOR_SIZE = 15;
 	public static final int SALMON_TIME = -500;
 	
-	// Biome Colors
-	public static final Color FOREST_COLOR = new Color(76, 178, 76);
-	public static final Color LAKE_COLOR = new Color(185, 69, 201);
+	public static final float PAUSE_BLINK = 2000;
 	
 	public static EnumMap<Section, Timer> times;
+	public static final UnicodeFont MENU_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN, 30));
+	public static final UnicodeFont PLAIN_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN,16));
+	public static final UnicodeFont BOLD_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.BOLD,16));
+	public static final UnicodeFont BIG_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN, 70));
+	
+	// music
+	public static Music musicLoop;
+	public static Music levelSelectMusic;
+	public static Music titleMusic;
 	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
@@ -136,5 +150,52 @@ public class Config {
 			times.put(s, new Timer());
 		}
 		saveTimes();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void loadFonts() {
+		MENU_FONT.addAsciiGlyphs();
+		((List<Effect>) MENU_FONT.getEffects()).add(new ColorEffect(new Color(1, 1, 1, 0.8f)));
+
+		PLAIN_FONT.addAsciiGlyphs();
+        ((List<Effect>) PLAIN_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
+        BOLD_FONT.addAsciiGlyphs();
+        ((List<Effect>) BOLD_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
+        BIG_FONT.addAsciiGlyphs();
+        ((List<Effect>) BIG_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
+		try {
+			MENU_FONT.loadGlyphs();
+			PLAIN_FONT.loadGlyphs();
+			BOLD_FONT.loadGlyphs();
+			BIG_FONT.loadGlyphs();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void initMusic() {
+		try {
+			titleMusic = new Music("assets/sounds/Field07.wav");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		musicLoop = titleMusic;
+		levelSelectMusic = titleMusic;
+	}
+	
+	public static void playMusic(Music music) {
+		musicLoop.stop();
+		musicLoop = music;
+		musicLoop.loop();
+		musicLoop.setVolume(0f);
+		if (soundOn) {
+			musicLoop.fade(2000, 1f, false);
+		} else {
+			musicLoop.setVolume(gameVolume);
+			musicLoop.pause();
+		}
 	}
 }

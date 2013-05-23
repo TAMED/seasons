@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="360" height="24" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="forestTiles.tsx"/>
  <tileset firstgid="217" source="salmonTiles.tsx"/>
- <tileset firstgid="233" source="mushrooms.tsx"/>
+ <tileset firstgid="249" source="mushrooms.tsx"/>
  <layer name="foreground" width="360" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3ayUrDUBiG4XMFgq5EUDciqBuHtXbRu3AEtY7gPOC0VG/bL0jBhqTNSXOSP573gRehFZva+DUUu865LhERmavjAADWdBz7DAAWsc8AYBP7DAA2sc8AYBP7DAA2sc8AYBP7DAA2sc8AYram1ps+iBzsM4CYbaqtpg8iB/sMIGah97l/fV7mOp19BhCz0Pvc//llHod9BhAz9hkAbGKfAcAm9hkAbGKfs2009LiANYfqSB2rnnox0nTIJ21EW/Z5T+2rg+oObeRjxy7rParobW2X/r+jqr+2yZW6VjfqVn0aaSHkkzbCdzd9z0Pffd5WO2rXDe7zubpQlx7HOo7kcf/j7vjIeo8qelvbpc/bqr9alr5eflVv6l19qO+cFoc07HvL3rca6hdgiO/5Evq8PFGn6swN7vOjelLPHsc6Dj77Zp9j3ef09fKXy9/kItuc3tmq7mOf878/1Hl5p+7Vg/v9u58golr7e708apeb3ufJmpsy8PpYaoaIaiv5XLfI9bKVzzdma25OzRt4naw06n2ZiOIs2eelmltWKwaeu5V+AIkQwVEAhwAA
+   H4sIAAAAAAAAC+3ayUoDQRhF4XoCQVciqBsR1I3DWrPIWziCGkdwHnBaqq/tDRIwTTrpSqrSf1nng0MgBtPR9qYJNp1zTSIiMlfDAQCsaTj2GQAsYp8BwCb2GQBsYp8BwCb2GQBsYp8BwCb2GQBsYp8B5GxNrdd9ECXYZwA521RbdR9ECfYZQM5i73Pn+nyY63T2GUDOYu9z5/sP8zzsM4Ccsc8AYBP7DAA2sc8AYBP73NtGTc8LWHOojtSxaqkXI03HfNFGpLLPe2pfHYQ7tIHPnbte71FV70td8f+OQt+m5Epdqxt1qz6NtBDzRRvhu5u+56HvPm+rHbXruvf5XF2oS49jHUX7ef/j7vjo9R5V9b7UFc/b0LeWFa+XX9Wbelcf6rukxT71e+ywX1uN9QMwxPd8iX1enqhTdea69/lRPalnj2MdBZ99s8+57nPxevnLlW9ylW0u7myor7HP5Y+PdV7eqXv14H7/7ieIaKz9vV4etMt17/Nk4KYM/PxTaoaIxlb7c90q18tWPt+YDdycmjfwe0ilQe/LRJRn7X1eCtyyWjHw2lLpB1SkGxwAhwAA
   </data>
  </layer>
  <layer name="object" width="360" height="24">

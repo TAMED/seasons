@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="21" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="lakeTiles.tsx"/>
+ <tileset firstgid="217" source="salmonTiles.tsx"/>
+ <layer name="background" width="50" height="21">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRQC2gOdAOoBKghz9ItYMcN436g3Z2jGR/DDTA5mZC/hiM/hysaYhUMFj9MZqnaasHGcgiYVrZQQ9AjD+GApBlGNp+ER8mGADuxwn0
+  </data>
+ </layer>
+ <layer name="foreground" width="50" height="21">
+  <data encoding="base64" compression="zlib">
+   eJzd1rkKwkAQgOF9A6/Sq1SwtEplEfIAaT07z87z9f0lqSxWdhgnmyx8jbAw/8iKqXMubYA6niVWWCMpP5tXN4747HHAEZkrGhaVTiQ7V9xwR+6Khhba6NRUFz30McCwpkYYY4JpBPP4JD86ZmVH7N9HZtDh25WW3KDDtyuLbq0O3640uq06/t0da4c2iw7JWwi9Y9EheQuhdyQdobuSvIXQO5IO7d8aDd8dG2yxU96vdccJZ1wimE3a8fmf+MATrwhmk3Q05bwBAtpxng==
+  </data>
+ </layer>
+ <layer name="object" width="50" height="21">
+  <data encoding="base64" compression="zlib">
+   eJzt00ENADAMA7HyZ1g2I7DXPktVG8FJUaoAsvTvAAiQ+oPErsQm7l62su8+Nof5DgUUBfA=
+  </data>
+ </layer>
+</map>

@@ -7,10 +7,8 @@ import java.util.EnumSet;
 
 import org.newdawn.slick.Animation;
 
-import config.Config;
-
 import util.Direction;
-
+import config.Config;
 import entities.Entity;
 import entities.Player;
 
@@ -20,6 +18,9 @@ import entities.Player;
  *
  */
 public enum AnimationState {
+	STATIC {
+		
+	},
 	
 	BASIC { 
 		
@@ -66,7 +67,10 @@ public enum AnimationState {
 		public AnimationState getNextState(Entity entity) {
 			if (entity.getPhysicsBody().getLinearVelocity().y >= Config.VEL_EPSILON) {
 				return AnimationState.SOMERSAULT;
-			} 
+			}
+			if (entity.isTouching(Direction.DOWN)){
+				return AnimationState.IDLE;
+			}
 			return this;
 		}
 
@@ -158,13 +162,13 @@ public enum AnimationState {
 	}
 	
 	static {
+		STATIC.prohibitTransitions();
 		BASIC.prohibitTransitions();
-		
 		IDLE.prohibitTransitions();
 		RUN.prohibitTransitions();
-		JUMP.prohibitTransitions(IDLE, RUN);
-		RISE.prohibitTransitions(IDLE, RUN);
-		FALL.prohibitTransitions(RUN);
+		JUMP.prohibitTransitions();
+		RISE.prohibitTransitions();
+		FALL.prohibitTransitions();
 		HOOKING.prohibitTransitions();
 		SOMERSAULT.prohibitTransitions();
 	}
