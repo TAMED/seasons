@@ -25,14 +25,14 @@ public enum Section {
 	LAKE_1("Forest_8.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearant"),
 	LAKE_2("lake1.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bear"),
 	LAKE_3("Lake_2.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Bearlake"),
-	LAKE_4("Lake_4.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Water Bear"),
+	LAKE_4("Lake_4.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Waterbear"),
 	
-	DESERT_1("Desert_1.tmx", "desert4.png", 20000, Biome.DESERT, "Bearsert"),
-	DESERT_2("Desert_2.tmx", "desert4.png", 20000, Biome.DESERT, "Revenge of Bearsert"),
+	DESERT_1("Desert_1.tmx", "desert4.png", 20000, Biome.DESERT, "Drybear"),
+	DESERT_2("Desert_2.tmx", "desert4.png", 20000, Biome.DESERT, "Hawtbear"),
 	
 	CANYON_1("Canyon_1.tmx", "canyon2.png", 20000, Biome.CANYON, "Canbearyon"),
 	CANYON_2("Canyon_Climb.tmx", "canyon2.png", 30000, Biome.CANYON, "Nothing"),
-	CANYON_3("Canyon_3", "canyon2,png", 20000, Biome.CANYON, "Shrooooms"),
+	CANYON_3("Canyon_3.tmx", "canyon2.png", 20000, Biome.CANYON, "Shrooooms"),
 	
 	HELL_1("Hell_1.tmx", "hell2.png", 20000, Biome.HELL, "Bearvents"),
 	HELL_2("Hell_2.tmx", "hell2.png", 20000, Biome.HELL, "Hellbear"), 
