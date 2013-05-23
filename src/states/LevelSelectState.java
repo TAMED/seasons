@@ -59,7 +59,6 @@ public class LevelSelectState extends BasicGameState{
 			Config.playMusic(Config.levelSelectMusic);
 		}
 		ResultsState.clearResults();
-		
 	}
 
 	@Override
