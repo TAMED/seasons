@@ -116,15 +116,28 @@ public class Config {
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
 		XStream x = new XStream();
+		
+		File f = new File("times.xml");
+		FileInputStream fileInputStream = null;
 		try {
-			File f = new File("times.xml");
 			if (f.exists()) {
-				times = (EnumMap<Section, Timer>) x.fromXML(new FileInputStream(f));
+				fileInputStream = new FileInputStream(f);
+				times = (EnumMap<Section, Timer>) x.fromXML(fileInputStream);
 			} else {
 				createAndSaveTimes();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				if (fileInputStream != null) fileInputStream.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			if (f.exists()) {
+				System.out.println("I'm in Config");
+				System.out.println("times-" + System.currentTimeMillis() + ".xml");
+				System.out.println(f.renameTo(new File("times-" + System.currentTimeMillis() + ".xml")));
+			}
 			createAndSaveTimes();
 		}
 	}
