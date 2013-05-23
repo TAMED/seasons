@@ -35,9 +35,6 @@ public enum Level {
 
 	private static final Queue<Section> sectionQueue = new LinkedList<Section>();
 	private Section[] sections;
-	private Image instruction;
-	private int x;
-	private int y;
 	
 	private Level(Section...sections) {
 		this.sections = sections;

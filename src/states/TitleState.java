@@ -1,9 +1,9 @@
 package states;
 
+import input.Controls;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import input.Controls;
 
 import main.MainGame;
 
@@ -15,9 +15,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
-
 import config.Config;
-import config.Section;
 import entities.BearSprite;
 import entities.Salmon;
 
