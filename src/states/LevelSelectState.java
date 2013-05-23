@@ -76,7 +76,7 @@ public class LevelSelectState extends BasicGameState{
 		
 		String title = "Level Select";
 		int w = Config.RESOLUTION_WIDTH;
-		FontUtils.drawCenter(font, title, 0, 0, w);
+		FontUtils.drawCenter(Config.BIG_FONT, title, 0, 5, w);
 	}
 	
 	@Override

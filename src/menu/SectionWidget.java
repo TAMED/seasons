@@ -39,7 +39,7 @@ public class SectionWidget {
 	
 	public SectionWidget(GUIContext container, final Level level, final StateBasedGame game) {
 		btnSound = new SoundEffect("assets/sounds/Jump_Sound.wav");
-		x = level.ordinal() * WIDTH;
+		x = level.ordinal() * WIDTH - 20;
 		y = MARGIN_TOP;
 		
 		Image image;
