@@ -42,7 +42,6 @@ public class LevelSelectState extends BasicGameState{
 			for (int j = 0; j < Level.values()[i].getNumSections(); j++) {
 				SectionWidget sw = new SectionWidget(gc, Level.values()[i], j, game);
 				sections.add(sw);
-				System.out.println(sw.getSection().getDisplayName());
 			}			
 		}
 

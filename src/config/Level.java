@@ -58,14 +58,12 @@ public enum Level {
 	}
 	
 	public static void addToQueue(Level level, int start) {
-		System.out.println("Adding sections");
 		for (int i = start; i < level.getNumSections(); i++) {
 			sectionQueue.add(level.getSection(i));
 		}
 	}
 	
 	public static void clearQueue() {
-		System.out.println("Clearing queue");
 		sectionQueue.clear();
 	}
 	
