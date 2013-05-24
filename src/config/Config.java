@@ -24,12 +24,12 @@ import com.thoughtworks.xstream.XStream;
 
 public class Config {
 	
-	public static final String TITLE = "Seasons";
+	public static final String TITLE = "Shaman Bear Wants Salmon";
 	
 	// Resolution
 	public static final int RESOLUTION_WIDTH = 1366;
 	public static final int RESOLUTION_HEIGHT = 768;
-	public static final boolean FULLSCREEN = false;
+	public static final boolean FULLSCREEN = true;
 	
 	// Frame Rate
 	public static final int ACTIVE_FRAME_RATE = 60;
