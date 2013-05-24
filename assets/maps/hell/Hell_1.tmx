@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" width="60" height="20" tilewidth="32" tileheight="32">
  <tileset firstgid="1" source="hellTiles.tsx"/>
- <tileset firstgid="201" source="salmonTiles.tsx"/>
+ <tileset firstgid="193" source="salmonTiles.tsx"/>
  <layer name="background" width="60" height="20">
-  <data encoding="base64" compression="zlib">
-   eJztwzENADAMA7BSKIABGH+CffLvnVRbchUAAADAW+cWJ7e4+aMB8YwArw==
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3DMQ0AMAwDsFIogAEYf4J98u+dVFtyFQAAAMBb5xYnt7j5owHqrsWSwBIAAA==
   </data>
  </layer>
  <layer name="foreground" width="60" height="20">
-  <data encoding="base64" compression="zlib">
-   eJzt2LkNwjAUBuAswNlwQ8NNQ8cGwAycHWfHuUsGyADZgq34U1h6WHFeiIh4iPzSJ8WKC/84FoSRZVmjP2OKzYwlJgUFKPrc4/o6zFjP4411xZUxTGDqc4/r6zLjMJHwGahwfb1nI034PSO/FK5vCcpEM2Bu0LmREq7vANrEMGBu0LmRkk/2TfZXXri+LSvZX1Po/tLuputvJK7zS7ubrr+R5Py+5p2+UmMTqu8SVrDW5obpawvnEKrvHg5wjNDXEc4lVN8r3OAeoa8r3AzmsCB91XtBBrKQg7yhrz5PKm/93nfFBrawI33Ve0EFqlCDuqGvPk8qb/0NOMEZLqSv+h3VgS70oG/oq8+TSq1f/y/nCQEkm5o=
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3YOQ6CQBQGYC7g2rhr425jxw3UM7h2rp3rXTgAB+CE/hSTPCcMT4mGR+RPvoQJU8yfYYJoW5Zl/xlTHGYsMRkoQTngHtfXZcYSM4EpzALucX09Zpy0cH39ZyNLBD0jSQrXtwJVoh0yN+zcSAnXdwRdYhwyN+zcSMk3+6b7Ky9c346V7q8pdH9pd9N1HPnV+aXdTddxJD2/r/mkr9Q4hOq7gjVstLnv9HWEcwnV9wBHOEXo6wrnEarvDe7wiNDXE24OC1iSvuq7IAd5KEDR0FefJ5W/fv9dsYUd7Elf9V1Qgzo0oGnoq8+Tyl9/C85wgSvpq35H9aAPAxga+urzpFLr1//LeQKDvwtBwBIAAA==
   </data>
  </layer>
  <layer name="object" width="60" height="20">
-  <data encoding="base64" compression="zlib">
-   eJztltENgCAMRNlK9/9zAHAdvkwIQWjhsEfkJQ3RFLxaoHVuTY4OO02U8nE1nlfkthZAQkiMQQNCD/P+rMXFHrNWn8Rfs+aXeQ3ZKPVH+z7MjD3X09LXo782xyKvo+9HvlVixj/Q5hFRA6zqiPacInVK1kLmF30Pl7S1ej50zX7Dsi/RwNxzbObhE9ts/oYnt5wIYxxVyQ==
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2W3Q2AMAiEu5Wu7wDFlXwyaUj/aI+CsV9yMRoqh6g0hG9yDOg0ceqPq3EuWeuF29qAEygRgpF+U0ErPayiVpf3mqX+euIl91zZV2LH3nh07Itm7dxPy9+I/9oai77OXp/JlUPjGUj7iJgBqDmilVf6XaNyI/uL/g/nvLX2fOiZXcLqfZLiec+x0SMm2mz+RnQuzgOUyv6mwBIAAA==
   </data>
  </layer>
- <imagelayer name="Image Layer 1" width="60" height="20"/>
 </map>
