@@ -15,10 +15,18 @@ import org.newdawn.slick.state.transition.Transition;
 public class Transitions {
 
 	public static Transition fadeOut() {
-		return new FadeOutTransition(Color.white, 400);
+		return fadeOut(Color.white);
+	}
+	
+	public static Transition fadeOut(Color color) {
+		return new FadeOutTransition(color, 400);
 	}
 
 	public static Transition fadeIn() {
-		return new FadeInTransition(Color.white, 100);
+		return fadeIn(Color.white);
+	}
+
+	public static Transition fadeIn(Color color) {
+		return new FadeInTransition(color, 100);
 	}
 }
