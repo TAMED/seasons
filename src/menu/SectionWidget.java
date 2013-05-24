@@ -25,7 +25,7 @@ public class SectionWidget {
 	MouseOverArea mouseOver;
 	private Section section;
 	private final int WIDTH = Config.RESOLUTION_WIDTH/5;
-	private final int HEIGHT = 50;
+	private final int HEIGHT = 60;
 	private final int MARGIN_TOP = 100;
 	private final int PADDING = 5;
 	private final int MARGIN_LEFT = 20;
@@ -38,6 +38,7 @@ public class SectionWidget {
 	private Section prevSection;
 	
 	private SoundEffect btnSound;
+	private Level level;
 	
 	public SectionWidget(GUIContext container, final Level level, final StateBasedGame game) {
 		btnSound = new SoundEffect("assets/sounds/Jump_Sound.wav");
@@ -46,14 +47,13 @@ public class SectionWidget {
 		
 		Image image;
 		font = Config.MENU_FONT;
-        
+        this.level = level;
         try {
 			salmonSprite = new Salmon(x + 4*PADDING + MARGIN_LEFT, y + 4*PADDING);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
         
-        this.section = level.getSection(0);
         try {
 			image = new Image(0,0);
 			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
@@ -90,7 +90,8 @@ public class SectionWidget {
 		
 		Image image;
 		font = Config.MENU_FONT;
-        
+		this.level = level;
+		
         try {
 			salmonSprite = new Salmon(x + 4*PADDING + MARGIN_LEFT, y + 4*PADDING);
 		} catch (SlickException e) {
@@ -149,6 +150,13 @@ public class SectionWidget {
 	
 	public void render(GameContainer gc, Graphics g) {
 		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, opacity));
+		String bestTime;
+		if (this.section == null) {
+			bestTime = getBestTime(this.level);
+		} else {
+			bestTime = getBestTime(this.section);
+		}
+		font.drawString((float)x + PADDING + MARGIN_LEFT + 50, (float)y + 30, bestTime, new org.newdawn.slick.Color(1,1,1, opacity));
 		mouseOver.render(gc, g);
 		salmonSprite.display(!locked);
 		if (locked) {
@@ -168,6 +176,20 @@ public class SectionWidget {
 		
 
 
+	}
+	
+	private String getBestTime(Section s) {
+		String best = Float.toString(Config.times.get(section).getBestTime().getSeconds());
+		return best;
+	}
+	
+	private String getBestTime(Level l) {
+		float times = 0f;
+		for (int i = 0; i < l.getNumSections(); i++) {
+			Section s = l.getSections()[i];
+			times += Config.times.get(s).getBestTime().getSeconds();
+		}
+		return Float.toString(times);
 	}
 	
 	public void update(GameContainer gc, int delta) {

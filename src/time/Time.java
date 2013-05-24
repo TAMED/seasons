@@ -24,6 +24,10 @@ public class Time {
 		return millis;
 	}
 	
+	public float getSeconds() {
+		return millis/1000f;
+	}
+	
 	public void set(Time t) {
 		this.millis = t.getMillis();
 	}
