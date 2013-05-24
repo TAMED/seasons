@@ -35,4 +35,9 @@ public class Time {
 	public boolean fasterThan(Time t) {
 		return millis < t.getMillis();
 	}
+	
+	public String getTimeString() {
+		if (millis == Integer.MAX_VALUE) return "N/A";
+		return String.format("%.2f", millis / 1000f);
+	}
 }

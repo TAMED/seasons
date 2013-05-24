@@ -12,6 +12,8 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
 
 import sounds.SoundEffect;
+import states.ResultsState;
+import time.Time;
 import time.Timer;
 import ui.Transitions;
 import config.Config;
@@ -156,7 +158,7 @@ public class SectionWidget {
 		} else {
 			bestTime = getBestTime(this.section);
 		}
-		font.drawString((float)x + PADDING + MARGIN_LEFT + 50, (float)y + 30, bestTime, new org.newdawn.slick.Color(1,1,1, opacity));
+		Config.TIME_FONT.drawString((float)x + PADDING + MARGIN_LEFT + 50, (float)y + 30, bestTime, new org.newdawn.slick.Color(1,1,1, opacity));
 		mouseOver.render(gc, g);
 		salmonSprite.display(!locked);
 		if (locked) {
@@ -179,17 +181,23 @@ public class SectionWidget {
 	}
 	
 	private String getBestTime(Section s) {
-		String best = Float.toString(Config.times.get(section).getBestTime().getSeconds());
+		String best = Config.times.get(section).getBestTime().getTimeString();
 		return best;
 	}
 	
 	private String getBestTime(Level l) {
-		float times = 0f;
-		for (int i = 0; i < l.getNumSections(); i++) {
-			Section s = l.getSections()[i];
-			times += Config.times.get(s).getBestTime().getSeconds();
-		}
-		return Float.toString(times);
+		int times = 0;
+//		for (int i = 0; i < l.getNumSections(); i++) {
+//			Section s = l.getSections()[i];
+//			if (Config.times.get(section).getBestTime().getMillis() != Integer.MAX_VALUE) {
+//				times += Config.times.get(s).getBestTime().getSeconds();
+//			} else {
+//				return "";
+//			}
+//		}
+//		Time t = new Time(times);
+//		return t.getTimeString();
+		return "";
 	}
 	
 	public void update(GameContainer gc, int delta) {

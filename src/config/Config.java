@@ -107,6 +107,7 @@ public class Config {
 	public static final UnicodeFont PLAIN_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN,16));
 	public static final UnicodeFont BOLD_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.BOLD,16));
 	public static final UnicodeFont BIG_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN, 70));
+	public static final UnicodeFont TIME_FONT = new UnicodeFont(new Font("Palatino Linotype", Font.PLAIN, 20));
 	
 	// music
 	public static Music musicLoop;
@@ -197,11 +198,15 @@ public class Config {
         BIG_FONT.addAsciiGlyphs();
         ((List<Effect>) BIG_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
         
+        TIME_FONT.addAsciiGlyphs();
+        ((List<Effect>) TIME_FONT.getEffects()).add(new ColorEffect(java.awt.Color.WHITE));
+        
 		try {
 			MENU_FONT.loadGlyphs();
 			PLAIN_FONT.loadGlyphs();
 			BOLD_FONT.loadGlyphs();
 			BIG_FONT.loadGlyphs();
+			TIME_FONT.loadGlyphs();
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
