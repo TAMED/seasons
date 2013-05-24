@@ -160,7 +160,7 @@ public class ResultsState extends BasicGameState {
 		completedSections.clear();
 	}
 	
-	private Grade getGrade(int time, int goal) {
+	public static Grade getGrade(int time, int goal) {
 		if (time <= S_THRESHOLD * goal) return Grade.S;
 		else if (time <= A_THRESHOLD * goal) return Grade.A;
 		else if (time <= B_THRESHOLD * goal) return Grade.B;

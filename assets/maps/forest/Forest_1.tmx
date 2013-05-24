@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <tileset firstgid="217" source="salmonTiles.tsx"/>
+ <tileset firstgid="249" source="instructions.tsx"/>
+ <layer name="background" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3St1JCQQAFUBBDhWDEUBkQMxWYMFcqmLUTFDOd/r2ZY888mldQcGdOs3f2zhYbibROeqLh7o2HvJcNeW+/yd4Hn3zxzQ+//P2X7kbpIEYnXXQHbMZ1vSRI0kc/AwwyxDApRhhlrMHem7N3JphkimnSzJBhljnmWWCRJZYD3pfT5VlhlTXW2aDAJltss8MuewF7B7pDjihS4pgTTjnjnAsuueI6YO9GV6bCLXdUueeBR5545oVXaiH/mXbaaaXUARh/bvpABgAA
+  </data>
+ </layer>
+ <layer name="foreground" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3SOQqAQAyF4dxCS0UdCwvtvYlr59q5Xt9XTDsYNCDCBL72Lx5RRJQLURCT3EW2Z3sf97Kf9GpooBXqjTDBLNTb4YDzZc9hchm9BAKm0NAooIRK91Im0x900MOgez6TqbfACtuD3t0mHlz5RM+3QAYAAA==
+  </data>
+ </layer>
+ <layer name="object" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBQMV3CTAH8kgZHsd1oBAGRuDUJABgAA
+  </data>
+ </layer>
+</map>

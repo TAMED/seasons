@@ -113,18 +113,35 @@ public class Config {
 	public static Music levelSelectMusic;
 	public static Music titleMusic;
 	
+	// debug mode
+	public static final boolean DEBUG = false;
+	public static final boolean COLEMAK = false;
+	
 	@SuppressWarnings("unchecked")
 	public static void loadTimes() {
 		XStream x = new XStream();
+		
+		File f = new File("times.xml");
+		FileInputStream fileInputStream = null;
 		try {
-			File f = new File("times.xml");
 			if (f.exists()) {
-				times = (EnumMap<Section, Timer>) x.fromXML(new FileInputStream(f));
+				fileInputStream = new FileInputStream(f);
+				times = (EnumMap<Section, Timer>) x.fromXML(fileInputStream);
 			} else {
 				createAndSaveTimes();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				if (fileInputStream != null) fileInputStream.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			if (f.exists()) {
+				System.out.println("I'm in Config");
+				System.out.println("times-" + System.currentTimeMillis() + ".xml");
+				System.out.println(f.renameTo(new File("times-" + System.currentTimeMillis() + ".xml")));
+			}
 			createAndSaveTimes();
 		}
 	}
@@ -144,6 +161,20 @@ public class Config {
 		}
 	}
 	
+	
+	// only used in debug!
+	public static void clearTimes() {
+		File f = new File("times.xml");
+		try {
+			if (f.exists()) f.delete();
+			f.createNewFile();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static void createAndSaveTimes() {
 		times = new EnumMap<Section, Timer>(Section.class);
 		for (Section s : Section.values()) {
@@ -151,7 +182,7 @@ public class Config {
 		}
 		saveTimes();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public static void loadFonts() {
 		MENU_FONT.addAsciiGlyphs();
@@ -177,7 +208,7 @@ public class Config {
 	}
 	public static void initMusic() {
 		try {
-			titleMusic = new Music("assets/sounds/Field07.wav");
+			titleMusic = new Music("assets/sounds/Field07.ogg");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

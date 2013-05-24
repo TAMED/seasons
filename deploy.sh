@@ -1,16 +1,16 @@
 #!/bin/bash
-if [ -e seasons.tar.gz ]; then
-    rm seasons.tar.gz
+if [ -e shamanbear.tar.gz ]; then
+    rm shamanbear.tar.gz
 fi
-if [ -e seasons.zip ]; then
-    rm seasons.zip
+if [ -e shamanbear.zip ]; then
+    rm shamanbear.zip
 fi
-mkdir seasons
-cp -r seasons.jar assets seasons
-mkdir seasons/lib
-cp -r lib/linux lib/macosx lib/windows seasons/lib
-mkdir seasons/log
-tar -cvvf seasons.tar seasons
-gzip seasons.tar
-zip -r seasons.zip seasons
-rm -rf seasons/
+mkdir shamanbear
+cp -r shamanbear.jar assets shamanbear
+mkdir shamanbear/lib
+cp -r lib/linux lib/macosx lib/windows shamanbear/lib
+mkdir shamanbear/log
+tar -cvvf shamanbear.tar shamanbear
+gzip shamanbear.tar
+zip -r shamanbear.zip shamanbear
+rm -rf shamanbear/

@@ -236,6 +236,21 @@
    <property name="type" value="wall"/>
   </properties>
  </tile>
+ <tile id="57">
+  <properties>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="58">
+  <properties>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
+  <tile id="59">
+  <properties>
+   <property name="type" value="wall"/>
+  </properties>
+ </tile>
  <tile id="60">
   <properties>
    <property name="hookable" value="true"/>

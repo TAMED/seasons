@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="45" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <tileset firstgid="217" source="instructions.tsx"/>
+ <tileset firstgid="1017" source="salmonTiles.tsx"/>
+ <layer name="background" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3O2U1CQRjF8cnME4JgAwoqDbihDeDegLJIA+LanAtoAwgoDYi4NODOg39zYwzJDWZuMhMfvpP8Hu4yc45SEolEIrHJiVbqVA++q/N8ocP/d9F9hnPU9G/35ZD+Rsi3aw97f7qv0EQLbR1036BjueHB0+Zberq4Qw/3Ouh+xJOnDbZ5ZtcLXvGGd3zgE/1/ujlmlBpBHAmMIokUxoz9fdMRzthmnI4JpJHBJKZM0J2N0L/oYfMMHbOYwzwWkDNB91KE/g3ObDrenef+ZaxgFWtYN9G7dzhTcbx5i/u3UUARJZTN3927Id8OeXeEY8ebv7ur2MM+Doy/bolEInGRLzerSsngEAAA
+  </data>
+ </layer>
+ <layer name="foreground" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WzWrCQBSG4XMDCu5UEBfauLCgFdqFVUEX6qZegD/trta6U6u3oLYX7Xcwg2OY2OhMhgg58BCSgeQ1SkyeiAp35gEceI2AR4lqnTsrUIYSTOAdPsj+tKFDp/vHPVvYwR5+4c9dl5tn8A1z+8n0DC903swzhBGM3X1e5+9ANP/AGjY2Y91R3WeeT5jCl7vvbU5qSGs2v8FA0byAJawUzbzNaihqNovxNqvW5WaHrnt+OJJqyM1PUJOaxfbS51NNmew1N6FF+s3i/HFz3Ox3/rg5bvY7v8nmOh2f/Q3P8Sg3d6EHfc/xKDf7janmMP4H/eZSMwv6XhTG+8atzbew3WyCbnOCgr2nm25OachQsN+jqV7RnNMgP4P+w9c7AD+6LAXgEAAA
+  </data>
+ </layer>
+ <layer name="object" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UwQkAIAwDwIL7D+yvdAQREcLdBCkkrYL39vqdABi2CNzwQ0iX0vGUO+BUA5Cv2O7gEAAA
+  </data>
+ </layer>
+</map>
