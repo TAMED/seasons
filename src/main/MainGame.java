@@ -54,6 +54,7 @@ public class MainGame extends StateBasedGame {
 			app.setVSync(true);
 			app.setAlwaysRender(true);
 			app.setTargetFrameRate(Config.ACTIVE_FRAME_RATE);
+			app.setShowFPS(false);
 			app.start();
 		} catch (Exception e) {
 			e.printStackTrace();
