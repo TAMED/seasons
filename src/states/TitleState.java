@@ -7,6 +7,7 @@ import java.util.List;
 
 import main.MainGame;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -15,6 +16,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.FontUtils;
 
+import ui.Transitions;
 import config.Config;
 import entities.BearSprite;
 import entities.Salmon;
@@ -31,7 +33,6 @@ public class TitleState extends BasicGameState {
 	private final float CHANGE_TIME = 1800;
 	private final float TRANS_TIME = 500;
 	private int section = 0;
-	private int nextSection;
 	private int oldSection = 0;
 	private static int load = 0;
 
@@ -110,7 +111,7 @@ public class TitleState extends BasicGameState {
 		Controls.update(gc);
 		
 		if (Controls.moveKeyPressed()) {
-			game.enterState(1);
+			game.enterState(1, Transitions.fadeOut(Color.black), Transitions.fadeIn(Color.black));
 		}
 		
 		rotateTitle();
