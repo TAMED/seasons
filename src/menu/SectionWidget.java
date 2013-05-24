@@ -12,6 +12,7 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
 
 import sounds.SoundEffect;
+import states.ResultsState;
 import time.Timer;
 import ui.Transitions;
 import config.Config;
@@ -156,7 +157,7 @@ public class SectionWidget {
 		} else {
 			bestTime = getBestTime(this.section);
 		}
-		font.drawString((float)x + PADDING + MARGIN_LEFT + 50, (float)y + 30, bestTime, new org.newdawn.slick.Color(1,1,1, opacity));
+		Config.TIME_FONT.drawString((float)x + PADDING + MARGIN_LEFT + 50, (float)y + 30, bestTime, new org.newdawn.slick.Color(1,1,1, opacity));
 		mouseOver.render(gc, g);
 		salmonSprite.display(!locked);
 		if (locked) {

@@ -88,8 +88,7 @@ public class TimeBar {
 	}
 	
 	private String getTimeString(Time t) {
-		if (t == null || t.getMillis() == Integer.MAX_VALUE) return "N/A";
-		return String.format("%.2f", t.getMillis() / 1000f);
+		return t.getTimeString();
 	}
 
 }
