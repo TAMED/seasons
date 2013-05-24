@@ -30,6 +30,7 @@ public class Controls {
 	private static float mouseX;
 	private static float mouseY;
 
+	@SuppressWarnings("unused")
 	public static void update(GameContainer gc) {
 		Input input = gc.getInput();
 		mouseX = input.getMouseX();
