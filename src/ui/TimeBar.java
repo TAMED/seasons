@@ -47,9 +47,9 @@ public class TimeBar {
 		graphics.setColor(Color.white);
 		
 		String goalStr = getTimeString(timer.getGoal());
-		graphics.fillRect(Config.RESOLUTION_WIDTH/2 - 1, timePos.y+timeHeight, 1, 20);
-		goalFont.drawString(Config.RESOLUTION_WIDTH/2 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
-		goalFont.drawString(Config.RESOLUTION_WIDTH/2 - goalFont.getWidth(goalStr)/2, goalFont.getHeight("Goal")+timeHeight + timePos.y + 20, goalStr);
+		graphics.fillRect(Config.RESOLUTION_WIDTH/3 - 1, timePos.y+timeHeight, 1, 20);
+		goalFont.drawString(Config.RESOLUTION_WIDTH/3 - goalFont.getWidth("Goal")/2, timeHeight + timePos.y + 20, "Goal");
+		goalFont.drawString(Config.RESOLUTION_WIDTH/3 - goalFont.getWidth(goalStr)/2, goalFont.getHeight("Goal")+timeHeight + timePos.y + 20, goalStr);
 		
 		if (timer.getBestTime().getMillis() < Integer.MAX_VALUE) {
 			String bestStr = getTimeString(timer.getBestTime());
@@ -74,7 +74,7 @@ public class TimeBar {
 	}
 	
 	public void enter(GameContainer gc, StateBasedGame game, Timer timer) {
-		timeDivide = 2*timer.getGoal().getMillis()/timeWidth;
+		timeDivide = 3f*timer.getGoal().getMillis()/timeWidth;
 	}
 	
 	public void update(GameContainer gc, StateBasedGame game, int delta) {
