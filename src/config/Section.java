@@ -26,7 +26,7 @@ public enum Section {
 	LAKE_3("Lake_2.tmx", "mountainLake3.png", 2000, Biome.LAKE, "Bearlake"),
 	LAKE_4("Lake_4.tmx", "mountainLake3.png", 30000, Biome.LAKE, "Waterbear"),
 	
-	DESERT_1("Desert_1.tmx", "desert4.png", 7000, Biome.DESERT, "Drybear"),
+	DESERT_1("Desert_1.tmx", "desert4.png", 5000, Biome.DESERT, "Drybear"),
 	DESERT_2("Desert_2.tmx", "desert4.png", 22000, Biome.DESERT, "Hotbear"),
 	DESERT_3("Desert_3.tmx", "desert4.png", 20000, Biome.DESERT, "Sunbear"),
 	
