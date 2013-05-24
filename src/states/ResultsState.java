@@ -55,8 +55,8 @@ public class ResultsState extends BasicGameState {
 	public static final int ID = 2;
 	private static final int SPACING = 65;
 	private static final float S_THRESHOLD = 1.0f;
-	private static final float A_THRESHOLD = 1.25f;
-	private static final float B_THRESHOLD = 2.0f;
+	private static final float A_THRESHOLD = 1.5f;
+	private static final float B_THRESHOLD = 2.5f;
 	private static final List<Section> completedSections = new LinkedList<Section>();
 	private List<Grade> grades;
 	private UnicodeFont smallFont;
