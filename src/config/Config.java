@@ -24,7 +24,7 @@ import com.thoughtworks.xstream.XStream;
 
 public class Config {
 	
-	public static final String TITLE = "Seasons";
+	public static final String TITLE = "Shaman Bear Wants Salmon";
 	
 	// Resolution
 	public static final int RESOLUTION_WIDTH = 1366;
