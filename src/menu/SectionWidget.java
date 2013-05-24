@@ -76,9 +76,10 @@ public class SectionWidget {
         } else {
         	Level prevLevel = Level.values()[levelIndex-1];
         	this.prevSection = prevLevel.getSection(prevLevel.getNumSections()-1);
-        	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+        	Timer t = Config.times.get(prevSection);
+        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
             	this.locked = false;
-            } 
+            }
         }
 	}
 	
@@ -137,7 +138,7 @@ public class SectionWidget {
         	Timer t = Config.times.get(prevSection);
         	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
             	this.locked = false;
-            } 
+            }
         }
         
 	}
