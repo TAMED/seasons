@@ -29,7 +29,7 @@ public class Config {
 	// Resolution
 	public static final int RESOLUTION_WIDTH = 1366;
 	public static final int RESOLUTION_HEIGHT = 768;
-	public static final boolean FULLSCREEN = true;
+	public static final boolean FULLSCREEN = false;
 	
 	// Frame Rate
 	public static final int ACTIVE_FRAME_RATE = 60;
