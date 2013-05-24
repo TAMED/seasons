@@ -12,6 +12,7 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
 
 import sounds.SoundEffect;
+import time.Timer;
 import ui.Transitions;
 import config.Config;
 import config.Level;
@@ -75,9 +76,10 @@ public class SectionWidget {
         } else {
         	Level prevLevel = Level.values()[levelIndex-1];
         	this.prevSection = prevLevel.getSection(prevLevel.getNumSections()-1);
-        	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+        	Timer t = Config.times.get(prevSection);
+        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
             	this.locked = false;
-            } 
+            }
         }
 	}
 	
@@ -133,9 +135,10 @@ public class SectionWidget {
         
         else {
         	this.prevSection = level.getSection(index-1);
-        	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+        	Timer t = Config.times.get(prevSection);
+        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
             	this.locked = false;
-            } 
+            }
         }
         
 	}

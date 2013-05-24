@@ -31,6 +31,7 @@ public enum Section {
 	
 	DESERT_1("Desert_1.tmx", "desert4.png", 20000, Biome.DESERT, "Drybear"),
 	DESERT_2("Desert_2.tmx", "desert4.png", 20000, Biome.DESERT, "Hawtbear"),
+	DESERT_3("Desert_3.tmx", "desert4.png", 20000, Biome.DESERT, "Sunbear"),
 	
 	CANYON_1("Canyon_1.tmx", "canyon2.png", 20000, Biome.CANYON, "Canbearyon"),
 	CANYON_2("Canyon_Climb.tmx", "canyon2.png", 30000, Biome.CANYON, "Nothing"),

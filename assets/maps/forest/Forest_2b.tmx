@@ -11,7 +11,7 @@
  </layer>
  <layer name="foreground" width="45" height="24">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WywqCQBiG4f8GCtpVEC0qWxR0gFp0glpUm7qAjruOu4633zfk0GBOmTMOBv7wIGrYm4maJaLcnymABe0QKAvc9rPOCpSgCEtYwZrMTx8G9Dp/Rcnn2H6xeQ8HOBpodE4DmvTePIM5LOx1tp/9B7z5Cje4m4y1R3aeN7CFnb3ubI4rSCo2T2Dq0nyCM1xcmtkyrSCv2MzHy/UsNlv02/3DElQDbq5BXWjmy0+/z21KZK65Cz1Sb+bHj5qjZtnxo+aoWXZ8nc0tet77O47tYW4ewgjGju1hbpaNruYgnoOy+dTMeH0vCuJ9w2+zH6abdVBtjpG393TdzQkFKfJ2Perq5c0ZBeI96Bv2fQ8ygKPk4BAAAA==
+   H4sIAAAAAAAAC+3WzWrCQBSG4XMDCu5UEBfauLCgFdqFVUEX6qZegD/trta6U6u3oLYX7Xcwg2OY2OhMhgg58BCSgeQ1SkyeiAp35gEceI2AR4lqnTsrUIYSTOAdPsj+tKFDp/vHPVvYwR5+4c9dl5tn8A1z+8n0DC903swzhBGM3X1e5+9ANP/AGjY2Y91R3WeeT5jCl7vvbU5qSGs2v8FA0byAJawUzbzNaihqNovxNqvW5WaHrnt+OJJqyM1PUJOaxfbS51NNmew1N6FF+s3i/HFz3Ox3/rg5bvY7v8nmOh2f/Q3P8Sg3d6EHfc/xKDf7janmMP4H/eZSMwv6XhTG+8atzbew3WyCbnOCgr2nm25OachQsN+jqV7RnNMgP4P+w9c7AD+6LAXgEAAA
   </data>
  </layer>
  <layer name="object" width="45" height="24">
