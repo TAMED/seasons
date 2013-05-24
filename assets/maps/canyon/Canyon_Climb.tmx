@@ -5,7 +5,7 @@
  <tileset firstgid="193" source="salmonTiles.tsx"/>
  <layer name="foreground" width="15" height="200">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3auwrCMABG4TyBu64KDi7O6pN43bxuXh+hc/WF/QdBEZO2CZJYT+BMzUczhJRCMmPM0KNM9c3nMVYTNbU87znsUq3U2sPu1UEdPWzRCLVdLBaLxWKxWCwWi8Vif8jm6vroZpn7Pif2mrFYm2U/Y+tky+znb7wXiw2xnLHYWLbsmZnSmrH/Y137M9U1Y+tnOSexWCwW6xqv3wn+6bAxbVO1VFt1KtqBed53HFW0RQOLxWJTsTM1VwsPu1FbtXNY293pkzqri8M2AroD/+fGweAuAAA=
+   H4sIAAAAAAAAC+3auw6CMABG4T6Bu66aOLi4adQn8bp53bzxCMzqC/sPGgmxBUoIiKfJmeiXQtKUkBAaY8Yehapvvo+pmqm55XrPYddqo7Ye9qhO6uxhk0Ze28VisVgsFovFYrFYLPaH7E3dXz0sc+Nz3nYQaWix8TllPy+23pb9jK2TTbOfi1gXi81jbWds0etisWnPzCrdM/Z/rGt/VvWesfWznJNYLBaLdY3oe4JvOmyZtqlaqq06Ge3IfP53nGS0SQOLxWKrYhdqqVYedqf26uCwtn+nL+qqAodt5OgJykMsoeAuAAA=
   </data>
  </layer>
  <layer name="object" width="15" height="200">
