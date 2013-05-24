@@ -12,7 +12,7 @@ import org.newdawn.slick.Image;
  *
  */
 public enum Section {
-	FOREST_1("Forest_1.tmx", "forest3.png", 20000, Biome.FOREST, "W, A"),
+	FOREST_1("Forest_1.tmx", "forest3.png", 20000, Biome.FOREST, "Move!"),
 	FOREST_2("Forest_2.tmx", "forest3.png", 20000, Biome.FOREST, "Jump!"),
 	FOREST_2A("Forest_2a.tmx", "forest3.png", 20000, Biome.FOREST, "Hook!"),
 	FOREST_2B("Forest_2b.tmx", "forest3.png", 20000, Biome.FOREST, "Release!"),
