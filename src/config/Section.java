@@ -30,16 +30,16 @@ public enum Section {
 	LAKE_4("Lake_4.tmx", "mountainLake3.png", 20000, Biome.LAKE, "Waterbear"),
 	
 	DESERT_1("Desert_1.tmx", "desert4.png", 20000, Biome.DESERT, "Drybear"),
-	DESERT_2("Desert_2.tmx", "desert4.png", 20000, Biome.DESERT, "Hawtbear"),
+	DESERT_2("Desert_2.tmx", "desert4.png", 20000, Biome.DESERT, "Hotbear"),
 	DESERT_3("Desert_3.tmx", "desert4.png", 20000, Biome.DESERT, "Sunbear"),
 	
 	CANYON_1("Canyon_1.tmx", "canyon2.png", 20000, Biome.CANYON, "Canbearyon"),
-	CANYON_2("Canyon_Climb.tmx", "canyon2.png", 30000, Biome.CANYON, "Nothing"),
-	CANYON_3("Canyon_3.tmx", "canyon2.png", 20000, Biome.CANYON, "Shrooooms"),
+	CANYON_2("Canyon_Climb.tmx", "canyon2.png", 30000, Biome.CANYON, "Flybear"),
+	CANYON_3("Canyon_3.tmx", "canyon2.png", 20000, Biome.CANYON, "Bearshrooms"),
 	
 	HELL_1("Hell_1.tmx", "hell2.png", 20000, Biome.HELL, "Bearvents"),
 	HELL_2("Hell_2.tmx", "hell2.png", 20000, Biome.HELL, "Hellbear"), 
-	HELL_3("Hell_3.tmx", "hell2.png", 20000, Biome.HELL, "Childbeard"),  ;
+	HELL_3("Hell_3.tmx", "hell2.png", 20000, Biome.HELL, "Vulcanbear"),  ;
 
 	private final String mapName;
 	private final String backgroundName;
@@ -51,13 +51,6 @@ public enum Section {
 	private int instructionY;
 	
 	static {
-		try {
-			Image bat = new Image("assets/instructions/hookbat.png");
-			FOREST_2A.setInstruction(bat, 30, 30);
-			System.out.println(FOREST_2A.hasInstruction());
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private Section(String map, String background) {

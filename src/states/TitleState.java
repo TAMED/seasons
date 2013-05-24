@@ -28,8 +28,11 @@ public class TitleState extends BasicGameState {
 	private List<Image> backgrounds = new ArrayList<Image>();
 
 	private float screenChange = 0;
-	private final float CHANGE_TIME = 700;
+	private final float CHANGE_TIME = 1800;
+	private final float TRANS_TIME = 500;
 	private int section = 0;
+	private int nextSection;
+	private int oldSection = 0;
 	private static int load = 0;
 
 	public TitleState() {
@@ -65,9 +68,22 @@ public class TitleState extends BasicGameState {
 			load += 1;
 			return;
 		}
+		
+		
 		Image background = backgrounds.get(section);
+
+		
 		background.drawCentered(Config.RESOLUTION_WIDTH/2, Config.RESOLUTION_HEIGHT/2);
 		
+		Image fadeOut = backgrounds.get(oldSection);
+		if (screenChange < TRANS_TIME) {
+			
+
+			fadeOut.setAlpha(1.0f - (screenChange/TRANS_TIME));
+			fadeOut.drawCentered(Config.RESOLUTION_WIDTH/2, Config.RESOLUTION_HEIGHT/2);
+		} else {
+			fadeOut.setAlpha(1.0f);
+		}
 		
 		name.drawCentered(Config.RESOLUTION_WIDTH / 2, Config.RESOLUTION_HEIGHT / 2);
 		
@@ -106,8 +122,10 @@ public class TitleState extends BasicGameState {
 		screenChange += delta;
 		if (screenChange > CHANGE_TIME) {
 			screenChange = screenChange % CHANGE_TIME;
+			oldSection  = section;
 			section = (section + 1) % backgrounds.size();
 		}
+
 	}
 
 	public void rotateTitle() {
