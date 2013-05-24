@@ -20,15 +20,21 @@ public enum Level {
 			Section.FOREST_3,
 			Section.FOREST_4,
 			Section.FOREST_5,
-			Section.FOREST_6,
-			Section.FOREST_7,
-			Section.FOREST_8),
+			Section.FOREST_6),
+			
 	LAKE(Section.LAKE_1,
-		 Section.LAKE_2),
+		 Section.LAKE_2,
+		 Section.LAKE_3,
+		 Section.LAKE_4),
 	
-	DESERT(Section.DESERT_1),
+	DESERT(Section.DESERT_1,
+			Section.DESERT_2,
+			Section.DESERT_3),
 	
-	CANYON(Section.CANYON_1),
+	CANYON(Section.CANYON_1,
+			Section.CANYON_2,
+			Section.CANYON_3),
+			
 	HELL(Section.HELL_1,
 		 Section.HELL_2,
 		 Section.HELL_3);
@@ -50,19 +56,17 @@ public enum Level {
 		sectionQueue.add(section);
 	}
 	
-	public static void addToQueue(Level level, int index) {
-		sectionQueue.add(level.getSection(index));
+	public static void addToQueue(Level level) {
+		addToQueue(level, 0);
 	}
-
-	public static void addAllToQueue(Level level) {
-		for (int i = 0; i < level.getNumSections(); i++) {
+	
+	public static void addToQueue(Level level, int start) {
+		for (int i = start; i < level.getNumSections(); i++) {
 			sectionQueue.add(level.getSection(i));
 		}
 	}
 	
-	
 	public static void clearQueue() {
-		System.out.println("Clearing queue");
 		sectionQueue.clear();
 	}
 	

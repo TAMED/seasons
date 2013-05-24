@@ -29,7 +29,6 @@ public class Controls {
 	private static Set<Action> cache;
 	private static float mouseX;
 	private static float mouseY;
-	private static final boolean COLEMAK = true;
 
 	public static void update(GameContainer gc) {
 		Input input = gc.getInput();
@@ -38,7 +37,7 @@ public class Controls {
 		cache = EnumSet.noneOf(Action.class);
 		
 		// in other words, if you are mike a.k.a. a bitch
-	     if (COLEMAK && InputContext.getInstance().getLocale().getDisplayVariant().length() > 10) {
+	     if (Config.COLEMAK && InputContext.getInstance().getLocale().getDisplayVariant().length() > 10) {
 	    	 if (input.isKeyDown(Input.KEY_W)) cache.add(Action.UP);
 	    	 if (input.isKeyPressed(Input.KEY_W)) cache.add(Action.JUMP);
 	    	 if (input.isKeyDown(Input.KEY_R)) cache.add(Action.DOWN);
@@ -75,13 +74,15 @@ public class Controls {
 
 		// Function keys are for testing and we'll eventually take them out
 		// TODO: remove
-		if (input.isKeyPressed(Input.KEY_F5)) cache.add(Action.RESET);
-		if (input.isKeyPressed(Input.KEY_F11)) cache.add(Action.FULLSCREEN);
-		if (input.isKeyPressed(Input.KEY_F2)) cache.add(Action.GOD_MODE);
-		if (input.isKeyPressed(Input.KEY_F3)) cache.add(Action.DEBUG);
-		if (input.isKeyPressed(Input.KEY_F4)) cache.add(Action.SLOW_DOWN);
-		if (input.isKeyPressed(Input.KEY_F6)) cache.add(Action.SKIP);
-		if (input.isKeyPressed(Input.KEY_F7)) cache.add(Action.REPLAY);
+		if (Config.DEBUG){
+			if (input.isKeyPressed(Input.KEY_F5)) cache.add(Action.RESET);
+			if (input.isKeyPressed(Input.KEY_F11)) cache.add(Action.FULLSCREEN);
+			if (input.isKeyPressed(Input.KEY_F2)) cache.add(Action.GOD_MODE);
+			if (input.isKeyPressed(Input.KEY_F3)) cache.add(Action.DEBUG);
+			if (input.isKeyPressed(Input.KEY_F4)) cache.add(Action.SLOW_DOWN);
+			if (input.isKeyPressed(Input.KEY_F6)) cache.add(Action.SKIP);
+			if (input.isKeyPressed(Input.KEY_F7)) cache.add(Action.REPLAY);
+		}
 	}
 	
 	public static double getAimAngle(Player player) {

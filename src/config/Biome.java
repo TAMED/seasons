@@ -5,27 +5,25 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
 public enum Biome {
-	FOREST(new Color(76, 178, 76), "assets/sounds/Song1.wav"),
-	LAKE(new Color(185, 69, 201), "assets/sounds/Field08.wav"),
-	DESERT(new Color(200, 200, 200), "assets/sounds/Field12.wav"),
-	CANYON(new Color(200, 200, 200), "assets/sounds/Field35.wav"),
-	HELL(new Color(200, 200, 200), "assets/sounds/Field09.wav");
+	FOREST(new Color(76, 178, 76),   "Field19.ogg", "forest"),
+	LAKE(  new Color(185, 69, 201),  "Field08.ogg", "lake"),
+	DESERT(new Color(200, 200, 200), "Field12.ogg", "desert"),
+	CANYON(new Color(200, 200, 200), "Field35.ogg", "canyon"),
+	HELL(  new Color(200, 200, 200), "Field09.ogg", "hell");
 	
 	private Color color;
 	private Music music;
+	private String biomeName;
+
 	
-	private Biome(Color color) {
-		this(color, "assets/sounds/Song1.wav");
-	}
-	
-	private Biome(Color color, String music) {
+	private Biome(Color color, String music, String name) {
 		this.color = color;
 		try {
-			this.music = new Music(music);
+			this.music = new Music("assets/sounds/" + music, true);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.biomeName = name;
 	}
 
 	public Color getColor() {
@@ -36,4 +34,7 @@ public enum Biome {
 		return music;
 	}
 
+	public String getName() {
+		return biomeName;
+	}
 }

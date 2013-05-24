@@ -1,5 +1,8 @@
 package states;
 
+import input.Controls;
+import input.Controls.Action;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,6 @@ public class LevelSelectState extends BasicGameState{
 			for (int j = 0; j < Level.values()[i].getNumSections(); j++) {
 				SectionWidget sw = new SectionWidget(gc, Level.values()[i], j, game);
 				sections.add(sw);
-				System.out.println(sw.getSection().getDisplayName());
 			}			
 		}
 
@@ -60,7 +62,6 @@ public class LevelSelectState extends BasicGameState{
 			Config.playMusic(Config.levelSelectMusic);
 		}
 		ResultsState.clearResults();
-		
 	}
 
 	@Override
@@ -77,11 +78,16 @@ public class LevelSelectState extends BasicGameState{
 		String title = "Level Select";
 		int w = Config.RESOLUTION_WIDTH;
 		FontUtils.drawCenter(Config.BIG_FONT, title, 0, 5, w);
+		Config.PLAIN_FONT.drawString(0, Config.RESOLUTION_HEIGHT- Config.PLAIN_FONT.getHeight("Press Q to quit"), "Press Q to quit");
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
+		Controls.update(gc);
+		if (Controls.isKeyPressed(Action.QUIT)) {
+			gc.exit();
+		}
 		for (int i = 0; i < sections.size(); i++) {
 			sections.get(i).update(gc, delta);
 		}

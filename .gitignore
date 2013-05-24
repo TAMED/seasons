@@ -3,7 +3,10 @@ bin/
 seasons.jar
 seasons.tar.gz
 seasons.zip
-times.xml
+shamanbear.jar
+shamanbear.tar.gz
+shamanbear.zip
+times*.xml
 config.xml
 
 # Package Files #

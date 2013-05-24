@@ -12,8 +12,8 @@ import org.newdawn.slick.gui.MouseOverArea;
 import org.newdawn.slick.state.StateBasedGame;
 
 import sounds.SoundEffect;
+import time.Timer;
 import ui.Transitions;
-import config.Biome;
 import config.Config;
 import config.Level;
 import config.Section;
@@ -34,6 +34,8 @@ public class SectionWidget {
 	private int y;
 	private String displayName;
 	private float opacity;
+	private boolean locked = true;
+	private Section prevSection;
 	
 	private SoundEffect btnSound;
 	
@@ -56,7 +58,7 @@ public class SectionWidget {
 			image = new Image(0,0);
 			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
 				public void componentActivated(AbstractComponent source) {
-					Level.addAllToQueue(level);
+					Level.addToQueue(level);
 					game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 				}
 			});
@@ -66,6 +68,19 @@ public class SectionWidget {
         
         this.displayName = "ALL " + level.toString();
         this.opacity = .9f;
+        
+        int levelIndex = level.ordinal();
+        
+        if (levelIndex == 0) {
+        	this.locked = false;
+        } else {
+        	Level prevLevel = Level.values()[levelIndex-1];
+        	this.prevSection = prevLevel.getSection(prevLevel.getNumSections()-1);
+        	Timer t = Config.times.get(prevSection);
+        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
+            	this.locked = false;
+            }
+        }
 	}
 	
 	public SectionWidget(GUIContext container, final Level level, final int index, final StateBasedGame game) {
@@ -87,7 +102,7 @@ public class SectionWidget {
 			image = new Image(0,0);
 			mouseOver = new MouseOverArea(container, image, x, y, WIDTH, HEIGHT, new ComponentListener() {
 				public void componentActivated(AbstractComponent source) {
-					Level.addToQueue(level, index);
+					Level.addToQueue(level.getSection(index));
 					game.enterState(Level.getNextSection().getID(), Transitions.fadeOut(), Transitions.fadeIn());
 				}
 			});
@@ -97,25 +112,74 @@ public class SectionWidget {
         
         this.displayName = Integer.toString(index + 1) + ": " + section.getDisplayName();
         this.opacity = .6f;
+        
+        int levelIndex = level.ordinal();
+        
+        // forest case
+        if (levelIndex == 0) {
+        	if (index == 0) {
+        		this.locked = false;
+        	} else {
+            	this.prevSection = level.getSection(index-1);
+            	Timer t = Config.times.get(prevSection);
+            	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
+                	this.locked = false;
+                } 
+        	}
+        } else if (index == 0) {// first section of every other level 
+        	Level prevLevel = Level.values()[levelIndex-1];
+        	this.prevSection = prevLevel.getSection(prevLevel.getNumSections()-1);
+        	Timer t = Config.times.get(prevSection);
+        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
+            	this.locked = false;
+            } 
+        }
+        
+        else {
+        	this.prevSection = level.getSection(index-1);
+        	Timer t = Config.times.get(prevSection);
+        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
+            	this.locked = false;
+            }
+        }
+        
 	}
 
 	
 	
 	public void render(GameContainer gc, Graphics g) {
+		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, opacity));
 		mouseOver.render(gc, g);
-		float alpha = mouseOver.isMouseOver() ? 1.0f : opacity;
-		if (mouseOver.isMouseOver() && salmonSprite.isStopped()) {
-			salmonSprite.play();
-			btnSound.play();
-		} else if (!mouseOver.isMouseOver()) {
-			salmonSprite.stop();
-		}
+		salmonSprite.display(!locked);
+		if (locked) {
+			mouseOver.setAcceptingInput(false);
 
-		font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, alpha));
+		} else {
+			mouseOver.setAcceptingInput(true);
+			float alpha = mouseOver.isMouseOver() ? 1.0f : opacity;
+			if (mouseOver.isMouseOver() && salmonSprite.isStopped()) {
+				btnSound.play();
+				salmonSprite.play();
+			} else if (!mouseOver.isMouseOver()) {
+				salmonSprite.stop();
+			}
+			font.drawString((float)x + PADDING + MARGIN_LEFT + 40, (float)y , displayName, new org.newdawn.slick.Color(1,1,1, alpha));
+		}
+		
+
+
 	}
 	
 	public void update(GameContainer gc, int delta) {
 		salmonSprite.update(gc, delta);
+		if (this.locked == true) {
+			if (this.prevSection != null) {
+				Timer t = Config.times.get(prevSection);
+	        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
+	        		this.locked = false;
+	        	}
+	        } 
+		}
 	}
 	
 	public Sprite getSalmonSprite() {
