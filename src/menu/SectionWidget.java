@@ -121,14 +121,16 @@ public class SectionWidget {
         		this.locked = false;
         	} else {
             	this.prevSection = level.getSection(index-1);
-            	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+            	Timer t = Config.times.get(prevSection);
+            	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
                 	this.locked = false;
                 } 
         	}
         } else if (index == 0) {// first section of every other level 
         	Level prevLevel = Level.values()[levelIndex-1];
         	this.prevSection = prevLevel.getSection(prevLevel.getNumSections()-1);
-        	if (Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
+        	Timer t = Config.times.get(prevSection);
+        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
             	this.locked = false;
             } 
         }
@@ -171,8 +173,11 @@ public class SectionWidget {
 	public void update(GameContainer gc, int delta) {
 		salmonSprite.update(gc, delta);
 		if (this.locked == true) {
-		  if (this.prevSection != null && Config.times.get(prevSection).getBestTime().getMillis() < Integer.MAX_VALUE) {
-	        	this.locked = false;
+			if (this.prevSection != null) {
+				Timer t = Config.times.get(prevSection);
+	        	if (t != null && t.getBestTime().getMillis() < Integer.MAX_VALUE) {
+	        		this.locked = false;
+	        	}
 	        } 
 		}
 	}
