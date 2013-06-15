@@ -51,6 +51,7 @@ public class Bat extends Enemy {
 			if(player.getHookshot().isIn()) {
 				this.getPhysicsBodyDef().type = BodyType.DYNAMIC;
 				this.getPhysicsBody().setGravityScale(0);
+				this.getPhysicsBody().setBullet(true);
 				setAI(new FlyingGoomba(getFacing()));
 				hooked = false;
 			}
