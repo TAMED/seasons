@@ -19,6 +19,8 @@ import config.Level;
 import config.Section;
 import entities.Salmon;
 import entities.Sprite;
+import states.ResultsState;
+import states.ResultsState.Grade;
 
 public class SectionWidget {
 	private Salmon salmonSprite;
@@ -36,6 +38,10 @@ public class SectionWidget {
 	private float opacity;
 	private boolean locked = true;
 	private Section prevSection;
+	private Grade grade;
+	private int gradeX = 120;
+	private int gradeY = 30;
+	private float gradeScale = .6f;
 	
 	private SoundEffect btnSound;
 	private Level level;
@@ -155,8 +161,11 @@ public class SectionWidget {
 			bestTime = getBestTime(this.level);
 		} else {
 			bestTime = getBestTime(this.section);
+			grade = ResultsState.getGrade(getBestTimeInt(this.section), this.section.getGoalTime());
+			grade.getImage().draw((float)x + gradeX, (float)y + gradeY, gradeScale);
 		}
 		Config.TIME_FONT.drawString((float)x + PADDING + MARGIN_LEFT + 50, (float)y + 30, bestTime, new org.newdawn.slick.Color(1,1,1, opacity));
+		
 		mouseOver.render(gc, g);
 		salmonSprite.display(!locked);
 		if (locked) {
@@ -181,6 +190,10 @@ public class SectionWidget {
 	private String getBestTime(Section s) {
 		String best = Config.times.get(section).getBestTime().getTimeString();
 		return best;
+	}
+	
+	private int getBestTimeInt(Section s) {
+		return Config.times.get(s).getBestTime().getMillis();
 	}
 	
 	private String getBestTime(Level l) {
