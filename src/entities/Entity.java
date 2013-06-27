@@ -239,7 +239,6 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void jump(GameContainer gc, int delta) {
-		
 		if (checkWater(gc) || (categoriesTouchingSensors()[Direction.DOWN.ordinal()] & Config.WATER) > 0) {
 			if (jumpTimer >= 500 && (categoriesTouchingSensors()[Direction.UP.ordinal()] & Config.WATER) == 0){
 				getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), new Vec2(0, 0));
@@ -247,10 +246,11 @@ public abstract class Entity extends Sprite {
 				anim.play(AnimationState.JUMP);
 				jumpTimer = 0;
 			}
-		} else if (jumpCheck() || LevelState.godMode) {
+		} else if (jumpTimer >=100 && (jumpCheck() || LevelState.godMode)) {
 			getPhysicsBody().applyLinearImpulse(new Vec2(0, -jmpSpeed), getPhysicsBody().getWorldCenter());
 			jumpSound.play();
 			anim.play(AnimationState.JUMP);
+			jumpTimer = 0;
 		}
 		
 	}
