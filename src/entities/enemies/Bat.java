@@ -51,6 +51,7 @@ public class Bat extends Enemy {
 			if(player.getHookshot().isIn()) {
 				this.getPhysicsBodyDef().type = BodyType.DYNAMIC;
 				this.getPhysicsBody().setGravityScale(0);
+				this.getPhysicsBody().setBullet(true);
 				setAI(new FlyingGoomba(getFacing()));
 				hooked = false;
 			}
@@ -79,7 +80,7 @@ public class Bat extends Enemy {
 	public void render(Graphics g, Biome biome) {
 		g.setColor(biome.getColor());
 		float offset = (float) (.1*Config.PIXELS_PER_METER);
-		g.drawRect(getX() - getWidth()/2-offset, getY() - getHeight()/2-offset, getWidth()+2*offset, getHeight()+2*offset);
+		//g.drawRect(getX() - getWidth()/2-offset, getY() - getHeight()/2-offset, getWidth()+2*offset, getHeight()+2*offset);
 		super.render(g);
 	}
 	

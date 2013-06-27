@@ -27,6 +27,7 @@ public class TitleState extends BasicGameState {
 	private Salmon salmon;
 	private BearSprite bear;
 	private float jigglin = 0;
+	private static final float JIGGLE_RATE = (float) (2000 / 3 / Math.PI);
 	private List<Image> backgrounds = new ArrayList<Image>();
 
 	private float screenChange = 0;
@@ -115,7 +116,7 @@ public class TitleState extends BasicGameState {
 		}
 		
 		rotateTitle();
-		jigglin += delta/100f;
+		jigglin += delta/JIGGLE_RATE;
 		
 		salmon.update(gc, delta);
 		bear.update(gc, delta);

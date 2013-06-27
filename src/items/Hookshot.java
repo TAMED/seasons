@@ -45,6 +45,8 @@ public class Hookshot extends ItemBase {
 	
 	public Hookshot(Player player) {
 		super(player);
+		spawnDummyHook();
+		removeDummyHook();
 		state = HookState.IN;
 		
 		hookSound = new SoundEffect("assets/sounds/Hook_Sound.wav");
@@ -186,6 +188,20 @@ public class Hookshot extends ItemBase {
 				  CHAIN_HEIGHT,
 				  owner,
 				  hook);
+	}
+	
+	private void spawnDummyHook() {
+		hook = new Hook(owner);
+		chain = new Chain(0,0, 
+				  CHAIN_LENGTH,
+				  CHAIN_HEIGHT,
+				  owner,
+				  hook);
+	}
+	
+	private void removeDummyHook() {
+		hook = null;
+		chain = null;
 	}
 
 	/**

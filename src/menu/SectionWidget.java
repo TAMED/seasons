@@ -197,6 +197,17 @@ public class SectionWidget {
 	}
 	
 	private String getBestTime(Level l) {
+//		int times = 0;
+//		for (int i = 0; i < l.getNumSections(); i++) {
+//			Section s = l.getSections()[i];
+//			if (Config.times.get(section).getBestTime().getMillis() != Integer.MAX_VALUE) {
+//				times += Config.times.get(s).getBestTime().getSeconds();
+//			} else {
+//				return "";
+//			}
+//		}
+//		Time t = new Time(times);
+//		return t.getTimeString();
 		return "";
 	}
 	
