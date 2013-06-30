@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="45" height="24" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="forestTiles.tsx"/>
+ <tileset firstgid="217" source="instructions.tsx"/>
+ <tileset firstgid="1017" source="salmonTiles.tsx"/>
+ <layer name="background" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3TS04CQRSF4UrVCB/oBhBRNqAougFQ0A2ogGwARWVzPkA34BM3IKK4AZ8w4E9K0yHpCclN2YM6yRfSfRL6TK5SPj4+Pj7j5FQrdaZH37V4vtRBd44LNHXQXenw/3OR65BvP+igu8Et7nCvbdfG4z9uDsvr754nfjt4Rhcv2nY9vEVs81/e2fWBT3zhGz/oYxDRzTGj1AQmMYVpxDGDWSP3Ham7WWRTAnNIYh4pLBjbpQU3S93NGpuWsIwMVrCKrLHduuBmqbvZYlMOeWxgEwUUje22BTdL3c0+m3awiz2UUEbF2K4quHncu6mFvDvm3Ymx3QEOUceRCbqG4GZXdyMZV3cjGVd3IxlXdyMZV3fjE80MAdhkhfvgEAAA
+  </data>
+ </layer>
+ <layer name="foreground" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WzU7CQBSG4XMDkLAEYlgIdQGJaJSFClEWyAYuAPzZqcAOBW8B0Iv2mzgT28m0lDNDqYSTPIvJJPSlZFqKRLSAJazgC76hBMcpdULmuYLrhNV8TPsenEY0Jzl30IYK/XaJJtNvL/bT0nwJDQo2ixnAEB7kWuzXKB3Npvss5gVe4U2uw5q5Z69s0dyDvqF5Cu/wsaaZe/ZuLJrV6M2mfVNzB+4ZultsPoPziOYLC9tqbkIrovnWwq6a81BgKO6wmXMGo85NEs3cax2ag3No/ruWi89RZ0l/P+nN4nv538Gc54CrZvU+099PerPOo82fA66aw2Yfm1X3ps11t5mBcdH8CE/wLNf/oXkEY5jIdZXsmjOQjcGmeQZz+JRrdZ9zTHH/44T1+s9h3P9Hnmw+Yqr4rrmO6PsBQsY0keAQAAA=
+  </data>
+ </layer>
+ <layer name="object" width="45" height="24">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3TywkAIAxEwYD9F+xNLEHwxzJTQQL7quC83l5fAEy3WtQ8/GNnj9omXcrGU/6AVQPe7F9f4BAAAA==
+  </data>
+ </layer>
+</map>
