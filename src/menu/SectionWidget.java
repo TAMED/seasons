@@ -161,8 +161,10 @@ public class SectionWidget {
 			bestTime = getBestTime(this.level);
 		} else {
 			bestTime = getBestTime(this.section);
-			grade = ResultsState.getGrade(getBestTimeInt(this.section), this.section.getGoalTime());
-			grade.getImage().draw((float)x + gradeX, (float)y + gradeY, gradeScale);
+			if (getBestTimeInt(this.section) != Integer.MAX_VALUE) {
+				grade = ResultsState.getGrade(getBestTimeInt(this.section), this.section.getGoalTime());
+				grade.getImage().draw((float)x + gradeX, (float)y + gradeY, gradeScale);
+			}
 		}
 		Config.TIME_FONT.drawString((float)x + PADDING + MARGIN_LEFT + 50, (float)y + 30, bestTime, new org.newdawn.slick.Color(1,1,1, opacity));
 		

@@ -16,7 +16,6 @@ public enum Level {
 	FOREST(Section.FOREST_1,
 			Section.FOREST_2,
 			Section.FOREST_2A,
-			Section.FOREST_2B,
 			Section.FOREST_3,
 			Section.FOREST_4,
 			Section.FOREST_5,
@@ -25,7 +24,8 @@ public enum Level {
 	LAKE(Section.LAKE_1,
 		 Section.LAKE_2,
 		 Section.LAKE_3,
-		 Section.LAKE_4),
+		 Section.LAKE_4,
+		 Section.LAKE_5),
 	
 	DESERT(Section.DESERT_1,
 			Section.DESERT_2,
